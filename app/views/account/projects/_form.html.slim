@@ -1,0 +1,8 @@
+.container.box
+  = simple_form_for [:account, @project] do |f|
+    = f.input :name
+    .lavel.lavel-left
+      .lavel-item
+        = f.submit
+      .lavel-item
+        = link_to 'Back', account_projects_path
