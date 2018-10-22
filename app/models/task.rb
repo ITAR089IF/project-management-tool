@@ -3,11 +3,12 @@
 # Table name: tasks
 #
 #  id          :bigint(8)        not null, primary key
-#  title       :string
 #  description :text
-#  section_id  :integer
+#  row_order   :integer
+#  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  project_id  :integer
 #
 
 class Task < ApplicationRecord
@@ -18,5 +19,5 @@ class Task < ApplicationRecord
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }, presence: true
 
-  ranks :row_order, with_same: :section_id
+  ranks :row_order, with_same: :project_id
 end

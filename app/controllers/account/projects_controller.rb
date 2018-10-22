@@ -1,8 +1,9 @@
 class Account::ProjectsController < Account::AccountController
+	before_action :set_workspace
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   def index
-    @projects = current_user.projects.order(created_at: :desc)
+    @projects = @workspace.projects.order(created_at: :desc)
   end
 
   def show
@@ -10,14 +11,14 @@ class Account::ProjectsController < Account::AccountController
   end
 
   def new
-    @project = current_user.projects.new
+    @project = @workspace.projects.new
   end
 
   def create
-    @project = current_user.projects.new(project_params)
+    @project = @workspace.projects.new(project_params)
 
     if @project.save
-      redirect_to account_projects_path
+			redirect_to account_workspace_projects_path(@workspace)
     else
       render :new
     end
@@ -28,7 +29,7 @@ class Account::ProjectsController < Account::AccountController
 
   def update
     if @project.update_attributes(project_params)
-      redirect_to account_projects_path
+      redirect_to account_workspace_projects_path(@workspace)
     else
       render :edit
     end
@@ -36,13 +37,16 @@ class Account::ProjectsController < Account::AccountController
 
   def destroy
     @project.delete
-    redirect_to account_projects_path
+    redirect_to account_workspace_projects_path(@workspace)
   end
 
   private
+	def set_workspace
+		@workspace = current_user.workspaces.find(params[:workspace_id])
+	end
 
   def set_project
-    @project = current_user.projects.find(params[:id])
+    @project = @workspace.projects.find(params[:id])
   end
 
   def project_params

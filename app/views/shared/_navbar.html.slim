@@ -10,10 +10,7 @@
     .navbar-start
       .navbar-item IF-089.Ruby 
       - if user_signed_in?
-        a.navbar-item[href="/account/dashboard"]
-          | Dashboard
-        a.navbar-item[href="/account/projects"]
-          | My projects
+        = link_to 'Workspaces', account_workspaces_path, class: 'navbar-item'
       / .navbar-item.has-dropdown.is-hoverable
         a.navbar-link
           |  My Tasks 

@@ -14,13 +14,19 @@
 end
 
 User.all.each do |user|
-  Faker::Number.between(5, 10).times do |i|
-    user.projects.create(name: Faker::Name.name)
+  3.times do
+    user.workspaces.create(name: Faker::Name.name)
   end
 end
 
+Workspace.all.each do |workspace|
+	3.times do
+		workspace.projects.create(name: Faker::Name.last_name)
+	end
+end
+
 Project.all.each do |project|
-  Faker::Number.between(5, 10).times do |i|
+  3.times do
     project.tasks.create(title: Faker::Name.name, description: Faker::Lorem.paragraph)
   end
 end
