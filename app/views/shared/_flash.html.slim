@@ -1,9 +1,8 @@
-.is-marginless
-  - if flash.notice
-    .notification.is-success
-      = notice
-      button.delete aria-label="delete" 
-  - elsif flash.alert
-    .notification.is-danger
-      = alert
-      button.delete aria-label="delete" 
+- if flash.notice
+  .is-marginless.notification.is-success
+    = notice
+    button.delete aria-label="delete" 
+- elsif flash.alert
+  .is-marginless.notification.is-danger
+    = alert
+    button.delete aria-label="delete" 
