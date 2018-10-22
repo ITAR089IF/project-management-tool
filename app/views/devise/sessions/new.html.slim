@@ -1,19 +1,12 @@
-
-h2.subtitle
-  'Log in
-
-= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  .container.box
+.container
+  h2.title
+    | Log in
+  = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
     .field
-      = f.input :email, required: false, autofocus: true,
-                input_html: { plaseholder: 'Email' },
-                label: false
-      = f.input :password,
-                required: false,
-                input_html: { plaseholder: "Password" },
-                label: false
-      = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
+      = f.input :email, input_html: { placeholder: 'Email' }, wrapper: :bulma_input
+      = f.input :password, input_html: { placeholder: "Password" }, wrapper: :bulma_input
+      = f.input :remember_me, wrapper: :inline_checkbox, as: :boolean if devise_mapping.rememberable?
     .form-actions
-      = f.submit "Log in", class: 'button is-pimary'
+      = f.submit "Log in", class: 'button is-primary'
 
-= render "devise/shared/links"
+  = render "devise/shared/links"

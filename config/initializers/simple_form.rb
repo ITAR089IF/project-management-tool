@@ -8,11 +8,26 @@
 #
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
-  # Wrappers are used by the form builder to generate a
-  # complete input. You can remove any component from the
-  # wrapper, change the order or even add your own to the
-  # stack. The options given below are used to wrap the
-  # whole input.
+
+  config.wrappers :bulma_input, class: "field", error_class: :field_with_errors do |b|
+    b.use :html5
+    b.use :placeholder
+
+    b.use :label, class: "label"
+    b.use :input, class: "input"
+    b.use :hint,  wrap_with: { tag: :div, class: "help" }
+    b.use :error, wrap_with: { tag: :div, class: "help is-danger" }
+  end
+  
+  config.wrappers :inline_checkbox, :tag => 'div', :class => 'control-group', :error_class => 'error' do |b|
+    b.use :html5
+    b.wrapper :tag => 'div', :class => 'controls' do |ba|
+      ba.use :label_input, :wrap_with => { :class => 'checkbox inline' }
+      ba.use :error, :wrap_with => { :tag => 'span', :class => 'help-inline' }
+      ba.use :hint,  :wrap_with => { :tag => 'p', :class => 'help-block' }
+    end
+  end
+
   config.wrappers :default, class: :input,
     hint_class: :field_with_hint, error_class: :field_with_errors, valid_class: :field_without_errors do |b|
     ## Extensions enabled by default

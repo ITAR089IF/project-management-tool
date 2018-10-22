@@ -1,24 +1,17 @@
-
-h2.subtitle
-  'Sign up
-= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-  = f.error_notification
-  .container.box
+.container
+  h2.title
+    | Sign up
+  = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
     .field
       = f.input :full_name, required: true, autofocus: true,
-                class: 'input is-primary',
-                input_html: { placeholder:'Full Name'},
-                label: false
+                input_html: { placeholder:'Full Name'}, wrapper: :bulma_input
       = f.input :email, required: true, autofocus: true,
-                input_html: { placeholder: 'Email' },
-                label: false
+                input_html: { placeholder: 'Email' }, wrapper: :bulma_input
       = f.input :password, required: true,
                 hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                input_html: { placeholder: "New Password" },
-                label: false
+                input_html: { placeholder: "New Password" }, wrapper: :bulma_input
       = f.input :password_confirmation, required: true,
-                input_html: { placeholder: "Cofirm Password" },
-                label: false
+                input_html: { placeholder: "Cofirm Password" }, wrapper: :bulma_input
     .form-actions
       = f.submit 'Sign up', class: 'button is-primary'
-= render 'devise/shared/links'
+    = render 'devise/shared/links'

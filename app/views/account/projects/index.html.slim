@@ -1,7 +1,8 @@
-br/
-.conteiner.box
+.conteiner
   .level
     .level-left
+      .title My projects
+    .level-right
       .level-item
         = link_to "Add project", new_account_project_path, class: "button  is-link"
   .conteiner
@@ -10,6 +11,8 @@ br/
         .level-left
           .level-item
             = link_to "#{project.name}", account_project_path(project)
+          .level-item
+            = "Tasks: #{project.tasks.count}"
         .level-right
           .level-item
             = link_to "Edit", edit_account_project_path(project), class: "button is-small right"
