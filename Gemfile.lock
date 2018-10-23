@@ -345,6 +345,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   database_cleaner
   devise
+  factory_bot
   factory_bot_rails
   faker
   figaro

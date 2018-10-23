@@ -39,7 +39,8 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
   gem 'factory_bot_rails'
-	gem 'database_cleaner'
+  gem 'factory_bot'
+  gem 'database_cleaner'
 end
 
 group :development do
@@ -53,8 +54,8 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
-	gem 'simplecov', require: false
-	gem 'rails-controller-testing'
+  gem 'simplecov', require: false
+  gem 'rails-controller-testing'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

@@ -10,8 +10,10 @@
 #
 
 class Project < ApplicationRecord
-  has_many :tasks
+  has_many :tasks, dependent: :delete_all
   belongs_to :workspace
 
   validates :name, length: { maximum: 250 }, presence: true
+
+  scope :order_desc, -> workspace { workspace.projects.order(id: :desc) }
 end

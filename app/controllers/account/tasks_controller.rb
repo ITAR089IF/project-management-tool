@@ -36,22 +36,26 @@ class Account::TasksController < Account::AccountController
   end
 
   def move
-    Task.find(params[:task_id]).update_attribute(:row_order_position, params[:move])
+    @project.tasks.find(params[:task_id]).update_attribute(task_movement_params)
     redirect_to account_workspace_project_path(@workspace, @project)
   end
 
   private
 
   def set_workspace_and_project
-		@workspace = current_user.workspaces.find(params[:workspace_id])
+    @workspace = current_user.workspaces.find(params[:workspace_id])
     @project = @workspace.projects.find(params[:project_id])
   end
 
   def set_task
     @task = @project.tasks.find(params[:id])
-	end
+  end
 
   def tasks_params
     params.require(:task).permit(:title, :description)
+  end
+
+  def task_movement_params
+    params.require(:task).permit(:row_order_position)
   end
 end
