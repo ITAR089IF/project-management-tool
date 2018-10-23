@@ -22,6 +22,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   validates :first_name, length: { maximum: 250 }, presence: true
+  validates :last_name, length: { maximum: 250 }, presence: true
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
@@ -34,14 +35,14 @@ class User < ApplicationRecord
     else
       where(provider: auth.provider, uid: auth.uid).first do |user|
         user.password = Devise.friendly_token[0,20]
-        user.first_name = auth.info.name
+        user.first_name = auth.info.name.split.first
+        user.last_name = auth.info.name.split.last
         user.email = auth.info.email
         user.uid = auth.uid
         user.provider = auth.provider
         user.oauth_token = auth.credentials.token
         user.oauth_expires_at = Time.at(auth.credentials.expires_at)
         user.save!
-        # user.skip_confirmation!
       end
     end
   end
