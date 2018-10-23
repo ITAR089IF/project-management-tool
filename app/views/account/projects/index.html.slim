@@ -1,11 +1,10 @@
-.conteiner
+.container 
   .level
     .level-left
       .title My projects
     .level-right
-      .level-item
-        = link_to "Add project", new_account_project_path, class: "button  is-link"
-  .conteiner
+      = link_to "Add project", new_account_project_path, class: "button  is-link"
+  .container 
     - @projects.each do |project|
       .level
         .level-left
