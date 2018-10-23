@@ -21,7 +21,7 @@ class User < ApplicationRecord
   has_many :projects
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  validates :full_name, length: { maximum: 250 }, presence: true
+  validates :first_name, length: { maximum: 250 }, presence: true
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
@@ -34,7 +34,7 @@ class User < ApplicationRecord
     else
       where(provider: auth.provider, uid: auth.uid).first do |user|
         user.password = Devise.friendly_token[0,20]
-        user.full_name = auth.info.name
+        user.first_name = auth.info.name
         user.email = auth.info.email
         user.uid = auth.uid
         user.provider = auth.provider
