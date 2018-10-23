@@ -8,6 +8,10 @@
 #  updated_at   :datetime         not null
 #  workspace_id :integer
 #
+# Indexes
+#
+#  index_projects_on_workspace_id  (workspace_id)
+#
 
 class Project < ApplicationRecord
   has_many :tasks, dependent: :delete_all
@@ -15,5 +19,5 @@ class Project < ApplicationRecord
 
   validates :name, length: { maximum: 250 }, presence: true
 
-  scope :order_desc, -> workspace { workspace.projects.order(id: :desc) }
+  scope :order_desc, -> { order(id: :desc) }
 end

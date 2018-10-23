@@ -10,6 +10,11 @@
 #  updated_at  :datetime         not null
 #  project_id  :integer
 #
+# Indexes
+#
+#  index_tasks_on_project_id  (project_id)
+#  index_tasks_on_row_order   (row_order)
+#
 
 class Task < ApplicationRecord
   include RankedModel
@@ -20,4 +25,6 @@ class Task < ApplicationRecord
   validates :description, length: { maximum: 250 }, presence: true
 
   ranks :row_order, with_same: :project_id
+
+  scope :row_order_asc, -> { order(row_order: :asc) }
 end

@@ -1,21 +1,21 @@
 .conteiner.box
   .lavel.lavel-left.lavel-item
-    = link_to 'New task', new_account_workspace_project_task_path(@workspace, @project)
+    = link_to 'New task', new_account_project_task_path(@project)
   - @tasks.each do |task|
     .level
       .level-left
        .level-item
-         = link_to "#{task.title}", account_workspace_project_task_path(@workspace, @project, task)
+         = link_to task.title, account_project_task_path(@project, task)
        .level-item
-         = link_to "Up", account_workspace_project_task_move_path(@workspace, @project, task, :up),
-           method: :put, class: "button is-small left"
+         = link_to "Up", move_account_project_task_path(@project, task,
+           task: { row_order_position: :up}), method: :put, class: "button is-small left"
        .level-item
-         = link_to "Down", account_workspace_project_task_move_path(@workspace, @project, task, :down),
-           method: :put, class: "button is-small left"
+         = link_to "Down", move_account_project_task_path(@project, task,
+           task: { row_order_position: :down }), method: :put, class: "button is-small left"
       .level-right
         .level-item
-          = link_to "Edit", edit_account_workspace_project_task_path(@workspace, @project, task),
+          = link_to "Edit", edit_account_project_task_path(@project, task),
             class: "button is-small right"
         .level-item
-          = link_to "Delete", account_workspace_project_task_path(@workspace, @project, task),
+          = link_to "Delete", account_project_task_path(@project, task),
             method: :delete,  class: "button is-small right", data: { confirm: "Are you sure?" }

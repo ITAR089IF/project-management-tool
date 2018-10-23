@@ -1,19 +1,18 @@
 class Account::WorkspacesController < Account::AccountController
-  before_action :set_workspace, only: [:show, :edit, :update, :destroy]
-
   def index
-    @workspaces = current_user.workspaces.order(created_at: :desc)
+    @workspaces = collection.order_desc
   end
 
   def show
+    @workspace = resource
   end
 
   def new
-    @workspace = current_user.workspaces.new
+    @workspace = collection.build
   end
 
   def create
-    @workspace = current_user.workspaces.new(workspace_params)
+    @workspace = collection.build(workspace_params)
 
     if @workspace.save
       redirect_to account_workspaces_path, notice: 'Workspace was created!'
@@ -23,9 +22,12 @@ class Account::WorkspacesController < Account::AccountController
   end
 
   def edit
+    @workspace = resource
   end
 
   def update
+    @workspace = resource
+
     if @workspace.update_attributes(workspace_params)
       redirect_to account_workspace_path(@workspace), notice: 'Workspace was updated!'
     else
@@ -34,14 +36,22 @@ class Account::WorkspacesController < Account::AccountController
   end
 
   def destroy
-    @workspace.delete
+    resource.destroy
     redirect_to account_workspaces_path
   end
 
   private
 
-  def set_workspace
-    @workspace = current_user.workspaces.find(params[:id])
+  def parent
+    current_user
+  end
+
+  def collection
+    parent.workspaces
+  end
+
+  def resource
+    collection.find(params[:id])
   end
 
   def workspace_params

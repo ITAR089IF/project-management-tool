@@ -3,13 +3,14 @@ br/
   .level
     .level-left
       .level-item
-        = link_to "Add project", new_account_workspace_project_path(@workspace), class: "button  is-link"
+        = link_to "Add project", new_account_workspace_project_path(@workspace),
+          class: "button  is-link"
   .conteiner
     - @projects.each do |project|
       .level
         .level-left
           .level-item
-            = link_to "#{project.name}", account_workspace_project_path(@workspace, project)
+            = link_to project.name, account_workspace_project_path(@workspace, project)
         .level-right
           .level-item
             = link_to "Edit", edit_account_workspace_project_path(@workspace, project),
@@ -17,4 +18,4 @@ br/
           .level-item
             = link_to "Delete",  account_workspace_project_path(@workspace, project),
               method: :delete, class: "button is-small right", data: { confirm: "Are you sure?" }
- 
+

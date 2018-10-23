@@ -17,8 +17,8 @@ require 'rails_helper'
 
 RSpec.describe Workspace, type: :model do
   context 'validation tests' do
-    let(:user) { create(:user) }
-    let(:workspace) { build(:workspace, user_id: user.id) }
+    let!(:user) { create(:user) }
+    let!(:workspace) { build(:workspace, user_id: user.id) }
 
     it 'name should be presence' do
       expect(workspace.valid?).to eq true
@@ -37,6 +37,15 @@ RSpec.describe Workspace, type: :model do
     it 'name length must be less then 30' do
       workspace.name = '*' * 31
       expect(workspace.valid?).to eq false
+    end
+  end
+
+  context 'scope tests' do
+    let!(:user) { create(:user) }
+    let!(:workspace) { create_list(:workspace, 5, user_id: user.id) }
+
+    it 'should be sort by desc' do
+      expect(Workspace.order_desc).to eq Workspace.order(id: :desc)
     end
   end
 end

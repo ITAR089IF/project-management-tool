@@ -8,9 +8,13 @@ Rails.application.routes.draw do
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
     resources :workspaces do
-      resources :projects do
-        resources :tasks, except: [:index] do
-          put '/:move', to: 'tasks#move', as: 'move'
+      resources :projects
+    end
+
+    resources :projects, only: [] do
+      resources :tasks, except: [:index] do
+        member do
+          put :move
         end
       end
     end

@@ -1,54 +1,60 @@
 class Account::TasksController < Account::AccountController
-  before_action :set_workspace_and_project
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :parent
 
   def show
+    @task = resource
   end
 
   def new
-    @task = @project.tasks.new
+    @task = collection.build
   end
 
   def create
-    @task = @project.tasks.new(tasks_params)
+    @task = collection.build(tasks_params)
 
     if @task.save
-      redirect_to account_workspace_project_path(@workspace, @project)
+      redirect_to account_project_path(parent.workspace_id, parent.id)
     else
       render :new
     end
   end
 
   def edit
+    @task = resource
   end
 
   def update
+    @task = resource
+
     if @task.update(tasks_params)
-      redirect_to account_workspace_project_task_path(@workspace, @project, @task)
+      redirect_to account_project_task_path(parent.id, @task)
     else
       render "edit"
     end
   end
 
   def destroy
-    @task.destroy
-    redirect_to account_workspace_project_path(@workspace, @project)
+    resource.destroy
+    redirect_to account_workspace_project_path(parent.workspace_id, parent.id)
   end
 
   def move
-    @project.tasks.find(params[:task_id]).update_attribute(task_movement_params)
-    redirect_to account_workspace_project_path(@workspace, @project)
+    resource.update_attributes(task_movement_params)
+    redirect_to account_workspace_project_path(parent.workspace_id, parent.id)
   end
 
   private
 
-  def set_workspace_and_project
-    @workspace = current_user.workspaces.find(params[:workspace_id])
-    @project = @workspace.projects.find(params[:project_id])
+  def parent
+    @project = Project.find(params[:project_id])
   end
 
-  def set_task
-    @task = @project.tasks.find(params[:id])
+  def collection
+    parent.tasks
+  end
+
+  def resource
+    parent.tasks.find(params[:id])
   end
 
   def tasks_params
