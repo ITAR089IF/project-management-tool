@@ -23,6 +23,8 @@
 class Task < ApplicationRecord
   include RankedModel
 
+  ranks :row_order, with_same: :project_id
+
   scope :row_order_asc, -> { order(row_order: :asc) }
 
   belongs_to :project, required: true
@@ -30,5 +32,4 @@ class Task < ApplicationRecord
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }, presence: true
 
-  ranks :row_order, with_same: :project_id
 end
