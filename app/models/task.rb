@@ -18,5 +18,5 @@ class Task < ApplicationRecord
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }, presence: true
 
-  ranks :row_order, with_same: :section_id
+  ranks :row_order, with_same: :project_id
 end
