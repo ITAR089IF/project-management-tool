@@ -1,17 +1,17 @@
 class Account::ProjectsController < Account::AccountController
   def index
-    parent
+    @workspace = parent
     @projects = collection.order_desc
   end
 
   def show
-    parent
+    @workspace = parent
     @project = resource
     @tasks = @project.tasks.row_order_asc
   end
 
   def new
-    parent
+    @workspace = parent
     @project = collection.build
   end
 
@@ -26,7 +26,7 @@ class Account::ProjectsController < Account::AccountController
   end
 
   def edit
-    parent
+    @workspace = parent
     @project = resource
   end
 
@@ -48,7 +48,7 @@ class Account::ProjectsController < Account::AccountController
   private
 
   def parent
-    @workspace = current_user.workspaces.find(params[:workspace_id])
+    current_user.workspaces.find(params[:workspace_id])
   end
 
   def collection

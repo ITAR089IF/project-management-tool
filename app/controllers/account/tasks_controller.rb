@@ -1,11 +1,11 @@
 class Account::TasksController < Account::AccountController
   def show
-    parent
+    @project = parent
     @task = resource
   end
 
   def new
-    parent
+    @project = parent
     @task = collection.build
   end
 
@@ -20,7 +20,7 @@ class Account::TasksController < Account::AccountController
   end
 
   def edit
-    parent
+    @project = parent
     @task = resource
   end
 
@@ -47,7 +47,7 @@ class Account::TasksController < Account::AccountController
   private
 
   def parent
-    @project = Project.find(params[:project_id])
+    Project.find(params[:project_id])
   end
 
   def collection
