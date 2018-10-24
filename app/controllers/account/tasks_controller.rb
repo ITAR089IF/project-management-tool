@@ -1,11 +1,11 @@
 class Account::TasksController < Account::AccountController
-  before_action :parent
-
   def show
+    parent
     @task = resource
   end
 
   def new
+    parent
     @task = collection.build
   end
 
@@ -20,6 +20,7 @@ class Account::TasksController < Account::AccountController
   end
 
   def edit
+    parent
     @task = resource
   end
 

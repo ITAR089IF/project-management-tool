@@ -1,16 +1,17 @@
 class Account::ProjectsController < Account::AccountController
-  before_action :parent
-
   def index
+    parent
     @projects = collection.order_desc
   end
 
   def show
+    parent
     @project = resource
     @tasks = @project.tasks.row_order_asc
   end
 
   def new
+    parent
     @project = collection.build
   end
 
@@ -25,6 +26,7 @@ class Account::ProjectsController < Account::AccountController
   end
 
   def edit
+    parent
     @project = resource
   end
 

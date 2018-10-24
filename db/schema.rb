@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_23_184549) do
+ActiveRecord::Schema.define(version: 2018_10_24_090749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 2018_10_23_184549) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "workspace_id"
+    t.bigint "workspace_id"
     t.index ["workspace_id"], name: "index_projects_on_workspace_id"
   end
 
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 2018_10_23_184549) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "row_order"
-    t.integer "project_id"
+    t.bigint "project_id"
     t.index ["project_id"], name: "index_tasks_on_project_id"
     t.index ["row_order"], name: "index_tasks_on_row_order"
   end
@@ -67,8 +67,11 @@ ActiveRecord::Schema.define(version: 2018_10_23_184549) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_workspaces_on_user_id"
   end
 
+  add_foreign_key "projects", "workspaces"
+  add_foreign_key "tasks", "projects"
+  add_foreign_key "workspaces", "users"
 end
