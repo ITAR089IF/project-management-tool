@@ -25,9 +25,9 @@ class Task < ApplicationRecord
 
   ranks :row_order, with_same: :project_id
 
-  scope :row_order_asc, -> { order(row_order: :asc) }
-
   belongs_to :project, required: true
+
+  scope :row_order_asc, -> { order(row_order: :asc) }
 
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }, presence: true

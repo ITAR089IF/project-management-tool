@@ -18,10 +18,10 @@
 #
 
 class Project < ApplicationRecord
-  scope :order_desc, -> { order(id: :desc) }
-
   belongs_to :workspace, required: true
   has_many :tasks
+
+  scope :order_desc, -> { order(id: :desc) }
 
   validates :name, length: { maximum: 250 }, presence: true
 end
