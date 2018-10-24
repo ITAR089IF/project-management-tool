@@ -24,32 +24,19 @@ RSpec.describe Workspace, type: :model do
     let!(:user) { create(:user) }
     let!(:workspace) { build(:workspace, user_id: user.id) }
 
-    it 'name should be presence' do
-      expect(workspace.valid?).to eq true
-    end
-
-    it 'should be invalid if name empty' do
-      workspace.name = ''
-      expect(workspace.valid?).to eq false
-    end
-
-    it 'shouldn`t be saved without user_id' do
-      workspace.user_id = ''
-      expect(workspace.valid?).to eq false
-    end
-
-    it 'name length must be less then 30' do
-      workspace.name = '*' * 31
-      expect(workspace.valid?).to eq false
-    end
+    it { expect validate_presence_of :name }
+    it { expect validate_length_of :name }
+    it { expect belong_to :user }
   end
 
   context 'scope tests' do
     let!(:user) { create(:user) }
-    let!(:workspace) { create_list(:workspace, 5, user_id: user.id) }
+    let!(:workspace1) { create(:workspace, user_id: user.id) }
+    let!(:workspace2) { create(:workspace, user_id: user.id) }
+    let!(:workspace3) { create(:workspace, user_id: user.id) }
 
     it 'should be sort by desc' do
-      expect(Workspace.order_desc).to eq Workspace.order(id: :desc)
+      expect(user.workspaces.order_desc).to eq [workspace3, workspace2, workspace1]
     end
   end
 end

@@ -27,10 +27,13 @@ RSpec.describe Task, type: :model do
     let!(:user) { create(:user) }
     let!(:workspace) { create(:workspace, user_id: user.id) }
     let!(:project) { create(:project, workspace_id: workspace.id) }
-    let!(:task) { create_list(:task, 10, project_id: project.id) }
+    let!(:task1) { create(:task, project_id: project.id) }
+    let!(:task2) { create(:task, project_id: project.id) }
+    let!(:task3) { create(:task, project_id: project.id) }
 
     it 'shold order by row_order asc' do
-      expect(Task.row_order_asc).to eq Task.order(row_order: :asc)
+      project.tasks.first.update(row_order_position: :down)
+      expect(project.tasks.row_order_asc).to eq [task2, task1, task3]
     end
   end
 end

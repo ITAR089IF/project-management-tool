@@ -42,12 +42,8 @@ class Account::WorkspacesController < Account::AccountController
 
   private
 
-  def parent
-    current_user
-  end
-
   def collection
-    parent.workspaces
+    current_user.workspaces
   end
 
   def resource

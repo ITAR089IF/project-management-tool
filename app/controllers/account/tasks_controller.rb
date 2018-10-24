@@ -1,19 +1,19 @@
 class Account::TasksController < Account::AccountController
   def show
     @project = parent
-    @task = resource
+    @task = @project.tasks.find(params[:id])
   end
 
   def new
     @project = parent
-    @task = collection.build
+    @task = @project.tasks.build
   end
 
   def create
     @task = collection.build(tasks_params)
 
     if @task.save
-      redirect_to account_project_path(parent.workspace_id, parent.id)
+      redirect_to account_workspace_project_path(parent.workspace_id, parent)
     else
       render :new
     end
@@ -21,7 +21,7 @@ class Account::TasksController < Account::AccountController
 
   def edit
     @project = parent
-    @task = resource
+    @task = @project.tasks.find(params[:id])
   end
 
   def update

@@ -1,25 +1,25 @@
 class Account::ProjectsController < Account::AccountController
   def index
     @workspace = parent
-    @projects = collection.order_desc
+    @projects = @workspace.projects.order_desc
   end
 
   def show
     @workspace = parent
-    @project = resource
+    @project = @workspace.projects.find(params[:id])
     @tasks = @project.tasks.row_order_asc
   end
 
   def new
     @workspace = parent
-    @project = collection.build
+    @project = @workspace.projects.build
   end
 
   def create
     @project = collection.build(project_params)
 
     if @project.save
-      redirect_to account_workspace_projects_path(@workspace)
+      redirect_to account_workspace_projects_path(parent)
     else
       render :new
     end
@@ -27,14 +27,14 @@ class Account::ProjectsController < Account::AccountController
 
   def edit
     @workspace = parent
-    @project = resource
+    @project = @workspace.projects.find(params[:id])
   end
 
   def update
     @project = resource
 
     if @project.update(project_params)
-      redirect_to account_workspace_projects_path(@workspace)
+      redirect_to account_workspace_projects_path(parent)
     else
       render :edit
     end
@@ -42,7 +42,7 @@ class Account::ProjectsController < Account::AccountController
 
   def destroy
     resource.destroy
-    redirect_to account_workspace_projects_path(@workspace)
+    redirect_to account_workspace_projects_path(parent)
   end
 
   private
