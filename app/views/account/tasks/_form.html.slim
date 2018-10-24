@@ -1,10 +1,6 @@
 .container.box
   = simple_form_for [:account, @project, @task] do |f|
-    .field
-      = f.input :title, placeholder: 'Title', wrapper: :bulma_input
-      = f.input :description, placeholder: 'Description', wrapper: :bulma_input
-    .field.is-grouped
-      .control
-        = f.submit "Save", class: "button is-link"
-      .control
-        = link_to 'Back', account_projects_path(@project), class: 'button is-text'
+    = f.input :title, placeholder: 'Title', wrapper: :bulma_input, required: true
+    = f.input :description, placeholder: 'Description', wrapper: :bulma_input, required: true
+    = f.submit "Save", class: "button is-link"
+    = link_to 'Back', account_projects_path(@project), class: 'button is-text'

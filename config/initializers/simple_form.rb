@@ -12,20 +12,17 @@ SimpleForm.setup do |config|
   config.wrappers :bulma_input, class: "field", error_class: :field_with_errors do |b|
     b.use :html5
     b.use :placeholder
-
-    b.use :label, class: "label"
-    b.use :input, class: "input"
+    b.use :label, class: "label", valid_class: 'is-success', error_class: 'is-danger'
+    b.use :input, class: "input", valid_class: 'is-success', error_class: 'is-danger'
     b.use :hint,  wrap_with: { tag: :div, class: "help" }
     b.use :error, wrap_with: { tag: :div, class: "help is-danger" }
   end
   
-  config.wrappers :inline_checkbox, tag: 'div', class: 'control-group', error_class: 'error' do |b|
+  config.wrappers :inline_checkbox, class: 'field', error_class: :field_with_errors do |b|
     b.use :html5
-    b.wrapper tag: 'div', class: 'controls' do |ba|
-      ba.use :label_input, wrap_with: { class: 'checkbox inline self_checkbox' }
-      ba.use :error, wrap_with: { tag: 'span', class: 'help-inline' }
-      ba.use :hint, wrap_with: { tag: 'p', class: 'help-block' }
-    end
+    b.use :label_input, wrap_with: { class: 'checkbox inline' }
+    b.use :error, wrap_with: { tag: :div, class: 'help is-danger' }
+    b.use :hint, wrap_with: { tag: :div, class: 'help' }
   end
 
   config.wrappers :default, class: :input,
@@ -145,7 +142,7 @@ SimpleForm.setup do |config|
   # in this configuration, which is recommended due to some quirks from different browsers.
   # To stop SimpleForm from generating the novalidate option, enabling the HTML5 validations,
   # change this configuration to true.
-  config.browser_validations = false
+  config.browser_validations = true
 
   # Collection of methods to detect if a file type was given.
   # config.file_methods = [ :mounted_as, :file?, :public_filename, :attached? ]
