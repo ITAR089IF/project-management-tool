@@ -33,7 +33,7 @@ class Account::ProjectsController < Account::AccountController
   def update
     @project = resource
 
-    if @project.update_attributes(project_params)
+    if @project.update(project_params)
       redirect_to account_workspace_projects_path(@workspace)
     else
       render :edit

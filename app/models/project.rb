@@ -18,10 +18,10 @@
 #
 
 class Project < ApplicationRecord
-  has_many :tasks, dependent: :delete_all
-  belongs_to :workspace
-
-  validates :name, length: { maximum: 250 }, presence: true
+  has_many :tasks
+  belongs_to :workspace, required: true
 
   scope :order_desc, -> { order(id: :desc) }
+
+  validates :name, length: { maximum: 250 }, presence: true
 end

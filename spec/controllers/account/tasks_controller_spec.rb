@@ -18,27 +18,27 @@ RSpec.describe Account::TasksController, type: :controller do
     it 'should move task down' do
       put :move, params: {
         project_id: project.id,
-        id: Task.first.id,
+        id: project.tasks.first.id,
         task: {
           row_order_position: :down
         }
       }
 
       expect(response).to redirect_to account_workspace_project_path(workspace.id, project.id)
-      expect(Task.row_order_asc.first).to eq Task.order(id: :asc).second
+      expect(project.tasks.row_order_asc.first).to eq project.tasks.order(id: :asc).second
     end
 
     it 'should move task up' do
       put :move, params: {
         project_id: project.id,
-        id: Task.last.id,
+        id: project.tasks.last.id,
         task: {
           row_order_position: :up
         }
       }
 
       expect(response).to redirect_to account_workspace_project_path(workspace.id, project.id)
-      expect(Task.row_order_asc.fourth).to eq Task.order(id: :asc).last
+      expect(project.tasks.row_order_asc.fourth).to eq project.tasks.order(id: :asc).last
     end
   end
 end
