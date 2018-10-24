@@ -12,13 +12,11 @@ class Account::ProjectsController < Account::AccountController
 
   def new
     @workspace = parent
-    @project = @workspace.projects.build
+    @project = current_user.projects.build
   end
 
   def create
-    @project = collection.build(project_params)
-
-    if @project.save
+    if current_user.projects.create(project_params)
       redirect_to account_workspace_projects_path(parent)
     else
       render :new
@@ -51,15 +49,11 @@ class Account::ProjectsController < Account::AccountController
     current_user.workspaces.find(params[:workspace_id])
   end
 
-  def collection
-    parent.projects
-  end
-
   def resource
     parent.projects.find(params[:id])
   end
 
   def project_params
-    params.require(:project).permit(:name)
+    params.require(:project).permit(:name).merge(workspace_id: params[:workspace_id])
   end
 end

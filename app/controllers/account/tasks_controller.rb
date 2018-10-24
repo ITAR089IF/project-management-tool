@@ -47,7 +47,7 @@ class Account::TasksController < Account::AccountController
   private
 
   def parent
-    Project.find(params[:project_id])
+    current_user.projects.find(params[:project_id])
   end
 
   def collection
