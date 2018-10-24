@@ -22,7 +22,7 @@
 
 FactoryBot.define do
   factory :task, class: 'Task' do
-    title { Faker::Name.first_name }
+    title { Faker::Lorem.sentence }
     description { Faker::Lorem.paragraph }
 
     project

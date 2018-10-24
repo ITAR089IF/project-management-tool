@@ -23,7 +23,7 @@
 #
 
 class User < ApplicationRecord
-  has_many :workspaces
+  has_many :workspaces, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

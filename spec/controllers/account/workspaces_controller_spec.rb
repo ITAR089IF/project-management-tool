@@ -76,9 +76,9 @@ RSpec.describe Account::WorkspacesController, type: :controller do
 
   context 'DELETE /workspace/:id' do
     it 'should delete workspace' do
-    delete :destroy, params: { id: workspace.id }
+      delete :destroy, params: { id: workspace.id }
 
-    expect(response).to redirect_to account_workspaces_path
+      expect(response).to redirect_to account_workspaces_path
     end
   end
 end

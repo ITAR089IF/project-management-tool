@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Account::TasksController, type: :controller do
+  render_views
+
   context 'PUT /:move' do
     let!(:user) { create(:user) }
     let!(:workspace) { create(:workspace, user_id: user.id) }

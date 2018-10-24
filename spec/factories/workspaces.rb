@@ -19,7 +19,7 @@
 
 FactoryBot.define do
   factory :workspace do
-    name { Faker::Name.first_name }
+    name { Faker::Educator.subject }
 
     user
   end

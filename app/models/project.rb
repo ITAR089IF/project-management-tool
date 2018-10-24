@@ -19,7 +19,7 @@
 
 class Project < ApplicationRecord
   belongs_to :workspace, required: true
-  has_many :tasks
+  has_many :tasks, dependent: :destroy
 
   scope :order_desc, -> { order(id: :desc) }
 
