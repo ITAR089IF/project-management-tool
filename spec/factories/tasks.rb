@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :task do
-    title {"Title1"}
-    description {"Description1"}
+    title { Faker::Name.name }
+    description { Faker::Lorem.paragraph }
   end
 end

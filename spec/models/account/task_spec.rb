@@ -4,7 +4,7 @@ RSpec.describe Task, type: :model do
   context 'validation tests' do
     let!(:user) { create(:user) }
     let!(:project) { create(:project, user_id: user.id) }
-    let!(:task) { create(:task, project_id: project.id) }
+    let!(:task) { build(:task, project_id: project.id) }
 
     it "ensures required fields are present" do
       expect(task.valid?).to eq(true)

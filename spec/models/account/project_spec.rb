@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Project, type: :model do
   context 'validation tests' do
     let!(:user) { create(:user) }
-    let!(:project) { create(:project, user_id: user.id) }
+    let!(:project) { build(:project, user_id: user.id) }
 
     it "ensures required fields are present" do
       expect(project.valid?).to eq(true)

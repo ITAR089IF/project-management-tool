@@ -14,7 +14,7 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2018-10-24T16:08:59+03:00">2018-10-24T16:08:59+03:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2018-10-24T17:54:23+03:00">2018-10-24T17:54:23+03:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -7075,7 +7075,7 @@
         <li class="covered" data-hits="9" data-linenumber="3">
           <span class="hits">9</span>
           
-          <code class="ruby">    name {&quot;project1&quot;}</code>
+          <code class="ruby">    name { Faker::Name.name }</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="4">
@@ -7124,13 +7124,13 @@
         <li class="covered" data-hits="6" data-linenumber="3">
           <span class="hits">6</span>
           
-          <code class="ruby">    title {&quot;Title1&quot;}</code>
+          <code class="ruby">    title { Faker::Name.name }</code>
         </li>
       
         <li class="covered" data-hits="6" data-linenumber="4">
           <span class="hits">6</span>
           
-          <code class="ruby">    description {&quot;Description1&quot;}</code>
+          <code class="ruby">    description { Faker::Lorem.paragraph }</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="5">
@@ -7179,25 +7179,25 @@
         <li class="covered" data-hits="14" data-linenumber="3">
           <span class="hits">14</span>
           
-          <code class="ruby">    first_name {&#39;John&#39;}</code>
+          <code class="ruby">    first_name { Faker::Name.first_name }</code>
         </li>
       
         <li class="covered" data-hits="14" data-linenumber="4">
           <span class="hits">14</span>
           
-          <code class="ruby">    last_name {&#39;Dou&#39;}</code>
+          <code class="ruby">    last_name { Faker::Name.last_name }</code>
         </li>
       
         <li class="covered" data-hits="14" data-linenumber="5">
           <span class="hits">14</span>
           
-          <code class="ruby">    email {&#39;jdou@world.com&#39;}</code>
+          <code class="ruby">    email { Faker::Internet.email }</code>
         </li>
       
         <li class="covered" data-hits="14" data-linenumber="6">
           <span class="hits">14</span>
           
-          <code class="ruby">    password {&#39;123456&#39;}</code>
+          <code class="ruby">    password { Faker::Internet.password }</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="7">
@@ -7264,7 +7264,7 @@
         <li class="covered" data-hits="4" data-linenumber="6">
           <span class="hits">4</span>
           
-          <code class="ruby">    let!(:project) { create(:project, user_id: user.id) }</code>
+          <code class="ruby">    let!(:project) { build(:project, user_id: user.id) }</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="7">
@@ -7421,7 +7421,7 @@
         <li class="covered" data-hits="6" data-linenumber="7">
           <span class="hits">6</span>
           
-          <code class="ruby">    let!(:task) { create(:task, project_id: project.id) }</code>
+          <code class="ruby">    let!(:task) { build(:task, project_id: project.id) }</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="8">
@@ -7626,7 +7626,7 @@
         <li class="covered" data-hits="6" data-linenumber="5">
           <span class="hits">6</span>
           
-          <code class="ruby">    let!(:user) { create(:user) }</code>
+          <code class="ruby">    let!(:user) { build(:user) }</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="6">

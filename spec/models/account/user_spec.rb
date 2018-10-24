@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   context 'validation tests' do
-    let!(:user) { create(:user) }
+    let!(:user) { build(:user) }
 
     it "ensures required fields are present" do
       expect(user.valid?).to eq(true)
