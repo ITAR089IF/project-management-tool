@@ -53,6 +53,8 @@ group :test do
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
   gem 'simplecov', require: false
+  gem 'shoulda-matchers', '4.0.0.rc1'
+  gem 'rails-controller-testing' # If you are using Rails 5.x
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

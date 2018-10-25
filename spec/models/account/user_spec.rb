@@ -4,28 +4,14 @@ RSpec.describe User, type: :model do
   context 'validation tests' do
     let!(:user) { build(:user) }
 
-    it "ensures required fields are present" do
-      expect(user.valid?).to eq(true)
-    end
+    it { should validate_presence_of(:first_name) }
 
-    it "ensures first_name isn't empty" do
-      user.first_name = ''
-      expect(user.valid?).to eq(false)
-    end
+    it { should validate_presence_of(:last_name) }
 
-    it "ensures last_name isn't empty" do
-      user.last_name = ''
-      expect(user.valid?).to eq(false)
-    end
+    it { should have_many(:projects) }
+ 
+    it { should validate_length_of(:first_name).is_at_most(250) }
 
-    it "ensures length must be less then 251" do
-      user.first_name = '@' * 251
-      expect(user.valid?).to eq false
-    end
-
-    it "ensures length must be less then 251" do
-      user.last_name = '@' * 251
-      expect(user.valid?).to eq false
-    end
+    it { should validate_length_of(:last_name).is_at_most(250) }
   end
 end
