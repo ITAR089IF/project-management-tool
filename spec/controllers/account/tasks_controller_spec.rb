@@ -11,6 +11,7 @@ RSpec.describe Account::TasksController, type: :controller do
 
     before do
       sign_in user
+      user.update(projects: [project])
     end
 
     after do

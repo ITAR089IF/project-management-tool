@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Account::WorkspacesController, type: :controller do
   render_views
 
-  let(:user) { create(:user) }
-  let(:workspace) { create(:workspace, user_id: user.id) }
+  let!(:user) { create(:user) }
+  let!(:workspace) { create(:workspace, user_id: user.id) }
 
   before do
     sign_in user
