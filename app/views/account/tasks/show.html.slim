@@ -1,18 +1,16 @@
-.container.box
+.container
   .content
     h3 Title
     = @task.title
     h3 Description
     = @task.description
-    br/
-    .level
-      .level-left
-        .level-item
-          = link_to "Edit", edit_account_project_task_path(@project, @task),
-            class: "button is-small right"
-        .level-item
-          = link_to "Delete", account_project_task_path(@project, @task),
-            method: :delete, class: "button is-small right", data: { confirm: 'Are you sure?' }
-        .level-item
-          = link_to 'Back', account_workspace_project_path(@project.workspace_id, @project),
-            class: "button is-small right"
+  .level
+    .level-left
+      .level-item
+        = link_to "Edit", edit_account_project_task_path(@project, @task),
+          class: "button is-small right"
+      .level-item
+        = link_to "Delete", account_project_task_path(@project, @task),
+          method: :delete, class: "button is-small right", data: { confirm: 'Are you sure?' }
+      .level-item
+        = link_to 'Back', account_workspace_project_path(@project.workspace_id, @project), class: "button is-small right"

@@ -1,6 +1,12 @@
-.conteiner.box
-  .lavel.lavel-left.lavel-item
-    = link_to 'New task', new_account_project_task_path(@project)
+.container
+  .level
+    .level-left
+      .level-item
+        .title
+          | Project:
+          = @project.name
+    .level-right
+      = link_to "Add Task", new_account_project_task_path(@project), class: "button is-link"
   - @tasks.each do |task|
     .level
       .level-left
