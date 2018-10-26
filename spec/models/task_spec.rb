@@ -55,4 +55,9 @@ RSpec.describe Task, type: :model do
       expect(project.tasks.row_order_asc).to eq [task2, task1, task3]
     end
   end
+
+  context 'factory tests' do
+    subject { build(:task) }
+    it { is_expected.to be_valid }
+  end
 end

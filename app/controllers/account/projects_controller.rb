@@ -1,9 +1,4 @@
 class Account::ProjectsController < Account::AccountController
-  def index
-    @workspace = parent
-    @projects = @workspace.projects.order_desc
-  end
-
   def show
     @workspace = parent
     @project = @workspace.projects.find(params[:id])
@@ -17,7 +12,7 @@ class Account::ProjectsController < Account::AccountController
 
   def create
     if current_user.projects.create(project_params)
-      redirect_to account_workspace_projects_path(parent)
+      redirect_to account_workspace_path(parent)
     else
       render :new
     end
@@ -32,7 +27,7 @@ class Account::ProjectsController < Account::AccountController
     @project = resource
 
     if @project.update(project_params)
-      redirect_to account_workspace_projects_path(parent)
+      redirect_to account_workspace_path(parent)
     else
       render :edit
     end
@@ -40,7 +35,7 @@ class Account::ProjectsController < Account::AccountController
 
   def destroy
     resource.destroy
-    redirect_to account_workspace_projects_path(parent)
+    redirect_to account_workspace_path(parent)
   end
 
   private

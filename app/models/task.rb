@@ -31,7 +31,7 @@ class Task < ApplicationRecord
   scope :row_order_asc, -> { order(row_order: :asc) }
 
   validates :title, length: { maximum: 250 }, presence: true
-  validates :description, length: { maximum: 250 }, presence: true
+  validates :description, length: { maximum: 250 }
 
   before_save :section
 

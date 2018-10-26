@@ -8,3 +8,26 @@
     }
   }
 }
+
+.workspaces {
+  .projects {
+    margin-top: 10px;
+  }
+
+  .lavel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .lavel-right {
+      display: flex;
+      flex-direction: row;
+
+      .lavel-item {
+        margin: 0px 5px;
+      }
+    }
+  }
+}
+
+

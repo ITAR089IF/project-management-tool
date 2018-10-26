@@ -1,18 +1,18 @@
-.title
-  | My Workspaces
 .workspaces
-  = link_to 'New workspace', new_account_workspace_path
+  .title
+    | My Workspaces
+  .box.has-text-centered
+    = link_to 'Add Workspace', new_account_workspace_path, class: 'title'
   - @workspaces.each do |workspace|
-    .workspace
-      .lavel.lavel-left
-        .lavel-item.title
-          = link_to workspace.name, account_workspace_path(workspace)
-        .lavel-item
-          = link_to 'View projects', account_workspace_projects_path(workspace)
-      .lavel.lavel-right
-        .lavel-item
-          = link_to 'Edit', edit_account_workspace_path(workspace),
-            class: 'button'
-        .lavel-item
-          = link_to 'Delete', account_workspace_path(workspace),
-            class: 'button', method: :delete, data: { confirm: 'Are you sure?' }
+    .box
+      .lavel
+        .lavel-left
+          .lavel-item.title
+            = link_to workspace.name, account_workspace_path(workspace)
+        .lavel-right
+          .lavel-item
+            = link_to 'Edit', edit_account_workspace_path(workspace),
+              class: 'button'
+          .lavel-item
+            = link_to 'Delete', account_workspace_path(workspace),
+              class: 'button', method: :delete, data: { confirm: 'Are you sure?' }

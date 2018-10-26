@@ -5,7 +5,8 @@
 #  id                     :bigint(8)        not null, primary key
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
-#  full_name              :string
+#  first_name             :string
+#  last_name              :string
 #  oauth_expires_at       :string
 #  oauth_token            :string
 #  provider               :string
@@ -29,7 +30,8 @@ class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  validates :full_name, length: { maximum: 250 }, presence: true
+  validates :first_name, length: { maximum: 250 }, presence: true
+  validates :last_name, length: { maximum: 250 }, presence: true
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
@@ -42,14 +44,14 @@ class User < ApplicationRecord
     else
       where(provider: auth.provider, uid: auth.uid).first do |user|
         user.password = Devise.friendly_token[0,20]
-        user.full_name = auth.info.name
+        user.first_name = auth.info.first_name
+        user.last_name = auth.info.last_name
         user.email = auth.info.email
         user.uid = auth.uid
         user.provider = auth.provider
         user.oauth_token = auth.credentials.token
         user.oauth_expires_at = Time.at(auth.credentials.expires_at)
         user.save!
-        # user.skip_confirmation!
       end
     end
   end
