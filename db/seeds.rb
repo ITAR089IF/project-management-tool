@@ -8,7 +8,7 @@
 5.times do |i|
   User.create(
           email: "supersem#{i}@asana.com",
-          password: '123456',
+          password: Faker::Internet.password,
           first_name: Faker::Name.first_name,
           last_name: Faker::Name.last_name
   )

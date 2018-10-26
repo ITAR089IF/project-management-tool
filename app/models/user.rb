@@ -35,9 +35,8 @@ class User < ApplicationRecord
     else
       where(provider: auth.provider, uid: auth.uid).first do |user|
         user.password = Devise.friendly_token[0,20]
-        name_parts = name.split
-        user.first_name = auth.info.name_parts.shift
-        user.last_name = auth.info.name_parts.join.strip
+        user.first_name = auth.info.first_name
+        user.last_name = auth.info.last_name
         user.email = auth.info.email
         user.uid = auth.uid
         user.provider = auth.provider
