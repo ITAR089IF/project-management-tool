@@ -16,6 +16,6 @@
         = link_to 'Back', account_workspace_project_path(@project.workspace_id, @project), class: "button is-small right"
   .content
     h3 Comments
-    = render 'account/comments/form', item: [:account, @task.project, @comment]
-    = render 'account/comments/show_comments', comments: @comments, commentable: @task
+    = render partial: 'comments/form', locals: { commentable: @task, comment: @comment }
+    = render 'comments/show_comments', comments: @comments
   = paginate @comments, window: 2

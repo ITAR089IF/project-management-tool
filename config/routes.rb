@@ -11,16 +11,13 @@ Rails.application.routes.draw do
       resources :projects
     end
 
-    resources :projects, only: [] do
-      member do
-        resources :comments, only: [:create, :update, :destroy]
-      end
-      resources :tasks, except: [:index] do
+    resources :projects do
+      resources :tasks do
         member do
-          resources :comments, only: [:create, :update, :destroy]
           put :move
         end
       end
     end
   end
+  resources :comments, only: [:create, :update, :destroy]
 end

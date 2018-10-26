@@ -1,0 +1,17 @@
+- comments.each do |comment|
+  article.media.box
+    .media-content
+      .content
+        p
+          strong
+            = comment.user.full_name
+          br
+          = comment.body
+          br
+          small
+            = comment.created_at.to_date
+    .media-right
+      -if can_manage_comment?(comment)
+          = link_to comment_path(comment),
+              method: :delete, data: {confirm: "Are you sure?"} do
+              i.fa.fa-trash-o
