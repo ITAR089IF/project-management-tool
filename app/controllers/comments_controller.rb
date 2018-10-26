@@ -8,6 +8,8 @@ class CommentsController < ApplicationController
       if @comment.save
           redirect_back fallback_location: root_path
       else
+        flash[:alert] = 'Something went wrong!'
+        redirect_back fallback_location: root_path
       end
   end
 
