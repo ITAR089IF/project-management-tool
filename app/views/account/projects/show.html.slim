@@ -1,10 +1,10 @@
+- title "#{@workspace.name}: #{@project.name}"
 .container
   .level
     .level-left
       .level-item
         .title
-          | Project:
-          = @project.name
+          = "#{@workspace.name}: #{@project.name}"
     .level-right
       = link_to "Add Task", new_account_project_task_path(@project), class: "button is-link"
   - @tasks.each do |task|

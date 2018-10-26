@@ -1,7 +1,8 @@
+- title "#{@project.name}: #{@task.title}"
 .container
   .content
-    h3 Title
-    = @task.title
+    .title
+      = "#{@project.name}: #{@task.title}"
     h3 Description
     = @task.description
   .level

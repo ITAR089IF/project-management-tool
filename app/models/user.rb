@@ -5,7 +5,8 @@
 #  id                     :bigint(8)        not null, primary key
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
-#  full_name              :string
+#  first_name             :string
+#  last_name              :string
 #  oauth_expires_at       :string
 #  oauth_token            :string
 #  provider               :string
@@ -28,6 +29,8 @@ class User < ApplicationRecord
   has_many :user_projects, dependent: :destroy
   has_many :projects, through: :user_projects
 
+  validates :first_name, length: { maximum: 250 }, presence: true
+  validates :last_name, length: { maximum: 250 }, presence: true
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook]
@@ -39,7 +42,8 @@ class User < ApplicationRecord
     else
       where(provider: auth.provider, uid: auth.uid).first do |user|
         user.password = Devise.friendly_token[0,20]
-        user.full_name = auth.info.name
+        user.first_name = auth.info.first_name
+        user.last_name = auth.info.last_name
         user.email = auth.info.email
         user.uid = auth.uid
         user.provider = auth.provider
@@ -58,7 +62,7 @@ class User < ApplicationRecord
     end
   end
 
-  # def full_name
-  #   "#{first_name}  #{last_name}"
-  # end
+  def full_name
+    "#{first_name}  #{last_name}"
+  end
 end

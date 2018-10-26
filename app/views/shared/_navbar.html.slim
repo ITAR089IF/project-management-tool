@@ -32,9 +32,9 @@
             .button.is-primary
               = link_to "Sign Up", new_user_registration_path
             .button.is-light
-              = link_to "Log in", new_user_session_path
+              = link_to "Sign in", new_user_session_path
         - else
           .navbar-item
             = current_user.email
           .navbar-item
-            = link_to "Log out", destroy_user_session_path, method: :delete, class: 'button is-primary'
+            = link_to "Sign out", destroy_user_session_path, method: :delete, class: 'button is-primary'

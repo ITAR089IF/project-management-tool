@@ -32,6 +32,7 @@ gem 'omniauth', '~> 1.6', '>= 1.6.1'
 gem 'omniauth-facebook', '~> 4.0'
 gem 'annotate'
 gem 'ranked-model'
+gem 'meta-tags'
 
 group :development, :test do
   gem 'faker'
@@ -56,8 +57,8 @@ group :test do
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
   gem 'simplecov', require: false
-  gem 'rails-controller-testing'
   gem 'shoulda-matchers', '4.0.0.rc1'
+  gem 'rails-controller-testing' # If you are using Rails 5.x
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
