@@ -1,7 +1,9 @@
+- title "#{@workspace.name} projects"
 .container
   .level
     .level-left
-      .title My projects
+      .title 
+        = @workspace.name
     .level-right
       = link_to "Add project", new_account_workspace_project_path(@workspace), class: "button is-link"
   .container

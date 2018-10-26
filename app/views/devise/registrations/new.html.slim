@@ -1,19 +1,20 @@
-.hero-body
-  .container.has-text-centered
-    .column.is-4.is-offset-4.box
-      h2.title
-        | Sign up
-      = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-          = f.input :first_name, required: true, autofocus: true, label: false,
-                    input_html: { placeholder:'First Name'}, wrapper: :bulma_input
-          = f.input :last_name, required: true, label: false,
-                    input_html: { placeholder:'Last Name'}, wrapper: :bulma_input
-          = f.input :email, required: true, label: false,
-                    input_html: { placeholder: 'Email' }, wrapper: :bulma_input
-          = f.input :password, required: true, label: false,
-                    hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                    input_html: { placeholder: "New Password" }, wrapper: :bulma_input
-          = f.input :password_confirmation, required: true, label: false,
-                    input_html: { placeholder: "Cofirm Password" }, wrapper: :bulma_input
-          = f.submit 'Sign up', class: 'button is-primary is-fullwidth'
-    = render 'devise/shared/links'
+- title "Sign up"
+.hero
+  .hero-body
+    .container.has-text-centered
+      .column.is-4.is-offset-4.box
+        .title Sign up
+        = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+            = f.input :first_name, required: true, autofocus: true, label: false,
+                      input_html: { placeholder:'First Name'}, wrapper: :bulma_input
+            = f.input :last_name, required: true, label: false,
+                      input_html: { placeholder:'Last Name'}, wrapper: :bulma_input
+            = f.input :email, required: true, label: false,
+                      input_html: { placeholder: 'Email' }, wrapper: :bulma_input
+            = f.input :password, required: true, label: false,
+                      hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                      input_html: { placeholder: "New Password" }, wrapper: :bulma_input
+            = f.input :password_confirmation, required: true, label: false,
+                      input_html: { placeholder: "Cofirm Password" }, wrapper: :bulma_input
+            = f.submit 'Sign up', class: 'button is-primary is-fullwidth'
+      = render 'devise/shared/links'
