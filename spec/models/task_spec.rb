@@ -3,6 +3,7 @@
 # Table name: tasks
 #
 #  id          :bigint(8)        not null, primary key
+#  complete    :boolean          default(FALSE)
 #  description :text
 #  row_order   :integer
 #  title       :string

@@ -7,7 +7,8 @@ class Account::ProjectsController < Account::AccountController
   def show
     @workspace = parent
     @project = @workspace.projects.find(params[:id])
-    @tasks = @project.tasks.row_order_asc
+    @incomplete_tasks = @project.tasks.incomplete
+    @complete_tasks = @project.tasks.complete
   end
 
   def new

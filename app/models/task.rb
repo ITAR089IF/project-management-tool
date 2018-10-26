@@ -3,6 +3,7 @@
 # Table name: tasks
 #
 #  id          :bigint(8)        not null, primary key
+#  complete    :boolean          default(FALSE)
 #  description :text
 #  row_order   :integer
 #  title       :string
@@ -27,6 +28,8 @@ class Task < ApplicationRecord
 
   belongs_to :project, required: true
 
+  scope :incomplete, -> { where(complete: false) }
+  scope :complete, -> { where(complete: true) }
   scope :row_order_asc, -> { order(row_order: :asc) }
 
   validates :title, length: { maximum: 250 }, presence: true

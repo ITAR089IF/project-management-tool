@@ -44,6 +44,11 @@ class Account::TasksController < Account::AccountController
     redirect_to account_workspace_project_path(parent.workspace_id, parent.id)
   end
 
+  def complete
+    resource.update_attributes(complete: true)
+    redirect_to account_workspace_project_path(parent.workspace_id, parent.id)
+  end
+
   private
 
   def parent
@@ -65,4 +70,5 @@ class Account::TasksController < Account::AccountController
   def task_movement_params
     params.require(:task).permit(:row_order_position)
   end
+
 end
