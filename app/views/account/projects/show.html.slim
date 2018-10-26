@@ -10,14 +10,15 @@
   - @tasks.each do |task|
     .level
       .level-left
-       .level-item
-         = link_to task.title, account_project_task_path(@project, task)
-       .level-item
-         = link_to "Up", move_account_project_task_path(@project, task,
-           task: { row_order_position: :up}), method: :put, class: "button is-small left"
-       .level-item
-         = link_to "Down", move_account_project_task_path(@project, task,
-           task: { row_order_position: :down }), method: :put, class: "button is-small left"
+        .level-item
+          = link_to task.title, account_project_task_path(@project, task),
+            task.section? ? { class: 'title' } : nil
+        .level-item
+          = link_to "Up", move_account_project_task_path(@project, task,
+            task: { row_order_position: :up}), method: :put, class: "button is-small left"
+        .level-item
+          = link_to "Down", move_account_project_task_path(@project, task,
+            task: { row_order_position: :down }), method: :put, class: "button is-small left"
       .level-right
         .level-item
           = link_to "Edit", edit_account_project_task_path(@project, task),

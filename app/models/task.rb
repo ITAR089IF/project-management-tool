@@ -5,6 +5,7 @@
 #  id          :bigint(8)        not null, primary key
 #  description :text
 #  row_order   :integer
+#  section     :boolean
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -32,4 +33,9 @@ class Task < ApplicationRecord
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }, presence: true
 
+  before_save :section
+
+  def section
+    self.section = /[:]$/.match?(self.title.strip) ? true : false
+  end
 end
