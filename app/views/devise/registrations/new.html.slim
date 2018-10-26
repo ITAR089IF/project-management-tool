@@ -1,9 +1,9 @@
+- title "Sign up"
 .hero
   .hero-body
     .container.has-text-centered
       .column.is-4.is-offset-4.box
-        .title
-          = title "Sign up"
+        .title Sign up
         = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
             = f.input :first_name, required: true, autofocus: true, label: false,
                       input_html: { placeholder:'First Name'}, wrapper: :bulma_input
