@@ -1,11 +1,12 @@
-.hero-body
-  .container.has-text-centered
-    .column.is-4.is-offset-4.box
-      h2.title
-        | Log in
-      = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-          = f.input :email, input_html: { placeholder: 'Email' }, wrapper: :bulma_input, label: false, required: true
-          = f.input :password, input_html: { placeholder: "Password" }, wrapper: :bulma_input, label: false, required: true
-          = f.input :remember_me, wrapper: :inline_checkbox, as: :boolean if devise_mapping.rememberable?
-          = f.submit "Log in", class: 'button is-primary is-fullwidth'
-    = render "devise/shared/links"
+.hero
+  .hero-body
+    .container.has-text-centered
+      .column.is-4.is-offset-4.box
+        .title
+          = title "Log in"
+        = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+            = f.input :email, input_html: { placeholder: 'Email' }, wrapper: :bulma_input, label: false, required: true
+            = f.input :password, input_html: { placeholder: "Password" }, wrapper: :bulma_input, label: false, required: true
+            = f.input :remember_me, wrapper: :inline_checkbox, as: :boolean if devise_mapping.rememberable?
+            = f.submit "Log in", class: 'button is-primary is-fullwidth'
+      = render "devise/shared/links"

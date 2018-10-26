@@ -1,8 +1,7 @@
 doctype html
 html
   head
-    title
-      | Asana demo
+    = display_meta_tags site: 'Project management tool', reverse: true
     = csrf_meta_tags
     = csp_meta_tag
 

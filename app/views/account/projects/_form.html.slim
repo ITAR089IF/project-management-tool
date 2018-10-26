@@ -1,5 +1,4 @@
-.container.box
-  = simple_form_for [:account, @workspace, @project] do |f|
-    = f.input :name, wrapper: :bulma_input, required: true
-    = f.submit "Save", class: "button is-link"
-    = link_to 'Back', account_workspace_projects_path, class: 'button is-text'
+= simple_form_for [:account, @workspace, @project] do |f|
+  = f.input :name, wrapper: :bulma_input, required: true
+  = f.submit "Save", class: "button is-link"
+  = link_to 'Back', account_workspace_projects_path, class: 'button is-text'
