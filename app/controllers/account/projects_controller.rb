@@ -5,12 +5,11 @@ class Account::ProjectsController < Account::AccountController
   end
 
   def show
-    @tasks = @project.tasks.order(row_order: :asc)
-    @comments = @project.comments.order(:created_at).page(params[:page]).per(5)
-    @comment = Comment.new
     @workspace = parent
     @project = @workspace.projects.find(params[:id])
     @tasks = @project.tasks.row_order_asc
+    @comments = @project.comments.order(created_at: :desc).page(params[:page]).per(5)
+    @comment = Comment.new
   end
 
   def new

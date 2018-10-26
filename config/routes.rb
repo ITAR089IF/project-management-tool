@@ -7,16 +7,14 @@ Rails.application.routes.draw do
 
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
-    resources :projects do
-      resources :tasks, except: [:index] do
-        put '/:move', to: 'tasks#move', as: 'move'
-
     resources :workspaces do
       resources :projects
     end
 
     resources :projects, only: [] do
-      resources :comments, only: [:create, :update, :destroy]
+      member do
+        resources :comments, only: [:create, :update, :destroy]
+      end
       resources :tasks, except: [:index] do
         member do
           resources :comments, only: [:create, :update, :destroy]

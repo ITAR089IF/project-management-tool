@@ -1,36 +1,42 @@
 class Account::CommentsController < Account::AccountController
-  before_action :set_task
-
   def new
-    @comment = @task.comments.new
+    @comment = parent_task.comments.new
   end
 
   def create
-    @comment = @task.comments.new(comments_params)
-    if @comment.save
-        redirect_to account_project_task_path(@task.project, @task )
+    if params.to_unsafe_h.keys.include?(:task_id)
+      @comment = parent_task.comments.new(comments_params)
+      if @comment.save
+          redirect_back fallback_location: root_path
+      else
+        render :new
+      end
     else
-      render :new
+      @comment = parent_project.comments.new(comments_params)
+      if @comment.save
+          redirect_back fallback_location: root_path
+      else
+        render :new
+      end
     end
   end
+
   def destroy
     @comment = Comment.find(params[:id])
     @comment.destroy
-    redirect_to account_project_task_path(@task.project, @task )
+    redirect_back fallback_location: root_path
   end
 
   private
-  def set_comment
-    @comment = @task.comments.find(params[:id])
+  def parent_task
+    current_user.projects.find(params[:project_id]).tasks.find(params[:id])
   end
 
-
-  def set_task
-    @task = Task.find(params[:task_id])
+  def parent_project
+    current_user.projects.find(params[:project_id])
   end
 
   def comments_params
-    params.require(:comment).permit(:body).merge(user_id: current_user.id)
-
+    params.require(:comment).permit(:body).merge(user_id: current_user.id )
   end
 end

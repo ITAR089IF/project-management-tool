@@ -44,21 +44,12 @@ ActiveRecord::Schema.define(version: 2018_10_25_110613) do
     t.index ["workspace_id"], name: "index_projects_on_workspace_id"
   end
 
-  create_table "sections", force: :cascade do |t|
-    t.string "name"
-    t.integer "project_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "tasks", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "row_order"
-    t.bigint "user_id"
-    t.index ["user_id"], name: "index_tasks_on_user_id"
     t.bigint "project_id"
     t.index ["project_id"], name: "index_tasks_on_project_id"
     t.index ["row_order"], name: "index_tasks_on_row_order"
@@ -83,10 +74,9 @@ ActiveRecord::Schema.define(version: 2018_10_25_110613) do
     t.datetime "updated_at", null: false
     t.string "uid"
     t.string "provider"
-    t.string "first_name"
+    t.string "full_name"
     t.string "oauth_token"
     t.string "oauth_expires_at"
-    t.string "last_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -99,7 +89,6 @@ ActiveRecord::Schema.define(version: 2018_10_25_110613) do
     t.index ["user_id"], name: "index_workspaces_on_user_id"
   end
 
-  add_foreign_key "tasks", "users"
   add_foreign_key "projects", "workspaces"
   add_foreign_key "tasks", "projects"
   add_foreign_key "user_projects", "projects"

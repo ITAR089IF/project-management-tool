@@ -1,7 +1,7 @@
 class Account::TasksController < Account::AccountController
   def show
     @comment = Comment.new
-    @comments = @task.comments.order(:created_at).page(params[:page]).per(5)
+    @comments = resource.comments.order(created_at: :desc).page(params[:page]).per(5)
     @project = parent
     @task = @project.tasks.find(params[:id])
   end
@@ -13,7 +13,6 @@ class Account::TasksController < Account::AccountController
 
   def create
     @task = collection.build(tasks_params)
-
     if @task.save
       redirect_to account_workspace_project_path(parent.workspace_id, parent)
     else
