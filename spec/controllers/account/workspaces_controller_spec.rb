@@ -4,7 +4,7 @@ RSpec.describe Account::WorkspacesController, type: :controller do
   render_views
 
   let!(:user) { create(:user) }
-  let!(:workspace) { create(:workspace, user_id: user.id) }
+  let!(:workspace) { create(:workspace, user: user) }
 
   before do
     sign_in user
@@ -24,6 +24,20 @@ RSpec.describe Account::WorkspacesController, type: :controller do
   context 'GET /workspace/new' do
     it 'should show page create new workspace' do
       get :new
+      expect(response).to be_successful
+    end
+  end
+
+  context 'GET /worspaces/:id' do
+    it 'should show page with workspace' do
+      get :show, params: { id: workspace }
+      expect(response).to be_successful
+    end
+  end
+
+  context 'GET /workspaces/:id/edit' do
+    it 'should show page edit' do
+      get :edit, params: { id: workspace }
       expect(response).to be_successful
     end
   end
