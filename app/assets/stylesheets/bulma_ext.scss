@@ -1,0 +1,10 @@
+@import 'bulma';
+
+.checkbox {
+  label {
+    input {
+      vertical-align: -2px;
+      margin-right: 3px;
+    }
+  }
+}
