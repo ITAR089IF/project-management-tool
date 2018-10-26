@@ -5,7 +5,8 @@
 #  id                     :bigint(8)        not null, primary key
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
-#  full_name              :string
+#  first_name             :string
+#  last_name              :string
 #  oauth_expires_at       :string
 #  oauth_token            :string
 #  provider               :string
