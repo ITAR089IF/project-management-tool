@@ -1,0 +1,9 @@
+.container.box
+  -if commentable.is_a? Task
+    = simple_form_for [:account, commentable.project, commentable, comment] do |f|
+      = f.text_area :body, placeholder: 'Add a comment...', wrapper: :bulma_input, required: true
+      = f.submit "Save", class: "button is-link"
+  -else commentable.is_a? Project
+    = simple_form_for [:account, commentable, comment] do |f|
+      = f.text_area :body, placeholder: 'Add a comment...', wrapper: :bulma_input, required: true
+      = f.submit "Save", class: "button is-link"

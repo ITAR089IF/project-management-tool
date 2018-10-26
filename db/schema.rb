@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_19_211246) do
+ActiveRecord::Schema.define(version: 2018_10_25_110613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.string "body"
+    t.integer "commentable_id"
+    t.string "commentable_type"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
     t.string "slug", null: false
@@ -34,6 +43,13 @@ ActiveRecord::Schema.define(version: 2018_10_19_211246) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "sections", force: :cascade do |t|
+    t.string "name"
+    t.integer "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tasks", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -42,6 +58,8 @@ ActiveRecord::Schema.define(version: 2018_10_19_211246) do
     t.datetime "updated_at", null: false
     t.integer "row_order"
     t.integer "project_id"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -54,11 +72,13 @@ ActiveRecord::Schema.define(version: 2018_10_19_211246) do
     t.datetime "updated_at", null: false
     t.string "uid"
     t.string "provider"
-    t.string "full_name"
+    t.string "first_name"
     t.string "oauth_token"
     t.string "oauth_expires_at"
+    t.string "last_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "tasks", "users"
 end

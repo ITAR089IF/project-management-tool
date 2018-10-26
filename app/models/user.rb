@@ -19,9 +19,9 @@
 
 class User < ApplicationRecord
   has_many :projects
+  has_many :comments
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  validates :full_name, length: { maximum: 250 }, presence: true
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
@@ -52,5 +52,9 @@ class User < ApplicationRecord
         user.email = data["email"] if user.email.blank?
       end
     end
+  end
+
+  def full_name
+    "#{first_name}  #{last_name}"
   end
 end

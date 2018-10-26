@@ -1,0 +1,22 @@
+- comments.each do |comment|
+  article.media.box
+    .media-content
+      .content
+        p
+          strong
+            = comment.user.full_name
+          br
+          = comment.body
+          br
+          small
+            = comment.created_at.to_date
+    .media-right
+      -if can_manage_comment?(comment)
+        - if commentable.is_a? Task
+          = link_to account_project_task_comment_path(comment.commentable.project, comment.commentable, id: comment.id ),
+              method: :delete, data: {confirm: "Are you sure?"} do
+            i.fa.fa-trash-o
+        - if commentable.is_a? Project
+          = link_to account_project_comment_path(comment.commentable, id: comment.id ),
+              method: :delete, data: {confirm: "Are you sure?"} do
+            i.fa.fa-trash-o

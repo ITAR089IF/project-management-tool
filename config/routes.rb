@@ -8,8 +8,10 @@ Rails.application.routes.draw do
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
     resources :projects do
+      resources :comments, only: [:new, :create, :update, :destroy]
       resources :tasks, except: [:index] do
         put '/:move', to: 'tasks#move', as: 'move'
+        resources :comments, only: [:create, :update, :destroy]
       end
     end
   end

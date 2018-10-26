@@ -7,6 +7,8 @@ class Account::ProjectsController < Account::AccountController
 
   def show
     @tasks = @project.tasks.order(row_order: :asc)
+    @comments = @project.comments.order(:created_at).page(params[:page]).per(5)
+    @comment = Comment.new
   end
 
   def new

@@ -5,22 +5,34 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-5.times do |i|
-  User.create(
-          email: "supersem#{i}@asana.com",
-          password: '123456',
-          full_name: Faker::Name.name
-  )
-end
+# 5.times do |i|
+#   User.create(
+#           email: "supersem#{i}@asana.com",
+#           password: '123456',
+#           full_name: Faker::Name.name
+#   )
+# end
+#
+# User.all.each do |user|
+#   Faker::Number.between(5, 10).times do |i|
+#     user.projects.create(name: Faker::Name.name)
+#   end
+# end
+#
+# Project.all.each do |project|
+#   Faker::Number.between(5, 10).times do |i|
+#     project.tasks.create(title: Faker::Name.name, description: Faker::Lorem.paragraph)
+#   end
+# end
 
-User.all.each do |user|
-  Faker::Number.between(5, 10).times do |i|
-    user.projects.create(name: Faker::Name.name)
+Project.all.each do |project|
+  Faker::Number.between(2,5).times do |i|
+    project.comments.create(body: Faker::Lorem.paragraph, user_id: rand(User.all.count))
   end
 end
 
-Project.all.each do |project|
-  Faker::Number.between(5, 10).times do |i|
-    project.tasks.create(title: Faker::Name.name, description: Faker::Lorem.paragraph)
+Task.all.each do |task|
+  Faker::Number.between(2,5).times do |i|
+    task.comments.create(body: Faker::Lorem.paragraph, user_id: rand(User.all.count))
   end
 end

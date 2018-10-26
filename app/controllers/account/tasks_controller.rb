@@ -3,6 +3,8 @@ class Account::TasksController < Account::AccountController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def show
+    @comment = Comment.new
+    @comments = @task.comments.order(:created_at).page(params[:page]).per(5)
   end
 
   def new
