@@ -23,11 +23,19 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 
-FactoryBot.define do
-  factory :user do
-    first_name { Faker::Name.first_name }
-    last_name { Faker::Name.last_name }
-    sequence(:email) { |index| Faker::Internet.email.sub(/\@/, "_#{index}@") }
-    password { Faker::Internet.password }
+require 'rails_helper'
+
+RSpec.describe User, type: :model do
+  context 'factory tests' do
+    subject { build(:user) }
+    it { is_expected.to be_valid }
+  end
+
+  context 'validation tests' do
+    it { should validate_presence_of(:first_name) }
+    it { should validate_presence_of(:last_name) }
+    it { should have_many(:projects) }
+    it { should validate_length_of(:first_name).is_at_most(250) }
+    it { should validate_length_of(:last_name).is_at_most(250) }
   end
 end
