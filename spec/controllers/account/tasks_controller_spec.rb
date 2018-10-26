@@ -28,6 +28,7 @@ RSpec.describe Account::TasksController, type: :controller do
 
   context 'POST /tasks' do
     it 'should create a task and redirect to project page' do
+
       post :create, params: {
         project_id: project.id,
         task: {
@@ -40,6 +41,9 @@ RSpec.describe Account::TasksController, type: :controller do
     end
 
     it 'shouldn`t create a task and render page new' do
+      get :new, params: {
+        project_id: project.id,
+      }
       post :create, params: {
         project_id: project.id,
         task: {
