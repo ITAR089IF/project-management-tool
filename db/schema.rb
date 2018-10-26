@@ -65,9 +65,10 @@ ActiveRecord::Schema.define(version: 2018_10_24_200310) do
     t.datetime "updated_at", null: false
     t.string "uid"
     t.string "provider"
-    t.string "full_name"
+    t.string "first_name"
     t.string "oauth_token"
     t.string "oauth_expires_at"
+    t.string "last_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
