@@ -38,9 +38,10 @@ ActiveRecord::Schema.define(version: 2018_10_25_110613) do
 
   create_table "projects", force: :cascade do |t|
     t.string "name"
-    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "workspace_id"
+    t.index ["workspace_id"], name: "index_projects_on_workspace_id"
   end
 
   create_table "sections", force: :cascade do |t|
@@ -53,13 +54,23 @@ ActiveRecord::Schema.define(version: 2018_10_25_110613) do
   create_table "tasks", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.integer "section_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "row_order"
-    t.integer "project_id"
     t.bigint "user_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
+    t.bigint "project_id"
+    t.index ["project_id"], name: "index_tasks_on_project_id"
+    t.index ["row_order"], name: "index_tasks_on_row_order"
+  end
+
+  create_table "user_projects", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_user_projects_on_project_id"
+    t.index ["user_id"], name: "index_user_projects_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -80,5 +91,18 @@ ActiveRecord::Schema.define(version: 2018_10_25_110613) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "workspaces", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_workspaces_on_user_id"
+  end
+
   add_foreign_key "tasks", "users"
+  add_foreign_key "projects", "workspaces"
+  add_foreign_key "tasks", "projects"
+  add_foreign_key "user_projects", "projects"
+  add_foreign_key "user_projects", "users"
+  add_foreign_key "workspaces", "users"
 end

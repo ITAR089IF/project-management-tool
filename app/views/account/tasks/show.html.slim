@@ -12,10 +12,9 @@
       .level-item
         = link_to "Delete", account_project_task_path(@project, @task),
           method: :delete, class: "button is-small right", data: { confirm: 'Are you sure?' }
-      .level-item
-        = link_to 'Back', account_project_path(@project), class: "button is-small right"
   .content
     h3 Comments
     = render 'account/comments/form', comment: @comment, commentable: @task
     = render 'account/comments/show_comments', comments: @comments, commentable: @task
     = paginate @comments, window: 2
+        = link_to 'Back', account_workspace_project_path(@project.workspace_id, @project), class: "button is-small right"

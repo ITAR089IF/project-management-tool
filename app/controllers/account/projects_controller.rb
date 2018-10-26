@@ -1,53 +1,62 @@
 class Account::ProjectsController < Account::AccountController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
-
   def index
-    @projects = current_user.projects.order(created_at: :desc)
+    @workspace = parent
+    @projects = @workspace.projects.order_desc
   end
 
   def show
     @tasks = @project.tasks.order(row_order: :asc)
     @comments = @project.comments.order(:created_at).page(params[:page]).per(5)
     @comment = Comment.new
+    @workspace = parent
+    @project = @workspace.projects.find(params[:id])
+    @tasks = @project.tasks.row_order_asc
   end
 
   def new
-    @project = current_user.projects.new
+    @workspace = parent
+    @project = current_user.projects.build
   end
 
   def create
-    @project = current_user.projects.new(project_params)
-
-    if @project.save
-      redirect_to account_projects_path
+    if current_user.projects.create(project_params)
+      redirect_to account_workspace_projects_path(parent)
     else
       render :new
     end
   end
 
   def edit
+    @workspace = parent
+    @project = @workspace.projects.find(params[:id])
   end
 
   def update
-    if @project.update_attributes(project_params)
-      redirect_to account_projects_path
+    @project = resource
+
+    if @project.update(project_params)
+      redirect_to account_workspace_projects_path(parent)
     else
       render :edit
     end
   end
 
   def destroy
-    @project.delete
-    redirect_to account_projects_path
+    resource.destroy
+    redirect_to account_workspace_projects_path(parent)
   end
 
   private
 
-  def set_project
-    @project = current_user.projects.find(params[:id])
+  def parent
+    current_user.workspaces.find(params[:workspace_id])
+  end
+
+  def resource
+    parent.projects.find(params[:id])
   end
 
   def project_params
-    params.require(:project).permit(:name)
+    params.require(:project).permit(:name).merge(workspace_id: params[:workspace_id])
   end
 end

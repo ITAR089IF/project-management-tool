@@ -1,58 +1,70 @@
 class Account::TasksController < Account::AccountController
-  before_action :set_project
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
-
   def show
     @comment = Comment.new
     @comments = @task.comments.order(:created_at).page(params[:page]).per(5)
+    @project = parent
+    @task = @project.tasks.find(params[:id])
   end
 
   def new
-    @task = @project.tasks.new
+    @project = parent
+    @task = @project.tasks.build
   end
 
   def create
-    @task = @project.tasks.new(tasks_params)
+    @task = collection.build(tasks_params)
 
     if @task.save
-      redirect_to account_project_path(@project)
+      redirect_to account_workspace_project_path(parent.workspace_id, parent)
     else
       render :new
     end
   end
 
   def edit
+    @project = parent
+    @task = @project.tasks.find(params[:id])
   end
 
   def update
+    @task = resource
+
     if @task.update(tasks_params)
-      redirect_to account_project_task_path(@project, @task)
+      redirect_to account_project_task_path(parent.id, @task)
     else
       render "edit"
     end
   end
 
   def destroy
-    @task.destroy
-    redirect_to account_project_path(@project)
+    resource.destroy
+    redirect_to account_workspace_project_path(parent.workspace_id, parent.id)
   end
 
   def move
-    Task.find(params[:task_id]).update_attribute(:row_order_position, params[:move])
-    redirect_to account_project_path(@project)
+    resource.update_attributes(task_movement_params)
+    redirect_to account_workspace_project_path(parent.workspace_id, parent.id)
   end
 
   private
 
-  def set_project
-    @project = current_user.projects.find(params[:project_id])
+  def parent
+    current_user.projects.find(params[:project_id])
+  end
+
+  def collection
+    parent.tasks
+  end
+
+  def resource
+    parent.tasks.find(params[:id])
   end
 
   def tasks_params
     params.require(:task).permit(:title, :description)
   end
 
-  def set_task
-    @task = @project.tasks.find(params[:id])
+  def task_movement_params
+    params.require(:task).permit(:row_order_position)
   end
 end

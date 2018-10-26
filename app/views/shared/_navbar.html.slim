@@ -8,23 +8,23 @@
       span[aria-hidden="true"]
   .navbar-menu#navMenu.has-text-right
     .navbar-start
-      .navbar-item IF-089.Ruby 
+      .navbar-item IF-089.Ruby
       - if user_signed_in?
         a.navbar-item[href="/account/dashboard"]
           | Dashboard
-        a.navbar-item[href="/account/projects"]
-          | My projects
+        a.navbar-item[href="/account/workspaces"]
+          | My Worspaces
         / .navbar-item.has-dropdown.is-hoverable
           a.navbar-link[href="#"]
-            |  My Tasks 
+            |  My Tasks
           .navbar-dropdown
             a.navbar-item[href="#"]
-              |  List 
+              |  List
             a.navbar-item[href="#"]
-              |  Calendar 
+              |  Calendar
             hr.navbar-divider
             a.navbar-item[href="#"]
-              |  Report an issue 
+              |  Report an issue
     .navbar-end
       .navbar-item
         - if (!user_signed_in?)
