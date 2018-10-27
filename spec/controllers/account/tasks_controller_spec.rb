@@ -56,34 +56,6 @@ RSpec.describe Account::TasksController, type: :controller do
     end
   end
 
-  context 'PUT /tasks/:id' do
-    it 'should update task and redirect to task page' do
-      put :update, params: {
-        project_id: project.id,
-        id: project.tasks.task.id,
-        task: {
-          title: 'Test task',
-          description: 'test description'
-        }
-      }
-
-      expect(response).to redirect_to account_project_task_path( project.id, task.id)
-    end
-
-    it 'shouldn`t update task and render page edit' do
-      put :update, params: {
-        project_id: project.id,
-        id: project.tasks.task.id,
-        task: {
-          title: '',
-          description: ''
-        }
-      }
-
-      expect(response).to render_template(:edit)
-    end
-  end
-
   context 'PUT /:move' do
     it 'should move task down' do
       put :move, params: {
