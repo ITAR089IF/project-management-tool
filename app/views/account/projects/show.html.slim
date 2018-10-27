@@ -43,7 +43,7 @@
       .level
         .level-left
           .level-item
-            = task.title
+            = link_to task.title, account_project_task_path(@project, task)
         .level-right
           .level-item
           p
@@ -51,3 +51,4 @@
           .level-item
           = link_to "Delete", account_project_task_path(@project, task),
             method: :delete,  class: "button is-small right", data: { confirm: "Are you sure?" }
+            
