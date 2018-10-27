@@ -22,7 +22,7 @@ require 'rails_helper'
 RSpec.describe Workspace, type: :model do
   context 'validation tests' do
     let!(:user) { create(:user) }
-    let!(:workspace) { build(:workspace, user_id: user.id) }
+    let!(:workspace) { build(:workspace, user: user) }
 
     it { expect validate_presence_of :name }
     it { expect validate_length_of :name }
@@ -31,9 +31,9 @@ RSpec.describe Workspace, type: :model do
 
   context 'scope tests' do
     let!(:user) { create(:user) }
-    let!(:workspace1) { create(:workspace, user_id: user.id) }
-    let!(:workspace2) { create(:workspace, user_id: user.id) }
-    let!(:workspace3) { create(:workspace, user_id: user.id) }
+    let!(:workspace1) { create(:workspace, user: user) }
+    let!(:workspace2) { create(:workspace, user: user) }
+    let!(:workspace3) { create(:workspace, user: user) }
 
     it 'should be sort by desc' do
       expect(user.workspaces.order_desc).to eq [workspace3, workspace2, workspace1]

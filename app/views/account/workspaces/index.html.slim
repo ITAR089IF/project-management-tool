@@ -1,18 +1,23 @@
-.workspaces
-  .title
-    | My Workspaces
-  .box.has-text-centered
-    = link_to 'Add Workspace', new_account_workspace_path, class: 'title'
+.container
+  .level
+    .level-left
+      .level-item
+        .title
+          | My Workspaces
+    .level-right
+      .level-item
+        = link_to 'Add Workspace', new_account_workspace_path, class: 'title button is-text'
   - @workspaces.each do |workspace|
     .box
-      .lavel
-        .lavel-left
-          .lavel-item.title
-            = link_to workspace.name, account_workspace_path(workspace)
-        .lavel-right
-          .lavel-item
+      .level
+        .level-left
+          .level-item
+            .title
+              = link_to workspace.name, account_workspace_path(workspace)
+        .level-right
+          .level-item
             = link_to 'Edit', edit_account_workspace_path(workspace),
-              class: 'button'
-          .lavel-item
+              class: 'button right'
+          .level-item
             = link_to 'Delete', account_workspace_path(workspace),
-              class: 'button', method: :delete, data: { confirm: 'Are you sure?' }
+              class: 'button right', method: :delete, data: { confirm: 'Are you sure?' }

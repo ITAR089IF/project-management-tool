@@ -32,10 +32,4 @@ class Task < ApplicationRecord
 
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }
-
-  before_save :section
-
-  def section
-    self.section = /[:]$/.match?(self.title.strip) ? true : false
-  end
 end

@@ -4,14 +4,15 @@
       .level-item
         .title
           = "Project: #{@project.name}"
-    .level-right
-      = link_to "Add Task", new_account_project_task_path(@project), class: "button is-link"
+    .level-right.buttons
+        = link_to "Add Task", new_account_project_task_path(@project), class: "button is-link"
+        = link_to "Add Section", new_account_project_task_path(@project, section: true), class: "button is-link"
   - @tasks.each do |task|
     .level
       .level-left
         .level-item
           = link_to task.title, account_project_task_path(@project, task),
-            task.section? ? { class: 'title is-4 is-italic' } : nil
+            class: ('title is-4 is-italic' if task.section?)
         .level-item
           = link_to "Up", move_account_project_task_path(@project, task,
             task: { row_order_position: :up}), method: :put, class: "button is-small left"

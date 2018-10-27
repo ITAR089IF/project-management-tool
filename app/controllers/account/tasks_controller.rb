@@ -6,11 +6,11 @@ class Account::TasksController < Account::AccountController
 
   def new
     @project = parent
-    @task = @project.tasks.build
+    @task = @project.tasks.build(section: params[:section])
   end
 
   def create
-    @task = collection.build(tasks_params)
+    @task = parent.tasks.build(tasks_params)
 
     if @task.save
       redirect_to account_workspace_project_path(parent.workspace_id, parent)
@@ -59,7 +59,7 @@ class Account::TasksController < Account::AccountController
   end
 
   def tasks_params
-    params.require(:task).permit(:title, :description)
+    params.require(:task).permit(:title, :description, :section)
   end
 
   def task_movement_params
