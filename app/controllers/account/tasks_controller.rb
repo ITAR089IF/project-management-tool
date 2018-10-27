@@ -1,6 +1,6 @@
 class Account::TasksController < Account::AccountController
   def show
-    @comments = resource.comments.order(created_at: :desc).page(params[:page]).per(5)
+    @comments = resource.comments.order_desc.page(params[:page]).per(5)
     @project = parent
     @task = @project.tasks.find(params[:id])
     @comment = @comments.build

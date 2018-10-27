@@ -8,7 +8,7 @@ class Account::ProjectsController < Account::AccountController
     @workspace = parent
     @project = @workspace.projects.find(params[:id])
     @tasks = @project.tasks.row_order_asc
-    @comments = @project.comments.order(created_at: :desc).page(params[:page]).per(5)
+    @comments = @project.comments.order_desc.page(params[:page]).per(5)
     @comment = @project.comments.build
   end
 

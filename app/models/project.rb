@@ -18,9 +18,11 @@
 #
 
 class Project < ApplicationRecord
+  paginates_per  5
+
+  belongs_to :workspace, required: true
   has_many :tasks, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
-  belongs_to :workspace, required: true
   has_many :tasks, dependent: :destroy
   has_many :user_projects, dependent: :destroy
   has_many :users, through: :user_projects
@@ -28,5 +30,4 @@ class Project < ApplicationRecord
   scope :order_desc, -> { order(id: :desc) }
 
   validates :name, length: { maximum: 250 }, presence: true
-  paginates_per  5
 end

@@ -1,11 +1,10 @@
 class CommentsController < ApplicationController
   def create
-    @comment = Comment.new(comments_params)
+    @comment = current_user.comments.build(comments_params)
     if @comment.save
         redirect_back fallback_location: root_path
     else
-      flash[:alert] = 'Something went wrong!'
-      redirect_back fallback_location: root_path
+      redirect_back fallback_location: root_path, alert: 'Something went wrong!'
     end
   end
 
@@ -16,9 +15,8 @@ class CommentsController < ApplicationController
   end
 
   private
-  
+
   def comments_params
-    params.require(:comment).permit(:body, :commentable_type, :commentable_id).
-    merge(user_id: current_user.id)
+    params.require(:comment).permit(:body, :commentable_type, :commentable_id)
   end
 end

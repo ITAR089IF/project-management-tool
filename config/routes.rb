@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       resources :projects
     end
 
-    resources :projects do
+    resources :projects, only: [] do
       resources :tasks, except: [:index] do
         member do
           put :move

@@ -17,9 +17,7 @@ FactoryBot.define do
     association :user
     association :commentable, factory: :project
   end
-end
 
-FactoryBot.define do
   factory :task_comment, class: 'Comment' do
     body { Faker::Lorem.paragraph }
     association :user

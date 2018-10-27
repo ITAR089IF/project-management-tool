@@ -27,7 +27,7 @@ RSpec.describe CommentsController, type: :controller do
           { comment: { body: '', commentable_type: project.class.name,
                        commentable_id: project.id  } }
         end
-        it 'comment is not create' do
+        it 'comment was not created' do
           expect(response.status).to eq 200
           expect{subject}.not_to change{ Comment.count }
         end
@@ -51,7 +51,7 @@ RSpec.describe CommentsController, type: :controller do
           { comment: { body: '', commentable_type: task.class.name,
                        commentable_id: task.id  } }
         end
-        it 'comment is not create' do
+        it 'comment was not created' do
           expect(response.status).to eq 200
           expect{subject}.not_to change{ Comment.count }
         end

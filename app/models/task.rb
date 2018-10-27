@@ -22,15 +22,15 @@
 
 class Task < ApplicationRecord
   include RankedModel
-  belongs_to :project
+
+  ranks :row_order, with_same: :project_id
+  paginates_per  5
+
   belongs_to :project, required: true
   has_many :comments, as: :commentable, dependent: :destroy
 
+  scope :row_order_asc, -> { order(row_order: :asc) }
+
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }, presence: true
-
-  ranks :row_order, with_same: :project_id
-
-  scope :row_order_asc, -> { order(row_order: :asc) }
-  paginates_per  5
 end
