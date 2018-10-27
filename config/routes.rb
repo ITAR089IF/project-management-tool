@@ -12,12 +12,12 @@ Rails.application.routes.draw do
     end
 
     resources :projects do
-      resources :tasks do
+      resources :tasks, except: [:index] do
         member do
           put :move
         end
       end
     end
   end
-  resources :comments, only: [:create, :update, :destroy]
+  resources :comments, only: [:create, :destroy]
 end

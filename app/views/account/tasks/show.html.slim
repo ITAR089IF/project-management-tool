@@ -14,7 +14,8 @@
         = link_to "Delete", account_project_task_path(@project, @task),
           method: :delete, class: "button is-small right", data: { confirm: 'Are you sure?' }
       .level-item
-        = link_to 'Back', account_workspace_project_path(@project.workspace_id, @project), class: "button is-small right"
+        = link_to 'Back', account_workspace_project_path(@project.workspace_id, @project),
+                          class: "button is-small right"
   .content
     h3 Comments
     = render partial: 'comments/form', locals: { commentable: @task, comment: @comment }

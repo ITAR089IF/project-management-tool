@@ -3,7 +3,7 @@ class Account::TasksController < Account::AccountController
     @comments = resource.comments.order(created_at: :desc).page(params[:page]).per(5)
     @project = parent
     @task = @project.tasks.find(params[:id])
-    @comment = Comment.new
+    @comment = @comments.build
   end
 
   def new

@@ -30,7 +30,7 @@ class Task < ApplicationRecord
   validates :description, length: { maximum: 250 }, presence: true
 
   ranks :row_order, with_same: :project_id
-  ranks :row_order, with_same: :section_id
+
   scope :row_order_asc, -> { order(row_order: :asc) }
   paginates_per  5
 end

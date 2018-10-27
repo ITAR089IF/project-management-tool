@@ -9,11 +9,7 @@ Workspace.all.each do |workspace|
 end
 
 Project.all.each do |project|
-  FactoryBot.create_list(:task, 3, :comment, 5,  project: project)
-end
-
-Task.all.each do |task|
-  FactoryBot.create_list(:comment, 5, task: task)
+  FactoryBot.create_list(:task, 3, project: project)
 end
 
 User.all.each do |user|
@@ -22,8 +18,11 @@ User.all.each do |user|
   user.workspaces.each do |workspace|
     workspace.projects.each do |project|
       projects << project
+      FactoryBot.create_list(:project_comment, 5, commentable: project, user: user)
+      project.tasks.each do |task|
+        FactoryBot.create_list(:task_comment, 5, commentable: task, user: user)
+      end
     end
   end
-
   user.update(projects: projects)
 end

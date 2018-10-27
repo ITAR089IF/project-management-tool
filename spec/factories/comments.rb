@@ -12,7 +12,17 @@
 #
 
 FactoryBot.define do
-  factory :comment do
+  factory :project_comment, class: 'Comment' do
     body { Faker::Lorem.paragraph }
+    association :user
+    association :commentable, factory: :project
+  end
+end
+
+FactoryBot.define do
+  factory :task_comment, class: 'Comment' do
+    body { Faker::Lorem.paragraph }
+    association :user
+    association :commentable, factory: :task
   end
 end
