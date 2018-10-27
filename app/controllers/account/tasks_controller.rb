@@ -45,7 +45,7 @@ class Account::TasksController < Account::AccountController
   end
 
   def complete
-    resource.update_attributes(complete: true)
+    resource.update(complete: true)
     redirect_to account_workspace_project_path(parent.workspace_id, parent.id)
   end
 

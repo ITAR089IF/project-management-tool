@@ -36,7 +36,6 @@ RSpec.describe Account::TasksController, type: :controller do
           description: 'test description'
         }
       }
-
       expect(response).to redirect_to account_workspace_project_path(workspace.id, project.id)
     end
 
