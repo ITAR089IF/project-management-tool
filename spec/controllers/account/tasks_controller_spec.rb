@@ -12,10 +12,6 @@ RSpec.describe Account::TasksController, type: :controller do
     sign_in user
   end
 
-  after do
-    sign_out user
-  end
-
   context 'GET /projects/:project_id/task/:id' do
     it 'should show task page' do
       get :show, params: { project_id: project.id, id: task.first.id }

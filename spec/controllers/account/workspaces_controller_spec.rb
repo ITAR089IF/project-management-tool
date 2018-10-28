@@ -10,10 +10,6 @@ RSpec.describe Account::WorkspacesController, type: :controller do
     sign_in user
   end
 
-  after do
-    sign_out user
-  end
-
   context 'GET /workspaces' do
     it 'should show all user workspaces' do
       get :index
