@@ -5,12 +5,11 @@ RSpec.describe Account::TasksController, type: :controller do
 
   let!(:user) { create(:user) }
   let!(:workspace) { create(:workspace, user: user) }
-  let!(:project) { create(:project, workspace: workspace) }
+  let!(:project) { create(:project, workspace: workspace, users: [user]) }
   let!(:task) { create_list(:task, 5, project: project) }
 
   before do
     sign_in user
-    user.update(projects: [project])
   end
 
   after do

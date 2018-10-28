@@ -6,7 +6,7 @@ class Account::TasksController < Account::AccountController
 
   def new
     @project = parent
-    @task = @project.tasks.build(section: params[:section])
+    @task = @project.tasks.build(section_params)
   end
 
   def create
@@ -64,5 +64,9 @@ class Account::TasksController < Account::AccountController
 
   def task_movement_params
     params.require(:task).permit(:row_order_position)
+  end
+
+  def section_params
+    params.permit(:section)
   end
 end
