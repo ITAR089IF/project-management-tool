@@ -1,9 +1,4 @@
 class Account::ProjectsController < Account::AccountController
-  def index
-    @workspace = parent
-    @projects = @workspace.projects.order_desc
-  end
-
   def show
     @workspace = parent
     @project = resource

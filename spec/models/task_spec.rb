@@ -5,6 +5,7 @@
 #  id          :bigint(8)        not null, primary key
 #  description :text
 #  row_order   :integer
+#  section     :boolean
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -23,30 +24,22 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  context 'factory tests' do
-    subject { build(:task) }
-    it { is_expected.to be_valid }
-  end
-
-  context 'validation tests' do
-    it { should validate_presence_of(:title) }
-    it { should validate_presence_of(:description) }
-    it { should belong_to(:project) }
-    it { should validate_length_of(:title).is_at_most(250) }
-    it { should validate_length_of(:description).is_at_most(250) }
-  end
+  let!(:user) { create(:user) }
+  let!(:workspace) { create(:workspace, user: user) }
+  let!(:project) { create(:project, workspace: workspace) }
+  let!(:task1) { create(:task, project: project) }
+  let!(:task2) { create(:task, project: project) }
+  let!(:task3) { create(:task, project: project) }
 
   context 'scope testing' do
-    let!(:user) { create(:user) }
-    let!(:workspace) { create(:workspace, user_id: user.id) }
-    let!(:project) { create(:project, workspace_id: workspace.id) }
-    let!(:task1) { create(:task, project_id: project.id) }
-    let!(:task2) { create(:task, project_id: project.id) }
-    let!(:task3) { create(:task, project_id: project.id) }
-
     it 'shold order by row_order asc' do
       project.tasks.first.update(row_order_position: :down)
       expect(project.tasks.row_order_asc).to eq [task2, task1, task3]
     end
+  end
+
+  context 'factory tests' do
+    subject { build(:task) }
+    it { is_expected.to be_valid }
   end
 end
