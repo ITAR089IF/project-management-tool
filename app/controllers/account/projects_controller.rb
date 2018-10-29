@@ -1,18 +1,20 @@
 class Account::ProjectsController < Account::AccountController
   def show
     @workspace = parent
-    @project = @workspace.projects.find(params[:id])
+    @project = resource
     @tasks = @project.tasks.row_order_asc
   end
 
   def new
     @workspace = parent
-    @project = current_user.projects.build
+    @project = collection.build
   end
 
   def create
-    if current_user.projects.create(project_params)
-      redirect_to account_workspace_path(parent)
+    @workspace = parent
+    @project = collection.build(project_params)
+    if  @project.save
+      redirect_to account_workspace_projects_path(parent), notice: "Project was successfully created!"
     else
       render :new
     end
@@ -20,14 +22,14 @@ class Account::ProjectsController < Account::AccountController
 
   def edit
     @workspace = parent
-    @project = @workspace.projects.find(params[:id])
+    @project = resource
   end
 
   def update
+    @workspace = parent
     @project = resource
-
     if @project.update(project_params)
-      redirect_to account_workspace_path(parent)
+      redirect_to account_workspace_projects_path(parent), notice: "Project was successfully updated!"
     else
       render :edit
     end
@@ -35,7 +37,7 @@ class Account::ProjectsController < Account::AccountController
 
   def destroy
     resource.destroy
-    redirect_to account_workspace_path(parent)
+    redirect_to account_workspace_projects_path(parent), alert: "Project was successfully deleted!"
   end
 
   private
@@ -44,8 +46,12 @@ class Account::ProjectsController < Account::AccountController
     current_user.workspaces.find(params[:workspace_id])
   end
 
+  def collection
+    parent.projects
+  end
+
   def resource
-    parent.projects.find(params[:id])
+    collection.find(params[:id])
   end
 
   def project_params
