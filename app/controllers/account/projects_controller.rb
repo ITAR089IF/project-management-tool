@@ -19,7 +19,7 @@ class Account::ProjectsController < Account::AccountController
     @workspace = parent
     @project = collection.build(project_params)
     if  @project.save
-      redirect_to account_workspace_projects_path(parent)
+      redirect_to account_workspace_projects_path(parent), notice: "Project was created!"
     else
       render :new
     end
@@ -34,7 +34,7 @@ class Account::ProjectsController < Account::AccountController
     @workspace = parent
     @project = resource
     if @project.update(project_params)
-      redirect_to account_workspace_projects_path(parent)
+      redirect_to account_workspace_projects_path(parent), notice: "Project was edited!"
     else
       render :edit
     end
@@ -42,7 +42,7 @@ class Account::ProjectsController < Account::AccountController
 
   def destroy
     resource.destroy
-    redirect_to account_workspace_projects_path(parent)
+    redirect_to account_workspace_projects_path(parent), alert: "Project was deleted!"
   end
 
   private
