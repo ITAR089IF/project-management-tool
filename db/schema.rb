@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2018_10_25_193351) do
     t.integer "row_order"
     t.bigint "project_id"
     t.boolean "complete", default: false
+    t.boolean "section"
     t.index ["project_id"], name: "index_tasks_on_project_id"
     t.index ["row_order"], name: "index_tasks_on_row_order"
   end

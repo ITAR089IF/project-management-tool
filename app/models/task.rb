@@ -6,6 +6,7 @@
 #  complete    :boolean          default(FALSE)
 #  description :text
 #  row_order   :integer
+#  section     :boolean
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -33,6 +34,5 @@ class Task < ApplicationRecord
   scope :row_order_asc, -> { order(row_order: :asc) }
 
   validates :title, length: { maximum: 250 }, presence: true
-  validates :description, length: { maximum: 250 }, presence: true
-
+  validates :description, length: { maximum: 250 }
 end
