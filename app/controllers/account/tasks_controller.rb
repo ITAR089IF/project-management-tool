@@ -46,7 +46,9 @@ class Account::TasksController < Account::AccountController
 
   def complete
     resource.update(complete: true)
-    redirect_to account_workspace_project_path(parent.workspace_id, parent.id)
+    respond_to do |format|
+      format.js
+    end
   end
 
   private
