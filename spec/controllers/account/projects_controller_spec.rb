@@ -38,12 +38,12 @@ RSpec.describe Account::ProjectsController, type: :controller do
     end
 
     describe "POST #create" do
-      context "with walid attributes" do
+      context "with valid attributes" do
         it "must create new project" do
           expect { post :create, params: { workspace_id: workspace.to_param, project: project_valid_params } }.to change(Project, :count).by(1)
         end
       end
-      context "with inwalid attributes" do
+      context "with invalid attributes" do
         it "must not create a project and render 'new' form" do
           expect { post(:create, params: { workspace_id: workspace.to_param, project: project_invalid_params }) }.to change(Project, :count).by(0)
         end
@@ -58,14 +58,14 @@ RSpec.describe Account::ProjectsController, type: :controller do
     end
 
     describe "PATCH #update" do
-      context "with walid attributes" do
+      context "with valid attributes" do
         it "must update the project" do
           put :update, params: { workspace_id: workspace.to_param, id: project.to_param, project: project_valid_params}
           project.reload
           expect(project.name).to eq(project_valid_params[:name])
         end
       end
-      context "with inwalid attributes" do
+      context "with invalid attributes" do
         it "must not update the project and render 'edit' form" do
           put :update, params: { workspace_id: workspace.to_param, id: project.to_param, project: project_invalid_params}
           project.reload
