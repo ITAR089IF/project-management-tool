@@ -1,0 +1,12 @@
+<% if flash.any? %>
+  var message = document.getElementsByClassName('flash-message')[0];
+  message.insertBefore('<%= j render "shared/flash" %>', message.children[1]);
+<%end%>
+<% flash.clear %>
+
+<% if @comment.save %>
+  document.getElementsByClassName('content')[0].innerHTML('<%= j render 'show_comments' %>');
+  document.getElementsByClassName('input')[0].value('');
+<% else %>
+  document.getElementsByClassName('input')[0].classList.add('is-danger');
+<% end %>

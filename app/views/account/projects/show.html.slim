@@ -28,6 +28,6 @@
                               data: { confirm: "Are you sure?" }
   .content
     h3 Comments
-    = render partial: 'comments/form', locals: { commentable: @project, comment: @comment }
-    = render 'comments/show_comments', comments: @comments
+    = render partial: 'account/comments/form'
+    = render 'account/comments/show_comments'
     = paginate @comments, window: 2

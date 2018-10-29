@@ -18,6 +18,6 @@
                           class: "button is-small right"
   .content
     h3 Comments
-    = render partial: 'comments/form', locals: { commentable: @task, comment: @comment }
-    = render 'comments/show_comments', comments: @comments
+    = render 'account/comments/form'
+    = render 'account/comments/show_comments'
   = paginate @comments, window: 2

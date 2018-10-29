@@ -18,9 +18,9 @@ User.all.each do |user|
   user.workspaces.each do |workspace|
     workspace.projects.each do |project|
       projects << project
-      FactoryBot.create_list(:project_comment, 5, commentable: project, user: user)
+      FactoryBot.create_list(:comment, rand(3..5), :for_project, user: user, commentable: project)
       project.tasks.each do |task|
-        FactoryBot.create_list(:task_comment, 5, commentable: task, user: user)
+        FactoryBot.create_list(:comment, rand(3..5), :for_task, user: user, commentable: task)
       end
     end
   end

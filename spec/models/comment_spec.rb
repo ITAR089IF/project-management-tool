@@ -10,6 +10,10 @@
 #  commentable_id   :integer
 #  user_id          :integer
 #
+# Indexes
+#
+#  index_comments_on_commentable_id_and_commentable_type  (commentable_id,commentable_type)
+#
 
 require 'rails_helper'
 

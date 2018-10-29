@@ -10,17 +10,20 @@
 #  commentable_id   :integer
 #  user_id          :integer
 #
+# Indexes
+#
+#  index_comments_on_commentable_id_and_commentable_type  (commentable_id,commentable_type)
+#
 
 FactoryBot.define do
-  factory :project_comment, class: 'Comment' do
+  factory :comment, class: 'Comment' do
     body { Faker::Lorem.paragraph }
     association :user
-    association :commentable, factory: :project
-  end
-
-  factory :task_comment, class: 'Comment' do
-    body { Faker::Lorem.paragraph }
-    association :user
-    association :commentable, factory: :task
+    trait :for_task do
+      association :commentable, factory: :task
+    end
+    trait :for_project do
+      association :commentable, factory: :project
+    end
   end
 end

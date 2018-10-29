@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2018_10_27_115923) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type"
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
