@@ -1,8 +1,8 @@
   = simple_form_for [:account, @user] do |f|
     = f.input :first_name, wrapper: :bulma_input, required: true
     = f.input :last_name, wrapper: :bulma_input, required: true
-    = f.input :role, wrapper: :bulma_input, required: false
-    = f.input :department, wrapper: :bulma_input, required: false
-    = f.input :about_me, wrapper: :bulma_input, required: false
+    = f.input :role, wrapper: :bulma_input
+    = f.input :department, wrapper: :bulma_input
+    = f.input :about_me, wrapper: :bulma_input
     = f.submit "Update Profile", class: "button is-link"
     = link_to 'Back', account_dashboard_path, class: 'button is-text'

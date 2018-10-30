@@ -35,9 +35,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   validates :first_name, length: { maximum: 250 }, presence: true
   validates :last_name, length: { maximum: 250 }, presence: true
-  validates :role, length: { maximum: 250 }, presence: false
-  validates :department, length: { maximum: 250 }, presence: false
-  validates :about_me, length: { maximum: 250 }, presence: false
+  validates :role, length: { maximum: 250 }
+  validates :department, length: { maximum: 250 }
+  validates :about_me, length: { maximum: 250 }
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,

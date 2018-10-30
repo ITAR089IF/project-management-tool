@@ -16,12 +16,10 @@ RSpec.describe Account::UsersController, type: :controller do
 
   describe "PUT #update" do
     it "should update the user's name" do
-      patch :update, params: { id: user.id, user: {first_name: "John"}}
+      patch :update, params: { id: user.id, user: { first_name: "John" } }
       expect(controller.notice).to eq('Profile successfully updated!')
     end
-  end
 
-  describe "PUT #update" do
     it "shouldn't update and redirects to 'edit'" do
       patch :update, params: { id: user.id, user: { first_name: "" } }
       expect(controller.notice).not_to eq('Profile successfully updated!')
