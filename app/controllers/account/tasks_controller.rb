@@ -45,8 +45,7 @@ class Account::TasksController < Account::AccountController
   end
 
   def watch
-    @project = parent
-    @task = parent.tasks.find(params[:id])
+    @task = resource
 
     if @task.users.include? current_user
       resource.watches.find_by(user_id: current_user).destroy
