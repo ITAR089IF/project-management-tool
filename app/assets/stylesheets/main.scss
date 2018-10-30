@@ -1,0 +1,17 @@
+.site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+.site-header {
+  flex: none;
+}
+.site-content {
+  flex: 1;
+}
+.site-footer {
+  flex: none;
+}
+.footer-content {
+  padding: 10px 10px;
+}
