@@ -3,6 +3,8 @@
 # Table name: users
 #
 #  id                     :bigint(8)        not null, primary key
+#  about_me               :text
+#  department             :string
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string
@@ -13,6 +15,7 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  role                   :string
 #  uid                    :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -32,6 +35,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   validates :first_name, length: { maximum: 250 }, presence: true
   validates :last_name, length: { maximum: 250 }, presence: true
+  validates :role, length: { maximum: 250 }, presence: false
+  validates :department, length: { maximum: 250 }, presence: false
+  validates :about_me, length: { maximum: 250 }, presence: false
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
