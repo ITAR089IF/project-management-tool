@@ -1,0 +1,1 @@
+$("#watch_task_<%=@task.id%>").html("<%= @task.users.include?(current_user) ? 'Following' : 'Follow task' %>");

@@ -36,12 +36,25 @@ class Account::TasksController < Account::AccountController
 
   def destroy
     resource.destroy
-    redirect_to account_workspace_project_path(parent.workspace_id, parent.id)
+    redirect_to account_workspace_project_path(parent.workspace_id, parent)
   end
 
   def move
-    resource.update_attributes(task_movement_params)
-    redirect_to account_workspace_project_path(parent.workspace_id, parent.id)
+    resource.update(task_movement_params)
+    redirect_to account_workspace_project_path(parent.workspace_id, parent)
+  end
+
+  def watch
+    @project = parent
+    @task = parent.tasks.find(params[:id])
+
+    if @task.users.include? current_user
+      resource.watches.find_by(user_id: current_user).destroy
+    else
+      resource.update(users: [current_user])
+    end
+
+    respond_to(:js)
   end
 
   private

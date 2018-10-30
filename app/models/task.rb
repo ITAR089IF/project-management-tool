@@ -27,6 +27,8 @@ class Task < ApplicationRecord
   ranks :row_order, with_same: :project_id
 
   belongs_to :project, required: true
+  has_many :watches, dependent: :destroy
+  has_many :users, through: :watches
 
   scope :row_order_asc, -> { order(row_order: :asc) }
 
