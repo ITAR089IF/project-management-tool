@@ -12,12 +12,12 @@ SimpleForm.setup do |config|
   config.wrappers :bulma_input, class: "field", error_class: :field_with_errors do |b|
     b.use :html5
     b.use :placeholder
-    b.use :label, class: "label", valid_class: 'is-success', error_class: 'is-danger'
-    b.use :input, class: "input", valid_class: 'is-success', error_class: 'is-danger'
+    b.use :label, class: "label", error_class: 'is-danger'
+    b.use :input, class: "input", error_class: 'is-danger'
     b.use :hint,  wrap_with: { tag: :div, class: "help" }
     b.use :error, wrap_with: { tag: :div, class: "help is-danger" }
   end
-  
+
   config.wrappers :inline_checkbox, class: 'field', error_class: :field_with_errors do |b|
     b.use :html5
     b.use :label_input, wrap_with: { class: 'checkbox inline' }

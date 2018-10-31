@@ -3,7 +3,7 @@
 # Table name: users
 #
 #  id                     :bigint(8)        not null, primary key
-#  about_me               :text
+#  about                  :text
 #  department             :string
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null

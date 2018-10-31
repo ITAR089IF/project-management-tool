@@ -18,6 +18,7 @@
 #
 
 class Project < ApplicationRecord
+  MAX = 250
   belongs_to :workspace, required: true
   has_many :tasks, dependent: :destroy
   has_many :user_projects, dependent: :destroy
@@ -25,5 +26,5 @@ class Project < ApplicationRecord
 
   scope :order_desc, -> { order(id: :desc) }
 
-  validates :name, length: { maximum: 250 }, presence: true
+  validates :name, length: { maximum: MAX }, presence: true
 end

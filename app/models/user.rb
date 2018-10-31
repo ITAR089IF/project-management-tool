@@ -3,7 +3,7 @@
 # Table name: users
 #
 #  id                     :bigint(8)        not null, primary key
-#  about_me               :text
+#  about                  :text
 #  department             :string
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
@@ -27,17 +27,16 @@
 #
 
 class User < ApplicationRecord
+  MAX = 250
   has_many :workspaces, dependent: :destroy
   has_many :user_projects, dependent: :destroy
   has_many :projects, through: :user_projects
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  validates :first_name, length: { maximum: 250 }, presence: true
-  validates :last_name, length: { maximum: 250 }, presence: true
-  validates :role, length: { maximum: 250 }
-  validates :department, length: { maximum: 250 }
-  validates :about_me, length: { maximum: 250 }
+  validates :first_name, length: { maximum: MAX }, presence: true
+  validates :last_name, length: { maximum: MAX }, presence: true
+  validates :role, length: { maximum: MAX }
+  validates :department, length: { maximum: MAX }
+  validates :about, length: { maximum: MAX }
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
