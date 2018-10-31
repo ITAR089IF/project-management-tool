@@ -1,4 +1,6 @@
 class Account::TasksController < Account::AccountController
+  protect_from_forgery except: :watch
+
   def show
     @project = parent
     @task = @project.tasks.find(params[:id])
@@ -48,9 +50,9 @@ class Account::TasksController < Account::AccountController
     @task = resource
 
     if @task.users.include? current_user
-      resource.watches.find_by(user_id: current_user).destroy
+      @task.watches.find_by(user_id: current_user).destroy
     else
-      resource.update(users: [current_user])
+      @task.update(users: [current_user])
     end
 
     respond_to(:js)
