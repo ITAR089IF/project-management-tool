@@ -12,7 +12,7 @@ class Account::ProjectsController < Account::AccountController
 
   def create
     @workspace = parent
-    @project = collection.build(project_params)
+    @project = @workspace.projects.build(project_params)
 
     if  @project.save
       redirect_to account_workspace_path(@workspace), notice: "Project was successfully created!"
@@ -29,7 +29,7 @@ class Account::ProjectsController < Account::AccountController
   def update
     @workspace = parent
     @project = resource
-    
+
     if @project.update(project_params)
       redirect_to account_workspace_path(@workspace), notice: "Project was successfully updated!"
     else
@@ -57,6 +57,6 @@ class Account::ProjectsController < Account::AccountController
   end
 
   def project_params
-    params.require(:project).permit(:name).merge(workspace_id: params[:workspace_id])
+    params.require(:project).permit(:name).merge(users: [current_user])
   end
 end

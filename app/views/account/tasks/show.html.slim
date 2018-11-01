@@ -1,8 +1,14 @@
 - title "#{@project.name}: #{@task.title}"
 .container
   .content
-    .title
-      = "#{@project.name}: #{@task.title}"
+    .level
+      .level-left
+        .level-item
+          .title
+            = "#{@project.name}: #{@task.title}"
+      .level-right
+        .level-item id="watch_task_#{@task.id}"
+          = render('/account/tasks/watch_link', task: @task, project: @project)
     h3 Description
     = @task.description
     - if @task.files.attached?

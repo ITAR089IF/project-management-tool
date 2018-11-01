@@ -42,8 +42,21 @@ class Account::TasksController < Account::AccountController
   end
 
   def move
-    resource.update_attributes(task_movement_params)
+    resource.update(task_movement_params)
     redirect_to account_workspace_project_path(parent.workspace_id, parent)
+  end
+
+  def watch
+    @project = parent
+    @task = @project.tasks.find(params[:id])
+
+    if current_user.watching?(@task)
+      @task.remove_watcher(current_user)
+    else
+      @task.add_watcher(current_user)
+    end
+
+    respond_to(:js)
   end
 
   def remove_attachment

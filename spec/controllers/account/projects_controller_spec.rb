@@ -58,6 +58,7 @@ RSpec.describe Account::ProjectsController, type: :controller do
           expect(project.name).to eq(project_valid_params[:name])
         end
       end
+
       context "with invalid attributes" do
         it "must not update the project and render 'edit' form" do
           put :update, params: { workspace_id: workspace.to_param, id: project.to_param, project: project_invalid_params}
