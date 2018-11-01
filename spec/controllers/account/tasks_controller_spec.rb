@@ -15,6 +15,7 @@ RSpec.describe Account::TasksController, type: :controller do
   context 'GET /projects/:project_id/task/:id' do
     it 'should show task page' do
       get :show, params: { project_id: project.to_param, id: tasks.first.to_param }
+
       expect(response).to be_successful
     end
   end
@@ -22,6 +23,7 @@ RSpec.describe Account::TasksController, type: :controller do
   context 'GET /projects/:project_id/task/new' do
     it 'should get new task page' do
       get :new, params: { project_id: project.to_param }
+
       expect(response).to be_successful
     end
   end
@@ -61,6 +63,7 @@ RSpec.describe Account::TasksController, type: :controller do
 
     it "must remove attachment fromm a task" do
       delete :delete_file_attachment, params: { project_id: project.id, id: task.id, attachment_id: attachment.id}
+      
       expect(response).to redirect_to(account_project_task_path(project.id, task.id))
     end
   end
