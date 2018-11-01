@@ -67,6 +67,6 @@ class User < ApplicationRecord
   end
 
   def watching?(task)
-    self.tasks.include?(task)
+    self.tasks.where(id: task).any?
   end
 end
