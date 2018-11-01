@@ -36,10 +36,10 @@ class Task < ApplicationRecord
   validates :description, length: { maximum: 250 }
 
   def add_watcher(user)
-    self.task_watches.create(user_id: user.id)
+    self.task_watches.find_or_create_by(user_id: user.id)
   end
 
   def remove_watcher(user)
-    self.task_watches.find_by(user_id: user).destroy if user
+    self.task_watches.where(user_id: user.id).destroy_all if user
   end
 end

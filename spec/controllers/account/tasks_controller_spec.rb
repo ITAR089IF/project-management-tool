@@ -6,10 +6,12 @@ RSpec.describe Account::TasksController, type: :controller do
   let!(:user) { create(:user) }
   let!(:user1) { create(:user) }
   let!(:user2) { create(:user) }
+  let!(:user3) { create(:user) }
+  let!(:user4) { create(:user) }
   let!(:workspace) { create(:workspace, user: user) }
   let!(:project) { create(:project, workspace: workspace, users: [user, user1]) }
   let!(:task1) { create(:task, project: project) }
-  let!(:task2) { create(:task, project: project, watchers: [user1, user2]) }
+  let!(:task2) { create(:task, project: project, watchers: [user1, user2, user3, user4]) }
   let!(:task3) { create(:task, project: project) }
 
   before do
@@ -75,19 +77,35 @@ RSpec.describe Account::TasksController, type: :controller do
 
   context 'POST /watch' do
     it 'should follow task if no one follow yet' do
-      post :watch, params: { project_id: project.id, id: task1.id }, format: :js
-      expect(Task.first.watchers).to include user
+      expect(task1.watchers.count).to eq 0
+
+      patch :watch, params: { project_id: project.id, id: task1.id }, format: :js
+
+      task1.reload
+
+      expect(task1.watchers.count).to eq 1
+      expect(task1.watchers).to include user
     end
 
     it 'should follow task if some one follow task already' do
-      expect{post :watch, params: { project_id: project.id, id: task2.id }, format: :js}.to change(Task.second.watchers, :count).by(1)
-      expect(Task.second.watchers).to include user
+      expect(task2.watchers.count).to eq 4
+
+      patch :watch, params: { project_id: project.id, id: task2.id }, format: :js
+
+      task2.reload
+
+      expect(task2.watchers.count).to eq 5
+      expect(task2.watchers).to include user
     end
 
     it 'should unfollow task' do
       sign_in user1
-      expect{post :watch, params: { project_id: project.id, id: task2.id }, format: :js}.to change(Task.second.watchers, :count).by(-1)
-      expect(Task.second.watchers).to_not include user1
+      expect(task2.watchers.count).to eq 4
+      patch :watch, params: { project_id: project.id, id: task2.id }, format: :js
+
+      task2.reload
+      expect(task2.watchers.count).to eq 3
+      expect(task2.watchers).to_not include user1
     end
   end
 end

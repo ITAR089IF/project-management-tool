@@ -1,6 +1,4 @@
 class Account::TasksController < Account::AccountController
-  protect_from_forgery except: :watch
-
   def show
     @project = parent
     @task = @project.tasks.find(params[:id])
@@ -47,7 +45,8 @@ class Account::TasksController < Account::AccountController
   end
 
   def watch
-    @task = resource
+    @project = parent
+    @task = @project.tasks.find(params[:id])
 
     if current_user.watching?(@task)
       @task.remove_watcher(current_user)

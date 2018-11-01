@@ -7,11 +7,7 @@
           .title
             = "#{@project.name}: #{@task.title}"
       .level-right
-        .level-item
-          = link_to (current_user.watching?(@task) ? 'Following' : 'Follow task'),
-            watch_account_project_task_path(@project, @task),
-            class: 'button is-text', remote: true, id: "watch_task_#{@task.id}",
-            method: :post
+        = content_tag(:div, render('watch_link'), class: 'level-item', id: "watch_task_#{@task.id}")
     h3 Description
     = @task.description
   .level

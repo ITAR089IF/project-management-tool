@@ -1,1 +1,2 @@
-$("#watch_task_<%=@task.id%>").html("<%= current_user.watching?(@task) ? 'Following' : 'Follow task' %>");
+$("#watch_task_<%=@task.id%> a").html('<%= j render 'watch_link'%>');
+

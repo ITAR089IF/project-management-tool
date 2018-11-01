@@ -1,0 +1,3 @@
+= link_to (current_user.watching?(@task) ? 'Following' : 'Follow task'),
+  watch_account_project_task_path(@project, @task),
+  class: 'button is-text', remote: true, method: :patch
