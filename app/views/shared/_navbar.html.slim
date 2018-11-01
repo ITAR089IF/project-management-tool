@@ -23,17 +23,13 @@
         - else
           .navbar-item.has-dropdown.is-hoverable
             a.navbar-link
-              = current_user.first_name
+              = current_user.full_name
             .navbar-dropdown
-              a.navbar-item
-                = link_to "My workspaces", account_workspaces_path, class: 'navbar-item'
+              = link_to "My workspaces", account_workspaces_path, class: 'navbar-item'
               hr.navbar-divider
-              a.navbar-item
-                - current_user.workspaces.each do |workspace|
-                  a.navbar-item
-                    = link_to workspace.name, account_workspace_path(workspace.id), class: 'navbar-item'
+              - current_user.workspaces.each do |workspace|
+                = link_to workspace.name, account_workspace_path(workspace), class: 'navbar-item'
               hr.navbar-divider
-              a.navbar-item
                 = link_to "My Profile Settings...", edit_account_profile_path, class: 'navbar-item'
           .navbar-item
           = link_to "Log out", destroy_user_session_path, method: :delete, class: 'button is-primary'

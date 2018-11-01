@@ -22,7 +22,6 @@
 #
 
 class Task < ApplicationRecord
-  MAX = 250
   include RankedModel
 
   ranks :row_order, with_same: :project_id
@@ -31,6 +30,6 @@ class Task < ApplicationRecord
 
   scope :row_order_asc, -> { order(row_order: :asc) }
 
-  validates :title, length: { maximum: MAX }, presence: true
-  validates :description, length: { maximum: MAX }
+  validates :title, length: { maximum: 250 }, presence: true
+  validates :description, length: { maximum: 250 }
 end

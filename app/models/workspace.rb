@@ -18,11 +18,10 @@
 #
 
 class Workspace < ApplicationRecord
-  MAX = 250
   belongs_to :user, required: true
   has_many :projects, dependent: :destroy
 
   scope :order_desc, -> { order(id: :desc) }
 
-  validates :name, presence: true, length: { maximum: MAX }
+  validates :name, presence: true, length: { maximum: 250 }
 end

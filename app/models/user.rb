@@ -27,16 +27,15 @@
 #
 
 class User < ApplicationRecord
-  MAX = 250
   has_many :workspaces, dependent: :destroy
   has_many :user_projects, dependent: :destroy
   has_many :projects, through: :user_projects
 
-  validates :first_name, length: { maximum: MAX }, presence: true
-  validates :last_name, length: { maximum: MAX }, presence: true
-  validates :role, length: { maximum: MAX }
-  validates :department, length: { maximum: MAX }
-  validates :about, length: { maximum: MAX }
+  validates :first_name, length: { maximum: 250 }, presence: true
+  validates :last_name, length: { maximum: 250 }, presence: true
+  validates :role, length: { maximum: 250 }
+  validates :department, length: { maximum: 250 }
+  validates :about, length: { maximum: 250 }
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
@@ -67,5 +66,9 @@ class User < ApplicationRecord
         user.email = data["email"] if user.email.blank?
       end
     end
+  end
+
+  def full_name
+    "#{first_name} #{last_name}"
   end
 end

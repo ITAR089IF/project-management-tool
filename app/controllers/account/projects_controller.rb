@@ -14,7 +14,7 @@ class Account::ProjectsController < Account::AccountController
     @workspace = parent
     @project = collection.build(project_params)
     if  @project.save
-      redirect_to account_workspace_projects_path(parent), notice: "Project was successfully created!"
+        redirect_to account_workspace_path(@workspace), notice: "Project was successfully created!"
     else
       render :new
     end
@@ -55,6 +55,6 @@ class Account::ProjectsController < Account::AccountController
   end
 
   def project_params
-    params.require(:project).permit(:name).merge(workspace_id: params[:workspace_id])
+    params.require(:project).permit(:name).merge(users: [current_user])
   end
 end

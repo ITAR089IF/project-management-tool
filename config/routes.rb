@@ -7,7 +7,6 @@ Rails.application.routes.draw do
 
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
-    resources :users, only: [:edit, :update]
     resource :profile, only: [:edit, :update]
     resources :workspaces do
       resources :projects, except: [:index]

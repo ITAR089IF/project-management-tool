@@ -8,12 +8,11 @@ class Account::WorkspacesController < Account::AccountController
   end
 
   def new
-    @workspace = collection.build
+    @workspace = Workspace.new
   end
 
   def create
-    @workspace = collection.build(workspace_params)
-
+    @workspace = Workspace.new(workspace_params)
     if @workspace.save
       redirect_to account_workspaces_path, notice: 'Workspace was created!'
     else
@@ -51,6 +50,6 @@ class Account::WorkspacesController < Account::AccountController
   end
 
   def workspace_params
-    params.require(:workspace).permit(:name)
+    params.require(:workspace).permit(:name).merge(user_id: current_user.id)
   end
 end
