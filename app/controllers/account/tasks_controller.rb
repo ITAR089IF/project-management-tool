@@ -49,10 +49,10 @@ class Account::TasksController < Account::AccountController
   def watch
     @task = resource
 
-    if @task.users.include? current_user
-      @task.watches.find_by(user_id: current_user).destroy
+    if current_user.watching?(@task)
+      @task.remove_watcher(current_user)
     else
-      @task.update(users: [current_user])
+      @task.add_watcher(current_user)
     end
 
     respond_to(:js)

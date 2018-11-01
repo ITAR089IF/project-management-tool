@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: watches
+# Table name: task_watches
 #
 #  id         :bigint(8)        not null, primary key
 #  created_at :datetime         not null
@@ -10,8 +10,8 @@
 #
 # Indexes
 #
-#  index_watches_on_task_id  (task_id)
-#  index_watches_on_user_id  (user_id)
+#  index_task_watches_on_task_id  (task_id)
+#  index_task_watches_on_user_id  (user_id)
 #
 # Foreign Keys
 #
@@ -19,7 +19,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 
-class Watch < ApplicationRecord
-  belongs_to :user, required: true
-  belongs_to :task, required: true
+require 'rails_helper'
+
+RSpec.describe TaskWatch, type: :model do
+  it { expect(create(:task_watch)).to be_persisted }
 end

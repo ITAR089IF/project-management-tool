@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_30_180602) do
+ActiveRecord::Schema.define(version: 2018_10_31_175048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 2018_10_30_180602) do
     t.datetime "updated_at", null: false
     t.bigint "workspace_id"
     t.index ["workspace_id"], name: "index_projects_on_workspace_id"
+  end
+
+  create_table "task_watches", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "task_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_task_watches_on_task_id"
+    t.index ["user_id"], name: "index_task_watches_on_user_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -70,17 +79,11 @@ ActiveRecord::Schema.define(version: 2018_10_30_180602) do
     t.string "oauth_token"
     t.string "oauth_expires_at"
     t.string "last_name"
+    t.string "role"
+    t.string "department"
+    t.text "about_me"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  end
-
-  create_table "watches", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "task_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["task_id"], name: "index_watches_on_task_id"
-    t.index ["user_id"], name: "index_watches_on_user_id"
   end
 
   create_table "workspaces", force: :cascade do |t|
@@ -92,10 +95,10 @@ ActiveRecord::Schema.define(version: 2018_10_30_180602) do
   end
 
   add_foreign_key "projects", "workspaces"
+  add_foreign_key "task_watches", "tasks"
+  add_foreign_key "task_watches", "users"
   add_foreign_key "tasks", "projects"
   add_foreign_key "user_projects", "projects"
   add_foreign_key "user_projects", "users"
-  add_foreign_key "watches", "tasks"
-  add_foreign_key "watches", "users"
   add_foreign_key "workspaces", "users"
 end

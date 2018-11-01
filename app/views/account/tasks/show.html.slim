@@ -3,12 +3,15 @@
   .content
     .level
       .level-left
-        .title
-          = "#{@project.name}: #{@task.title}"
+        .level-item
+          .title
+            = "#{@project.name}: #{@task.title}"
       .level-right
-        = link_to (@task.users.include?(current_user) ? 'Following' : 'Follow task'),
-          watch_account_project_task_path(@project, @task),
-          class: 'button is-text', remote: true, id: "watch_task_#{@task.id}"
+        .level-item
+          = link_to (current_user.watching?(@task) ? 'Following' : 'Follow task'),
+            watch_account_project_task_path(@project, @task),
+            class: 'button is-text', remote: true, id: "watch_task_#{@task.id}",
+            method: :post
     h3 Description
     = @task.description
   .level

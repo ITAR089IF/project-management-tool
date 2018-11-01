@@ -21,7 +21,7 @@ User.all.each do |user|
 
   user.projects.each do |project|
     project.tasks.each do |task|
-      task.update(users: [user]) if Faker::Boolean.boolean(rand(0.0..1.0))
+      task.update(watchers: [user]) if [true, false].sample
     end
   end
 end

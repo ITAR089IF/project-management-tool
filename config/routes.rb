@@ -15,7 +15,7 @@ Rails.application.routes.draw do
       resources :tasks, except: [:index] do
         member do
           put :move
-          get :watch
+          post :watch
         end
       end
     end

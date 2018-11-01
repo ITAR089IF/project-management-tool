@@ -27,11 +27,19 @@ class Task < ApplicationRecord
   ranks :row_order, with_same: :project_id
 
   belongs_to :project, required: true
-  has_many :watches, dependent: :destroy
-  has_many :users, through: :watches
+  has_many :task_watches, dependent: :destroy
+  has_many :watchers, through: :task_watches, source: :user
 
   scope :row_order_asc, -> { order(row_order: :asc) }
 
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }
+
+  def add_watcher(user)
+    self.update(watchers: [user])
+  end
+
+  def remove_watcher(user)
+    self.task_watches.find_by(user_id: user, task_id: self).destroy
+  end
 end

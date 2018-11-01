@@ -7,7 +7,7 @@ RSpec.describe Account::TasksController, type: :controller do
   let!(:workspace) { create(:workspace, user: user) }
   let!(:project) { create(:project, workspace: workspace, users: [user]) }
   let!(:task1) { create(:task, project: project) }
-  let!(:task2) { create(:task, project: project, users: [user]) }
+  let!(:task2) { create(:task, project: project, watchers: [user]) }
   let!(:task3) { create(:task, project: project) }
 
   before do
@@ -74,12 +74,12 @@ RSpec.describe Account::TasksController, type: :controller do
   context 'GET /watch' do
     it 'should follow task' do
       get :watch, params: { project_id: project.id, id: task1.id }, format: :js
-      expect(task1.users).to include user
+      expect(task1.watchers).to include user
     end
 
     it 'should unfollow task' do
       get :watch, params: { project_id: project.id, id: task2.id }, format: :js
-      expect(Task.second.users).to_not include user
+      expect(Task.second.watchers).to_not include user
     end
   end
 end
