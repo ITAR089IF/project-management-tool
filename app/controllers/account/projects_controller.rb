@@ -8,9 +8,8 @@ class Account::ProjectsController < Account::AccountController
     @workspace = parent
     @project = @workspace.projects.find(params[:id])
     @tasks = @project.tasks.row_order_asc
-    @commentable = @project
-    @comments = @commentable.comments.order_desc.page(params[:page]).per(5)
-    @comment = @commentable.comments.build
+    @comments = @project.comments.order_desc.page(params[:page]).per(5)
+    @comment = @project.comments.build
   end
 
   def new

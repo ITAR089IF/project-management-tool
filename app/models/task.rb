@@ -24,7 +24,6 @@ class Task < ApplicationRecord
   include RankedModel
 
   ranks :row_order, with_same: :project_id
-  paginates_per  5
 
   belongs_to :project, required: true
   has_many :comments, as: :commentable, dependent: :destroy

@@ -18,6 +18,7 @@
                           class: "button is-small right"
   .content
     h3 Comments
-    = render 'account/comments/form'
-    = render 'account/comments/show_comments'
-  = paginate @comments, window: 2
+    .new-comment
+      = render 'account/comments/form', commentable: @task, comment: @comment
+    .comments
+      = render 'account/comments/show_comments', commentable: @task, comments: @comments

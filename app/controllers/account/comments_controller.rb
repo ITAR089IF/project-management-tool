@@ -2,26 +2,17 @@ class Account::CommentsController < Account::AccountController
   before_action :load_commentable
 
   def create
-    @comments = @commentable.comments.order_desc.page(params[:page]).per(5)
+    @comments = @commentable.comments.order_desc
     @comment = @comments.build(comments_params)
-    respond_to do |format|
-      if @comment.save
-        @comments = @commentable.comments.order_desc.page(params[:page]).per(5)
-        flash[:notice] = 'Your comment was created'
-        format.html { redirect_back fallback_location: root_path, notice: 'Your comment was saved' }
-        format.js
-      else
-        flash[:alert] = 'Your comment was not created'
-        format.html { redirect_back fallback_location: root_path, notice: @comment.errors.full_messages[0] }
-        format.js
-      end
-    end
+    @result = @comment.save
+    respond_to :js
   end
 
   def destroy
     @comment = current_user.comments.find(params[:id])
+    @comments = @commentable.comments.order_desc
     @comment.destroy
-    redirect_back fallback_location: root_path, notice: 'Your comment was deleted'
+    respond_to :js
   end
 
   private

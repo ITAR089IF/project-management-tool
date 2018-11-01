@@ -9,8 +9,7 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
-    .flash-message
-      = render 'shared/flash'
+    = render 'shared/flash'
     = render 'shared/navbar'
     .section.is-fullheight
       = yield

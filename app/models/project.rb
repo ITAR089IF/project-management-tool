@@ -18,7 +18,6 @@
 #
 
 class Project < ApplicationRecord
-  paginates_per  5
 
   belongs_to :workspace, required: true
   has_many :tasks, dependent: :destroy

@@ -11,8 +11,11 @@ Rails.application.routes.draw do
       resources :projects
     end
 
+  concern :commentable do
+    resources :comments, only: [:create, :destroy]
+  end
     resources :projects, only: [] do
-      resources :comments, only: [:create, :destroy]
+      concerns :commentable
       resources :tasks, except: [:index] do
         member do
           put :move
@@ -21,7 +24,7 @@ Rails.application.routes.draw do
     end
 
     resources :task, only: [] do
-      resources :comments, only: [:create, :destroy]
+      concerns :commentable
     end
   end
 end

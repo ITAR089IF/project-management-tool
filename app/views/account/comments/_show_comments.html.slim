@@ -1,16 +1,14 @@
-- @comments.each do |comment|
+- comments.each do |comment|
   article.media.box
     .media-content
       .content
         p
-          strong
-            = comment.user.full_name
+          = simple_format(comment.user.full_name, {}, wrapper_tag: "strong")
           br
           = comment.body
           br
-          small
-            = comment.created_at.to_date
+          = simple_format(comment.created_at.to_date.to_s, {}, wrapper_tag: "small")
     .media-right
       -if comment.user.can_manage?(comment)
-          = link_to [:account, @commentable, comment], remote: true, method: :delete, data: {confirm: "Are you sure?"} do
+          = link_to [:account, commentable, comment], remote: true, method: :delete, data: {confirm: "Are you sure?"} do
               i.fa.fa-trash-o
