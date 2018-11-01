@@ -18,7 +18,6 @@
 #
 
 class Project < ApplicationRecord
-
   belongs_to :workspace, required: true
   has_many :tasks, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy

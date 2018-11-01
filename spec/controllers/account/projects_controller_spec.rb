@@ -20,7 +20,7 @@ RSpec.describe Account::ProjectsController, type: :controller do
         expect(response).to have_http_status(200)
       end
     end
-    
+
     describe "GET #show" do
       it "must return show page" do
         get :show, params: { workspace_id: workspace.to_param, id: project.to_param }
@@ -90,5 +90,4 @@ RSpec.describe Account::ProjectsController, type: :controller do
       end
     end
   end
-
 end
