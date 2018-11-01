@@ -8,9 +8,9 @@ RSpec.describe Account::DashboardController, type: :controller do
   end
 
   context 'GET /account/dashboard' do
-      it 'should show index page' do
-        get :index
-        expect(response).to be_successful
-      end
+    it 'should show index page' do
+      get :index
+      expect(response).to be_successful
     end
+  end
 end
