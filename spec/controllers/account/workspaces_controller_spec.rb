@@ -4,14 +4,10 @@ RSpec.describe Account::WorkspacesController, type: :controller do
   render_views
 
   let!(:user) { create(:user) }
-  let!(:workspace) { create(:workspace, user_id: user.id) }
+  let!(:workspace) { create(:workspace, user: user) }
 
   before do
     sign_in user
-  end
-
-  after do
-    sign_out user
   end
 
   context 'GET /workspaces' do
@@ -24,6 +20,20 @@ RSpec.describe Account::WorkspacesController, type: :controller do
   context 'GET /workspace/new' do
     it 'should show page create new workspace' do
       get :new
+      expect(response).to be_successful
+    end
+  end
+
+  context 'GET /worspaces/:id' do
+    it 'should show page with workspace' do
+      get :show, params: { id: workspace.to_param }
+      expect(response).to be_successful
+    end
+  end
+
+  context 'GET /workspaces/:id/edit' do
+    it 'should show page edit' do
+      get :edit, params: { id: workspace.to_param }
       expect(response).to be_successful
     end
   end
@@ -53,7 +63,7 @@ RSpec.describe Account::WorkspacesController, type: :controller do
   context 'PUT /workspace/:id' do
     it 'should update workspace and redirect to workspaces page' do
       put :update, params: {
-        id: workspace.id,
+        id: workspace.to_param,
         workspace: {
           name: 'Test text'
         }
@@ -64,7 +74,7 @@ RSpec.describe Account::WorkspacesController, type: :controller do
 
     it 'shouldn`t update workspace and render page edit' do
       put :update, params: {
-        id: workspace.id,
+        id: workspace.to_param,
         workspace: {
           name: ''
         }
@@ -76,7 +86,7 @@ RSpec.describe Account::WorkspacesController, type: :controller do
 
   context 'DELETE /workspace/:id' do
     it 'should delete workspace' do
-      delete :destroy, params: { id: workspace.id }
+      delete :destroy, params: { id: workspace.to_param }
 
       expect(response).to redirect_to account_workspaces_path
     end

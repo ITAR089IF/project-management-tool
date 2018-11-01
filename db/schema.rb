@@ -45,6 +45,16 @@ ActiveRecord::Schema.define(version: 2018_10_27_115923) do
     t.index ["workspace_id"], name: "index_projects_on_workspace_id"
   end
 
+  create_table "task_activities", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "task_id"
+    t.integer "role_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_task_activities_on_task_id"
+    t.index ["user_id"], name: "index_task_activities_on_user_id"
+  end
+
   create_table "tasks", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -52,6 +62,7 @@ ActiveRecord::Schema.define(version: 2018_10_27_115923) do
     t.datetime "updated_at", null: false
     t.integer "row_order"
     t.bigint "project_id"
+    t.boolean "section", default: false
     t.index ["project_id"], name: "index_tasks_on_project_id"
     t.index ["row_order"], name: "index_tasks_on_row_order"
   end
@@ -92,6 +103,8 @@ ActiveRecord::Schema.define(version: 2018_10_27_115923) do
   end
 
   add_foreign_key "projects", "workspaces"
+  add_foreign_key "task_activities", "tasks"
+  add_foreign_key "task_activities", "users"
   add_foreign_key "tasks", "projects"
   add_foreign_key "user_projects", "projects"
   add_foreign_key "user_projects", "users"

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
     resources :workspaces do
-      resources :projects
+      resources :projects, except: [:index]
     end
 
   concern :commentable do
@@ -23,7 +23,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :task, only: [] do
+    resources :task do
       concerns :commentable
     end
   end

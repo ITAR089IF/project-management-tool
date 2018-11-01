@@ -18,7 +18,7 @@ class Account::CommentsController < Account::AccountController
   private
 
   def comments_params
-    params.require(:comment).permit(:body).merge(user: current_user)
+    params.require(:comment).permit(:body).merge!(user: current_user)
   end
 
   def load_commentable
