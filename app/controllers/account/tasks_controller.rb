@@ -1,19 +1,19 @@
 class Account::TasksController < Account::AccountController
   def show
     @project = parent
-    @task = parent.tasks.find(params[:id])
+    @task = @project.tasks.find(params[:id])
   end
 
   def new
     @project = parent
-    @task = parent.tasks.build(section_params)
+    @task = @project.tasks.build(section_params)
   end
 
   def create
     @project = parent
-    @task = parent.tasks.build(tasks_params)
+    @task = @project.tasks.build(tasks_params)
     if @task.save
-      redirect_to account_project_task_path(parent, @task)
+      redirect_to account_project_task_path(@project, @task)
     else
       render :new
     end
@@ -21,14 +21,14 @@ class Account::TasksController < Account::AccountController
 
   def edit
     @project = parent
-    @task = parent.tasks.find(params[:id])
+    @task = @project.tasks.find(params[:id])
   end
 
   def update
     @project = parent
     @task = resource
     if resource.update(tasks_params)
-      redirect_to account_project_task_path(parent, resource)
+      redirect_to account_project_task_path(@project, @task)
     else
       render "edit"
     end
@@ -48,7 +48,7 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = resource
     @task.files.find_by_id(params[:attachment_id]).purge
-    redirect_to account_project_task_path(parent, resource)
+    redirect_to account_project_task_path(@project, @task)
   end
 
   private

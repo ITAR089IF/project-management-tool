@@ -32,7 +32,7 @@ FactoryBot.define do
       after(:build) do |user|
         2.times do |n|
           file = ["image1.jpg", "image2.jpg", "asana.png", "text.txt", "book.pdf"].sample
-          user.files.attach(io: File.open(Rails.root.join('spec', 'factories', 'files', file)), filename: file, content_type: ['image/png', 'image/jpg', 'text/plain', 'application/pdf'])
+          user.files.attach(io: File.open(Rails.root.join('spec', 'factories', 'files', file)), filename: file)
         end
       end
     end

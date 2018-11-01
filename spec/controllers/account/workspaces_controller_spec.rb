@@ -69,7 +69,7 @@ RSpec.describe Account::WorkspacesController, type: :controller do
         }
       }
 
-      expect(response).to redirect_to account_workspaces_path
+      expect(response).to redirect_to account_workspace_path(workspace.id)
     end
 
     it 'shouldn`t update workspace and render page edit' do
