@@ -8,7 +8,7 @@
             = "#{@project.name}: #{@task.title}"
       .level-right
         .level-item id="watch_task_#{@task.id}"
-          = render '/account/tasks/watch_link'
+          = render('/account/tasks/watch_link', task: @task, project: @project)
     h3 Description
     = @task.description
     - if @task.files.attached?
