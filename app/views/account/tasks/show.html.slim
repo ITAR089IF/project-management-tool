@@ -7,7 +7,8 @@
           .title
             = "#{@project.name}: #{@task.title}"
       .level-right
-        = content_tag(:div, render('watch_link'), class: 'level-item', id: "watch_task_#{@task.id}")
+        .level-item id="watch_task_#{@task.id}"
+          = render '/account/tasks/watch_link'
     h3 Description
     = @task.description
     - if @task.files.attached?
