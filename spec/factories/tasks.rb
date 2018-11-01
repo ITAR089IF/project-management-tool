@@ -5,7 +5,7 @@
 #  id          :bigint(8)        not null, primary key
 #  description :text
 #  row_order   :integer
-#  section     :boolean
+#  section     :boolean          default(FALSE)
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -27,5 +27,18 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph }
 
     project
+
+    trait :with_files do
+      transient do
+        files_count { 3 }
+      end
+
+      after(:build) do |task, evaluator|
+        evaluator.files_count.times do
+          task.files.attach(FileFactory.random_file)
+        end
+      end
+    end
+    
   end
 end

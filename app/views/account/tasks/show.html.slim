@@ -5,6 +5,20 @@
       = "#{@project.name}: #{@task.title}"
     h3 Description
     = @task.description
+    - if @task.files.attached?
+      h3 Attachments
+      - @task.files.each do |file|
+        .level
+          .level-left
+            .level-item
+              = file.filename
+          .level-right
+            .level-item
+              = link_to rails_blob_path(file) do
+                = fa_icon "download"
+            .level-item
+              = link_to remove_attachment_account_project_task_path(@project, @task, attachment_id: file.id), method: :delete, data: { confirm: "Are you sure?" } do
+                = fa_icon "trash"
   .level
     .level-left
       .level-item
