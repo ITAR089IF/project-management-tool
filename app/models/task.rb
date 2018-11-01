@@ -25,7 +25,8 @@ class Task < ApplicationRecord
   include RankedModel
 
   ranks :row_order, with_same: :project_id
-
+  
+  has_many_attached :files, dependent: :destroy
   belongs_to :project, required: true
   has_many :task_watches, dependent: :destroy
   has_many :watchers, through: :task_watches, source: :user

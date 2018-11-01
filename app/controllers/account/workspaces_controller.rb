@@ -13,7 +13,6 @@ class Account::WorkspacesController < Account::AccountController
 
   def create
     @workspace = collection.build(workspace_params)
-
     if @workspace.save
       redirect_to account_workspaces_path, notice: 'Workspace was created!'
     else
@@ -24,10 +23,9 @@ class Account::WorkspacesController < Account::AccountController
   def edit
     @workspace = resource
   end
-
+  
   def update
     @workspace = resource
-
     if @workspace.update(workspace_params)
       redirect_to account_workspace_path(@workspace), notice: 'Workspace was updated!'
     else

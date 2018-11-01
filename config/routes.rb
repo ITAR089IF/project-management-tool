@@ -16,6 +16,7 @@ Rails.application.routes.draw do
         member do
           put :move
           patch :watch
+          delete :remove_attachment
         end
       end
     end

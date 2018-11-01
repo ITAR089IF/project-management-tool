@@ -12,10 +12,10 @@ class Account::ProjectsController < Account::AccountController
 
   def create
     @workspace = parent
-    @project = collection.build(project_params)
+    @project = @workspace.projects.build(project_params)
 
-    if @project.save
-      redirect_to account_workspace_path(parent), notice: "Project was successfully created!"
+    if  @project.save
+      redirect_to account_workspace_path(@workspace), notice: "Project was successfully created!"
     else
       render :new
     end
@@ -31,7 +31,7 @@ class Account::ProjectsController < Account::AccountController
     @project = resource
 
     if @project.update(project_params)
-      redirect_to account_workspace_path(parent), notice: "Project was successfully updated!"
+      redirect_to account_workspace_path(@workspace), notice: "Project was successfully updated!"
     else
       render :edit
     end

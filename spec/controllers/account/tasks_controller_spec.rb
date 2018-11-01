@@ -101,11 +101,23 @@ RSpec.describe Account::TasksController, type: :controller do
     it 'should unfollow task' do
       sign_in user1
       expect(task2.watchers.count).to eq 4
+
       patch :watch, params: { project_id: project.id, id: task2.id }, format: :js
 
       task2.reload
       expect(task2.watchers.count).to eq 3
       expect(task2.watchers).to_not include user1
+    end
+  end
+
+  context "DELETE /:delete_file_attachment" do
+    let!(:task)       { create(:task, :with_files, project: project) }
+    let!(:attachment) { task.files.last }
+
+    it "must remove attachment fromm a task" do
+      delete :remove_attachment, params: { project_id: project.id, id: task.id, attachment_id: attachment.id}
+
+      expect(response).to redirect_to(account_project_task_path(project.id, task.id))
     end
   end
 end
