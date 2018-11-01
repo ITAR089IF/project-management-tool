@@ -2,7 +2,7 @@ class Account::ProjectsController < Account::AccountController
   def show
     @workspace = parent
     @project = resource
-    @tasks = @project.tasks.row_order_asc
+    @tasks = resource.tasks.row_order_asc
   end
 
   def new
@@ -14,7 +14,7 @@ class Account::ProjectsController < Account::AccountController
     @workspace = parent
     @project = collection.build(project_params)
     if  @project.save
-      redirect_to account_workspace_projects_path(parent), notice: "Project was successfully created!"
+      redirect_to account_workspace_path(parent), notice: "Project was successfully created!"
     else
       render :new
     end
@@ -29,7 +29,7 @@ class Account::ProjectsController < Account::AccountController
     @workspace = parent
     @project = resource
     if @project.update(project_params)
-      redirect_to account_workspace_projects_path(parent), notice: "Project was successfully updated!"
+      redirect_to account_workspace_path(parent), notice: "Project was successfully updated!"
     else
       render :edit
     end
@@ -37,7 +37,7 @@ class Account::ProjectsController < Account::AccountController
 
   def destroy
     resource.destroy
-    redirect_to account_workspace_projects_path(parent), alert: "Project was successfully deleted!"
+    redirect_to account_workspace_path(parent), alert: "Project was successfully deleted!"
   end
 
   private

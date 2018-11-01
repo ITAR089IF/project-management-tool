@@ -5,7 +5,7 @@
 #  id          :bigint(8)        not null, primary key
 #  description :text
 #  row_order   :integer
-#  section     :boolean
+#  section     :boolean          default(FALSE)
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -27,5 +27,14 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph }
 
     project
+
+    trait :with_files do
+      after(:build) do |user|
+        2.times do |n|
+          file = ["image1.jpg", "image2.jpg", "asana.png", "text.txt", "book.pdf"].sample
+          user.files.attach(io: File.open(Rails.root.join('spec', 'factories', 'files', file)), filename: file, content_type: ['image/png', 'image/jpg', 'text/plain', 'application/pdf'])
+        end
+      end
+    end
   end
 end

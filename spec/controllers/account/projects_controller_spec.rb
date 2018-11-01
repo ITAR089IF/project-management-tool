@@ -14,13 +14,6 @@ RSpec.describe Account::ProjectsController, type: :controller do
       sign_in user
     end
 
-    describe "GET #index" do
-      it "returns http success" do
-        get :index, params: { workspace_id: workspace.to_param }
-        expect(response).to have_http_status(200)
-      end
-    end
-    
     describe "GET #show" do
       it "must return show page" do
         get :show, params: { workspace_id: workspace.to_param, id: project.to_param }

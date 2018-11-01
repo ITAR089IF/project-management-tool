@@ -1,19 +1,19 @@
 class Account::TasksController < Account::AccountController
   def show
     @project = parent
-    @task = @project.tasks.find(params[:id])
+    @task = parent.tasks.find(params[:id])
   end
 
   def new
     @project = parent
-    @task = @project.tasks.build(section_params)
+    @task = parent.tasks.build(section_params)
   end
 
   def create
+    @project = parent
     @task = parent.tasks.build(tasks_params)
-
     if @task.save
-      redirect_to account_workspace_project_path(parent.workspace_id, parent)
+      redirect_to account_project_task_path(parent, @task)
     else
       render :new
     end
@@ -21,14 +21,14 @@ class Account::TasksController < Account::AccountController
 
   def edit
     @project = parent
-    @task = @project.tasks.find(params[:id])
+    @task = parent.tasks.find(params[:id])
   end
 
   def update
+    @project = parent
     @task = resource
-
-    if @task.update(tasks_params)
-      redirect_to account_project_task_path(parent.id, @task)
+    if resource.update(tasks_params)
+      redirect_to account_project_task_path(parent, resource)
     else
       render "edit"
     end
@@ -36,12 +36,19 @@ class Account::TasksController < Account::AccountController
 
   def destroy
     resource.destroy
-    redirect_to account_workspace_project_path(parent.workspace_id, parent.id)
+    redirect_to account_workspace_project_path(parent.workspace_id, parent)
   end
 
   def move
     resource.update_attributes(task_movement_params)
-    redirect_to account_workspace_project_path(parent.workspace_id, parent.id)
+    redirect_to account_workspace_project_path(parent.workspace_id, parent)
+  end
+
+  def delete_file_attachment
+    @project = parent
+    @task = resource
+    @task.files.find_by_id(params[:attachment_id]).purge
+    redirect_to account_project_task_path(parent, resource)
   end
 
   private
@@ -59,7 +66,7 @@ class Account::TasksController < Account::AccountController
   end
 
   def tasks_params
-    params.require(:task).permit(:title, :description, :section)
+    params.require(:task).permit(:title, :description, :section, files: [])
   end
 
   def task_movement_params
