@@ -15,7 +15,7 @@ Rails.application.routes.draw do
       resources :tasks, except: [:index] do
         member do
           put :move
-          delete :delete_file_attachment
+          delete :remove_attachment
         end
       end
     end

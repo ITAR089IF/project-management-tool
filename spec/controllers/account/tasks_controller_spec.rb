@@ -6,7 +6,7 @@ RSpec.describe Account::TasksController, type: :controller do
   let!(:user)      { create(:user) }
   let!(:workspace) { create(:workspace, user: user) }
   let!(:project)   { create(:project, workspace: workspace, users: [user]) }
-  let!(:tasks)     { create_list(:task, 2, :with_files, project: project) }
+  let!(:tasks)     { create_list(:task, 2, project: project) }
 
   before do
     sign_in user
@@ -58,11 +58,11 @@ RSpec.describe Account::TasksController, type: :controller do
   end
 
   context "DELETE /:delete_file_attachment" do
-    let!(:task)       { tasks.last }
+    let!(:task)       { create(:task, :with_files, project: project) }
     let!(:attachment) { task.files.last }
 
     it "must remove attachment fromm a task" do
-      delete :delete_file_attachment, params: { project_id: project.id, id: task.id, attachment_id: attachment.id}
+      delete :remove_attachment, params: { project_id: project.id, id: task.id, attachment_id: attachment.id}
       
       expect(response).to redirect_to(account_project_task_path(project.id, task.id))
     end

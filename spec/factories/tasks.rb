@@ -29,12 +29,16 @@ FactoryBot.define do
     project
 
     trait :with_files do
-      after(:build) do |user|
-        2.times do |n|
-          file = ["image1.jpg", "image2.jpg", "asana.png", "text.txt", "book.pdf"].sample
-          user.files.attach(io: File.open(Rails.root.join('spec', 'factories', 'files', file)), filename: file)
+      transient do
+        files_count { 3 }
+      end
+
+      after(:build) do |task, evaluator|
+        evaluator.files_count.times do
+          task.files.attach(FileFactory.random_file)
         end
       end
     end
+    
   end
 end

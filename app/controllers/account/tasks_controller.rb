@@ -12,7 +12,7 @@ class Account::TasksController < Account::AccountController
   def create
     @project = parent
     @task = @project.tasks.build(tasks_params)
-    
+
     if @task.save
       redirect_to account_project_task_path(@project, @task)
     else
@@ -46,10 +46,10 @@ class Account::TasksController < Account::AccountController
     redirect_to account_workspace_project_path(parent.workspace_id, parent)
   end
 
-  def delete_file_attachment
+  def remove_attachment
     @project = parent
     @task = resource
-    @task.files.find_by(id: params[:attachment_id]).purge
+    @task.files.find(params[:attachment_id]).purge
 
     redirect_to account_project_task_path(@project, @task)
   end
