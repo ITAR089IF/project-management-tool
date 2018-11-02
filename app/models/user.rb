@@ -3,6 +3,8 @@
 # Table name: users
 #
 #  id                     :bigint(8)        not null, primary key
+#  about                  :text
+#  department             :string
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string
@@ -13,6 +15,7 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  role                   :string
 #  uid                    :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -30,10 +33,11 @@ class User < ApplicationRecord
   has_many :task_watches, dependent: :destroy
   has_many :tasks, through: :task_watches
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   validates :first_name, length: { maximum: 250 }, presence: true
   validates :last_name, length: { maximum: 250 }, presence: true
+  validates :role, length: { maximum: 250 }
+  validates :department, length: { maximum: 250 }
+  validates :about, length: { maximum: 250 }
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
@@ -66,6 +70,10 @@ class User < ApplicationRecord
     end
   end
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+  
   def watching?(task)
     self.tasks.where(id: task.id).exists?
   end
