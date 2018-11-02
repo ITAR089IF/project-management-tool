@@ -3,6 +3,6 @@
   = f.input :last_name, wrapper: :bulma_input, required: true
   = f.input :role, wrapper: :bulma_input
   = f.input :department, wrapper: :bulma_input
-  = f.input :about, wrapper: :bulma_input
+  = f.input :about, wrapper: :textarea
   = f.submit "Update Profile", class: "button is-link"
   = link_to 'Back', account_dashboard_path, class: 'button is-text'

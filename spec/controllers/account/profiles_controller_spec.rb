@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Account::ProfilesController, type: :controller do
+  render_views
+
   let!(:user) { create(:user) }
   let!(:user_valid_params) { { first_name: "John"} }
   let!(:user_invalid_params) { { first_name: ""} }
