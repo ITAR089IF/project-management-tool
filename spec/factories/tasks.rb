@@ -29,5 +29,18 @@ FactoryBot.define do
     complete { Faker::Boolean.boolean }
 
     project
+
+    trait :with_files do
+      transient do
+        files_count { 3 }
+      end
+
+      after(:build) do |task, evaluator|
+        evaluator.files_count.times do
+          task.files.attach(FileFactory.random_file)
+        end
+      end
+    end
+    
   end
 end

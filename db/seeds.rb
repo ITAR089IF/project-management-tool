@@ -13,13 +13,15 @@ Project.all.each do |project|
 end
 
 User.all.each do |user|
-  projects = []
-
   user.workspaces.each do |workspace|
     workspace.projects.each do |project|
-      projects << project
+      project.update(users: [user])
     end
   end
 
-  user.update(projects: projects)
+  user.projects.each do |project|
+    project.tasks.each do |task|
+      task.update(watchers: [user]) if [true, false].sample
+    end
+  end
 end
