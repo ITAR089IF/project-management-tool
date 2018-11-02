@@ -26,7 +26,6 @@ class Account::WorkspacesController < Account::AccountController
 
   def update
     @workspace = resource
-
     if @workspace.update(workspace_params)
       redirect_to account_workspace_path(@workspace), notice: 'Workspace was updated!'
     else
