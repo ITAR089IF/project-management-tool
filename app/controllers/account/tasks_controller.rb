@@ -46,9 +46,8 @@ class Account::TasksController < Account::AccountController
 
   def complete
     resource.update(complete: true)
-    respond_to do |format|
-      format.js
-    end
+    respond_to :js
+  
   end
 
   private

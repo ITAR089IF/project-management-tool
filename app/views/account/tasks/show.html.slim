@@ -7,7 +7,7 @@
     = @task.description
   .level
     .level-left
-      - unless @task.complete?
+      - if @task.pending?
         .level-item
           = link_to "Edit", edit_account_project_task_path(@project, @task),
             class: "button is-small right"

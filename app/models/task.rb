@@ -35,4 +35,9 @@ class Task < ApplicationRecord
 
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }
+
+  def pending?
+    !complete?
+  end
+  
 end
