@@ -26,7 +26,6 @@ FactoryBot.define do
   factory :task, class: 'Task' do
     title { Faker::Lorem.sentence }
     description { Faker::Lorem.paragraph }
-    complete { Faker::Boolean.boolean }
 
     project
 
@@ -41,6 +40,6 @@ FactoryBot.define do
         end
       end
     end
-    
+
   end
 end

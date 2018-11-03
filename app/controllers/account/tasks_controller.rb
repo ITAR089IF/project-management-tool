@@ -37,8 +37,13 @@ class Account::TasksController < Account::AccountController
   end
 
   def destroy
+    @project = parent
+    @task = resource
     resource.destroy
-    redirect_to account_workspace_project_path(parent.workspace_id, parent)
+    respond_to do |f|
+      f.js
+      f.html { redirect_to account_workspace_project_path(parent.workspace_id, parent) }
+    end
   end
 
   def move
@@ -68,9 +73,10 @@ class Account::TasksController < Account::AccountController
   end
 
   def complete
-    resource.update(complete: true)
+    @project = parent
+    @task = resource
+    @task.update(complete: true)
     respond_to :js
-  
   end
 
   private
