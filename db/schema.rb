@@ -101,6 +101,9 @@ ActiveRecord::Schema.define(version: 2018_10_31_173535) do
     t.string "oauth_token"
     t.string "oauth_expires_at"
     t.string "last_name"
+    t.string "role"
+    t.string "department"
+    t.text "about"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
