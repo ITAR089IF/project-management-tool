@@ -17,12 +17,16 @@ SimpleForm.setup do |config|
     b.use :hint,  wrap_with: { tag: :div, class: "help" }
     b.use :error, wrap_with: { tag: :div, class: "help is-danger" }
   end
-  
+
   config.wrappers :inline_checkbox, class: 'field', error_class: :field_with_errors do |b|
     b.use :html5
     b.use :label_input, wrap_with: { class: 'checkbox inline' }
     b.use :error, wrap_with: { tag: :div, class: 'help is-danger' }
     b.use :hint, wrap_with: { tag: :div, class: 'help' }
+  end
+
+  config.wrappers :dropdown do |b|
+    b.use :input
   end
 
   config.wrappers :default, class: :input,
@@ -86,7 +90,7 @@ SimpleForm.setup do |config|
   config.boolean_style = :nested
 
   # Default class for buttons
-  config.button_class = 'btn'
+  config.button_class = 'button'
 
   # Method used to tidy up errors. Specify any Rails Array method.
   # :first lists the first message for each field.

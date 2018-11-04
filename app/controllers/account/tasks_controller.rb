@@ -55,8 +55,28 @@ class Account::TasksController < Account::AccountController
     else
       @task.add_watcher(current_user)
     end
+  end
 
-    respond_to(:js)
+  def choose_assignee
+    @project = parent
+    @task = @project.tasks.find(params[:id])
+    respond_to :js
+  end
+
+  def assign
+    @project = parent
+    @task = @project.tasks.find(params[:id])
+    @assignee = @task.build_assignee(assignee_params)
+    if @assignee.save
+      respond_to :js
+    end
+  end
+
+  def unassign
+    @project = parent
+    @task = resource
+    @task.assignee.destroy
+    respond_to :js
   end
 
   def remove_attachment
@@ -91,5 +111,9 @@ class Account::TasksController < Account::AccountController
 
   def section_params
     params.permit(:section)
+  end
+
+  def assignee_params
+    params.require(:assignee).permit(:user_id).merge!(task_id: params[:id])
   end
 end

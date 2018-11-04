@@ -25,3 +25,7 @@ User.all.each do |user|
     end
   end
 end
+
+Task.all.each do |task|
+  FactoryBot.create(:assignee, task: task, user: User.all.sample)
+end

@@ -1,37 +1,11 @@
-# == Schema Information
-#
-# Table name: users
-#
-#  id                     :bigint(8)        not null, primary key
-#  email                  :string           default(""), not null
-#  encrypted_password     :string           default(""), not null
-#  first_name             :string
-#  last_name              :string
-#  oauth_expires_at       :string
-#  oauth_token            :string
-#  provider               :string
-#  remember_created_at    :datetime
-#  reset_password_sent_at :datetime
-#  reset_password_token   :string
-#  uid                    :string
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#
-# Indexes
-#
-#  index_users_on_email                 (email) UNIQUE
-#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
-#
-
 class User < ApplicationRecord
   has_many :workspaces, dependent: :destroy
   has_many :user_projects, dependent: :destroy
   has_many :projects, through: :user_projects
   has_many :task_watches, dependent: :destroy
   has_many :tasks, through: :task_watches
+  has_many :assigned_task, through: :assignee, dependent: :destroy
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   validates :first_name, length: { maximum: 250 }, presence: true
   validates :last_name, length: { maximum: 250 }, presence: true
 
@@ -64,6 +38,10 @@ class User < ApplicationRecord
         user.email = data["email"] if user.email.blank?
       end
     end
+  end
+
+  def full_name
+    "#{first_name} #{last_name}"
   end
 
   def watching?(task)

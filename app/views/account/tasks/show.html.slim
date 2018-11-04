@@ -11,6 +11,9 @@
           = render('/account/tasks/watch_link', task: @task, project: @project)
     h3 Description
     = @task.description
+    .level
+      #assingnee_user_bar
+        = render 'account/tasks/assignee_show', task: @task
     - if @task.files.attached?
       h3 Attachments
       - @task.files.each do |file|

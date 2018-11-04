@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_31_175048) do
+ActiveRecord::Schema.define(version: 2018_11_01_213215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,15 @@ ActiveRecord::Schema.define(version: 2018_10_31_175048) do
     t.datetime "updated_at", null: false
     t.bigint "workspace_id"
     t.index ["workspace_id"], name: "index_projects_on_workspace_id"
+  end
+
+  create_table "assignees", force: :cascade do |t|
+    t.bigint "task_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_assignees_on_task_id"
+    t.index ["user_id"], name: "index_assignees_on_user_id"
   end
 
   create_table "task_watches", force: :cascade do |t|
@@ -116,6 +125,8 @@ ActiveRecord::Schema.define(version: 2018_10_31_175048) do
   end
 
   add_foreign_key "projects", "workspaces"
+  add_foreign_key "assignees", "tasks"
+  add_foreign_key "assignees", "users"
   add_foreign_key "task_watches", "tasks"
   add_foreign_key "task_watches", "users"
   add_foreign_key "tasks", "projects"
