@@ -1,19 +1,10 @@
-# frozen_string_literal: true
-#
-# Uncomment this and change the path if necessary to include your own
-# components.
-# See https://github.com/plataformatec/simple_form#custom-components to know
-# more about custom components.
-# Dir[Rails.root.join('lib/components/**/*.rb')].each { |f| require f }
-#
-# Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
 
   config.wrappers :bulma_input, class: "field", error_class: :field_with_errors do |b|
     b.use :html5
     b.use :placeholder
-    b.use :label, class: "label", valid_class: 'is-success', error_class: 'is-danger'
-    b.use :input, class: "input", valid_class: 'is-success', error_class: 'is-danger'
+    b.use :label, class: "label", error_class: 'is-danger'
+    b.use :input, class: "input", error_class: 'is-danger'
     b.use :hint,  wrap_with: { tag: :div, class: "help" }
     b.use :error, wrap_with: { tag: :div, class: "help is-danger" }
   end
@@ -27,6 +18,15 @@ SimpleForm.setup do |config|
 
   config.wrappers :dropdown do |b|
     b.use :input
+  end
+
+  config.wrappers :textarea, class: "field", error_class: :field_with_errors do |b|
+    b.use :html5
+    b.use :placeholder
+    b.use :label, class: "label", error_class: 'is-danger'
+    b.use :input, class: "textarea", error_class: 'is-danger'
+    b.use :hint,  wrap_with: { tag: :div, class: "help" }
+    b.use :error, wrap_with: { tag: :div, class: "help is-danger" }
   end
 
   config.wrappers :default, class: :input,
@@ -146,7 +146,7 @@ SimpleForm.setup do |config|
   # in this configuration, which is recommended due to some quirks from different browsers.
   # To stop SimpleForm from generating the novalidate option, enabling the HTML5 validations,
   # change this configuration to true.
-  config.browser_validations = true
+  config.browser_validations = false
 
   # Collection of methods to detect if a file type was given.
   # config.file_methods = [ :mounted_as, :file?, :public_filename, :attached? ]

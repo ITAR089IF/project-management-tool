@@ -4,5 +4,5 @@ class Workspace < ApplicationRecord
 
   scope :order_desc, -> { order(id: :desc) }
 
-  validates :name, presence: true, length: { maximum: 30 }
+  validates :name, presence: true, length: { maximum: 250 }
 end
