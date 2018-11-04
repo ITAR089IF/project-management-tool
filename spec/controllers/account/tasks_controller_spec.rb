@@ -47,8 +47,30 @@ RSpec.describe Account::TasksController, type: :controller do
     end
   end
 
-  context 'PUT /:move' do
+  context 'DELETE/projects/:project_id/tasks/:id' do
+    it 'should delete task with :js' do
+      expect(project.tasks.count).to eq 3
+      delete :destroy, params: { project_id: project.id, id: task1.id }, format: :js
+      expect(project.tasks.count).to eq 2
+    end
 
+    it 'should delete task with :html' do
+      delete :destroy, params: {
+        project_id: project.id, id: task2.id
+      }
+      expect(response).to redirect_to account_workspace_project_path(workspace.id, project.id)
+    end
+  end
+
+  context 'PATCH /:complete' do
+    it 'should change status of the task' do
+      expect(project.tasks.complete.count).to eq 0
+      patch :complete, params: { project_id: project.id, id: task1.id }, format: :js
+      expect(project.tasks.complete.count).to eq 1
+    end
+  end
+
+  context 'PUT /:move' do
     it 'should move task down' do
       put :move, params: {
         project_id: project.id,
