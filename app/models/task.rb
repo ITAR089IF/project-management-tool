@@ -3,9 +3,10 @@
 # Table name: tasks
 #
 #  id          :bigint(8)        not null, primary key
+#  complete    :boolean          default(FALSE)
 #  description :text
 #  row_order   :integer
-#  section     :boolean          default(FALSE)
+#  section     :boolean
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -31,10 +32,16 @@ class Task < ApplicationRecord
   has_many :task_watches, dependent: :destroy
   has_many :watchers, through: :task_watches, source: :user
 
+  scope :incomplete, -> { where(complete: false) }
+  scope :complete, -> { where(complete: true) }
   scope :row_order_asc, -> { order(row_order: :asc) }
 
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }
+
+  def pending?
+    !complete?
+  end
 
   def add_watcher(user)
     self.task_watches.find_or_create_by(user_id: user.id)
