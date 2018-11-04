@@ -16,3 +16,22 @@
   padding: 10px 10px;
 }
 
+div#assignee_show {
+  border: 1px dashed #404040;
+  border-radius: 20px;
+  padding: 10px;
+  margin-top: 1.5rem;
+}
+
+div#assignee_show i {
+  padding: 0 5px;
+  color: #404040;
+}
+
+div#assignee_show span {
+  padding-right: 5px;
+}
+
+div#assignee_show a>i:hover{
+  color: #ccc;
+}
