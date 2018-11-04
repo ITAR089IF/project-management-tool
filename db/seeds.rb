@@ -13,16 +13,19 @@ Project.all.each do |project|
 end
 
 User.all.each do |user|
-  projects = []
-
   user.workspaces.each do |workspace|
     workspace.projects.each do |project|
-      projects << project
+      project.update(users: [user])
       FactoryBot.create_list(:comment, 1.upto(5).to_a.sample, :for_project, user: user, commentable: project)
       project.tasks.each do |task|
         FactoryBot.create_list(:comment, 1.upto(5).to_a.sample, :for_task, user: user, commentable: task)
       end
     end
   end
-  user.update(projects: projects)
+
+  user.projects.each do |project|
+    project.tasks.each do |task|
+      task.update(watchers: [user]) if [true, false].sample
+    end
+  end
 end

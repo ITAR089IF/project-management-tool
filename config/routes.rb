@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
+    resource :profile, only: [:edit, :update]
     resources :workspaces do
       resources :projects, except: [:index]
     end
@@ -19,6 +20,9 @@ Rails.application.routes.draw do
       resources :tasks, except: [:index] do
         member do
           put :move
+          patch :complete
+          patch :watch
+          delete :remove_attachment
         end
       end
     end

@@ -8,16 +8,16 @@ RSpec.describe Account::CommentsController, type: :controller do
   let!(:user) { create(:user) }
   let!(:comment_for_task) { create(:comment, :for_task, body: 'Body', user: user, commentable: task) }
   let!(:comment_for_project) { create(:comment, :for_project, body: 'Body', user: user, commentable: project) }
-  let(:projects_comment_params) do
+  let!(:projects_comment_params) do
       { comment: { body: 'Body'}, project_id: project.id, format: :js }
   end
-  let(:tasks_comment_params) do
+  let!(:tasks_comment_params) do
     { comment: { body: 'Body'}, task_id: task.id, format: :js }
   end
-  let(:invalid_params_for_projects_comment) do
+  let!(:invalid_params_for_projects_comment) do
     { comment: { body: ''}, project_id: project.id, format: :js }
   end
-  let(:invalid_params_for_tasks_comment) do
+  let!(:invalid_params_for_tasks_comment) do
     { comment: { body: ''}, task_id: task.id, format: :js }
   end
 

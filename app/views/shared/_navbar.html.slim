@@ -10,21 +10,8 @@
     .navbar-start
       .navbar-item IF-089.Ruby
       - if user_signed_in?
-        a.navbar-item[href="/account/dashboard"]
-          | Dashboard
-        a.navbar-item[href="/account/workspaces"]
-          | My Worspaces
-        / .navbar-item.has-dropdown.is-hoverable
-          a.navbar-link[href="#"]
-            |  My Tasks
-          .navbar-dropdown
-            a.navbar-item[href="#"]
-              |  List
-            a.navbar-item[href="#"]
-              |  Calendar
-            hr.navbar-divider
-            a.navbar-item[href="#"]
-              |  Report an issue
+        .navbar-item
+          = link_to "Dashboard", account_dashboard_path, class: 'navbar-item'
     .navbar-end
       .navbar-item
         - if (!user_signed_in?)
@@ -34,7 +21,15 @@
             .button.is-light
               = link_to "Sign in", new_user_session_path
         - else
+          .navbar-item.has-dropdown.is-hoverable
+            a.navbar-link
+              = current_user.full_name
+            .navbar-dropdown
+              = link_to "My workspaces", account_workspaces_path, class: 'navbar-item'
+              hr.navbar-divider
+              - current_user.workspaces.each do |workspace|
+                = link_to workspace.name, account_workspace_path(workspace), class: 'navbar-item'
+              hr.navbar-divider
+                = link_to "My Profile Settings...", edit_account_profile_path, class: 'navbar-item'
           .navbar-item
-            = current_user.email
-          .navbar-item
-            = link_to "Sign out", destroy_user_session_path, method: :delete, class: 'button is-primary'
+          = link_to "Log out", destroy_user_session_path, method: :delete, class: 'button is-primary'

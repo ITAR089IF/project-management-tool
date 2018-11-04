@@ -2,9 +2,10 @@ class Account::ProjectsController < Account::AccountController
   def show
     @workspace = parent
     @project = resource
-    @tasks = @project.tasks.row_order_asc
     @comments = @project.comments.order_desc.page(params[:page]).per(5)
     @comment = @project.comments.build
+    @incomplete_tasks = @project.tasks.incomplete.row_order_asc
+    @complete_tasks = @project.tasks.complete.row_order_asc
   end
 
   def new
@@ -14,9 +15,10 @@ class Account::ProjectsController < Account::AccountController
 
   def create
     @workspace = parent
-    @project = collection.build(project_params)
+    @project = @workspace.projects.build(project_params)
+
     if  @project.save
-      redirect_to account_workspace_projects_path(parent), notice: "Project was successfully created!"
+      redirect_to account_workspace_path(@workspace), notice: "Project was successfully created!"
     else
       render :new
     end
@@ -30,8 +32,9 @@ class Account::ProjectsController < Account::AccountController
   def update
     @workspace = parent
     @project = resource
+
     if @project.update(project_params)
-      redirect_to account_workspace_projects_path(parent), notice: "Project was successfully updated!"
+      redirect_to account_workspace_path(@workspace), notice: "Project was successfully updated!"
     else
       render :edit
     end
@@ -39,7 +42,7 @@ class Account::ProjectsController < Account::AccountController
 
   def destroy
     resource.destroy
-    redirect_to account_workspace_projects_path(parent), alert: "Project was successfully deleted!"
+    redirect_to account_workspace_path(parent), alert: "Project was successfully deleted!"
   end
 
   private
@@ -57,6 +60,6 @@ class Account::ProjectsController < Account::AccountController
   end
 
   def project_params
-    params.require(:project).permit(:name).merge(workspace_id: params[:workspace_id])
+    params.require(:project).permit(:name).merge(users: [current_user])
   end
 end

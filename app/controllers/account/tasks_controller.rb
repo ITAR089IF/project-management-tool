@@ -12,10 +12,11 @@ class Account::TasksController < Account::AccountController
   end
 
   def create
-    @task = parent.tasks.build(tasks_params)
+    @project = parent
+    @task = @project.tasks.build(tasks_params)
 
     if @task.save
-      redirect_to account_workspace_project_path(parent.workspace_id, parent)
+      redirect_to account_project_task_path(@project, @task)
     else
       render :new
     end
@@ -27,23 +28,57 @@ class Account::TasksController < Account::AccountController
   end
 
   def update
+    @project = parent
     @task = resource
 
-    if @task.update(tasks_params)
-      redirect_to account_project_task_path(parent.id, @task)
+    if resource.update(tasks_params)
+      redirect_to account_project_task_path(@project, @task)
     else
       render "edit"
     end
   end
 
   def destroy
+    @project = parent
+    @task = resource
     resource.destroy
-    redirect_to account_workspace_project_path(parent.workspace_id, parent.id)
+    respond_to do |f|
+      f.js
+      f.html { redirect_to account_workspace_project_path(parent.workspace_id, parent) }
+    end
   end
 
   def move
-    resource.update_attributes(task_movement_params)
-    redirect_to account_workspace_project_path(parent.workspace_id, parent.id)
+    resource.update(task_movement_params)
+    redirect_to account_workspace_project_path(parent.workspace_id, parent)
+  end
+
+  def watch
+    @project = parent
+    @task = @project.tasks.find(params[:id])
+
+    if current_user.watching?(@task)
+      @task.remove_watcher(current_user)
+    else
+      @task.add_watcher(current_user)
+    end
+
+    respond_to(:js)
+  end
+
+  def remove_attachment
+    @project = parent
+    @task = resource
+    @task.files.find(params[:attachment_id]).purge
+
+    redirect_to account_project_task_path(@project, @task)
+  end
+
+  def complete
+    @project = parent
+    @task = resource
+    @task.update(complete: true)
+    respond_to :js
   end
 
   private
@@ -61,7 +96,7 @@ class Account::TasksController < Account::AccountController
   end
 
   def tasks_params
-    params.require(:task).permit(:title, :description, :section)
+    params.require(:task).permit(:title, :description, :section, files: [])
   end
 
   def task_movement_params

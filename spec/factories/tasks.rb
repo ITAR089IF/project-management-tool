@@ -3,6 +3,7 @@
 # Table name: tasks
 #
 #  id          :bigint(8)        not null, primary key
+#  complete    :boolean          default(FALSE)
 #  description :text
 #  row_order   :integer
 #  section     :boolean          default(FALSE)
@@ -27,5 +28,18 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph }
 
     project
+
+    trait :with_files do
+      transient do
+        files_count { 3 }
+      end
+
+      after(:build) do |task, evaluator|
+        evaluator.files_count.times do
+          task.files.attach(FileFactory.random_file)
+        end
+      end
+    end
+
   end
 end
