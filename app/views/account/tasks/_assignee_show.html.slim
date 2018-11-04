@@ -1,0 +1,14 @@
+  #assignee_show
+    -if task.assigned_user
+      =  link_to choose_assignee_account_project_task_path(task.project),
+                remote: true, id: 'assignee_show' do
+        span Assigned to: 
+        = task.assigned_user.first_name
+
+      = link_to unassign_account_project_task_path(task.project),
+                method: :delete, remote: true, :data => {:confirm => 'Are you sure?'} do
+                  = fa_icon 'times'
+    -else
+      = link_to choose_assignee_account_project_task_path(task.project), remote: true do
+        span Unassigned
+        = fa_icon 'plus'
