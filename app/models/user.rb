@@ -77,7 +77,7 @@ class User < ApplicationRecord
   end
 
   def can_manage?(comment)
-    comments.include?(comment)
+    comments.where(id: comment.id).exists?
   end
 
   def watching?(task)

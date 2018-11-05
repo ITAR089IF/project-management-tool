@@ -2,10 +2,9 @@
   article.media.box
     .media-content
       .content
-        p
-          strong = comment.user.full_name
-          = simple_format(comment.body)
-          small = comment.created_at.to_date
+        strong = comment.user.full_name
+        = simple_format(comment.body)
+        small = comment.created_at.to_date
     .media-right
       -if comment.user.can_manage?(comment)
           = link_to [:account, commentable, comment], remote: true, method: :delete, data: {confirm: "Are you sure?"} do
