@@ -60,11 +60,14 @@ class Account::TasksController < Account::AccountController
     else
       @task.add_watcher(current_user)
     end
+
+    respond_to(:js)
   end
 
   def choose_assignee
     @project = parent
     @task = @project.tasks.find(params[:id])
+
     respond_to :js
   end
 
@@ -72,6 +75,7 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = @project.tasks.find(params[:id])
     @result = @task.update(assignee_id: assignee_params[:assignee])
+
     respond_to :js
   end
 
@@ -79,6 +83,7 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = resource
     @result = @task.update(assignee_id: nil)
+
     respond_to :js
   end
 
@@ -94,6 +99,7 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = resource
     @task.update(complete: true)
+    
     respond_to :js
   end
 
