@@ -13,7 +13,6 @@ RSpec.describe Account::TasksController, type: :controller do
   let!(:task1) { create(:task, project: project) }
   let!(:task2) { create(:task, project: project, watchers: [user1, user2, user3, user4]) }
   let!(:task3) { create(:task, project: project) }
-  let!(:assignee) { create(:assignee, user: user, task: task2) }
 
   before do
     sign_in user
@@ -144,7 +143,7 @@ RSpec.describe Account::TasksController, type: :controller do
     end
   end
 
-  context '#GET / choose_assignee' do
+  context '#GET /choose_assignee' do
     it 'renders assignee form' do
       get :choose_assignee, params: { project_id: project.id, id: task1.id },
         format: :js, xhr: true
@@ -152,29 +151,28 @@ RSpec.describe Account::TasksController, type: :controller do
     end
   end
 
-  context '#POST / initial assign' do
+  context '#POST /initial assign' do
     it 'creates assignee' do
-      post :assign, params: { assignee: { user_id: user1.id }, id: task1.id, project_id: project.id }, format: :js, xhr: true
-
+      post :assign, params: { task: { assignee: user1.id }, id: task1.id, project_id: project.id }, format: :js, xhr: true
       expect(response).to render_template :assign
-      expect(task1.assigned_user).to eql user1
+      expect(task1.assignee).to eql user1
     end
   end
 
-  context '#POST / assign' do
+  context '#POST /assign' do
     it 'initial assign' do
-      post :assign, params: { assignee: { user_id: user1.id }, id: task1.id, project_id: project.id }, format: :js, xhr: true
+      post :assign, params: { task: { assignee: user1.id }, id: task1.id, project_id: project.id }, format: :js, xhr: true
       expect(response).to render_template :assign
-      expect(task1.assigned_user).to eql user1
+      expect(task1.assignee).to eql user1
     end
-    it 'reassignee' do
-      post :assign, params: { assignee: { user_id: user1.id }, id: task2, project_id: project.id }, format: :js, xhr: true
+    it 'reassign' do
+      post :assign, params: { task: { assignee: user1.id }, id: task2.id, project_id: project.id }, format: :js, xhr: true
       expect(response).to render_template :assign
-      expect(task2.assigned_user).to eql user1
+      expect(task2.assignee).to eql user1
     end
   end
 
-  context '#DELETE / unassign' do
+  context '#DELETE /unassign' do
     it 'delete assignee for task'  do
       delete :unassign, params: { project_id: project.id, id: task2.id }, format: :js
       expect(task2.reload.assignee).to be_nil

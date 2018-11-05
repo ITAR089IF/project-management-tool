@@ -71,16 +71,14 @@ class Account::TasksController < Account::AccountController
   def assign
     @project = parent
     @task = @project.tasks.find(params[:id])
-    @assignee = @task.build_assignee(assignee_params)
-    if @assignee.save
-      respond_to :js
-    end
+    @result = @task.update(assignee_id: assignee_params[:assignee])
+    respond_to :js
   end
 
   def unassign
     @project = parent
     @task = resource
-    @task.assignee.destroy
+    @result = @task.update(assignee_id: nil)
     respond_to :js
   end
 
@@ -126,6 +124,6 @@ class Account::TasksController < Account::AccountController
   end
 
   def assignee_params
-    params.require(:assignee).permit(:user_id).merge!(task_id: params[:id])
+    params.require(:task).permit(:assignee)
   end
 end

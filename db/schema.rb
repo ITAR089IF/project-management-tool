@@ -1,4 +1,19 @@
-ActiveRecord::Schema.define(version: 2018_11_01_213215) do
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# you'll amass, the slower it'll run and the greater likelihood for issues).
+#
+# It's strongly recommended that you check this file into your version control system.
+
+ActiveRecord::Schema.define(version: 2018_11_05_154717) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -41,15 +56,6 @@ ActiveRecord::Schema.define(version: 2018_11_01_213215) do
     t.index ["workspace_id"], name: "index_projects_on_workspace_id"
   end
 
-  create_table "assignees", force: :cascade do |t|
-    t.bigint "task_id"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["task_id"], name: "index_assignees_on_task_id"
-    t.index ["user_id"], name: "index_assignees_on_user_id"
-  end
-
   create_table "task_watches", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "task_id"
@@ -66,8 +72,10 @@ ActiveRecord::Schema.define(version: 2018_11_01_213215) do
     t.datetime "updated_at", null: false
     t.integer "row_order"
     t.bigint "project_id"
+    t.boolean "section", default: false
     t.boolean "complete", default: false
-    t.boolean "section"
+    t.bigint "assignee_id"
+    t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
     t.index ["project_id"], name: "index_tasks_on_project_id"
     t.index ["row_order"], name: "index_tasks_on_row_order"
   end
@@ -111,11 +119,10 @@ ActiveRecord::Schema.define(version: 2018_11_01_213215) do
   end
 
   add_foreign_key "projects", "workspaces"
-  add_foreign_key "assignees", "tasks"
-  add_foreign_key "assignees", "users"
   add_foreign_key "task_watches", "tasks"
   add_foreign_key "task_watches", "users"
   add_foreign_key "tasks", "projects"
+  add_foreign_key "tasks", "users", column: "assignee_id"
   add_foreign_key "user_projects", "projects"
   add_foreign_key "user_projects", "users"
   add_foreign_key "workspaces", "users"

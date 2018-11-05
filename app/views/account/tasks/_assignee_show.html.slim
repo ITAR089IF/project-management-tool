@@ -1,15 +1,15 @@
-  #assignee_show
-    = fa_icon 'user-o'
-    -if task.assigned_user
-      span Assigned to:
-      =  link_to choose_assignee_account_project_task_path(task.project),
-                remote: true, id: 'assignee_show' do
-        = task.assigned_user.full_name
+#assignee_show
+  = fa_icon 'user-o'
+  - if task.assignee
+    span Assigned to:
+    = link_to choose_assignee_account_project_task_path(task.project),
+              remote: true, id: 'assignee_show' do
+      = task.assignee.full_name
 
-      = link_to unassign_account_project_task_path(task.project),
-                method: :delete, remote: true, :data => {:confirm => 'Are you sure?'} do
-                  = fa_icon 'times'
-    -else
-      = link_to choose_assignee_account_project_task_path(task.project), remote: true do
-        span Unassigned
-        = fa_icon 'plus'
+    = link_to unassign_account_project_task_path(task.project),
+              method: :delete, remote: true, :data => {:confirm => 'Are you sure?'} do
+                = fa_icon 'times'
+  - else
+    = link_to choose_assignee_account_project_task_path(task.project), remote: true do
+      span Unassigned
+      = fa_icon 'plus'
