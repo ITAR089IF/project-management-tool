@@ -27,7 +27,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :task do
+    resources :tasks do
       concerns :commentable
     end
   end
