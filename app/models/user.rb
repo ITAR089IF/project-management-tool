@@ -40,20 +40,7 @@ class User < ApplicationRecord
   validates :role, length: { maximum: 250 }
   validates :department, length: { maximum: 250 }
   validates :about, length: { maximum: 250 }
-  validates :avatar, attached: true, content_type: ['image/png', 'image/jpg', 'image/jpeg']
-  # validate :avatar_validation
-
-  # def avatar_validation
-  #   if avatar.attached?
-  #     if avatar.blob.byte_size > 1000000
-  #       #avatar.purge
-  #       errors.add(:avatar, 'File is Too big')
-  #     elsif !avatar.blob.content_type.starts_with?('image/')
-  #       #avatar.purge
-  #       errors.add(:avatar, 'File has not a valid format!')
-  #     end
-  #   end
-  # end
+  validates :avatar, content_type: ['image/png', 'image/jpg', 'image/jpeg']
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
