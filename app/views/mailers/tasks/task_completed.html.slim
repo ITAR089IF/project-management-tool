@@ -1,0 +1,5 @@
+.title Task "#{@task.title} was compileted
+  .conteiner.box
+    = "#{@task.title}"
+    - if @task.description.present?
+      = " #{ @task.description}"

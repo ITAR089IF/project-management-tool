@@ -77,6 +77,13 @@ class Account::TasksController < Account::AccountController
     @task = resource
     @task.update(complete: true)
     respond_to :js
+    if @task.watchers.present?
+      @task.watchers.find_each do |watcher|
+        if watcher != current_user
+          TasksMailer.task_completed(watcher, @task).deliver
+        end
+      end
+    end
   end
 
   private
