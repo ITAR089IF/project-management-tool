@@ -4,7 +4,7 @@ class Account::CommentsController < Account::AccountController
   def create
     @comments = @commentable.comments.order_desc
     @comment = @comments.build(comments_params)
-    @result = @comment.save
+    @comment.save
     respond_to :js
   end
 
