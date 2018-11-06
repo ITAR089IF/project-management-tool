@@ -18,6 +18,9 @@ Rails.application.routes.draw do
           put :move
           patch :complete
           patch :watch
+          get :choose_assignee
+          post :assign
+          delete :unassign
           delete :remove_attachment
         end
       end
