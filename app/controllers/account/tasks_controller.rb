@@ -2,6 +2,8 @@ class Account::TasksController < Account::AccountController
   def show
     @project = parent
     @task = @project.tasks.find(params[:id])
+    @comments = @task.comments.order_desc.page(params[:page]).per(5)
+    @comment = @task.comments.build
   end
 
   def new

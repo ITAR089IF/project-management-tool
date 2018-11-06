@@ -35,9 +35,9 @@ gem 'annotate'
 gem 'ranked-model'
 gem 'meta-tags'
 gem 'jquery-rails'
-gem 'awesome_print'
 
 group :development, :test do
+  gem 'awesome_print', '~> 1.8'
   gem 'faker'
   gem 'pry-rails'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

@@ -24,9 +24,9 @@
 #  fk_rails_...  (assignee_id => users.id)
 #  fk_rails_...  (project_id => projects.id)
 #
-
 class Task < ApplicationRecord
   include RankedModel
+  include Commentable
 
   ranks :row_order, with_same: :project_id
 
