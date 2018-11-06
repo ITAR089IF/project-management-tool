@@ -3,4 +3,5 @@ $('.notification').remove();
   $('#assignee_form').html('<%=j render "account/tasks/assignee_show", task: @task %>')
 <% else %>
   <% flash[:alert] = @task.errors.full_messages.to_sentence %>
+  $('body').prepend("<%= j render 'shared/flash' %>");
 <% end %>
