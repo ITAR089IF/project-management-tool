@@ -11,16 +11,19 @@
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  assignee_id :bigint(8)
 #  project_id  :bigint(8)
 #
 # Indexes
 #
-#  index_tasks_on_deleted_at  (deleted_at)
-#  index_tasks_on_project_id  (project_id)
-#  index_tasks_on_row_order   (row_order)
+#  index_tasks_on_assignee_id  (assignee_id)
+#  index_tasks_on_deleted_at   (deleted_at)
+#  index_tasks_on_project_id   (project_id)
+#  index_tasks_on_row_order    (row_order)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (assignee_id => users.id)
 #  fk_rails_...  (project_id => projects.id)
 #
 
@@ -28,7 +31,6 @@ FactoryBot.define do
   factory :task, class: 'Task' do
     title { Faker::Lorem.sentence }
     description { Faker::Lorem.paragraph }
-
     project
 
     trait :with_files do
