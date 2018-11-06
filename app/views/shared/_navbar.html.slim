@@ -23,10 +23,14 @@
         - else
           .navbar-item.has-dropdown.is-hoverable
             a.navbar-link
+              figure.image.is-24x24
+                - if current_user.avatar.attached?
+                  = image_tag url_for(current_user.avatar), class: 'is-rounded'
+                - else
+                  img.is-rounded[src="https://bulma.io/images/placeholders/128x128.png"]
               = current_user.full_name
             .navbar-dropdown
-              = link_to "My workspaces", account_workspaces_path, class: 'navbar-item'
-              hr.navbar-divider
+              = link_to "My workspaces...", account_workspaces_path, class: 'navbar-item'
               - current_user.workspaces.each do |workspace|
                 = link_to workspace.name, account_workspace_path(workspace), class: 'navbar-item'
               hr.navbar-divider

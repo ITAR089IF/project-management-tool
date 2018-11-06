@@ -34,7 +34,7 @@ gem 'omniauth-facebook', '~> 4.0'
 gem 'annotate'
 gem 'ranked-model'
 gem 'meta-tags'
-gem 'jquery-rails'
+gem 'active_storage_validations'
 
 group :development, :test do
   gem 'faker'

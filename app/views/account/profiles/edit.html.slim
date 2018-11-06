@@ -2,4 +2,9 @@
 .container.has-text-centered
   .column.is-4.is-offset-4.box
     .title My Profile Settings
+    figure.image.is-64x64
+      - if current_user.avatar.attached?
+        = image_tag url_for(current_user.avatar), class: 'is-rounded'
+      - else
+        img.is-rounded[src="https://bulma.io/images/placeholders/128x128.png"]
     = render '/account/profiles/form'

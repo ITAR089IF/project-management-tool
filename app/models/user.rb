@@ -32,12 +32,27 @@ class User < ApplicationRecord
   has_many :projects, through: :user_projects
   has_many :task_watches, dependent: :destroy
   has_many :tasks, through: :task_watches
+  has_one_attached :avatar
 
   validates :first_name, length: { maximum: 250 }, presence: true
   validates :last_name, length: { maximum: 250 }, presence: true
   validates :role, length: { maximum: 250 }
   validates :department, length: { maximum: 250 }
   validates :about, length: { maximum: 250 }
+  validates :avatar, attached: true, content_type: ['image/png', 'image/jpg', 'image/jpeg']
+  # validate :avatar_validation
+
+  # def avatar_validation
+  #   if avatar.attached?
+  #     if avatar.blob.byte_size > 1000000
+  #       #avatar.purge
+  #       errors.add(:avatar, 'File is Too big')
+  #     elsif !avatar.blob.content_type.starts_with?('image/')
+  #       #avatar.purge
+  #       errors.add(:avatar, 'File has not a valid format!')
+  #     end
+  #   end
+  # end
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
@@ -73,7 +88,7 @@ class User < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}"
   end
-  
+
   def watching?(task)
     self.tasks.where(id: task.id).exists?
   end
