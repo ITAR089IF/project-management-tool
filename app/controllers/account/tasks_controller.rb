@@ -94,7 +94,7 @@ class Account::TasksController < Account::AccountController
   end
 
   def tasks_params
-    params.require(:task).permit(:title, :description, :section, files: [])
+    params.require(:task).permit(:title, :description, :section, :due_date, files: [])
   end
 
   def task_movement_params

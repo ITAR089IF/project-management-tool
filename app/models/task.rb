@@ -5,8 +5,9 @@
 #  id          :bigint(8)        not null, primary key
 #  complete    :boolean          default(FALSE)
 #  description :text
+#  due_date    :datetime
 #  row_order   :integer
-#  section     :boolean
+#  section     :boolean          default(FALSE)
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -41,6 +42,10 @@ class Task < ApplicationRecord
 
   def pending?
     !complete?
+  end
+
+  def expired?
+    self.due_date && (self.due_date < Time.now && !complete?)
   end
 
   def add_watcher(user)

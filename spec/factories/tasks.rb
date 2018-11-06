@@ -5,8 +5,9 @@
 #  id          :bigint(8)        not null, primary key
 #  complete    :boolean          default(FALSE)
 #  description :text
+#  due_date    :datetime
 #  row_order   :integer
-#  section     :boolean
+#  section     :boolean          default(FALSE)
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -26,7 +27,7 @@ FactoryBot.define do
   factory :task, class: 'Task' do
     title { Faker::Lorem.sentence }
     description { Faker::Lorem.paragraph }
-
+    due_date { rand(1.month.ago..1.month.since)}
     project
 
     trait :with_files do
