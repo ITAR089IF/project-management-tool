@@ -52,6 +52,7 @@ GEM
     archive-zip (0.11.0)
       io-like (~> 0.3.0)
     arel (9.0.0)
+    awesome_print (1.8.0)
     babosa (1.0.2)
     bcrypt (3.1.12)
     bindex (0.5.0)
@@ -343,6 +344,7 @@ PLATFORMS
 DEPENDENCIES
   annotate
   any_login
+  awesome_print
   babosa
   bootsnap (>= 1.1.0)
   bulma-rails
@@ -364,8 +366,8 @@ DEPENDENCIES
   kaminari
   listen (>= 3.0.5, < 3.2)
   meta-tags
-  omniauth (~> 1.6, >= 1.6.1)
-  omniauth-facebook (~> 4.0)
+  omniauth
+  omniauth-facebook
   pg (>= 0.18, < 2.0)
   pry-rails
   puma (~> 3.11)
