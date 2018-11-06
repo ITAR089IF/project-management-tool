@@ -20,7 +20,6 @@
 #
 
 class Workspace < ApplicationRecord
-
   acts_as_paranoid
   belongs_to :user, required: true
   has_many :projects, dependent: :destroy
