@@ -344,7 +344,7 @@ PLATFORMS
 DEPENDENCIES
   annotate
   any_login
-  awesome_print
+  awesome_print (~> 1.8)
   babosa
   bootsnap (>= 1.1.0)
   bulma-rails

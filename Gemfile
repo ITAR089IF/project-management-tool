@@ -35,7 +35,6 @@ gem 'annotate'
 gem 'ranked-model'
 gem 'meta-tags'
 gem 'jquery-rails'
-gem 'awesome_print'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'
