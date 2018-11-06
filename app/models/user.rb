@@ -33,6 +33,7 @@ class User < ApplicationRecord
   has_many :projects, through: :user_projects
   has_many :task_watches, dependent: :destroy
   has_many :tasks, through: :task_watches
+  has_many :assigned_tasks, class_name: "Task"
 
   validates :first_name, length: { maximum: 250 }, presence: true
   validates :last_name, length: { maximum: 250 }, presence: true
