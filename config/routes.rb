@@ -12,15 +12,26 @@ Rails.application.routes.draw do
       resources :projects, except: [:index]
     end
 
+  concern :commentable do
+    resources :comments, only: [:create, :destroy]
+  end
     resources :projects, only: [] do
+      concerns :commentable
       resources :tasks, except: [:index] do
         member do
           put :move
           patch :complete
           patch :watch
+          get :choose_assignee
+          post :assign
+          delete :unassign
           delete :remove_attachment
         end
       end
+    end
+
+    resources :tasks do
+      concerns :commentable
     end
   end
 end

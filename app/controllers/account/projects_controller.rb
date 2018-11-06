@@ -2,6 +2,8 @@ class Account::ProjectsController < Account::AccountController
   def show
     @workspace = parent
     @project = resource
+    @comments = @project.comments.order_desc.page(params[:page]).per(5)
+    @comment = @project.comments.build
     @incomplete_tasks = @project.tasks.incomplete.row_order_asc
     @complete_tasks = @project.tasks.complete.row_order_asc
   end

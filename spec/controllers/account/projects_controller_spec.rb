@@ -84,5 +84,4 @@ RSpec.describe Account::ProjectsController, type: :controller do
       end
     end
   end
-
 end

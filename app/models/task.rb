@@ -10,20 +10,24 @@
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  assignee_id :bigint(8)
 #  project_id  :bigint(8)
 #
 # Indexes
 #
-#  index_tasks_on_project_id  (project_id)
-#  index_tasks_on_row_order   (row_order)
+#  index_tasks_on_assignee_id  (assignee_id)
+#  index_tasks_on_project_id   (project_id)
+#  index_tasks_on_row_order    (row_order)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (assignee_id => users.id)
 #  fk_rails_...  (project_id => projects.id)
 #
 
 class Task < ApplicationRecord
   include RankedModel
+  include Commentable
 
   ranks :row_order, with_same: :project_id
 
@@ -31,6 +35,7 @@ class Task < ApplicationRecord
   belongs_to :project, required: true
   has_many :task_watches, dependent: :destroy
   has_many :watchers, through: :task_watches, source: :user
+  belongs_to :assignee, class_name: "User", required: false
 
   scope :incomplete, -> { where(complete: false) }
   scope :complete, -> { where(complete: true) }
