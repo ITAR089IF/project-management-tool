@@ -34,6 +34,7 @@ gem 'omniauth-facebook'
 gem 'annotate'
 gem 'ranked-model'
 gem 'meta-tags'
+gem 'premailer-rails'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'

@@ -1,5 +1,36 @@
-.title Task "#{@task.title} was compileted
-  .conteiner.box
-    = "#{@task.title}"
+table.email-table
+  tbody
+    tr
+      td colspan="2"
+        h1
+          | Task: #{ link_to @task.title, account_project_task_url(@task.project, @task) }
+    tr
+      td
+        .p #{@user.first_name} compileted this task
+    tr
+      td
+        h1 Task Details
     - if @task.description.present?
-      = " #{ @task.description}"
+      tr
+        td
+          .p DESCRIPTION:
+      tr
+        td colspan="2"
+          .p #{@task.description}
+    - if @task.assignee.present?
+      tr
+        td
+          .p ASSIGNEE:
+        td
+          .p #{@task.assignee.full_name}
+    tr
+      td
+        .p PROJECTS:
+      td
+        .p #{@task.project.name}
+    tr
+      td
+        .p  FOLLOWERS:
+      td
+        - @task.watchers.each do |watcher|
+          .p #{watcher.full_name}
