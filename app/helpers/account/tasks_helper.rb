@@ -1,13 +1,11 @@
 module Account::TasksHelper
-  def task_style(section, duedate)
-    classes = ''
-    
-    if section
-      classes = 'title is-4 is-italic'
-    elsif duedate
-      classes = 'has-text-danger'
+  def task_style(task)
+    if task.section?
+      'title is-4 is-italic'
+    elsif task.expired?
+      'has-text-danger'
     else
-      classes
+      ""
     end
   end
 end

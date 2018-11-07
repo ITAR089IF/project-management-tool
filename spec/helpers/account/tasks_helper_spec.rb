@@ -1,11 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe Account::TasksHelper, type: :helper do
+  let!(:user)         { create(:user) }
+  let!(:workspace)    { create(:workspace, user: user) }
+  let!(:project)      { create(:project, workspace: workspace, users: [user]) }
+  let!(:section)      { create(:task, project: project, section: true) }
+  let!(:expired_task) { create(:task, :expired, project: project) }
+  let!(:task)         { create(:task, project: project) }
+
   describe "#task_style" do
-    it "returns classes" do
-      expect(helper.task_style(true, true)).to eq('title is-4 is-italic')
-      expect(helper.task_style(false, true)).to eq("has-text-danger")
-      expect(helper.task_style(false, false)).to eq('')
+    it "returns classes for section" do
+      expect(helper.task_style(section)).to eq('title is-4 is-italic')
+    end
+
+    it "returns classes for expired task" do
+      expect(helper.task_style(expired_task)).to eq("has-text-danger")
+    end
+
+    it "returns classes for nil" do
+      expect(helper.task_style(task)).to eq('')
     end
   end
   

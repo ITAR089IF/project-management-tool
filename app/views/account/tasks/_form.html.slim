@@ -2,7 +2,7 @@
   = f.input_field :section, as: :hidden, value: @task.section
   = f.input :title, placeholder: 'Title', wrapper: :bulma_input, required: true
   = f.input :description, placeholder: 'Description', wrapper: :textarea
-  = f.input :due_date, as: :date, html5: true
-  = f.input :files, input_html: { multiple: true }, label: false
+  = f.input :due_date, as: :date, html5: true, wrapper: :data_and_file
+  = f.input :files, input_html: { multiple: true }, wrapper: :data_and_file, label: false
   = f.submit "Save", class: "button is-link"
   = link_to 'Back', account_workspace_project_path(@project.workspace_id, @project), class: 'button is-text'

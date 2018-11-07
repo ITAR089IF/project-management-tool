@@ -58,6 +58,7 @@ GEM
     bootsnap (1.3.2)
       msgpack (~> 1.0)
     builder (3.2.3)
+    bulma-extensions-rails (1.0.30)
     bulma-rails (0.7.2)
       sass (~> 3.2)
     byebug (10.0.2)
@@ -345,6 +346,7 @@ DEPENDENCIES
   any_login
   babosa
   bootsnap (>= 1.1.0)
+  bulma-extensions-rails
   bulma-rails
   byebug
   capybara (>= 2.15)

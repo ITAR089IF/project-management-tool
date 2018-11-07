@@ -27,7 +27,7 @@ FactoryBot.define do
   factory :task, class: 'Task' do
     title { Faker::Lorem.sentence }
     description { Faker::Lorem.paragraph }
-    due_date { rand(1.month.ago..1.month.since)}
+    due_date { nil }
     project
 
     trait :with_files do
@@ -42,5 +42,12 @@ FactoryBot.define do
       end
     end
 
+    trait :expired do 
+      due_date { 1.month.ago }
+    end
+
+    trait :future do 
+      due_date { 1.day.since }
+    end
   end
 end
