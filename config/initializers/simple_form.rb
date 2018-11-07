@@ -25,6 +25,10 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: { tag: :div, class: 'help' }
   end
 
+  config.wrappers :dropdown do |b|
+    b.use :input
+  end
+
   config.wrappers :textarea, class: "field", error_class: :field_with_errors do |b|
     b.use :html5
     b.use :placeholder
@@ -104,7 +108,7 @@ SimpleForm.setup do |config|
   config.boolean_style = :nested
 
   # Default class for buttons
-  config.button_class = 'btn'
+  config.button_class = 'button'
 
   # Method used to tidy up errors. Specify any Rails Array method.
   # :first lists the first message for each field.

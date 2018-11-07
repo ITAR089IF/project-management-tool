@@ -10,6 +10,7 @@
         = link_to "Add Task", new_account_project_task_path(@project), class: "button is-link"
       .level-item
         = link_to "Add Section", new_account_project_task_path(@project, section: true), class: "button is-link"
+
   .conteiner.box
     .title
       |  To Do List:
@@ -23,3 +24,10 @@
     #complete_tasks
       - @complete_tasks.each do |task|
         = render '/account/projects/show_tasks', task: task, project: @project
+
+  .content
+    h3 Comments
+    .new-comment
+      = render 'account/comments/form', commentable: @project, comment: @comment
+    .comments
+      = render 'account/comments/show_comments', commentable: @project, comments: @comments
