@@ -13,7 +13,7 @@
     = @task.description
     - if @task.due_date.present?
       h3 Due date
-      = I18n.localize(@task.due_date, format: :date_month_year_concise)
+      = l @task.due_date, format: :date_month_year_concise
     .level
       #assingnee_user_bar
         = render 'account/tasks/assignee_show', task: @task

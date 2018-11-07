@@ -17,8 +17,8 @@ RSpec.describe Account::TasksHelper, type: :helper do
       expect(helper.task_class(expired_task)).to eq("has-text-danger")
     end
 
-    it "returns classes for nil" do
-      expect(helper.task_class(task)).to eq(nil)
+    it "returns classes for link" do
+      expect(helper.task_class(task)).to eq("is-link")
     end
   end
   
