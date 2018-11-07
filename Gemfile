@@ -34,6 +34,7 @@ gem 'omniauth-facebook'
 gem 'annotate'
 gem 'ranked-model'
 gem 'meta-tags'
+gem "paranoia", '~> 2.2'
 gem 'premailer-rails'
 
 group :development, :test do
