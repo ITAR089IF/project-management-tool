@@ -38,7 +38,7 @@ SimpleForm.setup do |config|
     b.use :error, wrap_with: { tag: :div, class: "help is-danger" }
   end
 
-  config.wrappers :upload_file do |b|
+  config.wrappers :upload_avatar do |b|
     b.use :html5
     b.use :placeholder
     b.use :label, class: "file-label", error_class: 'is-danger'
