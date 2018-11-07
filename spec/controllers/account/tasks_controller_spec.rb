@@ -51,6 +51,7 @@ RSpec.describe Account::TasksController, type: :controller do
       expect(project.tasks.count).to eq 3
       delete :destroy, params: { project_id: project.id, id: task1.id }, format: :js
       expect(project.tasks.count).to eq 2
+      expect(project.tasks.with_deleted.count).to eq 3
     end
 
     it 'should delete task with :html' do
