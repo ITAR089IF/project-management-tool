@@ -34,10 +34,11 @@ class User < ApplicationRecord
   has_many :task_watches, dependent: :destroy
   has_many :tasks, through: :task_watches
   has_many :assigned_tasks, class_name: "Task"
+  has_many :shared_workspaces
+  has_many :invited_workspaces, through: :shared_workspaces, :class_name => 'Workspace'
 
   validates :first_name, length: { maximum: 250 }, presence: true
   validates :last_name, length: { maximum: 250 }, presence: true
-
   validates :role, length: { maximum: 250 }
   validates :department, length: { maximum: 250 }
   validates :about, length: { maximum: 250 }

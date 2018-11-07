@@ -66,6 +66,15 @@ ActiveRecord::Schema.define(version: 2018_11_05_154717) do
     t.index ["workspace_id"], name: "index_projects_on_workspace_id"
   end
 
+  create_table "shared_workspaces", force: :cascade do |t|
+    t.bigint "workspace_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_shared_workspaces_on_user_id"
+    t.index ["workspace_id"], name: "index_shared_workspaces_on_workspace_id"
+  end
+
   create_table "task_watches", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "task_id"
@@ -129,6 +138,8 @@ ActiveRecord::Schema.define(version: 2018_11_05_154717) do
   end
 
   add_foreign_key "projects", "workspaces"
+  add_foreign_key "shared_workspaces", "users"
+  add_foreign_key "shared_workspaces", "workspaces"
   add_foreign_key "task_watches", "tasks"
   add_foreign_key "task_watches", "users"
   add_foreign_key "tasks", "projects"

@@ -20,6 +20,8 @@
 class Workspace < ApplicationRecord
   belongs_to :user, required: true
   has_many :projects, dependent: :destroy
+  has_many :shared_workspaces
+  has_many :members, through: :shared_workspaces, :class_name => 'User'
 
   scope :order_desc, -> { order(id: :desc) }
 
