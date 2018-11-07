@@ -4,6 +4,7 @@
 #
 #  id          :bigint(8)        not null, primary key
 #  complete    :boolean          default(FALSE)
+#  deleted_at  :datetime
 #  description :text
 #  row_order   :integer
 #  section     :boolean          default(FALSE)
@@ -16,6 +17,7 @@
 # Indexes
 #
 #  index_tasks_on_assignee_id  (assignee_id)
+#  index_tasks_on_deleted_at   (deleted_at)
 #  index_tasks_on_project_id   (project_id)
 #  index_tasks_on_row_order    (row_order)
 #
