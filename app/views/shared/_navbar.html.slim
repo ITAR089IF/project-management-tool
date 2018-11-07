@@ -24,7 +24,7 @@
           .navbar-item.has-dropdown.is-hoverable
             a.navbar-link
               figure.image.is-24x24
-                = profiles_avatar
+                = profiles_avatar(current_user)
               = current_user.full_name
             .navbar-dropdown
               = link_to "My workspaces...", account_workspaces_path, class: 'navbar-item'

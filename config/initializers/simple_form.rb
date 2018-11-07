@@ -38,13 +38,13 @@ SimpleForm.setup do |config|
     b.use :error, wrap_with: { tag: :div, class: "help is-danger" }
   end
 
-  config.wrappers :upload_file, class: "field", error_class: :field_with_errors do |b|
+  config.wrappers :upload_file do |b|
     b.use :html5
     b.use :placeholder
-    b.use :label, class: "file-label navbar-item", error_class: 'is-danger'
-    b.use :input, class: "file-input navbar-item", error_class: 'is-danger'
+    b.use :label, class: "file-label", error_class: 'is-danger'
+    b.use :input, class: "file-input", error_class: 'is-danger'
     b.use :hint,  wrap_with: { tag: :div, class: "help" }
-    b.use :error, wrap_with: { tag: :div, class: "help is-danger" }
+    b.use :error, wrap_with: { tag: :div, class: "help is-danger " }
   end
 
   config.wrappers :default, class: :input,

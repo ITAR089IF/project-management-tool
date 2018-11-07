@@ -80,4 +80,8 @@ class User < ApplicationRecord
   def watching?(task)
     self.tasks.where(id: task.id).exists?
   end
+
+  def with_avatar?
+    self.avatar.attached? && self.avatar.attachment.blob.present? && self.avatar.attachment.blob.persisted?
+  end
 end
