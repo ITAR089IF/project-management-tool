@@ -34,16 +34,8 @@ gem 'omniauth-facebook'
 gem 'annotate'
 gem 'ranked-model'
 gem 'meta-tags'
-<<<<<<< HEAD
 gem "paranoia", '~> 2.2'
 gem 'premailer-rails'
-=======
-<<<<<<< HEAD
-=======
-gem 'jquery-rails'
-gem "paranoia", '~> 2.2'
->>>>>>> b092eacb5818dd9cedd90bd40fa2668888cd3732
->>>>>>> development
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'
