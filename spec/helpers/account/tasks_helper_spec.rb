@@ -18,7 +18,7 @@ RSpec.describe Account::TasksHelper, type: :helper do
     end
 
     it "returns classes for link" do
-      expect(helper.task_class(task)).to eq("is-link")
+      expect(helper.task_class(task)).to eq("has-text-link")
     end
   end
   

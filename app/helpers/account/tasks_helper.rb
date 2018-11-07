@@ -5,7 +5,7 @@ module Account::TasksHelper
     elsif task.expired?
       'has-text-danger'
     else
-      'is-link'
+      'has-text-link'
     end
   end
 end
