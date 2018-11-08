@@ -102,7 +102,7 @@ class Account::TasksController < Account::AccountController
     @task = resource
     @task.update(complete: true)
     respond_to :js
-    @task.watchers.find_each do |watcher|
+    @task.watchers.each do |watcher|
       if watcher != current_user
         TasksMailer.task_completed(watcher, @task, current_user).deliver
       end
