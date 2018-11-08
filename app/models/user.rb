@@ -88,6 +88,6 @@ class User < ApplicationRecord
   end
 
   def with_avatar?
-    self.avatar.attached? && self.avatar.attachment.blob.present? && self.avatar.attachment.blob.persisted?
+    avatar.attached? && avatar.attachment.blob.present? && avatar.attachment.blob.persisted?
   end
 end

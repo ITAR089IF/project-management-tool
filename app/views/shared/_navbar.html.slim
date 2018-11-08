@@ -24,10 +24,10 @@
           .navbar-item.has-dropdown.is-hoverable
             a.navbar-link
               figure.image.is-24x24
-                = profiles_avatar(current_user)
+                = profile_avatar(current_user)
               = current_user.full_name
             .navbar-dropdown
-              = link_to "My workspaces...", account_workspaces_path, class: 'navbar-item'
+              = link_to "My workspaces", account_workspaces_path, class: 'navbar-item'
               - current_user.workspaces.each do |workspace|
                 = link_to workspace.name, account_workspace_path(workspace), class: 'navbar-item'
               hr.navbar-divider

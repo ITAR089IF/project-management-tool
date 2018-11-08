@@ -25,6 +25,13 @@ RSpec.describe Account::ProfilesController, type: :controller do
       expect(user.first_name).to eq(user_valid_params[:first_name])
     end
 
+    it "should update the user's avatar" do
+      patch :update, params: { id: user.id, user: user_valid_params }
+      expect(user.avatar.attached?).to eq(false)
+      user.avatar.attach(FileFactory.random_file)
+      expect(user.avatar.attached?).to eq(true)
+    end
+
     it "shouldn't update and redirects to 'edit'" do
       patch :update, params: { id: user.id, user: user_invalid_params }
       user.reload

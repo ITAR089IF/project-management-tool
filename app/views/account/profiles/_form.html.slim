@@ -1,5 +1,5 @@
 = simple_form_for @user, url: [:account, :profile] do |f|
-  = f.input :avatar, label: "Add a profile photo", wrapper: :upload_avatar
+  = f.input :avatar, label: "Select your profile avatar", wrapper: :upload_file
   = f.input :first_name, wrapper: :bulma_input, required: true
   = f.input :last_name, wrapper: :bulma_input, required: true
   = f.input :role, wrapper: :bulma_input
