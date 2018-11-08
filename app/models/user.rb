@@ -35,7 +35,7 @@ class User < ApplicationRecord
   has_many :tasks, through: :task_watches
   has_many :assigned_tasks, class_name: "Task"
   has_many :shared_workspaces
-  has_many :invited_workspaces, through: :shared_workspaces, :class_name => 'Workspace'
+  has_many :invited_workspaces, through: :shared_workspaces, source: :workspace
 
   validates :first_name, length: { maximum: 250 }, presence: true
   validates :last_name, length: { maximum: 250 }, presence: true

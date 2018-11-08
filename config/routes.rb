@@ -9,8 +9,14 @@ Rails.application.routes.draw do
     get '/dashboard', to: 'dashboard#index'
     resource :profile, only: [:edit, :update]
     resources :workspaces do
+      member do
+        get :new_invitation
+        post :create_invitation
+        delete :delete_invitation
+      end
       resources :projects, except: [:index]
     end
+
 
   concern :commentable do
     resources :comments, only: [:create, :destroy]

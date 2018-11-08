@@ -1,0 +1,5 @@
+
+= simple_form_for :workspace, url: create_invitation_account_workspace_path(@workspace), remote: true do |f|
+  = f.input :user, label: false, wrapper: :dropdown, required: true, prompt: "Select user",
+                  collection: uninvited_users(@workspace).map{ |user| [user.email, user.id] }
+  = f.submit 'Save', class: 'button is-link'
