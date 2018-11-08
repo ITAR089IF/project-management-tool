@@ -6,17 +6,20 @@
     .level-right
       = link_to "Add project", new_account_workspace_project_path(@workspace), class: "button is-link"
   .container
-    - @workspace.projects.each do |project|
-      .level
-        .level-left
-          .level-item
-            = link_to project.name, account_workspace_project_path(@workspace, project)
-          .level-item
-            = "Tasks: #{project.tasks.count}"
-        .level-right
-          .level-item
-            = link_to "Edit", edit_account_workspace_project_path(@workspace, project),
-              class: "button is-small right"
-          .level-item
-            = link_to "Delete",  account_workspace_project_path(@workspace, project),
-              method: :delete, class: "button is-small right", data: { confirm: "Are you sure?" }
+    - if @workspace.projects.exists?
+      - @workspace.projects.each do |project|
+        .level
+          .level-left
+            .level-item
+              = link_to project.name, account_workspace_project_path(@workspace, project)
+            .level-item
+              = "Tasks: #{project.tasks.count}"
+          .level-right
+            .level-item
+              = link_to "Edit", edit_account_workspace_project_path(@workspace, project),
+                class: "button is-small right"
+            .level-item
+              = link_to "Delete",  account_workspace_project_path(@workspace, project),
+                method: :delete, class: "button is-small right", data: { confirm: "Are you sure?" }
+    - else
+      = image_tag('undraw_no_data_qbuo.svg', class: 'image no-content')
