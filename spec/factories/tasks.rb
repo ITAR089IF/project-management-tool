@@ -6,7 +6,7 @@
 #  complete    :boolean          default(FALSE)
 #  description :text
 #  row_order   :integer
-#  section     :boolean          default(FALSE)
+#  section     :boolean
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

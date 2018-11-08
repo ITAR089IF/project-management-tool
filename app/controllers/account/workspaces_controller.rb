@@ -1,6 +1,11 @@
 class Account::WorkspacesController < Account::AccountController
   def index
-    @workspaces = collection.order_desc
+    @workspaces = collection
+
+    respond_to do |format|
+      format.html { @workspaces.order_desc }
+      format.json { render json: { workspaces: @workspaces.search_by_name(params[:search]) }}
+    end
   end
 
   def show

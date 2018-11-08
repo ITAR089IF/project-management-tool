@@ -12,6 +12,23 @@
       - if user_signed_in?
         .navbar-item
           = link_to "Dashboard", account_dashboard_path, class: 'navbar-item'
+    - if user_signed_in?
+      .navbar-item
+        div
+          input.input placeholder="search" type="text" id="search"
+          .box#search-results
+            .level#workspaces-block
+              .level-left
+                .level-item
+                  #workspaces
+            .level#projects-block
+              .level-left
+                .level-item
+                  #projects
+            .level#tasks-block
+              .level-left
+                .level-item
+                  #tasks
     .navbar-end
       .navbar-item
         - if (!user_signed_in?)

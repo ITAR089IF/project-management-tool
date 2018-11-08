@@ -7,12 +7,13 @@
 #  commentable_type :string
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  commentable_id   :integer
-#  user_id          :integer
+#  commentable_id   :bigint(8)
+#  user_id          :bigint(8)
 #
 # Indexes
 #
-#  index_comments_on_commentable_id_and_commentable_type  (commentable_id,commentable_type)
+#  index_comments_on_commentable_type_and_commentable_id  (commentable_type,commentable_id)
+#  index_comments_on_user_id                              (user_id)
 #
 
 class Comment < ApplicationRecord
