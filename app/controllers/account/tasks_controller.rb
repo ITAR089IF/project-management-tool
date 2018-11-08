@@ -77,15 +77,14 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = @project.tasks.find(params[:id])
     @result = @task.update(assignee_id: assignee_params[:assignee])
-
     respond_to :js
+    TasksMailer.task_assign_to_user_email(@task).deliver
   end
 
   def unassign
     @project = parent
     @task = resource
     @result = @task.update(assignee_id: nil)
-
     respond_to :js
   end
 
@@ -101,7 +100,7 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = resource
     @task.update(complete: true)
-    
+
     respond_to :js
   end
 
