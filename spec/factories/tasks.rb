@@ -31,7 +31,7 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph }
     project
 
-    trait :complited do
+    trait :completed do
       complete { true }
     end
 
