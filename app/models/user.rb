@@ -27,14 +27,17 @@
 #
 
 class User < ApplicationRecord
+  has_many :comments, dependent: :destroy
   has_many :workspaces, dependent: :destroy
   has_many :user_projects, dependent: :destroy
   has_many :projects, through: :user_projects
   has_many :task_watches, dependent: :destroy
   has_many :tasks, through: :task_watches
+  has_many :assigned_tasks, class_name: "Task"
 
   validates :first_name, length: { maximum: 250 }, presence: true
   validates :last_name, length: { maximum: 250 }, presence: true
+
   validates :role, length: { maximum: 250 }
   validates :department, length: { maximum: 250 }
   validates :about, length: { maximum: 250 }
@@ -73,7 +76,11 @@ class User < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}"
   end
-  
+
+  def can_manage?(comment)
+    comments.where(id: comment.id).exists?
+  end
+
   def watching?(task)
     self.tasks.where(id: task.id).exists?
   end

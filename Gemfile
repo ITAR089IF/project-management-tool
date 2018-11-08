@@ -13,7 +13,6 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'jquery-rails'
 
 gem 'slim-rails'
 gem 'font-awesome-rails'
@@ -29,14 +28,16 @@ gem 'babosa'
 gem 'bulma-rails'
 gem 'webpacker'
 gem 'react_on_rails'
-gem 'omniauth', '~> 1.6', '>= 1.6.1'
-gem 'omniauth-facebook', '~> 4.0'
+gem 'omniauth'
+gem 'omniauth-facebook'
 gem 'annotate'
 gem 'ranked-model'
 gem 'meta-tags'
 gem 'jquery-rails'
+gem "paranoia", '~> 2.2'
 
 group :development, :test do
+  gem 'awesome_print', '~> 1.8'
   gem 'faker'
   gem 'pry-rails'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -51,6 +52,10 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-passenger'
+  gem 'capistrano-bundler'
 end
 
 group :test do

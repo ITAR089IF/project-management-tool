@@ -51,6 +51,7 @@ RSpec.describe Account::TasksController, type: :controller do
       expect(project.tasks.count).to eq 3
       delete :destroy, params: { project_id: project.id, id: task1.id }, format: :js
       expect(project.tasks.count).to eq 2
+      expect(project.tasks.with_deleted.count).to eq 3
     end
 
     it 'should delete task with :html' do
@@ -143,4 +144,34 @@ RSpec.describe Account::TasksController, type: :controller do
     end
   end
 
+  context '#GET /choose_assignee' do
+    it 'renders assignee form' do
+      get :choose_assignee, params: { project_id: project.id, id: task1.id },
+        format: :js, xhr: true
+      expect(response).to render_template :choose_assignee
+    end
+  end
+
+  context '#POST /assign' do
+    it 'initial assign' do
+      post :assign, params: { task: { assignee: user1.id }, id: task1.id, project_id: project.id }, format: :js, xhr: true
+      task1.reload
+      expect(response).to render_template :assign
+      expect(task1.assignee).to eql user1
+    end
+    it 'reassign' do
+      post :assign, params: { task: { assignee: user1.id }, id: task2.id, project_id: project.id }, format: :js, xhr: true
+      task2.reload
+      expect(response).to render_template :assign
+      expect(task2.assignee).to eql user1
+    end
+  end
+
+  context '#DELETE /unassign' do
+    it 'delete assignee for task'  do
+      delete :unassign, params: { project_id: project.id, id: task2.id }, format: :js
+      expect(task2.reload.assignee).to be_nil
+      expect(response).to render_template :unassign
+    end
+  end
 end

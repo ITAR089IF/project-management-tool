@@ -26,3 +26,9 @@
           = render '/account/projects/show_tasks', task: task, project: @project
   - else
     = image_tag('undraw_no_data_qbuo.svg', class: 'image no-content')
+  .content
+    h3 Comments
+    .new-comment
+      = render 'account/comments/form', commentable: @project, comment: @comment
+    .comments
+      = render 'account/comments/show_comments', commentable: @project, comments: @comments

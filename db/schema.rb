@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_31_173535) do
+ActiveRecord::Schema.define(version: 2018_11_05_214529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,17 @@ ActiveRecord::Schema.define(version: 2018_10_31_173535) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.string "body"
+    t.string "commentable_type"
+    t.bigint "commentable_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -53,6 +64,8 @@ ActiveRecord::Schema.define(version: 2018_10_31_173535) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "workspace_id"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_projects_on_deleted_at"
     t.index ["workspace_id"], name: "index_projects_on_workspace_id"
   end
 
@@ -74,6 +87,10 @@ ActiveRecord::Schema.define(version: 2018_10_31_173535) do
     t.bigint "project_id"
     t.boolean "complete", default: false
     t.boolean "section"
+    t.bigint "assignee_id"
+    t.datetime "deleted_at"
+    t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
+    t.index ["deleted_at"], name: "index_tasks_on_deleted_at"
     t.index ["project_id"], name: "index_tasks_on_project_id"
     t.index ["row_order"], name: "index_tasks_on_row_order"
   end
@@ -113,6 +130,8 @@ ActiveRecord::Schema.define(version: 2018_10_31_173535) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_workspaces_on_deleted_at"
     t.index ["user_id"], name: "index_workspaces_on_user_id"
   end
 
@@ -120,6 +139,7 @@ ActiveRecord::Schema.define(version: 2018_10_31_173535) do
   add_foreign_key "task_watches", "tasks"
   add_foreign_key "task_watches", "users"
   add_foreign_key "tasks", "projects"
+  add_foreign_key "tasks", "users", column: "assignee_id"
   add_foreign_key "user_projects", "projects"
   add_foreign_key "user_projects", "users"
   add_foreign_key "workspaces", "users"

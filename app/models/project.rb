@@ -3,6 +3,7 @@
 # Table name: projects
 #
 #  id           :bigint(8)        not null, primary key
+#  deleted_at   :datetime
 #  name         :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -10,6 +11,7 @@
 #
 # Indexes
 #
+#  index_projects_on_deleted_at    (deleted_at)
 #  index_projects_on_workspace_id  (workspace_id)
 #
 # Foreign Keys
@@ -18,6 +20,8 @@
 #
 
 class Project < ApplicationRecord
+  include Commentable
+  acts_as_paranoid
   belongs_to :workspace, required: true
   has_many :tasks, dependent: :destroy
   has_many :user_projects, dependent: :destroy
