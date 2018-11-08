@@ -34,11 +34,10 @@ gem 'omniauth-facebook'
 gem 'annotate'
 gem 'ranked-model'
 gem 'meta-tags'
-<<<<<<< HEAD
-=======
-gem 'jquery-rails'
+gem 'premailer-rails'
 gem "paranoia", '~> 2.2'
->>>>>>> b092eacb5818dd9cedd90bd40fa2668888cd3732
+gem 'bulma-extensions-rails'
+
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'
