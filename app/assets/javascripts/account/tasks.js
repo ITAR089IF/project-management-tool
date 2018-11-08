@@ -1,0 +1,2 @@
+// $(".datepicker").flatpickr();
+flatpickr(".datepicker");

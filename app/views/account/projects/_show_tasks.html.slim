@@ -5,7 +5,7 @@
         = link_to complete_account_project_task_path(project, task), class: 'add_to_complete', method: :patch, remote: true do
           = check_box_tag :complete
     .level-item
-      = link_to task.title, account_project_task_path(project, task), class: task_class(task)
+      = link_to task.title, account_project_task_path(project, task), class: task_link_class(task)
     .level-item
       = link_to "Up", move_account_project_task_path(project, task,
         task: { row_order_position: :up}), method: :put, class: "button is-small left"

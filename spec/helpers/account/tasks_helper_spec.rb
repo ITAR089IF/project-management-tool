@@ -8,17 +8,17 @@ RSpec.describe Account::TasksHelper, type: :helper do
   let!(:expired_task) { create(:task, :expired, project: project) }
   let!(:task)         { create(:task, project: project) }
 
-  describe "#task_class" do
+  describe "#task_link_class" do
     it "returns classes for section" do
-      expect(helper.task_class(section)).to eq('title is-4 is-italic')
+      expect(helper.task_link_class(section)).to eq('title is-4 is-italic')
     end
 
     it "returns classes for expired task" do
-      expect(helper.task_class(expired_task)).to eq("has-text-danger")
+      expect(helper.task_link_class(expired_task)).to eq("has-text-danger")
     end
 
     it "returns classes for link" do
-      expect(helper.task_class(task)).to eq("has-text-link")
+      expect(helper.task_link_class(task)).to eq("has-text-link")
     end
   end
   

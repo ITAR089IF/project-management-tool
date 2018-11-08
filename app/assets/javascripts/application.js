@@ -16,3 +16,4 @@
 //= require turbolinks
 //= require_tree .
 //= require jquery
+//= require flatpickr
