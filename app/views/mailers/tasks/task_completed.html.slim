@@ -1,36 +1,34 @@
-table.email-table
-  tbody
-    tr
-      td colspan="2"
-        h1
-          | Task: #{ link_to @task.title, account_project_task_url(@task.project, @task) }
-    tr
-      td
-        .p #{@user.first_name} complited this task
-    tr
-      td
-        h1 Task Details
-    - if @task.description.present?
-      tr
-        td
-          .p DESCRIPTION:
-      tr
-        td colspan="2"
-          .p #{@task.description}
-    - if @task.assignee.present?
-      tr
-        td
-          .p ASSIGNEE:
-        td
+.email-table
+  .div-row
+    = link_to image_tag("email.jpg"), root_url
+  .div-row
+    #task-link
+      = link_to @task.title, account_project_task_url(@task.project, @task)
+  .div-row
+    #task-details
+      .p #{@user.first_name} completed this task
+  .div-row
+    #details-title
+      h1 Task Details:
+  - if @task.description.present?
+    .div-row DESCRIPTION:
+    .div-row
+      #task-details
+        .p #{@task.description}
+  - if @task.assignee.present?
+    .div-row
+      .div-cell ASSIGNEE:
+      .div-cell
+        #task-details
           .p #{@task.assignee.full_name}
-    tr
-      td
-        .p PROJECTS:
-      td
+  .div-row
+    .div-cell PROJECTS:
+    .div-cell
+      #task-details
         .p #{@task.project.name}
-    tr
-      td
-        .p  FOLLOWERS:
-      td
+  .div-row
+    .div-cell FOLLOWERS:
+    .div-cell
+      #task-details
         - @task.watchers.each do |watcher|
           .p #{watcher.full_name}

@@ -1,13 +1,12 @@
 class TasksMailer < ApplicationMailer
-  default from: "info@asana.com"
   default template_path: 'mailers/tasks'
 
-  def task_completed(watcher, task, current_user)
+  def task_completed(task, current_user)
     @task = task
     @user = current_user
     mail(
-        to: watcher.email ,
-        subject: "Task compileted"
-      )
+      to: @task.watchers.map {|watcher| watcher.email if watcher != current_user},
+      subject: "Task completed"
+    )
   end
 end

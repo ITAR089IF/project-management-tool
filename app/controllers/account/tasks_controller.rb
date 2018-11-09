@@ -1,4 +1,6 @@
 class Account::TasksController < Account::AccountController
+  after_action :send_email_when_task_complete, only: :complete
+
   def show
     @project = parent
     @task = @project.tasks.find(params[:id])
@@ -101,12 +103,8 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = resource
     @task.update(complete: true)
+    
     respond_to :js
-    @task.watchers.each do |watcher|
-      if watcher != current_user
-        TasksMailer.task_completed(watcher, @task, current_user).deliver
-      end
-    end
   end
 
   private
@@ -137,5 +135,9 @@ class Account::TasksController < Account::AccountController
 
   def assignee_params
     params.require(:task).permit(:assignee)
+  end
+
+  def send_email_when_task_complete
+    TasksMailer.task_completed(@task, current_user).deliver_later
   end
 end
