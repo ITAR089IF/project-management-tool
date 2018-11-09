@@ -33,6 +33,10 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph }
     project
 
+    trait :completed do
+      complete { true }
+    end
+
     trait :with_files do
       transient do
         files_count { 3 }
