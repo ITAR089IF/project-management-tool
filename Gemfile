@@ -35,6 +35,8 @@ gem 'omniauth-facebook'
 gem 'annotate'
 gem 'ranked-model'
 gem 'meta-tags'
+gem "paranoia", '~> 2.2'
+# gem 'flatpickr_rails'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'

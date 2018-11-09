@@ -3,6 +3,7 @@
 # Table name: workspaces
 #
 #  id         :bigint(8)        not null, primary key
+#  deleted_at :datetime
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -10,7 +11,8 @@
 #
 # Indexes
 #
-#  index_workspaces_on_user_id  (user_id)
+#  index_workspaces_on_deleted_at  (deleted_at)
+#  index_workspaces_on_user_id     (user_id)
 #
 # Foreign Keys
 #
@@ -18,6 +20,7 @@
 #
 
 class Workspace < ApplicationRecord
+  acts_as_paranoid
   belongs_to :user, required: true
   has_many :projects, dependent: :destroy
 

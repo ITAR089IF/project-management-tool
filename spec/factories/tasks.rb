@@ -4,6 +4,7 @@
 #
 #  id          :bigint(8)        not null, primary key
 #  complete    :boolean          default(FALSE)
+#  deleted_at  :datetime
 #  description :text
 #  due_date    :datetime
 #  row_order   :integer
@@ -17,6 +18,7 @@
 # Indexes
 #
 #  index_tasks_on_assignee_id  (assignee_id)
+#  index_tasks_on_deleted_at   (deleted_at)
 #  index_tasks_on_project_id   (project_id)
 #  index_tasks_on_row_order    (row_order)
 #
@@ -30,7 +32,6 @@ FactoryBot.define do
   factory :task, class: 'Task' do
     title { Faker::Lorem.sentence }
     description { Faker::Lorem.paragraph }
-    due_date { nil }
     project
 
     trait :with_files do
@@ -46,11 +47,11 @@ FactoryBot.define do
     end
 
     trait :expired do 
-      due_date { 1.month.ago }
+      due_date { Faker::Date.backward(30) }
     end
 
     trait :future do 
-      due_date { 1.day.since }
+      due_date { Faker::Date.forward(30) }
     end
   end
 end

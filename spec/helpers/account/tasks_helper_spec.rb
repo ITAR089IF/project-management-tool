@@ -4,22 +4,30 @@ RSpec.describe Account::TasksHelper, type: :helper do
   let!(:user)         { create(:user) }
   let!(:workspace)    { create(:workspace, user: user) }
   let!(:project)      { create(:project, workspace: workspace, users: [user]) }
-  let!(:section)      { create(:task, project: project, section: true) }
-  let!(:expired_task) { create(:task, :expired, project: project) }
-  let!(:task)         { create(:task, project: project) }
 
-  describe "#task_link_class" do
-    it "returns classes for section" do
-      expect(helper.task_link_class(section)).to eq('title is-4 is-italic')
-    end
+  context 'section' do
+    let!(:task) { create(:task, project: project, section: true) }
 
-    it "returns classes for expired task" do
-      expect(helper.task_link_class(expired_task)).to eq("has-text-danger")
-    end
-
-    it "returns classes for link" do
-      expect(helper.task_link_class(task)).to eq("has-text-link")
-    end
+    subject { helper.task_link_class(task) }
+  
+    it { is_expected.to include('title') }
+    it { is_expected.to include('is-4') }
+    it { is_expected.to include('is-italic') }
   end
   
+  context 'expired' do
+    let!(:task) { create(:task, :expired, project: project) }
+
+    subject { helper.task_link_class(task) }
+  
+    it { is_expected.to eq('has-text-danger') }
+  end
+
+  context 'future task' do
+    let!(:task) { create(:task, :future, project: project) }
+
+    subject { helper.task_link_class(task) }
+  
+    it { is_expected.to eq('has-text-link') }
+  end
 end

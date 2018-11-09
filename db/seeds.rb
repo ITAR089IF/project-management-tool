@@ -9,7 +9,7 @@ Workspace.all.each do |workspace|
 end
 
 Project.all.each do |project|
-  FactoryBot.create_list(:task, 3, :future, project: project)
+  FactoryBot.create_list(:task, 3, project: project)
 end
 
 User.all.each do |user|

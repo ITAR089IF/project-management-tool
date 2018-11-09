@@ -1,6 +1,7 @@
 /*
- *= require_tree .
- *= require_self
- *= require flatpickr
+ *= require bulma_ext
  *= require font-awesome
+ *= require main
+ *= require tasks
+ *= require comments
  */
