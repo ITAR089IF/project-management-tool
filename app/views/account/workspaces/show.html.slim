@@ -20,12 +20,8 @@
           .level-item
             = link_to "Delete",  account_workspace_project_path(@workspace, project),
               method: :delete, class: "button is-small right", data: { confirm: "Are you sure?" }
-    #workspace-users
-      | Users
-      = raw ap (@members += @workspace.user)
-      / - @members.merge(@workspace.user).each do |member|
-      /     = member.full_name
-      /     br
-      #new-invitation
-        = link_to "Invite new person", new_invitation_account_workspace_path(@workspace),
-                                      remote: true, id: 'link_form'
+    | Members
+    span#new-member
+      = render 'new_member_link'
+    #workspace-members
+      = render 'show_user', users: User.for_ids(@members.pluck(:id) << @workspace.user.id)

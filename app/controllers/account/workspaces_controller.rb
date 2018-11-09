@@ -39,24 +39,22 @@ class Account::WorkspacesController < Account::AccountController
     redirect_to account_workspaces_path
   end
 
-  def new_invitation
+  def new_member
     @workspace = resource
-
 
     respond_to :js
   end
 
-  def create_invitation
-    ap invitation_params
+  def create_member
     @workspace = resource
-    @invitation = @workspace.shared_workspaces.build(user_id: invitation_params[:user])
-    @invitation.save
-    ap @invitation.errors.messages
+    @member = @workspace.shared_workspaces.build(user_id: member_params[:user])
+    @user = User.find(member_params[:user])
+    @member.save
 
     respond_to :js
   end
 
-  def delete_invitation
+  def delete_member
     @workspace = resource
     @task = resource
     @result = @task.update(assignee_id: nil)
@@ -79,7 +77,7 @@ class Account::WorkspacesController < Account::AccountController
     params.require(:workspace).permit(:name).merge(user_id: current_user.id)
   end
 
-  def invitation_params
+  def member_params
     params.require(:workspace).permit(:user)
   end
 end

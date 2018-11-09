@@ -10,9 +10,9 @@ Rails.application.routes.draw do
     resource :profile, only: [:edit, :update]
     resources :workspaces do
       member do
-        get :new_invitation
-        post :create_invitation
-        delete :delete_invitation
+        get :new_member
+        post :create_member
+        delete :delete_member
       end
       resources :projects, except: [:index]
     end

@@ -1,0 +1,7 @@
+<% if @user.persisted? %>
+  $('#workspace-members')
+  .append("<%=j render 'account/workspaces/show_user', users: [@user] %>")
+  $('#new-member').html("<%=j render 'account/workspaces/new_member_link' %>")
+<% else %>
+  $('#new-member').html("<%= j render 'member_form' %>");
+<% end %>

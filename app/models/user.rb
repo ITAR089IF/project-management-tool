@@ -85,4 +85,8 @@ class User < ApplicationRecord
   def watching?(task)
     self.tasks.where(id: task.id).exists?
   end
+
+  def self.for_ids(user_ids)
+    where(id: user_ids)
+  end
 end

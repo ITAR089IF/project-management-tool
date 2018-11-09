@@ -1,0 +1,4 @@
+= simple_form_for :workspace, url: create_member_account_workspace_path(workspace), remote: true do |f|
+  = f.input :user, label: false, wrapper: :bulma_input, required: true, prompt: "Select user",
+                  collection: uninvited_users(workspace).map{ |user| [user.full_name, user.id] }
+  = f.submit 'Save', class: 'button is-link'
