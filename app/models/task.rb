@@ -8,7 +8,7 @@
 #  description :text
 #  due_date    :datetime
 #  row_order   :integer
-#  section     :boolean          default(FALSE)
+#  section     :boolean
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -27,6 +27,7 @@
 #  fk_rails_...  (assignee_id => users.id)
 #  fk_rails_...  (project_id => projects.id)
 #
+
 class Task < ApplicationRecord
   include RankedModel
   include Commentable

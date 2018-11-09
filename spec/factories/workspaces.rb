@@ -11,7 +11,6 @@
 #
 # Indexes
 #
-#  index_workspaces_on_user_id  (user_id)
 #  index_workspaces_on_deleted_at  (deleted_at)
 #  index_workspaces_on_user_id     (user_id)
 #

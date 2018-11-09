@@ -1,4 +1,5 @@
 class Account::TasksController < Account::AccountController
+
   def show
     @project = parent
     @task = @project.tasks.find(params[:id])
@@ -102,6 +103,8 @@ class Account::TasksController < Account::AccountController
     @task = resource
     @task.update(complete: true)
 
+<<<<<<< HEAD
+=======
     respond_to :js
   end
 
@@ -110,7 +113,9 @@ class Account::TasksController < Account::AccountController
     @task = resource
     @task.update(complete: false)
 
+>>>>>>> development
     respond_to :js
+    TasksMailer.task_completed(@task, current_user).deliver_later
   end
 
   private
