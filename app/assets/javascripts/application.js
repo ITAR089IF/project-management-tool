@@ -4,4 +4,3 @@
 //= require turbolinks
 //= require cable
 //= require dashboard
-//= require account/tasks
