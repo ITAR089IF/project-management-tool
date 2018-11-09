@@ -103,6 +103,17 @@ class Account::TasksController < Account::AccountController
     @task = resource
     @task.update(complete: true)
 
+<<<<<<< HEAD
+=======
+    respond_to :js
+  end
+
+  def uncomplete
+    @project = parent
+    @task = resource
+    @task.update(complete: false)
+
+>>>>>>> development
     respond_to :js
     TasksMailer.task_completed(@task, current_user).deliver_later
   end
@@ -122,7 +133,7 @@ class Account::TasksController < Account::AccountController
   end
 
   def tasks_params
-    params.require(:task).permit(:title, :description, :section, files: [])
+    params.require(:task).permit(:title, :description, :section, :due_date, files: [])
   end
 
   def task_movement_params

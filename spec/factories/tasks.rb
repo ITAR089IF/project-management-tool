@@ -6,6 +6,7 @@
 #  complete    :boolean          default(FALSE)
 #  deleted_at  :datetime
 #  description :text
+#  due_date    :datetime
 #  row_order   :integer
 #  section     :boolean
 #  title       :string
@@ -33,6 +34,10 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph }
     project
 
+    trait :completed do
+      complete { true }
+    end
+
     trait :with_files do
       transient do
         files_count { 3 }
@@ -45,5 +50,12 @@ FactoryBot.define do
       end
     end
 
+    trait :expired do 
+      due_date { Faker::Date.backward(30) }
+    end
+
+    trait :future do 
+      due_date { Faker::Date.forward(30) }
+    end
   end
 end
