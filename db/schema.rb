@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 2018_11_05_214529) do
     t.bigint "project_id"
     t.boolean "section", default: false
     t.boolean "complete", default: false
+    t.datetime "due_date"
     t.datetime "deleted_at"
     t.bigint "assignee_id"
     t.index ["assignee_id"], name: "index_tasks_on_assignee_id"

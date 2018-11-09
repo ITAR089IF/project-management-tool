@@ -6,6 +6,7 @@
 #  complete    :boolean          default(FALSE)
 #  deleted_at  :datetime
 #  description :text
+#  due_date    :datetime
 #  row_order   :integer
 #  section     :boolean          default(FALSE)
 #  title       :string
@@ -48,6 +49,10 @@ class Task < ApplicationRecord
 
   def pending?
     !complete?
+  end
+
+  def expired?
+    self.due_date && self.due_date < Time.now && pending?
   end
 
   def add_watcher(user)
