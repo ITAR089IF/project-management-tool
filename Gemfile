@@ -27,6 +27,7 @@ gem 'ransack'
 gem 'friendly_id'
 gem 'babosa'
 gem 'bulma-rails'
+gem 'bulma-extensions-rails'
 gem 'webpacker'
 gem 'react_on_rails'
 gem 'omniauth'
@@ -34,10 +35,15 @@ gem 'omniauth-facebook'
 gem 'annotate'
 gem 'ranked-model'
 gem 'meta-tags'
+<<<<<<< HEAD
 gem 'premailer-rails'
 gem "paranoia", '~> 2.2'
 gem 'bulma-extensions-rails'
 
+=======
+gem "paranoia", '~> 2.2'
+# gem 'flatpickr_rails'
+>>>>>>> 4d01884f913e46a0a86f0570e759c7c03f80f733
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'
