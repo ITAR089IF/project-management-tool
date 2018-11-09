@@ -15,7 +15,6 @@ end
 
 RSpec.configure do |config|
 config.include Devise::Test::ControllerHelpers, type: :controller
-config.include Devise::Test::ControllerHelpers, type: :mailer
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction

@@ -11,10 +11,6 @@ RSpec.describe TasksMailer, type: :mailer do
     let!(:task) { create(:task, watchers: [user1]) }
     let!(:mail) { TasksMailer.task_completed(@task, current_user) }
 
-    before do
-      sign_in current_user
-    end
-
     it 'renders the subject' do
       expect(mail.subject).to eql("Task completed")
     end
@@ -28,7 +24,7 @@ RSpec.describe TasksMailer, type: :mailer do
     end
 
     it 'assigns @title' do
-      expect(mail.body.encoded).to match(task.title)
+      expect(mail.body.encoded).to include(task.title)
     end
 
   end

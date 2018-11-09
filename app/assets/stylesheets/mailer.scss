@@ -11,22 +11,24 @@
   background-size: 44%;
   background-repeat: no-repeat;
 }
-.email-table .div-row {
-  padding: 5px;
+
+.email-table {
+  .div-row {
+    padding: 5px;
+  }
 }
 
-.email-table .div-row .div-cell {
-  display:table-cell;
-  width: 195px;
+.email-table{
+  .div-row{
+    .div-cell {
+      display:table-cell;
+      width: 195px;
+    }
+  }
 }
-div#task-link {
+
+.title {
   font-size: 24px;
   text-align: center;
   padding: 5px;
-}
-div#task-details{
-  font-style: italic;
-}
-div#details-title{
-  color: #47473E;
 }
