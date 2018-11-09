@@ -52,7 +52,7 @@ class Task < ApplicationRecord
   end
 
   def expired?
-    self.due_date && (self.due_date < Time.now && pending?)
+    self.due_date && self.due_date < Time.now && pending?
   end
 
   def add_watcher(user)
