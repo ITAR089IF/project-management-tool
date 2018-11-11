@@ -85,10 +85,15 @@ ActiveRecord::Schema.define(version: 2018_11_05_214529) do
     t.datetime "updated_at", null: false
     t.integer "row_order"
     t.bigint "project_id"
-    t.boolean "section", default: false
     t.boolean "complete", default: false
+    t.boolean "section"
+<<<<<<< HEAD
+=======
+    t.datetime "due_date"
     t.datetime "deleted_at"
+>>>>>>> development
     t.bigint "assignee_id"
+    t.datetime "deleted_at"
     t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
     t.index ["deleted_at"], name: "index_tasks_on_deleted_at"
     t.index ["project_id"], name: "index_tasks_on_project_id"
