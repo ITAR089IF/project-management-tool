@@ -101,8 +101,12 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = resource
     @task.update(complete: true)
-    
+
     respond_to :js
+  end
+
+  def all
+    render json: { tasks: current_user.tasks(params[:search]) }
   end
 
   private
