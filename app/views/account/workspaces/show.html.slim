@@ -24,4 +24,4 @@
     span#new-member
       = render 'new_member_link'
     #workspace-members
-      = render 'show_user', users: User.for_ids(@members.pluck(:id) << @workspace.user.id)
+      = render 'show_user', users: @users

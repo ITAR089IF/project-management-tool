@@ -5,7 +5,7 @@ class Account::WorkspacesController < Account::AccountController
 
   def show
     @workspace = resource
-    @members = @workspace.members
+    @users = @workspace.members + [@workspace.user]
   end
 
   def new
@@ -47,17 +47,14 @@ class Account::WorkspacesController < Account::AccountController
 
   def create_member
     @workspace = resource
-    @member = @workspace.shared_workspaces.build(user_id: member_params[:user])
-    @user = User.find(member_params[:user])
-    @member.save
+    @invitation = @workspace.shared_workspaces.build(user_id: member_params[:user])
+    @invitation.save
 
     respond_to :js
   end
 
   def delete_member
     @workspace = resource
-    @task = resource
-    @result = @task.update(assignee_id: nil)
 
     respond_to :js
   end
@@ -66,7 +63,7 @@ class Account::WorkspacesController < Account::AccountController
   private
 
   def collection
-    current_user.workspaces
+    Workspace.where(current_user.workspaces.ids + current_user.invited_workspaces.ids)
   end
 
   def resource

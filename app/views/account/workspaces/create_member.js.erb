@@ -1,7 +1,7 @@
-<% if @user.persisted? %>
+<% if @invitation.persisted? %>
   $('#workspace-members')
-  .append("<%=j render 'account/workspaces/show_user', users: [@user] %>")
-  $('#new-member').html("<%=j render 'account/workspaces/new_member_link' %>")
+  .append("<%=j render 'account/workspaces/show_user', users: [@invitation.user] %>")
+  $('#new-member').html("<%=j render 'account/workspaces/new_member_link', workspace: @workspace %>")
 <% else %>
-  $('#new-member').html("<%= j render 'member_form' %>");
+  $('#new-member').html("<%= j render 'member_form', workspace: @workspace %>");
 <% end %>
