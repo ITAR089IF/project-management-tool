@@ -1,7 +1,9 @@
 require "rails_helper"
+include ActiveJob::TestHelper
 
 RSpec.describe TasksMailer, type: :mailer do
   describe "task_completed" do
+
     let!(:user) { create(:user) }
     let!(:current_user) { user }
     let!(:user1) { create(:user) }
@@ -9,7 +11,7 @@ RSpec.describe TasksMailer, type: :mailer do
     let!(:project) { create(:project, workspace: workspace, users: [user]) }
     let!(:task1) { create(:task, project: project) }
     let!(:task) { create(:task, watchers: [user1]) }
-    let!(:mail) { TasksMailer.task_completed(@task, current_user) }
+    let!(:mail) { TasksMailer.task_completed(@task, current_user).deliver_later }
 
     it 'renders the subject' do
       expect(mail.subject).to eql("Task completed")
