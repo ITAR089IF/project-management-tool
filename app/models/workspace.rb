@@ -22,7 +22,7 @@ class Workspace < ApplicationRecord
   has_many :projects, dependent: :destroy
 
   scope :order_desc, -> { order(id: :desc) }
-  scope :search_by_name, -> (search) { where("name ILIKE ?", "%#{search}%").order(name: :asc) if search }
+  scope :search_workspaces, -> (search) { where("name ILIKE ?", "%#{search}%").order(name: :asc) }
 
   validates :name, presence: true, length: { maximum: 250 }
 end

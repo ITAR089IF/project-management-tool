@@ -1,11 +1,6 @@
 class Account::WorkspacesController < Account::AccountController
   def index
-    @workspaces = collection
-
-    respond_to do |format|
-      format.html { @workspaces.order_desc }
-      format.json { render json: { workspaces: @workspaces.search_by_name(params[:search]) }}
-    end
+    @workspaces = collection.order_desc
   end
 
   def show
@@ -41,6 +36,10 @@ class Account::WorkspacesController < Account::AccountController
   def destroy
     resource.destroy
     redirect_to account_workspaces_path
+  end
+
+  def search
+    render json: { workspaces: collection.search_workspaces(params[:search]) }
   end
 
   private

@@ -35,12 +35,18 @@ RSpec.describe Project, type: :model do
   context 'scope testing' do
     let!(:user) { create(:user) }
     let!(:workspace) { create(:workspace, user_id: user.id) }
-    let!(:project1) { create(:project, workspace_id: workspace.id) }
-    let!(:project2) { create(:project, workspace_id: workspace.id) }
-    let!(:project3) { create(:project, workspace_id: workspace.id) }
+    let!(:project1) { create(:project, name: 'Test 1', workspace_id: workspace.id) }
+    let!(:project2) { create(:project, name: 'Test 2', workspace_id: workspace.id) }
+    let!(:project3) { create(:project, name: 'Text', workspace_id: workspace.id) }
 
     it 'should sort data by desc' do
       expect(workspace.projects.order_desc).to eq [project3, project2, project1]
+    end
+
+    it 'should find all projects with entered text' do
+      expect(workspace.projects.search_projects('Test').count).to eq 2
+      expect(workspace.projects.search_projects('text').count).to eq 1
+      expect(workspace.projects.search_projects('hhfj').count).to eq 0
     end
   end
 end

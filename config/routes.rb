@@ -7,8 +7,9 @@ Rails.application.routes.draw do
 
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
-    get '/projects', to: 'projects#all', defaults: { format: :json }
-    get '/tasks', to: 'tasks#all', defaults: { format: :json }
+    get '/workspaces/search', to: 'workspaces#search', defaults: { format: :json }
+    get '/projects/search', to: 'projects#search', defaults: { format: :json }
+    get '/tasks/search', to: 'tasks#search', defaults: { format: :json }
     resource :profile, only: [:edit, :update]
     resources :workspaces do
       resources :projects, except: [:index]

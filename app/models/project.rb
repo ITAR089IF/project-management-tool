@@ -25,7 +25,7 @@ class Project < ApplicationRecord
   has_many :users, through: :user_projects
 
   scope :order_desc, -> { order(id: :desc) }
-  scope :search_by_name, -> (search) { where('name ILIKE ?', "%#{search}%").order(name: :asc) }
+  scope :search_projects, -> (search) { where('name ILIKE ?', "%#{search}%").order(name: :asc) }
 
   validates :name, length: { maximum: 250 }, presence: true
 end

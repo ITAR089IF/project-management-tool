@@ -91,4 +91,12 @@ RSpec.describe Account::WorkspacesController, type: :controller do
       expect(response).to redirect_to account_workspaces_path
     end
   end
+
+
+  describe 'GET /workspaces/search' do
+    it 'should return search result in format json' do
+      get :search, params: { search: 'Text' }
+      expect(response).to be_successful
+    end
+  end
 end

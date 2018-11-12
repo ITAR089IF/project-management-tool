@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', e => {
-  const workspace_url = 'http://localhost:3000/account/workspaces.json';
-  const projects_url = 'http://localhost:3000/account/projects.json';
-  const tasks_url = 'http://localhost:3000/account/tasks.json';
+  const workspace_url = 'http://localhost:3000/account/workspaces/search.json';
+  const projects_url = 'http://localhost:3000/account/projects/search.json';
+  const tasks_url = 'http://localhost:3000/account/tasks/search.json';
 
   let search = document.getElementById('search');
   let searchResults = document.getElementById('search-results');
@@ -26,8 +26,7 @@ document.addEventListener('DOMContentLoaded', e => {
           'workspaces',
           'WORKSPACES',
           e.target.value,
-          workspacesBlock,
-          'name'
+          workspacesBlock
         );
 
         getData(projects_url,
@@ -35,8 +34,7 @@ document.addEventListener('DOMContentLoaded', e => {
           'projects',
           'PROJECTS',
           e.target.value,
-          projectsBlock,
-          'name'
+          projectsBlock
         );
 
         getData(tasks_url,
@@ -44,8 +42,7 @@ document.addEventListener('DOMContentLoaded', e => {
           'tasks',
           'TASKS',
           e.target.value,
-          tasksBlock,
-          'title'
+          tasksBlock
         )
 
         searchResults.style.display = 'block';
@@ -64,15 +61,14 @@ document.addEventListener('DOMContentLoaded', e => {
 
 });
 
-function getData(url, innerObject, objectName, title, search, displayObject, field) {
+function getData(url, innerObject, objectName, title, search, displayObject) {
   if (search) {
     fetch(`${url}?search=${search}`)
     .then(responce => { return responce.json() })
     .then(responce => {
-      console.log(responce);
       if (responce[objectName].length > 0) {
         displayObject.style.display = 'block';
-        innerObject.innerHTML = jsonToHTML(responce[objectName], title, field);
+        innerObject.innerHTML = jsonToHTML(responce[objectName], title);
       } else {
         innerObject.innerHTML = '';
         displayObject.style.display = 'none';
@@ -82,28 +78,54 @@ function getData(url, innerObject, objectName, title, search, displayObject, fie
   }
 }
 
-function jsonToHTML(data, title, field, objectId, referenceId = null, url) {
+function jsonToHTML(data, title, field) {
   html = `
     <div class='level'>
       <div class='level-left'>
         <div class='level-item'>
-          <div class='title is-4'>
-            ${title}
-          </div>
+          ${title}
         </div>
       </div>
-    </div>`;
+    </div>
+  `;
 
   data.map( element => {
+    let link = '';
+
+    switch(title) {
+      case "WORKSPACES":
+        link = linkToWorkspace(element.id, element.name);
+        break;
+      case "PROJECTS":
+        link = linkToProject(element.id, element.workspace_id, element.name);
+        break;
+      case "TASKS":
+        link = linkToTask(element.id, element.project_id, element.title);
+        break;
+    }
+
     html += `
       <div class="level is-small">
         <div class="level-left">
           <div class="level-item">
-            ${element[field]}
+            ${ link }
           </div>
         </div>
       </div>`
   });
 
   return html;
+}
+
+linkToWorkspace = (id, text) => {
+  return `<a href="http://localhost:3000/account/workspaces/${id}">${text}</a>`;
+}
+
+linkToProject = (id, workspaceId, text) => {
+  return `<a href="http://localhost:3000/account/workspaces/${workspaceId}/projects/${id}">${text}</a>`;
+}
+
+linkToTask = (id, projectId, text) => {
+  return `
+    <a href="http://localhost:3000/account/projects/${projectId}/tasks/${id}">${text}</a>`;
 }

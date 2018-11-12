@@ -32,7 +32,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let!(:user) { create(:user, first_name: 'John', last_name: 'Doe') }
   let!(:another_user) { create(:user) }
-  let!(:project) { create(:project) }
+  let!(:project) { create(:project, users: [user]) }
   let!(:task) { create(:task, project: project) }
   let!(:projects_comment) { create(:comment, :for_project,  user: user, commentable: project) }
   let!(:tasks_comment) { create(:comment, :for_task,  user: user, commentable: task) }
@@ -62,5 +62,17 @@ RSpec.describe User, type: :model do
     it { should have_many(:projects) }
     it { should validate_length_of(:first_name).is_at_most(250) }
     it { should validate_length_of(:last_name).is_at_most(250) }
+  end
+
+  context 'search' do
+    let!(:task1) { create(:task, title: 'Test 1', project: project) }
+    let!(:task2) { create(:task, title: 'Test 2', project: project) }
+    let!(:task3) { create(:task, title: 'Text',   project: project) }
+
+    it 'should find all tasks' do
+      expect(user.search_tasks('test').count).to eq 2
+      expect(user.search_tasks('Text').count).to eq 1
+      expect(user.search_tasks('asgdj').count).to eq 0
+    end
   end
 end

@@ -87,7 +87,7 @@ class User < ApplicationRecord
 
 
   # Search all tasks in all projects where user are invited or have it
-  def tasks(search)
+  def search_tasks(search)
     tasks = Array.new
 
     self.projects.each do |project|
