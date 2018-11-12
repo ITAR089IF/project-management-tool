@@ -5,7 +5,7 @@ class Account::WorkspacesController < Account::AccountController
 
   def show
     @workspace = resource
-    @users = @workspace.members.union_all(User.where(id: @workspace.user)).order_desc
+    @users = User.for(@workspace).order_desc
   end
 
   def new
@@ -47,7 +47,7 @@ class Account::WorkspacesController < Account::AccountController
 
   def create_member
     @workspace = resource
-    @invitation = @workspace.shared_workspaces.build(user_id: member_params[:user])
+    @invitation = @workspace.shared_workspaces.build(user_id: member_params[:user_id])
     @invitation.save
 
     respond_to :js
@@ -56,9 +56,12 @@ class Account::WorkspacesController < Account::AccountController
   def delete_member
     @workspace = resource
     @member_id = resource.members.find(params[:user]).id
-    @result = resource.members.destroy(params[:user])
-
-    respond_to :js
+    resource.members.destroy(params[:user])
+    if @member_id == current_user.id
+      redirect_to account_workspaces_path, notice: 'You have removed yourself from workspace!'
+    else
+      respond_to :js
+    end
   end
 
   private
@@ -75,6 +78,6 @@ class Account::WorkspacesController < Account::AccountController
   end
 
   def member_params
-    params.require(:workspace).permit(:user)
+    params.require(:workspace).permit(:user_id)
   end
 end
