@@ -6,8 +6,9 @@
 #  complete    :boolean          default(FALSE)
 #  deleted_at  :datetime
 #  description :text
+#  due_date    :datetime
 #  row_order   :integer
-#  section     :boolean          default(FALSE)
+#  section     :boolean
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

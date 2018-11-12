@@ -6,8 +6,9 @@
 #  complete    :boolean          default(FALSE)
 #  deleted_at  :datetime
 #  description :text
+#  due_date    :datetime
 #  row_order   :integer
-#  section     :boolean          default(FALSE)
+#  section     :boolean
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -26,6 +27,7 @@
 #  fk_rails_...  (assignee_id => users.id)
 #  fk_rails_...  (project_id => projects.id)
 #
+
 class Task < ApplicationRecord
   include RankedModel
   include Commentable
@@ -48,6 +50,10 @@ class Task < ApplicationRecord
 
   def pending?
     !complete?
+  end
+
+  def expired?
+    self.due_date && self.due_date < Time.now && pending?
   end
 
   def add_watcher(user)
