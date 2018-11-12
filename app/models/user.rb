@@ -47,6 +47,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook]
 
+  scope :order_desc, -> { order(:first_name, :last_name) }
+
   def self.from_omniauth(auth)
     user = User.where(email: auth.info.email).first
     if user
@@ -84,9 +86,5 @@ class User < ApplicationRecord
 
   def watching?(task)
     self.tasks.where(id: task.id).exists?
-  end
-
-  def self.for_ids(user_ids)
-    where(id: user_ids)
   end
 end

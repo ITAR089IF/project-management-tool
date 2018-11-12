@@ -5,7 +5,7 @@ class Account::WorkspacesController < Account::AccountController
 
   def show
     @workspace = resource
-    @users = @workspace.members + [@workspace.user]
+    @users = @workspace.members.union_all(User.where(id: @workspace.user)).order_desc
   end
 
   def new
