@@ -8,7 +8,7 @@
 #  description :text
 #  due_date    :datetime
 #  row_order   :integer
-#  section     :boolean
+#  section     :boolean          default(FALSE)
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
