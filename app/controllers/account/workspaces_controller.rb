@@ -55,15 +55,15 @@ class Account::WorkspacesController < Account::AccountController
 
   def delete_member
     @workspace = resource
+    @member_id = resource.members.find(params[:user]).id
+    @result = resource.members.destroy(params[:user])
 
     respond_to :js
   end
 
-
   private
-
   def collection
-    Workspace.where(current_user.workspaces.ids + current_user.invited_workspaces.ids)
+    current_user.workspaces.union(current_user.invited_workspaces)
   end
 
   def resource

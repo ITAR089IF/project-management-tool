@@ -1,3 +1,7 @@
-- users.each do |user|
-  = user.full_name
-  br
+- users.each do |member|
+  div id = "workspace-member-#{member.id}"
+    = member.full_name
+    - unless member == workspace.user
+      = link_to delete_member_account_workspace_path(user: member),
+              remote: true, method: :delete, data: {confirm: "Are you sure?"} do
+        = fa_icon "times"
