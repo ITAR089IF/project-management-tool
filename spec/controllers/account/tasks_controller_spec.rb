@@ -12,7 +12,7 @@ RSpec.describe Account::TasksController, type: :controller do
   let!(:project) { create(:project, workspace: workspace, users: [user, user1]) }
   let!(:task1) { create(:task, project: project) }
   let!(:task2) { create(:task, project: project, watchers: [user1, user2, user3, user4]) }
-  let!(:task3) { create(:task, project: project) }
+  let!(:task3) { create(:task, :completed, project: project) }
 
   before do
     sign_in user
@@ -51,6 +51,7 @@ RSpec.describe Account::TasksController, type: :controller do
       expect(project.tasks.count).to eq 3
       delete :destroy, params: { project_id: project.id, id: task1.id }, format: :js
       expect(project.tasks.count).to eq 2
+      expect(project.tasks.with_deleted.count).to eq 3
     end
 
     it 'should delete task with :html' do
@@ -62,10 +63,18 @@ RSpec.describe Account::TasksController, type: :controller do
   end
 
   context 'PATCH /:complete' do
-    it 'should change status of the task' do
-      expect(project.tasks.complete.count).to eq 0
-      patch :complete, params: { project_id: project.id, id: task1.id }, format: :js
+    it 'marks task as completed' do
       expect(project.tasks.complete.count).to eq 1
+      patch :complete, params: { project_id: project.id, id: task1.id }, format: :js
+      expect(project.tasks.complete.count).to eq 2
+    end
+  end
+
+  context 'PATCH /:uncomplete' do
+    it 'marks task as uncompleted' do
+      expect(project.tasks.complete.count).to eq 1
+      patch :uncomplete, params: { project_id: project.id, id: task3.id }, format: :js
+      expect(project.tasks.complete.count).to eq 0
     end
   end
 

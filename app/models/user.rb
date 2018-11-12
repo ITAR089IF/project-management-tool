@@ -34,6 +34,7 @@ class User < ApplicationRecord
   has_many :task_watches, dependent: :destroy
   has_many :tasks, through: :task_watches
   has_many :assigned_tasks, class_name: "Task"
+  has_one_attached :avatar
 
   validates :first_name, length: { maximum: 250 }, presence: true
   validates :last_name, length: { maximum: 250 }, presence: true
@@ -41,6 +42,7 @@ class User < ApplicationRecord
   validates :role, length: { maximum: 250 }
   validates :department, length: { maximum: 250 }
   validates :about, length: { maximum: 250 }
+  validates :avatar, content_type: ['image/png', 'image/jpg', 'image/jpeg']
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
@@ -95,5 +97,9 @@ class User < ApplicationRecord
     end
 
     tasks
+  end
+
+  def with_avatar?
+    avatar&.attachment&.blob&.persisted?
   end
 end

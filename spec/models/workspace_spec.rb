@@ -3,6 +3,7 @@
 # Table name: workspaces
 #
 #  id         :bigint(8)        not null, primary key
+#  deleted_at :datetime
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -10,7 +11,8 @@
 #
 # Indexes
 #
-#  index_workspaces_on_user_id  (user_id)
+#  index_workspaces_on_deleted_at  (deleted_at)
+#  index_workspaces_on_user_id     (user_id)
 #
 # Foreign Keys
 #
@@ -31,7 +33,7 @@ RSpec.describe Workspace, type: :model do
 
   context 'scope tests' do
     let!(:user) { create(:user) }
-    let!(:workspace1) { create(:workspace, name: 'IT', user: user) }
+    let!(:workspace1) { create(:workspace, name: 'IT Innovation', user: user) }
     let!(:workspace2) { create(:workspace, name: 'Infrastructure', user: user) }
     let!(:workspace3) { create(:workspace, user: user) }
 
@@ -40,8 +42,8 @@ RSpec.describe Workspace, type: :model do
     end
 
     it 'should find workspaces with entered text' do
-      expect(user.workspaces.search_workspaces('iN').count).to eq 1
-      expect(user.workspaces.search_workspaces('I').count).to eq 2
+      expect(user.workspaces.search_workspaces('iT').count).to eq 1
+      expect(user.workspaces.search_workspaces('in').count).to eq 2
       expect(user.workspaces.search_workspaces('nfras').count).to eq 0
     end
   end

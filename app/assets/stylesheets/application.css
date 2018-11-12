@@ -2,7 +2,6 @@
  *= require bulma_ext
  *= require font-awesome
  *= require comments
- *= require dashboard
  *= require main
  *= require search
  *= require tasks

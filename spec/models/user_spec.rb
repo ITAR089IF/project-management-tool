@@ -70,9 +70,9 @@ RSpec.describe User, type: :model do
     let!(:task3) { create(:task, title: 'deploy to digital oceane',   project: project) }
 
     it 'should find all tasks' do
-      expect(user.search_tasks('dep').count).to eq 2
-      expect(user.search_tasks('work').count).to eq 1
-      expect(user.search_tasks('oku').count).to eq 0
+      expect(user.search_tasks('deplo').count).to eq 2
+      expect(user.search_tasks('worksp').count).to eq 1
+      expect(user.search_tasks('igital').count).to eq 0
     end
   end
 end

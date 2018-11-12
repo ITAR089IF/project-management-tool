@@ -1,0 +1,2 @@
+$('#incomplete_tasks').append('<%= j render('/account/projects/show_tasks', task: @task, project: @project) %>');
+$('#complete_tasks #complete_task_<%= @task.id %>').remove();

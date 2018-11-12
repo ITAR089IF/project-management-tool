@@ -4,9 +4,11 @@
 #
 #  id          :bigint(8)        not null, primary key
 #  complete    :boolean          default(FALSE)
+#  deleted_at  :datetime
 #  description :text
+#  due_date    :datetime
 #  row_order   :integer
-#  section     :boolean
+#  section     :boolean          default(FALSE)
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -16,6 +18,7 @@
 # Indexes
 #
 #  index_tasks_on_assignee_id  (assignee_id)
+#  index_tasks_on_deleted_at   (deleted_at)
 #  index_tasks_on_project_id   (project_id)
 #  index_tasks_on_row_order    (row_order)
 #
@@ -28,6 +31,7 @@
 class Task < ApplicationRecord
   include RankedModel
   include Commentable
+  acts_as_paranoid
 
   ranks :row_order, with_same: :project_id
 
@@ -46,6 +50,10 @@ class Task < ApplicationRecord
 
   def pending?
     !complete?
+  end
+
+  def expired?
+    self.due_date && self.due_date < Time.now && pending?
   end
 
   def add_watcher(user)

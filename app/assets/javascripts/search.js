@@ -1,18 +1,18 @@
-document.addEventListener('DOMContentLoaded', e => {
-  var search = document.getElementById('search');
-  var searchResults = document.getElementById('search-results');
-
-  var workspaces = document.getElementById('workspaces');
-  var projects = document.getElementById('projects');
-  var tasks = document.getElementById('tasks');
-
-  var workspacesBlock = document.getElementById('workspaces-block');
-  var projectsBlock = document.getElementById('projects-block');
-  var tasksBlock = document.getElementById('tasks-block');
-
-  var timer;
-
+function global_search() {
   search.addEventListener('keyup', e => {
+
+    var search = document.getElementById('search');
+    var searchResults = document.getElementById('search-results');
+
+    var workspaces = document.getElementById('workspaces');
+    var projects = document.getElementById('projects');
+    var tasks = document.getElementById('tasks');
+
+    var workspacesBlock = document.getElementById('workspaces-block');
+    var projectsBlock = document.getElementById('projects-block');
+    var tasksBlock = document.getElementById('tasks-block');
+
+    var timer;
 
     clearTimeout(timer)
     timer = setTimeout(() => {
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', e => {
           tasksBlock
         )
 
-        searchResults.style.display = 'block';
+      searchResults.style.display = 'block';
       } else {
         workspaces.innerHTML = '';
         projects.innerHTML ='';
@@ -54,8 +54,8 @@ document.addEventListener('DOMContentLoaded', e => {
       }
     }, 300);
   })
+}
 
-});
 
 function getData(url, innerObject, objectName, title, search, displayObject) {
   if (search) {
@@ -118,7 +118,7 @@ linkToWorkspace = (id, text) => {
 }
 
 linkToProject = (id, workspaceId, text) => {
-  return `<a href="${Routes.account_workspace_project_path(workpsaceId, id)}">${text}</a>`;
+  return `<a href="${Routes.account_workspace_project_path(workspaceId, id)}">${text}</a>`;
 }
 
 linkToTask = (id, projectId, text) => {
