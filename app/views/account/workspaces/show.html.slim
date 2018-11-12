@@ -1,3 +1,4 @@
+- title "#{@workspace.name} projects"
 .container
   .level
     .level-left
@@ -11,9 +12,9 @@
         .level-left
           .level-item
             = link_to project.name, account_workspace_project_path(@workspace, project)
-          .level-item
-            = "Tasks: #{project.tasks.count}"
         .level-right
+          .level-item.tooltip[data-tooltip="Completed #{project.tasks.complete.count}/#{project.tasks.count}"]
+            = "Tasks: #{project.tasks.count}"
           .level-item
             = link_to "Edit", edit_account_workspace_project_path(@workspace, project),
               class: "button is-small right"

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
         member do
           put :move
           patch :complete
+          patch :uncomplete
           patch :watch
           get :choose_assignee
           post :assign
