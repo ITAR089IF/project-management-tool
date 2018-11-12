@@ -1,5 +1,9 @@
 class Account::TasksController < Account::AccountController
 
+  def index
+    @tasks_for_calendar = collection
+  end
+
   def show
     @project = parent
     @task = @project.tasks.find(params[:id])

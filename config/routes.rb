@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   end
     resources :projects, only: [] do
       concerns :commentable
-      resources :tasks, except: [:index] do
+      resources :tasks do
         member do
           put :move
           patch :complete

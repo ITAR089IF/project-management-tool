@@ -63,4 +63,8 @@ class Task < ApplicationRecord
   def remove_watcher(user)
     self.task_watches.where(user_id: user.id).delete_all
   end
+
+  def start_time
+    due_date
+  end
 end

@@ -37,7 +37,6 @@ gem 'ranked-model'
 gem 'meta-tags'
 gem 'premailer-rails'
 gem "paranoia", '~> 2.2'
-gem 'bulma-extensions-rails'
 
 
 group :development, :test do
