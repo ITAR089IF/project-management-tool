@@ -1,27 +1,23 @@
 document.addEventListener('DOMContentLoaded', e => {
-  const workspace_url = 'http://localhost:3000/account/workspaces/search.json';
-  const projects_url = 'http://localhost:3000/account/projects/search.json';
-  const tasks_url = 'http://localhost:3000/account/tasks/search.json';
+  var search = document.getElementById('search');
+  var searchResults = document.getElementById('search-results');
 
-  let search = document.getElementById('search');
-  let searchResults = document.getElementById('search-results');
+  var workspaces = document.getElementById('workspaces');
+  var projects = document.getElementById('projects');
+  var tasks = document.getElementById('tasks');
 
-  let workspaces = document.getElementById('workspaces');
-  let projects = document.getElementById('projects');
-  let tasks = document.getElementById('tasks');
+  var workspacesBlock = document.getElementById('workspaces-block');
+  var projectsBlock = document.getElementById('projects-block');
+  var tasksBlock = document.getElementById('tasks-block');
 
-  let workspacesBlock = document.getElementById('workspaces-block');
-  let projectsBlock = document.getElementById('projects-block');
-  let tasksBlock = document.getElementById('tasks-block');
-
-  let timer;
+  var timer;
 
   search.addEventListener('keyup', e => {
 
     clearTimeout(timer)
     timer = setTimeout(() => {
       if (e.target.value) {
-        getData(workspace_url,
+        getData(Routes.account_workspaces_search_path({ format: "json" }),
           workspaces,
           'workspaces',
           'WORKSPACES',
@@ -29,7 +25,7 @@ document.addEventListener('DOMContentLoaded', e => {
           workspacesBlock
         );
 
-        getData(projects_url,
+        getData(Routes.account_projects_search_path({ format: "json" }),
           projects,
           'projects',
           'PROJECTS',
@@ -37,7 +33,7 @@ document.addEventListener('DOMContentLoaded', e => {
           projectsBlock
         );
 
-        getData(tasks_url,
+        getData(Routes.account_tasks_search_path({ format: "json" }),
           tasks,
           'tasks',
           'TASKS',
@@ -79,7 +75,7 @@ function getData(url, innerObject, objectName, title, search, displayObject) {
 }
 
 function jsonToHTML(data, title, field) {
-  html = `
+  var html = `
     <div class='level'>
       <div class='level-left'>
         <div class='level-item'>
@@ -90,7 +86,7 @@ function jsonToHTML(data, title, field) {
   `;
 
   data.map( element => {
-    let link = '';
+    var link = '';
 
     switch(title) {
       case "WORKSPACES":
@@ -118,14 +114,13 @@ function jsonToHTML(data, title, field) {
 }
 
 linkToWorkspace = (id, text) => {
-  return `<a href="http://localhost:3000/account/workspaces/${id}">${text}</a>`;
+  return `<a href="${Routes.account_workspace_path(id)}">${text}</a>`;
 }
 
 linkToProject = (id, workspaceId, text) => {
-  return `<a href="http://localhost:3000/account/workspaces/${workspaceId}/projects/${id}">${text}</a>`;
+  return `<a href="${Routes.account_workspace_project_path(workpsaceId, id)}">${text}</a>`;
 }
 
 linkToTask = (id, projectId, text) => {
-  return `
-    <a href="http://localhost:3000/account/projects/${projectId}/tasks/${id}">${text}</a>`;
+  return `<a href="${Routes.account_project_task_path(projectId, id)}">${text}</a>`;
 }
