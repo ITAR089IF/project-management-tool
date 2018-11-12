@@ -85,14 +85,12 @@ class User < ApplicationRecord
     self.tasks.where(id: task.id).exists?
   end
 
-
-  # Search all tasks in all projects where user are invited or have it
   def search_tasks(search)
     tasks = Array.new
 
     self.projects.each do |project|
       project.tasks
-        .where('title ILIKE ?', "%#{search}%")
+        .where("title ~* '\\m(#{search})'")
         .each { |task| tasks << task }
     end
 

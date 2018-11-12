@@ -65,14 +65,14 @@ RSpec.describe User, type: :model do
   end
 
   context 'search' do
-    let!(:task1) { create(:task, title: 'Test 1', project: project) }
-    let!(:task2) { create(:task, title: 'Test 2', project: project) }
-    let!(:task3) { create(:task, title: 'Text',   project: project) }
+    let!(:task1) { create(:task, title: 'deploy to heroku', project: project) }
+    let!(:task2) { create(:task, title: 'workspace', project: project) }
+    let!(:task3) { create(:task, title: 'deploy to digital oceane',   project: project) }
 
     it 'should find all tasks' do
-      expect(user.search_tasks('test').count).to eq 2
-      expect(user.search_tasks('Text').count).to eq 1
-      expect(user.search_tasks('asgdj').count).to eq 0
+      expect(user.search_tasks('dep').count).to eq 2
+      expect(user.search_tasks('work').count).to eq 1
+      expect(user.search_tasks('oku').count).to eq 0
     end
   end
 end
