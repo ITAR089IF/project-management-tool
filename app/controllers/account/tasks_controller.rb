@@ -102,7 +102,6 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = resource
     @task.update(complete: true)
-
     respond_to :js
     TasksMailer.task_completed(@task, current_user).deliver_later
   end
@@ -111,7 +110,6 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = resource
     @task.update(complete: false)
-
     respond_to :js
   end
 
