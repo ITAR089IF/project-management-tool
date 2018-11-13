@@ -2,7 +2,7 @@
   = f.input :avatar, label: "Select your profile avatar", wrapper: :upload_file
   = f.input :first_name, wrapper: :bulma_input, required: true
   = f.input :last_name, wrapper: :bulma_input, required: true
-  = f.input :role, wrapper: :bulma_input
+  = f.input :role, wrapper: :bulma_input, label: "Job role"
   = f.input :department, wrapper: :bulma_input
   = f.input :about, wrapper: :textarea
   = f.submit "Update Profile", class: "button is-link"

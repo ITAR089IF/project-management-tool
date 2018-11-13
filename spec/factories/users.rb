@@ -55,12 +55,12 @@ FactoryBot.define do
     end
   end
 
-  trait :comments_for_projects do
+  trait :with_comments_for_projects do
     after(:create) do |user|
       user.workspaces.each do |workspace|
         workspace.projects.each do |project|
           project.update(users: [user])
-          FactoryBot.create_list(:comment, 1.upto(5).to_a.sample, :for_project, user: user, commentable: project)
+          FactoryBot.create_list(:comment, rand(5), :for_project, user: user, commentable: project)
         end
       end
     end
@@ -78,13 +78,13 @@ FactoryBot.define do
     end
   end
 
-  trait :comments_for_tasks do
+  trait :with_comments_for_tasks do
     after(:create) do |user|
       user.workspaces.each do |workspace|
         workspace.projects.each do |project|
           project.tasks.each do |task|
             project.update(users: [user])
-            FactoryBot.create_list(:comment, 1.upto(5).to_a.sample, :for_task, user: user, commentable: task)        
+            FactoryBot.create_list(:comment, rand(5), :for_task, user: user, commentable: task)
           end
         end
       end
@@ -96,7 +96,7 @@ FactoryBot.define do
       user.workspaces.each do |workspace|
         workspace.projects.each do |project|
           project.tasks.each do |task|
-            task.update(watchers: [user]) if [true, false].sample
+            task.update(watchers: [user])
           end
         end
       end
