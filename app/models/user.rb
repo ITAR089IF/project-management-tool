@@ -95,6 +95,6 @@ class User < ApplicationRecord
   end
 
   def self.for(workspace)
-    workspace.members.union_all(self.where(id: workspace.user))
+    workspace.members.union_all(self.where(id: workspace.user.id))
   end
 end

@@ -55,9 +55,9 @@ class Account::WorkspacesController < Account::AccountController
 
   def delete_member
     @workspace = resource
-    @member_id = resource.members.find(params[:user]).id
-    resource.members.destroy(params[:user])
-    if @member_id == current_user.id
+    @user = @workspace.members.find(params[:user])
+    @workspace.members.destroy(params[:user])
+    if @user == current_user
       redirect_to account_workspaces_path, notice: 'You have removed yourself from workspace!'
     else
       respond_to :js

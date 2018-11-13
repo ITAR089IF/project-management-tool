@@ -1,1 +1,2 @@
-$('#workspace-member-<%= @member_id %>').remove();
+$('#workspace-member-<%= @user.id %>').remove();
+$('#new-member').html('<%=j render 'account/workspaces/new_member_link', workspace: @workspace %>')
