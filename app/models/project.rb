@@ -28,7 +28,7 @@ class Project < ApplicationRecord
   has_many :users, through: :user_projects
 
   scope :order_desc, -> { order(id: :desc) }
-  scope :search_projects, -> (search) { where("name ~* ?", "\\m#{search}").order(name: :asc) }
+  scope :search_projects, -> (search) { where("name ~* ?", "\\m#{search}").order(name: :asc).limit(10) }
 
   validates :name, length: { maximum: 250 }, presence: true
 end

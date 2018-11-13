@@ -63,16 +63,4 @@ RSpec.describe User, type: :model do
     it { should validate_length_of(:first_name).is_at_most(250) }
     it { should validate_length_of(:last_name).is_at_most(250) }
   end
-
-  context 'search' do
-    let!(:task1) { create(:task, title: 'deploy to heroku', project: project) }
-    let!(:task2) { create(:task, title: 'workspace', project: project) }
-    let!(:task3) { create(:task, title: 'deploy to digital oceane',   project: project) }
-
-    it 'should find all tasks' do
-      expect(user.search_tasks('deplo').count).to eq 2
-      expect(user.search_tasks('worksp').count).to eq 1
-      expect(user.search_tasks('igital').count).to eq 0
-    end
-  end
 end

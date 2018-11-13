@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Account::SearchController, type: :controller do
+  render_views
+
   let!(:user) { create(:user) }
 
   before do
@@ -16,8 +18,10 @@ RSpec.describe Account::SearchController, type: :controller do
   it 'should return json' do
     get :index, params: { search: 'work' }
 
-    expect(JSON.parse(response.body)).to be_include('workspaces')
-    expect(JSON.parse(response.body)).to be_include('projects')
-    expect(JSON.parse(response.body)).to be_include('tasks')
+    parsed_response = JSON.parse(response.body)
+
+    expect(parsed_response.has_key?('workspaces')).to eq true
+    expect(parsed_response.has_key?('projects')).to eq true
+    expect(parsed_response.has_key?('tasks')).to eq true
   end
 end

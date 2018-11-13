@@ -87,12 +87,6 @@ class User < ApplicationRecord
     self.tasks.where(id: task.id).exists?
   end
 
-  def search_tasks(search)
-    self.projects.each do |project|
-      return project.tasks.where("title ~* ?", "\\m#{search}").map
-    end
-  end
-
   def with_avatar?
     avatar&.attachment&.blob&.persisted?
   end

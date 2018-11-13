@@ -44,6 +44,12 @@ class Task < ApplicationRecord
   scope :incomplete, -> { where(complete: false) }
   scope :complete, -> { where(complete: true) }
   scope :row_order_asc, -> { order(row_order: :asc) }
+  scope :search_tasks, -> (user_id, search) { joins('
+                                   INNER JOIN projects ON projects.id = tasks.project_id
+                                   INNER JOIN user_projects as up ON projects.id = up.project_id
+                                   INNER JOIN users ON users.id = up.user_id')
+                                     .where('users.id = ? AND tasks.title ~* ?', user_id, "\\m#{search}")
+                                     .limit(10) }
 
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }

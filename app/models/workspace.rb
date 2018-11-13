@@ -25,7 +25,7 @@ class Workspace < ApplicationRecord
   has_many :projects, dependent: :destroy
 
   scope :order_desc, -> { order(id: :desc) }
-  scope :search_workspaces, -> (search) { where("name ~* ?", "\\m#{search}").order(name: :asc) }
+  scope :search_workspaces, -> (search) { where("name ~* ?", "\\m#{search}").order(name: :asc).limit(10) }
 
   validates :name, presence: true, length: { maximum: 250 }
 end

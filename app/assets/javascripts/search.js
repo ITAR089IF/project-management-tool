@@ -1,7 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
-  globalSearch();
-});
-
 document.addEventListener('turbolinks:load', () => {
   globalSearch();
 });
