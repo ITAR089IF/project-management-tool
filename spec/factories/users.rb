@@ -8,6 +8,7 @@
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string
+#  job_role               :string
 #  last_name              :string
 #  oauth_expires_at       :string
 #  oauth_token            :string
@@ -15,7 +16,7 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
-#  role                   :string
+#  role                   :string           default("user")
 #  uid                    :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -32,7 +33,7 @@ FactoryBot.define do
     last_name { Faker::Name.last_name }
     sequence(:email) { |index| Faker::Internet.email.sub(/\@/, "_#{index}@") }
     password { Faker::Internet.password }
-    role { "user" }
+    job_role { Faker::Job.title }
     department { Faker::Job.field }
     about { Faker::Lorem.sentences }
   end
@@ -91,7 +92,7 @@ FactoryBot.define do
     end
   end
 
-  trait :watchers do
+  trait :with_watchers do
     after(:create) do |user|
       user.workspaces.each do |workspace|
         workspace.projects.each do |project|
