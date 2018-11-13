@@ -32,7 +32,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let!(:user) { create(:user, first_name: 'John', last_name: 'Doe') }
   let!(:another_user) { create(:user) }
-  let!(:project) { create(:project) }
+  let!(:project) { create(:project, users: [user]) }
   let!(:task) { create(:task, project: project) }
   let!(:projects_comment) { create(:comment, :for_project,  user: user, commentable: project) }
   let!(:tasks_comment) { create(:comment, :for_task,  user: user, commentable: task) }
