@@ -13,7 +13,6 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'jquery-rails'
 
 gem 'slim-rails'
 gem 'font-awesome-rails'
@@ -35,10 +34,11 @@ gem 'omniauth-facebook'
 gem 'annotate'
 gem 'ranked-model'
 gem 'meta-tags'
+gem 'jquery-rails'
+gem 'js-routes'
+gem 'active_storage_validations'
 gem 'premailer-rails'
 gem "paranoia", '~> 2.2'
-gem 'bulma-extensions-rails'
-
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'
