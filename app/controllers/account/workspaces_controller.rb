@@ -38,10 +38,6 @@ class Account::WorkspacesController < Account::AccountController
     redirect_to account_workspaces_path
   end
 
-  def search
-    render json: { workspaces: collection.search_workspaces(params[:search]) }
-  end
-
   private
 
   def collection

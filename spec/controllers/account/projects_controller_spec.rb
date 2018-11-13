@@ -69,13 +69,6 @@ RSpec.describe Account::ProjectsController, type: :controller do
       end
     end
 
-    describe 'GET /projects/search' do
-      it 'should return search result in format json' do
-        get :search, params: { search: 'Text' }
-        expect(response).to be_successful
-      end
-    end
-
     describe "DELETE #destroy" do
       it "returns http success" do
         expect { delete(:destroy, params: { workspace_id: workspace.to_param, id: project.to_param }) }.to change(Project, :count).by(-1)

@@ -114,10 +114,6 @@ class Account::TasksController < Account::AccountController
     respond_to :js
   end
 
-  def search
-    render json: { tasks: current_user.search_tasks(params[:search]) }
-  end
-
   private
 
   def parent

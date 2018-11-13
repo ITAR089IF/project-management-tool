@@ -88,15 +88,9 @@ class User < ApplicationRecord
   end
 
   def search_tasks(search)
-    tasks = Array.new
-
     self.projects.each do |project|
-      project.tasks
-        .where("title ~* '\\m(#{search})'")
-        .each { |task| tasks << task }
+      return project.tasks.where("title ~* ?", "\\m#{search}").map
     end
-
-    tasks
   end
 
   def with_avatar?

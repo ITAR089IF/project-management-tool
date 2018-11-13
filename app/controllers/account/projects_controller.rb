@@ -45,10 +45,6 @@ class Account::ProjectsController < Account::AccountController
     redirect_to account_workspace_path(parent), alert: "Project was successfully deleted!"
   end
 
-  def search
-    render json: { projects: current_user.projects.search_projects(params[:search]) }
-  end
-
   private
 
   def parent

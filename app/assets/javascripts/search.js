@@ -1,50 +1,44 @@
-function global_search() {
+document.addEventListener('DOMContentLoaded', () => {
+  globalSearch();
+});
+
+document.addEventListener('turbolinks:load', () => {
+  globalSearch();
+});
+
+function globalSearch() {
+
+  var search = document.getElementById('search');
+  var searchResults = document.getElementById('search-results');
+
+  var workspaces = document.getElementById('workspaces');
+  var projects = document.getElementById('projects');
+  var tasks = document.getElementById('tasks');
+
+  var workspacesBlock = document.getElementById('workspaces-block');
+  var projectsBlock = document.getElementById('projects-block');
+  var tasksBlock = document.getElementById('tasks-block');
+
   search.addEventListener('keyup', e => {
-
-    var search = document.getElementById('search');
-    var searchResults = document.getElementById('search-results');
-
-    var workspaces = document.getElementById('workspaces');
-    var projects = document.getElementById('projects');
-    var tasks = document.getElementById('tasks');
-
-    var workspacesBlock = document.getElementById('workspaces-block');
-    var projectsBlock = document.getElementById('projects-block');
-    var tasksBlock = document.getElementById('tasks-block');
 
     var timer;
 
     clearTimeout(timer)
     timer = setTimeout(() => {
-      if (e.target.value) {
-        getData(Routes.account_workspaces_search_path({ format: "json" }),
-          workspaces,
-          'workspaces',
-          'WORKSPACES',
-          e.target.value,
-          workspacesBlock
-        );
+      if(e.target.value) {
+        searchResults.style.display = 'block';
 
-        getData(Routes.account_projects_search_path({ format: "json" }),
-          projects,
-          'projects',
-          'PROJECTS',
-          e.target.value,
-          projectsBlock
-        );
-
-        getData(Routes.account_tasks_search_path({ format: "json" }),
-          tasks,
-          'tasks',
-          'TASKS',
-          e.target.value,
-          tasksBlock
-        )
-
-      searchResults.style.display = 'block';
+        fetch(Routes.account_search_index_path({ format: 'json', search: e.target.value }))
+          .then(response => { return response.json() })
+          .then(response => {
+            display(response.workspaces, workspacesBlock, workspaces, 'WORKSPACES', 'name');
+            display(response.projects, projectsBlock, projects, 'PROJECTS', 'name');
+            display(response.tasks, tasksBlock, tasks, 'TASKS', 'title');
+          })
+          .catch(error => { alert(error) });
       } else {
         workspaces.innerHTML = '';
-        projects.innerHTML ='';
+        projects.innerHTML = '';
         tasks.innerHTML = '';
 
         searchResults.style.display = 'none';
@@ -56,21 +50,13 @@ function global_search() {
   })
 }
 
-
-function getData(url, innerObject, objectName, title, search, displayObject) {
-  if (search) {
-    fetch(`${url}?search=${search}`)
-    .then(responce => { return responce.json() })
-    .then(responce => {
-      if (responce[objectName].length > 0) {
-        displayObject.style.display = 'block';
-        innerObject.innerHTML = jsonToHTML(responce[objectName], title);
-      } else {
-        innerObject.innerHTML = '';
-        displayObject.style.display = 'none';
-      }
-    })
-    .catch(error => { console.log(error) });
+function display(data, displayObject, innerObject, title, field) {
+  if(data.length > 0) {
+    displayObject.style.display = 'block';
+    innerObject.innerHTML = jsonToHTML(data, title, field);
+  } else {
+    innerObject.innerHTML = '';
+    displayObject.style.display = 'none';
   }
 }
 

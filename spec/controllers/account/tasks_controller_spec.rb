@@ -182,11 +182,4 @@ RSpec.describe Account::TasksController, type: :controller do
       expect(response).to render_template :unassign
     end
   end
-
-  describe 'GET /tasks/search' do
-    it 'should return search result in format json' do
-      get :search, params: { search: 'Text' }
-      expect(response).to be_successful
-    end
-  end
 end
