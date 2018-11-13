@@ -94,7 +94,7 @@ class User < ApplicationRecord
     avatar&.attachment&.blob&.persisted?
   end
 
-  def self.for(workspace)
-    workspace.members.union_all(self.where(id: workspace.user.id))
+  def self.for_workspace(workspace)
+    workspace.members.union(self.where(id: workspace.user.id))
   end
 end

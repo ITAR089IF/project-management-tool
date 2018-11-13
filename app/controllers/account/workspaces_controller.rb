@@ -5,7 +5,7 @@ class Account::WorkspacesController < Account::AccountController
 
   def show
     @workspace = resource
-    @users = User.for(@workspace).order_desc
+    @users = User.for_workspace(@workspace).order_desc
   end
 
   def new
@@ -55,8 +55,8 @@ class Account::WorkspacesController < Account::AccountController
 
   def delete_member
     @workspace = resource
-    @user = @workspace.members.find(params[:user])
-    @workspace.members.destroy(params[:user])
+    @user = @workspace.members.find(params[:user_id])
+    @workspace.members.destroy(params[:user_id])
     if @user == current_user
       redirect_to account_workspaces_path, notice: 'You have removed yourself from workspace!'
     else

@@ -31,11 +31,14 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let!(:user) { create(:user, first_name: 'John', last_name: 'Doe') }
+  let!(:user1) { create(:user) }
   let!(:another_user) { create(:user) }
   let!(:project) { create(:project) }
   let!(:task) { create(:task, project: project) }
   let!(:projects_comment) { create(:comment, :for_project,  user: user, commentable: project) }
   let!(:tasks_comment) { create(:comment, :for_task,  user: user, commentable: task) }
+  let!(:workspace) { create(:workspace, user: user) }
+  let!(:shared_workspace1) { create(:shared_workspace, user: user1, workspace: workspace) }
 
   context 'returns full name' do
     it { expect(user.full_name).to eq 'John Doe' }
@@ -62,5 +65,9 @@ RSpec.describe User, type: :model do
     it { should have_many(:projects) }
     it { should validate_length_of(:first_name).is_at_most(250) }
     it { should validate_length_of(:last_name).is_at_most(250) }
+  end
+
+  context '.for_workspace' do
+    it { expect(described_class.for_workspace(workspace)).to contain_exactly(user, user1) }
   end
 end
