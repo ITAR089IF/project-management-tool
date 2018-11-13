@@ -32,8 +32,75 @@ FactoryBot.define do
     last_name { Faker::Name.last_name }
     sequence(:email) { |index| Faker::Internet.email.sub(/\@/, "_#{index}@") }
     password { Faker::Internet.password }
-    role { Faker::Job.title }
+    role { "user" }
     department { Faker::Job.field }
     about { Faker::Lorem.sentences }
   end
+
+  trait :admin do
+    role { "admin" }
+  end
+
+  trait :with_workspaces do
+    after(:create) do |user|
+      FactoryBot.create_list(:workspace, 2, user: user)
+    end
+  end
+
+  trait :with_projects do
+    after(:create) do |user|
+      user.workspaces.each do |workspace|
+        FactoryBot.create_list(:project, 2, workspace: workspace, users: [user])
+      end
+    end
+  end
+
+  trait :comments_for_projects do
+    after(:create) do |user|
+      user.workspaces.each do |workspace|
+        workspace.projects.each do |project|
+          project.update(users: [user])
+          FactoryBot.create_list(:comment, 1.upto(5).to_a.sample, :for_project, user: user, commentable: project)
+        end
+      end
+    end
+  end
+
+  trait :with_tasks do
+    after(:create) do |user|
+      user.workspaces.each do |workspace|
+        workspace.projects.each do |project|
+          FactoryBot.create(:task, :future, project: project)
+          FactoryBot.create(:task, :expired, project: project)
+          FactoryBot.create(:task, :completed, :expired, project: project)
+        end
+      end
+    end
+  end
+
+  trait :comments_for_tasks do
+    after(:create) do |user|
+      user.workspaces.each do |workspace|
+        workspace.projects.each do |project|
+          project.tasks.each do |task|
+            project.update(users: [user])
+            FactoryBot.create_list(:comment, 1.upto(5).to_a.sample, :for_task, user: user, commentable: task)        
+          end
+        end
+      end
+    end
+  end
+
+  trait :watchers do
+    after(:create) do |user|
+      user.workspaces.each do |workspace|
+        workspace.projects.each do |project|
+          project.tasks.each do |task|
+            task.update(watchers: [user]) if [true, false].sample
+          end
+        end
+      end
+    end
+  end
+
 end
