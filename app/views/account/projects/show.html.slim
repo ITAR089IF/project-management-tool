@@ -14,6 +14,7 @@
   .conteiner.box
     .title
       |  To Do List:
+
     #incomplete_tasks
       - @incomplete_tasks.each do |task|
         = render '/account/projects/show_tasks', task: task, project: @project

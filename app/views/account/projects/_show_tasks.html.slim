@@ -14,10 +14,10 @@
       = link_to task.title, account_project_task_path(project, task), class: task_link_class(task)
     .level-item
       = link_to "Up", move_account_project_task_path(project, task,
-        task: { row_order_position: :up}), method: :put, class: "button is-small left"
+        task: { row_order_position: :up}), method: :put, class: "button is-small left", remote: true
     .level-item
       = link_to "Down", move_account_project_task_path(project, task,
-        task: { row_order_position: :down }), method: :put, class: "button is-small left"
+        task: { row_order_position: :down }), method: :put, class: "button is-small left", remote: true
   .level-right
     - if task.pending?
       .level-item
