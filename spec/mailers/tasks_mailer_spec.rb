@@ -1,9 +1,7 @@
 require "rails_helper"
 
 RSpec.describe TasksMailer, type: :mailer do
-<<<<<<< HEAD
-  
-=======
+
   describe "task_completed" do
     let!(:user) { create(:user) }
     let!(:current_user) { user }
@@ -31,5 +29,4 @@ RSpec.describe TasksMailer, type: :mailer do
     end
 
   end
->>>>>>> 08a0a9b5ccbbd749cf110488f1240524188121ac
 end
