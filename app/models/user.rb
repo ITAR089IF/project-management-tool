@@ -91,4 +91,8 @@ class User < ApplicationRecord
   def with_avatar?
     avatar&.attachment&.blob&.persisted?
   end
+
+  def admin?
+    self.role == 'admin'
+  end
 end
