@@ -8,6 +8,7 @@
 #  description :text
 #  due_date    :datetime
 #  row_order   :integer
+#  section     :boolean          default(FALSE)
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -68,9 +69,5 @@ class Task < ApplicationRecord
 
   def remove_watcher(user)
     self.task_watches.where(user_id: user.id).delete_all
-  end
-
-  def start_time
-    due_date
   end
 end
