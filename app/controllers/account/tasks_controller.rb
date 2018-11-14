@@ -110,13 +110,13 @@ class Account::TasksController < Account::AccountController
     TasksMailer.task_completed(@task, current_user).deliver_later
   end
 
+
   def uncomplete
     @project = parent
     @task = resource
     @task.update(complete: false)
     respond_to :js
   end
-
 
   private
 
