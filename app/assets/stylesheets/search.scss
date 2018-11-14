@@ -14,10 +14,16 @@
 #workspaces-block, #projects-block, #tasks-block {
   display: none;
   width: 200px;
+  margin: 0;
+  padding: 0;
 
-  .level-item {
-    width: 200px;
-    text-align: left;
-    justify-content: left;
+  .level {
+    margin: 5px 0;
+
+    .level-item {
+      width: 200px;
+      text-align: left;
+      justify-content: left;
+    }
   }
 }
