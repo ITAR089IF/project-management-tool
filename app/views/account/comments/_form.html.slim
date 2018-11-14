@@ -1,5 +1,5 @@
 .container.box
   = simple_form_for [:account, commentable, comment], remote: true do |f|
     = f.input :body, placeholder: 'Add a comment...', label: 'New comment',
-              wrapper: :textarea, required: true
+              wrapper: :textarea, required: true, as: :text
     = f.submit "Save", class: "button is-link"
