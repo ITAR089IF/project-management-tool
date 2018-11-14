@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
+    get '/calendar', to: 'dashboard#calendar'
     resource :profile, only: [:edit, :update]
     resources :workspaces do
       resources :projects, except: [:index]
@@ -17,7 +18,7 @@ Rails.application.routes.draw do
   end
     resources :projects, only: [] do
       concerns :commentable
-      resources :tasks do
+      resources :tasks, except: [:index] do
         member do
           put :move
           patch :complete

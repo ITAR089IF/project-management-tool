@@ -31,6 +31,7 @@
 class Task < ApplicationRecord
   include RankedModel
   include Commentable
+  extend SimpleCalendar
   acts_as_paranoid
 
   ranks :row_order, with_same: :project_id
