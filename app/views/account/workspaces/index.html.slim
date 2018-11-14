@@ -14,6 +14,8 @@
             = link_to workspace.name, account_workspace_path(workspace)
         .level-right
           .level-item
+            = "Projects: #{workspace.projects.count}"
+          .level-item
             = link_to 'Edit', edit_account_workspace_path(workspace),
               class: 'button right'
           .level-item
