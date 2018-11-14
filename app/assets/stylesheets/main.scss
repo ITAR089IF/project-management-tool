@@ -55,14 +55,15 @@
     background-color: #00d1b2;
     text-align: center;
     font-family: 'Roboto' Bold;
-    font-size: 18px;
+    font-size: 25px;
   }
   .calendar-task{
     font-size: 12px;
-    text-decoration: underline;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .day {
-    height: 80px;
+    height: 120px;
   }
   .today {
     background: #e7e7e7

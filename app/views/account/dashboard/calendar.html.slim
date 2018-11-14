@@ -1,7 +1,7 @@
 .container
   .title Calendar:
   = month_calendar events: @user_tasks do |date, tasks|
-    = date.to_formatted_s(:short)
+    = date.day
     ul
       - tasks.each do |task|
         li = link_to task.title, account_project_task_url(task.project, task), class: "calendar-task"
