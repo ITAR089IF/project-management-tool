@@ -18,15 +18,6 @@ SimpleForm.setup do |config|
     b.use :error, wrap_with: { tag: :div, class: "help is-danger" }
   end
 
-  config.wrappers :bulma_input_label_left, class: "field", error_class: :field_with_errors do |b|
-    b.use :html5
-    b.use :placeholder
-    b.use :label, class: "label has-text-left", error_class: 'is-danger'
-    b.use :input, class: "input", error_class: 'is-danger'
-    b.use :hint,  wrap_with: { tag: :div, class: "help" }
-    b.use :error, wrap_with: { tag: :div, class: "help is-danger" }
-  end
-
   config.wrappers :inline_checkbox, class: 'field', error_class: :field_with_errors do |b|
     b.use :html5
     b.use :label_input, wrap_with: { class: 'checkbox inline' }
@@ -47,16 +38,7 @@ SimpleForm.setup do |config|
     b.use :error, wrap_with: { tag: :div, class: "help is-danger" }
   end
 
-  config.wrappers :textarea_label_left, class: "field", error_class: :field_with_errors do |b|
-    b.use :html5
-    b.use :placeholder
-    b.use :label, class: "label has-text-left", error_class: 'is-danger'
-    b.use :input, class: "textarea", error_class: 'is-danger'
-    b.use :hint,  wrap_with: { tag: :div, class: "help" }
-    b.use :error, wrap_with: { tag: :div, class: "help is-danger" }
-  end
-
-  config.wrappers :upload_file do |b|
+  config.wrappers :upload_avatar do |b|
     b.use :html5
     b.use :placeholder
     b.use :label, class: "button is-small"

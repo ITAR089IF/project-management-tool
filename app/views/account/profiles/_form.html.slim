@@ -1,9 +1,9 @@
 = simple_form_for @user, url: [:account, :profile] do |f|
-  = f.input :avatar, label: "Select your profile avatar", wrapper: :upload_file
-  = f.input :first_name, wrapper: :bulma_input_label_left, required: true
-  = f.input :last_name, wrapper: :bulma_input_label_left, required: true
-  = f.input :job_role, wrapper: :bulma_input_label_left
-  = f.input :department, wrapper: :bulma_input_label_left
-  = f.input :about, wrapper: :textarea_label_left
+  = f.input :avatar, label: "Select your profile avatar", wrapper: :upload_avatar
+  = f.input :first_name, wrapper: :bulma_input, required: true, label_html: { class: "has-text-left"}
+  = f.input :last_name, wrapper: :bulma_input, required: true, label_html: { class: "has-text-left"}
+  = f.input :job_role, wrapper: :bulma_input, label_html: { class: "has-text-left"}
+  = f.input :department, wrapper: :bulma_input, label_html: { class: "has-text-left"}
+  = f.input :about, wrapper: :textarea, label_html: { class: "has-text-left"}
   = f.submit "Update Profile", class: "button is-link"
   = link_to 'Back', account_dashboard_path, class: 'button is-text'
