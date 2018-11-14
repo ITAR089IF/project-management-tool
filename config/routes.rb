@@ -7,14 +7,17 @@ Rails.application.routes.draw do
 
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
+    resources :search, only: [:index], defaults: { format: :json }
+
     resource :profile, only: [:edit, :update]
     resources :workspaces do
       resources :projects, except: [:index]
     end
 
-  concern :commentable do
-    resources :comments, only: [:create, :destroy]
-  end
+    concern :commentable do
+      resources :comments, only: [:create, :destroy]
+    end
+
     resources :projects, only: [] do
       concerns :commentable
       resources :tasks, except: [:index] do

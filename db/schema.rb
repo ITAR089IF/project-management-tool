@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_05_214529) do
+ActiveRecord::Schema.define(version: 2018_11_13_142043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,11 +85,11 @@ ActiveRecord::Schema.define(version: 2018_11_05_214529) do
     t.datetime "updated_at", null: false
     t.integer "row_order"
     t.bigint "project_id"
+    t.boolean "section", default: false
     t.boolean "complete", default: false
-    t.boolean "section"
-    t.bigint "assignee_id"
     t.datetime "deleted_at"
     t.datetime "due_date"
+    t.bigint "assignee_id"
     t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
     t.index ["deleted_at"], name: "index_tasks_on_deleted_at"
     t.index ["project_id"], name: "index_tasks_on_project_id"
@@ -119,9 +119,10 @@ ActiveRecord::Schema.define(version: 2018_11_05_214529) do
     t.string "oauth_token"
     t.string "oauth_expires_at"
     t.string "last_name"
-    t.string "role"
+    t.string "role", default: "user"
     t.string "department"
     t.text "about"
+    t.string "job_role"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

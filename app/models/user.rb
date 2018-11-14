@@ -8,6 +8,7 @@
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string
+#  job_role               :string
 #  last_name              :string
 #  oauth_expires_at       :string
 #  oauth_token            :string
@@ -15,7 +16,7 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
-#  role                   :string
+#  role                   :string           default("user")
 #  uid                    :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -34,6 +35,7 @@ class User < ApplicationRecord
   has_many :task_watches, dependent: :destroy
   has_many :tasks, through: :task_watches
   has_many :assigned_tasks, class_name: "Task"
+  has_one_attached :avatar
 
   validates :first_name, length: { maximum: 250 }, presence: true
   validates :last_name, length: { maximum: 250 }, presence: true
@@ -41,6 +43,7 @@ class User < ApplicationRecord
   validates :role, length: { maximum: 250 }
   validates :department, length: { maximum: 250 }
   validates :about, length: { maximum: 250 }
+  validates :avatar, content_type: ['image/png', 'image/jpg', 'image/jpeg']
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
@@ -83,5 +86,9 @@ class User < ApplicationRecord
 
   def watching?(task)
     self.tasks.where(id: task.id).exists?
+  end
+
+  def with_avatar?
+    avatar&.attachment&.blob&.persisted?
   end
 end
