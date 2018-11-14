@@ -64,7 +64,7 @@ class Account::TasksController < Account::AccountController
       @task.add_watcher(current_user)
     end
 
-    # respond_to(:js)
+    respond_to(:js)
   end
 
   def choose_assignee
