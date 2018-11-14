@@ -1,8 +1,6 @@
 class TasksMailer < ApplicationMailer
   default template_path: 'mailers/tasks'
 
-  default from: "info@asana.com"
-
   def task_assign_to_user_email(task)
     @task = task
     @user = @task.assignee
