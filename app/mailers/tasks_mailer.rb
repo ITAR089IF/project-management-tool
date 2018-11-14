@@ -17,5 +17,5 @@ class TasksMailer < ApplicationMailer
       to: email_watchers,
       subject: "Task completed"
     )
-    end
+  end
 end
