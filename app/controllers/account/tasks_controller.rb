@@ -79,7 +79,7 @@ class Account::TasksController < Account::AccountController
     @task = @project.tasks.find(params[:id])
     @result = @task.update(assignee_id: assignee_params[:assignee])
     respond_to :js
-    TasksMailer.task_assign_to_user_email(@task).deliver if  @task.update(assignee_id: assignee_params[:assignee])
+    TasksMailer.task_assign_to_user_email(@task).deliver if @task.update(assignee_id: assignee_params[:assignee])
   end
 
   def unassign
