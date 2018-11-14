@@ -21,6 +21,9 @@
 .file.optional.user_avatar {
   margin: 0.5em 0;
 }
+abbr[title] {
+  text-decoration: none;
+}
 .simple-calendar {
   table {
     border: 1px solid #00b89c;
