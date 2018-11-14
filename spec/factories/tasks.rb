@@ -2,18 +2,19 @@
 #
 # Table name: tasks
 #
-#  id          :bigint(8)        not null, primary key
-#  complete    :boolean          default(FALSE)
-#  deleted_at  :datetime
-#  description :text
-#  due_date    :datetime
-#  row_order   :integer
-#  section     :boolean          default(FALSE)
-#  title       :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  assignee_id :bigint(8)
-#  project_id  :bigint(8)
+#  id           :bigint(8)        not null, primary key
+#  complete     :boolean          default(FALSE)
+#  completed_at :datetime
+#  deleted_at   :datetime
+#  description  :text
+#  due_date     :datetime
+#  row_order    :integer
+#  section      :boolean          default(FALSE)
+#  title        :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  assignee_id  :bigint(8)
+#  project_id   :bigint(8)
 #
 # Indexes
 #
@@ -50,12 +51,16 @@ FactoryBot.define do
       end
     end
 
-    trait :expired do 
+    trait :expired do
       due_date { Faker::Date.backward(30) }
     end
 
-    trait :future do 
+    trait :future do
       due_date { Faker::Date.forward(30) }
+    end
+
+    trait :completed_at do
+      completed_at {Faker::Date.backward(30) }
     end
   end
 end
