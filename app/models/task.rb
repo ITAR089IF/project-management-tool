@@ -8,7 +8,7 @@
 #  description :text
 #  due_date    :datetime
 #  row_order   :integer
-#  section     :boolean          default(FALSE)
+#  section     :boolean
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -32,6 +32,7 @@ class Task < ApplicationRecord
   include RankedModel
   include Commentable
   extend SimpleCalendar
+
   acts_as_paranoid
 
   ranks :row_order, with_same: :project_id
@@ -45,12 +46,6 @@ class Task < ApplicationRecord
   scope :incomplete, -> { where(complete: false) }
   scope :complete, -> { where(complete: true) }
   scope :row_order_asc, -> { order(row_order: :asc) }
-  scope :search_tasks, -> (user_id, search) { select('tasks.id, tasks.title, tasks.project_id').joins('
-                                   INNER JOIN projects ON projects.id = tasks.project_id
-                                   INNER JOIN user_projects as up ON projects.id = up.project_id
-                                   INNER JOIN users ON users.id = up.user_id')
-                                     .where('users.id = ? AND tasks.title ~* ?', user_id, "\\m#{search}")
-                                     .limit(10) }
 
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }
@@ -64,10 +59,14 @@ class Task < ApplicationRecord
   end
 
   def add_watcher(user)
-    self.task_watches.find_or_create_by(user_id: user.id)
+    self.task_watches.create(user_id: user.id)
   end
 
   def remove_watcher(user)
     self.task_watches.where(user_id: user.id).delete_all
+  end
+
+  def start_time
+    due_date
   end
 end

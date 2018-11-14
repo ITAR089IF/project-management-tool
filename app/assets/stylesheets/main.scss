@@ -29,33 +29,27 @@
     max-width: 100%;
     width: 100%;
   }
-
   tr {
     border-collapse: collapse;
   }
-
   th {
     padding: 6px;
     box-sizing: border-box;
     text-align: left;
     margin-top: 10px
   }
-
   td {
     padding: 6px;
     vertical-align: top;
     width: 14%;
     border: 1px solid #ddd;
   }
-
   thead {
     background-color: #00b89c;
   }
-
   a {
     color: black
   }
-
   .calendar-heading{
     padding: 7px;
     background-color: #00d1b2;
@@ -63,20 +57,16 @@
     font-family: 'Roboto' Bold;
     font-size: 18px;
   }
-
   .calendar-task{
     font-size: 12px;
     text-decoration: underline;
   }
-
   .day {
     height: 80px;
   }
-
   .today {
     background: #e7e7e7
   }
-
   .prev-month {
     background: #f8f8f8;
   }
