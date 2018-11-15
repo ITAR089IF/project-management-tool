@@ -23,6 +23,7 @@
       .level-item
         p
           | Created  #{time_ago_in_words(task.created_at)} ago
+      = render '/account/projects/show_task_assignee', task: task
       .level-item
         = link_to "Edit", edit_account_project_task_path(project, task),
           class: "button is-small right"
@@ -30,6 +31,7 @@
       .level-item
         p
           | Completed #{time_ago_in_words(task.updated_at)} ago
+      = render '/account/projects/show_task_assignee', task: task
     .level-item
       = link_to "Delete", account_project_task_path(project, task),
         method: :delete,  class: "button is-small right", data: { confirm: "Are you sure?" },remote: true

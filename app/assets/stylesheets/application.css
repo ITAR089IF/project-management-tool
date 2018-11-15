@@ -5,5 +5,7 @@
  *= require main
  *= require search
  *= require tasks
+ *= require projects
  *= require profiles
+ *= require workspaces
  */
