@@ -28,44 +28,6 @@
 #  fk_rails_...  (project_id => projects.id)
 #
 
-<<<<<<< current
-#  id           :bigint(8)        not null, primary key
-#  complete     :boolean          default(FALSE)
-#  completed_at :datetime
-#  deleted_at   :datetime
-#  description  :text
-#  due_date     :datetime
-#  row_order    :integer
-#  section      :boolean          default(FALSE)
-#  title        :string
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  assignee_id  :bigint(8)
-#  project_id   :bigint(8)
-=======
-#  id          :bigint(8)        not null, primary key
-#  complete    :boolean          default(FALSE)
-#  description :text
-#  row_order   :integer
-#  title       :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  project_id  :bigint(8)
->>>>>>> before discard
-#
-# Indexes
-#
-#  index_tasks_on_assignee_id  (assignee_id)
-#  index_tasks_on_deleted_at   (deleted_at)
-#  index_tasks_on_project_id   (project_id)
-#  index_tasks_on_row_order    (row_order)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (assignee_id => users.id)
-#  fk_rails_...  (project_id => projects.id)
-#
-
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
