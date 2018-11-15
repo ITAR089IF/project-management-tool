@@ -73,7 +73,7 @@ FactoryBot.define do
         workspace.projects.each do |project|
           FactoryBot.create(:task, :future, project: project)
           FactoryBot.create(:task, :expired, project: project)
-          FactoryBot.create(:task, :completed, :expired, project: project)
+          FactoryBot.create(:task, :completed, :expired, :completed_at, project: project)
         end
       end
     end
