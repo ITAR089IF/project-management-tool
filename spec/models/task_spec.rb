@@ -4,9 +4,11 @@
 #
 #  id          :bigint(8)        not null, primary key
 #  complete    :boolean          default(FALSE)
+#  deleted_at  :datetime
 #  description :text
+#  due_date    :datetime
 #  row_order   :integer
-#  section     :boolean          default(FALSE)
+#  section     :boolean
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -16,6 +18,7 @@
 # Indexes
 #
 #  index_tasks_on_assignee_id  (assignee_id)
+#  index_tasks_on_deleted_at   (deleted_at)
 #  index_tasks_on_project_id   (project_id)
 #  index_tasks_on_row_order    (row_order)
 #
@@ -30,10 +33,10 @@ require 'rails_helper'
 RSpec.describe Task, type: :model do
   let!(:user) { create(:user) }
   let!(:workspace) { create(:workspace, user: user) }
-  let!(:project) { create(:project, workspace: workspace) }
-  let!(:task1) { create(:task, project: project) }
-  let!(:task2) { create(:task, project: project) }
-  let!(:task3) { create(:task, project: project) }
+  let!(:project) { create(:project, workspace: workspace, users: [user]) }
+  let!(:task1) { create(:task, title: 'deploy to heroku', project: project) }
+  let!(:task2) { create(:task, title: 'workspace', project: project) }
+  let!(:task3) { create(:task, title: 'deploy to digital oceane',   project: project) }
 
   context 'scope testing' do
     it 'shold order by row_order asc' do
@@ -45,5 +48,13 @@ RSpec.describe Task, type: :model do
   context 'factory tests' do
     subject { build(:task) }
     it { is_expected.to be_valid }
+  end
+
+  context 'search' do
+    it 'should find all tasks' do
+      expect(Task.all.search_tasks(user.id, 'deplo').count).to eq 2
+      expect(Task.search_tasks(user.id, 'worksp').count).to eq 1
+      expect(Task.search_tasks(user.id, 'igital').count).to eq 0
+    end
   end
 end

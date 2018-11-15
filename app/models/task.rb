@@ -4,9 +4,11 @@
 #
 #  id          :bigint(8)        not null, primary key
 #  complete    :boolean          default(FALSE)
+#  deleted_at  :datetime
 #  description :text
+#  due_date    :datetime
 #  row_order   :integer
-#  section     :boolean          default(FALSE)
+#  section     :boolean
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -16,6 +18,7 @@
 # Indexes
 #
 #  index_tasks_on_assignee_id  (assignee_id)
+#  index_tasks_on_deleted_at   (deleted_at)
 #  index_tasks_on_project_id   (project_id)
 #  index_tasks_on_row_order    (row_order)
 #
@@ -24,9 +27,11 @@
 #  fk_rails_...  (assignee_id => users.id)
 #  fk_rails_...  (project_id => projects.id)
 #
+
 class Task < ApplicationRecord
   include RankedModel
   include Commentable
+  acts_as_paranoid
 
   ranks :row_order, with_same: :project_id
 
@@ -39,12 +44,22 @@ class Task < ApplicationRecord
   scope :incomplete, -> { where(complete: false) }
   scope :complete, -> { where(complete: true) }
   scope :row_order_asc, -> { order(row_order: :asc) }
+  scope :search_tasks, -> (user_id, search) { select('tasks.id, tasks.title, tasks.project_id').joins('
+                                   INNER JOIN projects ON projects.id = tasks.project_id
+                                   INNER JOIN user_projects as up ON projects.id = up.project_id
+                                   INNER JOIN users ON users.id = up.user_id')
+                                     .where('users.id = ? AND tasks.title ~* ?', user_id, "\\m#{search}")
+                                     .limit(10) }
 
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }
 
   def pending?
     !complete?
+  end
+
+  def expired?
+    self.due_date && self.due_date < Time.now && pending?
   end
 
   def add_watcher(user)
