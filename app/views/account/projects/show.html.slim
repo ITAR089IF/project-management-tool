@@ -4,7 +4,8 @@
     .level-left
       .level-item
         .title
-          = "#{@workspace.name}: #{@project.name}"
+          = link_to @workspace.name, account_workspace_path(@workspace)
+          = ": #{@project.name}"
     .level-right
       .level-item
         = link_to "Add Task", new_account_project_task_path(@project), class: "button is-link"
