@@ -5,7 +5,7 @@ class Account::WorkspacesController < Account::AccountController
 
   def show
     @workspace = resource
-    @members = @workspace.potential_members.order_desc
+    @members = @workspace.all_members.order_desc
   end
 
   def new
