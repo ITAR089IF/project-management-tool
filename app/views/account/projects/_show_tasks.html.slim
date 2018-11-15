@@ -23,13 +23,7 @@
       .level-item
         p
           | Created  #{time_ago_in_words(task.created_at)} ago
-      - if task.assignee.present?
-        .level-item.image.is-24x24.tooltip[data-tooltip="#{task.assignee.full_name}"]
-          - if task.assignee.with_avatar?
-            = image_tag(task.assignee.avatar)
-          - else
-            .has-background-light.has_rounded_background
-              = task.assignee.user_initials
+      = render '/account/projects/show_task_assignee', task: task
       .level-item
         = link_to "Edit", edit_account_project_task_path(project, task),
           class: "button is-small right"
@@ -37,13 +31,7 @@
       .level-item
         p
           | Completed #{time_ago_in_words(task.updated_at)} ago
-      - if task.assignee.present?
-        .level-item.image.is-24x24.tooltip[data-tooltip="#{task.assignee.full_name}"]
-          - if task.assignee.with_avatar?
-            = image_tag(task.assignee.avatar)
-          - else
-            .has-background-light.has_rounded_background
-              = task.assignee.user_initials
+      = render '/account/projects/show_task_assignee', task: task
     .level-item
       = link_to "Delete", account_project_task_path(project, task),
         method: :delete,  class: "button is-small right", data: { confirm: "Are you sure?" },remote: true

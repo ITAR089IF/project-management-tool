@@ -1,0 +1,7 @@
+- if task.assignee.present?
+  .level-item.image.is-24x24.tooltip[data-tooltip="#{task.assignee.full_name}"]
+    - if task.assignee.with_avatar?
+      = image_tag(task.assignee.avatar)
+    - else
+      .has-background-light.has_rounded_background
+        = task.assignee.user_initials
