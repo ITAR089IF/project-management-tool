@@ -1,2 +1,1 @@
-$("#watch_task_<%= @task.id %> a")
-  parent().html('<%= j render('/account/tasks/watch_link', task: @task, project: @project) %>');
+$("#watch_task_<%= @task.id %> a").parent().html('<%= j render('/account/tasks/watch_link', task: @task, project: @project) %>');
