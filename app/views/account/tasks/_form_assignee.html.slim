@@ -1,7 +1,7 @@
 #assignee_form
   = simple_form_for :task, url: assign_account_project_task_path(task.project, task),
                               method: :post, remote: true do |f|
-    = f.input :assignee, prompt: "Select user", selected: task.assignee_id,
-              collection: task.project.workspace.potential_members.all.map{ |user| [user.full_name, user.id]},
-              label: false, wrapper: :dropdown
+    = f.input :assignee, collection: User.all.map{ |user| [user.full_name, user.id]},
+                      prompt: "Select user", selected: task.assignee_id,
+                      label: false, wrapper: :dropdown
     = f.button :submit, 'Assign task'

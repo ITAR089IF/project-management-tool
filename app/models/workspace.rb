@@ -36,8 +36,8 @@ class Workspace < ApplicationRecord
   end
 
   def potential_members
-    ids = [self.user.id]
-    ids += self.members.ids
+    ids = [self.user_id]
+    ids += self.members_ids
     User.where.not(id: ids)
   end
 end
