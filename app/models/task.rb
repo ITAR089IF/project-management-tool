@@ -55,6 +55,8 @@ class Task < ApplicationRecord
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }
 
+  alias_attribute :start_time, :due_date
+
   def pending?
     !complete?
   end
@@ -71,7 +73,4 @@ class Task < ApplicationRecord
     self.task_watches.where(user_id: user.id).delete_all
   end
 
-  def start_time
-    due_date
-  end
 end
