@@ -5,4 +5,4 @@
   = f.input :due_date, wrapper: :date, as: :date, html5: true
   = f.input :files, input_html: { multiple: true }, wrapper: :file, label: false
   = f.submit "Save", class: "button is-link"
-  = link_to 'Back', account_workspace_project_path(@project.workspace_id, @project), class: 'button is-text'
+= link_to 'Back', account_workspace_project_path(@project.workspace_id, @project), class: 'button is-text'
