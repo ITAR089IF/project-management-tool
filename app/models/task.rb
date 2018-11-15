@@ -48,7 +48,7 @@ class Task < ApplicationRecord
                                    INNER JOIN projects ON projects.id = tasks.project_id
                                    INNER JOIN user_projects as up ON projects.id = up.project_id
                                    INNER JOIN users ON users.id = up.user_id')
-                                     .where('users.id = ? AND tasks.title ~* ?', user_id, "\\m#{search}")
+                                     .where('users.id = ? AND tasks.title ILIKE ?', user_id, "%#{search}%")
                                      .limit(10) }
 
   validates :title, length: { maximum: 250 }, presence: true
