@@ -4,4 +4,8 @@
     = date.day
     ul
       - tasks.each do |task|
-        li = link_to task.title, account_project_task_url(task.project, task), class: "calendar-task"
+        li
+          = link_to account_project_task_url(task.project, task), class: "calendar-task" do
+            -if task.assignee.present?
+              = profile_avatar(task.assignee)
+            = task.title
