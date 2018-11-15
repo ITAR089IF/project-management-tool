@@ -25,7 +25,7 @@
         p
           | Created  #{time_ago_in_words(task.created_at)} ago
       .level-item
-        = link_to "Edit", edit_account_project_task_path(project, task, ({section: task.section} if task.section?)),
+        = link_to "Edit", edit_account_project_task_path(project, task),
           class: "button is-small right"
     - else
       .level-item

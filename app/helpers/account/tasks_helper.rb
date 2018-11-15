@@ -9,7 +9,7 @@ module Account::TasksHelper
     end
   end
 
-  def section_or_task
-    params[:section].nil? ? 'Task' : 'Section'
+  def task_form_title
+    !@task.section? ? 'Task' : 'Section'
   end
 end

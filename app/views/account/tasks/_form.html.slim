@@ -1,7 +1,7 @@
 = simple_form_for [:account, @project, @task] do |f|
   = f.input_field :section, as: :hidden, value: @task.section
   = f.input :title, placeholder: 'Title', wrapper: :bulma_input, required: true
-  - if params[:section].nil?
+  - if !@task.section?
     = f.input :description, placeholder: 'Description', wrapper: :textarea
     = f.input :due_date, wrapper: :date, as: :date, html5: true
     = f.input :files, input_html: { multiple: true }, wrapper: :file, label: false
