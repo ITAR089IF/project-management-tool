@@ -28,6 +28,8 @@
 #
 
 class User < ApplicationRecord
+  ADMIN = 'admin'
+
   has_many :comments, dependent: :destroy
   has_many :workspaces, dependent: :destroy
   has_many :user_projects, dependent: :destroy
@@ -90,5 +92,9 @@ class User < ApplicationRecord
 
   def with_avatar?
     avatar&.attachment&.blob&.persisted?
+  end
+
+  def admin?
+    self.role == ADMIN
   end
 end
