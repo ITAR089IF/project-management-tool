@@ -1,10 +1,11 @@
 /*
  *= require bulma_ext
  *= require font-awesome
- *= require comments
  *= require main
  *= require search
  *= require tasks
  *= require comments
+ *= require projects
+ *= require profiles
  *= require workspaces
  */

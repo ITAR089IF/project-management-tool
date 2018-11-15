@@ -17,7 +17,7 @@ class Account::TasksController < Account::AccountController
     @task = @project.tasks.build(tasks_params)
 
     if @task.save
-      redirect_to account_project_task_path(@project, @task)
+      redirect_to @task.section? ? account_workspace_project_path(@project.workspace_id, @project) : account_project_task_path(@project, @task)
     else
       render :new
     end
@@ -33,7 +33,7 @@ class Account::TasksController < Account::AccountController
     @task = resource
 
     if resource.update(tasks_params)
-      redirect_to account_project_task_path(@project, @task)
+      redirect_to @task.section? ? account_workspace_project_path(@project.workspace_id, @project) : account_project_task_path(@project, @task)
     else
       render "edit"
     end

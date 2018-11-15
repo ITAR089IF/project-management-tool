@@ -28,6 +28,8 @@
 #
 
 class User < ApplicationRecord
+  ADMIN = 'admin'
+
   has_many :comments, dependent: :destroy
   has_many :workspaces, dependent: :destroy
   has_many :user_projects, dependent: :destroy
@@ -83,6 +85,10 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def initials
+    "#{first_name[0]}#{last_name[0]}"
+  end
+
   def can_manage?(comment)
     comments.where(id: comment.id).exists?
   end
@@ -97,5 +103,9 @@ class User < ApplicationRecord
 
   def available_workspaces
     workspaces.union(self.invited_workspaces)
+  end
+  
+  def admin?
+    self.role == ADMIN
   end
 end

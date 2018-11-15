@@ -13,7 +13,9 @@
           .level-item
             = link_to project.name, account_workspace_project_path(@workspace, project)
         .level-right
-          .level-item.tooltip[data-tooltip="Completed #{project.tasks.complete.count}/#{project.tasks.count}"]
+          .level-tem.custom_width.tooltip[data-tooltip="Completed #{project.tasks.complete.count}/#{project.tasks.count}"]
+            progress.progress.is-primary[value="#{project.tasks.complete.count}" max="#{project.tasks.count}"]
+          .level-item
             = pluralize(project.tasks.count, "Task")
           .level-item
             = link_to "Edit", edit_account_workspace_project_path(@workspace, project),
