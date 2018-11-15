@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Admin::UsersController, type: :controller do
   render_views
 
-  let!(:user_admin) { create(:user, role: 'admin') }
+  let!(:user_admin) { create(:user, :admin) }
   let!(:user) { create(:user) }
 
   describe 'admin impersonate'  do
