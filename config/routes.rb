@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :users, only: [:index] do
+    resources :users, only: [] do
       post :impersonate, on: :member
       post :stop_impersonating, on: :collection
     end

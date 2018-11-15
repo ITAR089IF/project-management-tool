@@ -6,20 +6,35 @@ RSpec.describe Admin::UsersController, type: :controller do
   let!(:user_admin) { create(:user, role: 'admin') }
   let!(:user) { create(:user) }
 
-  describe 'user'  do
-    before do
-      sign_in user_admin
+  describe 'admin impersonate'  do
+    context 'impersonate' do
+      before do
+        sign_in user_admin
+      end
+
+      it 'it should impersonate admin as user' do
+        expect(controller.current_user).to eq user_admin
+
+        post :impersonate, params: { id: user.id }
+
+        expect(controller.current_user).to eq user
+        expect(controller.true_user).to eq user_admin
+        expect(response).to redirect_to root_path
+      end
     end
 
-    context 'impersonate' do
-      it 'it should impersonate admin as user' do
+    context 'stop_impersonate' do
+      before do
+        sign_in user_admin
         post :impersonate, params: { id: user.id }
-        expect(response).to redirect_to root_path
       end
 
       it 'should stop impersonating user' do
         post :stop_impersonating
+
         expect(response).to redirect_to root_path
+        expect(controller.current_user).to eq user_admin
+        expect(controller.true_user).to eq user_admin
       end
     end
   end
