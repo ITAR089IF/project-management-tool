@@ -38,4 +38,11 @@ Rails.application.routes.draw do
       concerns :commentable
     end
   end
+
+  namespace :admin do
+    resources :users, only: [] do
+      post :impersonate, on: :member
+      post :stop_impersonating, on: :collection
+    end
+  end
 end

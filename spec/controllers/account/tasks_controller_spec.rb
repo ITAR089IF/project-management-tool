@@ -86,9 +86,10 @@ RSpec.describe Account::TasksController, type: :controller do
         task: {
           row_order_position: :down
         }
-      }
+      },
+      format: :js
 
-      expect(response).to redirect_to account_workspace_project_path(workspace.id, project.id)
+      expect(response).to render_template :move
       expect(project.tasks.row_order_asc).to eq [task2, task1, task3]
     end
 
@@ -99,9 +100,10 @@ RSpec.describe Account::TasksController, type: :controller do
         task: {
           row_order_position: :up
         }
-      }
+      },
+      format: :js
 
-      expect(response).to redirect_to account_workspace_project_path(workspace.id, project.id)
+      expect(response).to render_template :move
       expect(project.tasks.row_order_asc).to eq [task1, task3, task2]
     end
   end

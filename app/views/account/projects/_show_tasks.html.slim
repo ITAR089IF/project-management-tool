@@ -15,15 +15,16 @@
       = link_to task.title, task.section? ? '#' : account_project_task_path(project, task), class: task_link_class(task)
     .level-item
       = link_to "Up", move_account_project_task_path(project, task,
-        task: { row_order_position: :up}), method: :put, class: "button is-small left"
+        task: { row_order_position: :up}), method: :put, class: "button is-small left", remote: true
     .level-item
       = link_to "Down", move_account_project_task_path(project, task,
-        task: { row_order_position: :down }), method: :put, class: "button is-small left"
+        task: { row_order_position: :down }), method: :put, class: "button is-small left", remote: true
   .level-right
     - if task.pending?
       .level-item
         p
           | Created  #{time_ago_in_words(task.created_at)} ago
+      = render '/account/projects/show_task_assignee', task: task
       .level-item
         = link_to "Edit", edit_account_project_task_path(project, task),
           class: "button is-small right"
@@ -31,6 +32,7 @@
       .level-item
         p
           | Completed #{time_ago_in_words(task.updated_at)} ago
+      = render '/account/projects/show_task_assignee', task: task
     .level-item
       = link_to "Delete", account_project_task_path(project, task),
         method: :delete,  class: "button is-small right", data: { confirm: "Are you sure?" },remote: true

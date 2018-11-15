@@ -43,7 +43,7 @@
             .button.is-light
               = link_to "Sign in", new_user_session_path
         - else
-          .navbar-item.has-dropdown.is-hoverable
+          .navbar-item.has-dropdown.is-hoverable.profile
             a.navbar-link
               figure.image.is-24x24
                 = profile_avatar(current_user)
