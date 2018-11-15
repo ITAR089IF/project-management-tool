@@ -12,11 +12,10 @@
     .div-row DESCRIPTION:
     .div-row
       .p #{@task.description}
-  - if @task.assignee.present?
-    .div-row
-      .div-cell ASSIGNEE:
-      .div-cell
-        .p #{@task.assignee.full_name}
+  .div-row
+    .div-cell ASSIGNEE:
+    .div-cell
+      .p #{@task.assignee.full_name}
   .div-row
     .div-cell PROJECTS:
     .div-cell
