@@ -1,5 +1,5 @@
-- title params[:section].nil? ? 'New Task' : 'New Section'
+- title "New #{section_or_task}"
 .container.box
   .title
-    = params[:section].nil? ? 'New Task' : 'New Section'
+    = "New #{section_or_task}"
   = render '/account/tasks/form'

@@ -8,4 +8,8 @@ module Account::TasksHelper
       'has-text-link'
     end
   end
+
+  def section_or_task
+    params[:section].nil? ? 'Task' : 'Section'
+  end
 end

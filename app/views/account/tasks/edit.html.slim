@@ -1,4 +1,5 @@
-- title "Edit Task"
+- title "Edit #{section_or_task}"
 .container.box
-  .title Edit Task
+  .title
+    = "Edit #{section_or_task}"
   = render '/account/tasks/form'
