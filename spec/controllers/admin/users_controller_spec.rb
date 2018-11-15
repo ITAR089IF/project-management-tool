@@ -6,13 +6,13 @@ RSpec.describe Admin::UsersController, type: :controller do
   let!(:user_admin) { create(:user, :admin) }
   let!(:user) { create(:user) }
 
-  describe 'admin impersonate'  do
-    context 'impersonate' do
+  describe '#impersonate'  do
+    context 'impersonate admin as user' do
       before do
         sign_in user_admin
       end
 
-      it 'it should impersonate admin as user' do
+      it 'should impersonate admin as user' do
         expect(controller.current_user).to eq user_admin
 
         post :impersonate, params: { id: user.id }
@@ -22,8 +22,10 @@ RSpec.describe Admin::UsersController, type: :controller do
         expect(response).to redirect_to root_path
       end
     end
+  end
 
-    context 'stop_impersonate' do
+  describe '#stop_impersonating' do
+    context 'stop impersonate user' do
       before do
         sign_in user_admin
         post :impersonate, params: { id: user.id }

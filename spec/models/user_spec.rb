@@ -64,7 +64,7 @@ RSpec.describe User, type: :model do
     it { should validate_length_of(:last_name).is_at_most(250) }
   end
 
-  context 'user admin' do
+  describe '#admin' do
     it { expect(user.admin?).to eq true }
     it { expect(another_user.admin?).to eq false }
   end
