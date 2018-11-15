@@ -13,4 +13,11 @@ RSpec.describe Account::DashboardController, type: :controller do
       expect(response).to be_successful
     end
   end
+
+  context 'GET /account/calendar' do
+    it 'should show calendar page' do
+      get :calendar
+      expect(response).to be_successful
+    end
+  end
 end

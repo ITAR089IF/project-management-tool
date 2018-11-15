@@ -51,13 +51,13 @@ abbr[title] {
   thead {
     background-color: #bde5d4;
   }
-  a{
+  a {
     color: #363636;
   }
-  ul{
+  ul {
     margin-bottom: 5px;
   }
-  li{
+  li {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -65,7 +65,7 @@ abbr[title] {
     padding: 2px;
     border-radius: 4px;
   }
-  .calendar-heading{
+  .calendar-heading {
     padding: 7px;
     background-color: #a8ccbc;
     text-align: center;
@@ -73,14 +73,15 @@ abbr[title] {
     font-size: 25px;
     color: black;
   }
-  .calendar-task{
+  .calendar-task {
     font-size: 14px;
   }
-  .is-rounded{
+  .is-rounded {
     width: 20px;
     height: 20px;
     border-radius: 50%;
     float: left;
+    margin: 3px;
   }
   .day {
     height: 125px;

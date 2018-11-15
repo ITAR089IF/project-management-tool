@@ -31,7 +31,6 @@
 class Task < ApplicationRecord
   include RankedModel
   include Commentable
-  extend SimpleCalendar
 
   acts_as_paranoid
 
