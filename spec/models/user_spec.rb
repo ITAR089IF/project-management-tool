@@ -39,6 +39,7 @@ RSpec.describe User, type: :model do
   let!(:tasks_comment) { create(:comment, :for_task,  user: user, commentable: task) }
   let!(:workspace) { create(:workspace, user: user) }
   let!(:shared_workspace1) { create(:shared_workspace, user: user1, workspace: workspace) }
+  let!(:workspace1) { create(:workspace, user: user1) }
 
   context 'returns full name' do
     it { expect(user.full_name).to eq 'John Doe' }
@@ -69,5 +70,9 @@ RSpec.describe User, type: :model do
 
   context '.for_workspace' do
     it { expect(described_class.for_workspace(workspace)).to contain_exactly(user, user1) }
+  end
+
+  context '.available_workspaces' do
+    it { expect(user.available_workspaces).to contain_exactly(workspace1) }
   end
 end

@@ -1,0 +1,7 @@
+<% if @invitation.persisted? %>
+  $('#workspace-members')
+  .append("<%= j render 'account/shared_workspaces/show_user', members: [@invitation.user], workspace: @workspace %>")
+  $('#new-member').html("<%= j render 'account/shared_workspaces/new_link', workspace: @workspace %>")
+<% else %>
+  $('#new-member').html("<%= j render 'account/shared_workspaces/form', workspace: @workspace, shared_workspace: @shared_workspace %>");
+<% end %>

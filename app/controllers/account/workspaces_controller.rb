@@ -5,7 +5,7 @@ class Account::WorkspacesController < Account::AccountController
 
   def show
     @workspace = resource
-    @users = User.for_workspace(@workspace).order_desc
+    @members = User.for_workspace(@workspace).order_desc
   end
 
   def new
@@ -39,31 +39,6 @@ class Account::WorkspacesController < Account::AccountController
     redirect_to account_workspaces_path
   end
 
-  def new_member
-    @workspace = resource
-
-    respond_to :js
-  end
-
-  def create_member
-    @workspace = resource
-    @invitation = @workspace.shared_workspaces.build(user_id: member_params[:user_id])
-    @invitation.save
-
-    respond_to :js
-  end
-
-  def delete_member
-    @workspace = resource
-    @user = @workspace.members.find(params[:user_id])
-    @workspace.members.destroy(params[:user_id])
-    if @user == current_user
-      redirect_to account_workspaces_path, notice: 'You have removed yourself from workspace!'
-    else
-      respond_to :js
-    end
-  end
-
   private
   def collection
     current_user.workspaces.union(current_user.invited_workspaces)
@@ -75,9 +50,5 @@ class Account::WorkspacesController < Account::AccountController
 
   def workspace_params
     params.require(:workspace).permit(:name).merge(user_id: current_user.id)
-  end
-
-  def member_params
-    params.require(:workspace).permit(:user_id)
   end
 end

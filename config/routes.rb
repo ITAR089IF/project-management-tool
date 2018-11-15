@@ -11,11 +11,7 @@ Rails.application.routes.draw do
 
     resource :profile, only: [:edit, :update]
     resources :workspaces do
-      member do
-        get :new_member
-        post :create_member
-        delete :delete_member
-      end
+      resources :shared_workspaces, only: [:new, :create, :destroy]
       resources :projects, except: [:index]
     end
 

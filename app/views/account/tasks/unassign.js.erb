@@ -1,6 +1,6 @@
 $('.notification').remove();
 <% if @result %>
-  $('#assingnee_user_bar').html("<%=j render 'account/tasks/assignee_show', task: @task %>");
+  $('#assingnee_user_bar').html("<%= j render 'account/tasks/assignee_show', task: @task %>");
 <% else %>
   <% flash[:alert] = @task.errors.full_messages.to_sentence %>
   $('body').prepend("<%= j render 'shared/flash' %>");

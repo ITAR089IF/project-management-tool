@@ -96,6 +96,10 @@ class User < ApplicationRecord
   end
 
   def self.for_workspace(workspace)
-    workspace.members.union(self.where(id: workspace.user.id))
+    workspace.members.union(self.where(id: workspace.user_id))
+  end
+
+  def available_workspaces
+    workspaces.union(self.invited_workspaces)
   end
 end
