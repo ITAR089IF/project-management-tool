@@ -37,6 +37,7 @@ FactoryBot.define do
 
     trait :completed do
       complete { true }
+      completed_at {Faker::Date.backward(30) }
     end
 
     trait :with_files do
@@ -59,8 +60,5 @@ FactoryBot.define do
       due_date { Faker::Date.forward(30) }
     end
     
-    trait :completed_at do
-      completed_at {Faker::Date.backward(30) }
-    end
   end
 end
