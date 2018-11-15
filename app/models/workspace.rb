@@ -30,4 +30,14 @@ class Workspace < ApplicationRecord
   scope :search_workspaces, -> (search) { select('workspaces.id, workspaces.name').where("name ~* ?", "\\m#{search}").order(name: :asc).limit(10) }
 
   validates :name, presence: true, length: { maximum: 250 }
+
+  def all_members
+    members.union(User.where(id: self.user_id))
+  end
+
+  def potential_members
+    ids = [self.user.id]
+    ids += self.members.ids
+    User.where.not(id: ids)
+  end
 end

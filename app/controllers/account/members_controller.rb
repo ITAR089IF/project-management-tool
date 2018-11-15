@@ -1,7 +1,7 @@
 class Account::MembersController < Account::AccountController
   def new
     @workspace = resource
-    @shared_workspase = @workspace.shared_workspaces.build
+    @shared_workspaсe = @workspace.shared_workspaces.build
 
     respond_to :js
   end

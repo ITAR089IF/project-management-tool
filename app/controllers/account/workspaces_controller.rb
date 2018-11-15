@@ -5,7 +5,7 @@ class Account::WorkspacesController < Account::AccountController
 
   def show
     @workspace = resource
-    @members = User.for_workspace(@workspace).order_desc
+    @members = @workspace.potential_members.order_desc
   end
 
   def new
@@ -41,7 +41,7 @@ class Account::WorkspacesController < Account::AccountController
 
   private
   def collection
-    current_user.workspaces.union(current_user.invited_workspaces)
+    current_user.available_workspaces
   end
 
   def resource

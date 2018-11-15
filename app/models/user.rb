@@ -95,10 +95,6 @@ class User < ApplicationRecord
     avatar&.attachment&.blob&.persisted?
   end
 
-  def self.for_workspace(workspace)
-    workspace.members.union(self.where(id: workspace.user_id))
-  end
-
   def available_workspaces
     workspaces.union(self.invited_workspaces)
   end
