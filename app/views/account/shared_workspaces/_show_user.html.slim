@@ -1,7 +1,0 @@
-- members.each do |member|
-  div data-attribute = "#{member.id}"
-    = fa_icon "user-o", text: member.full_name
-    - unless member == workspace.user
-      = link_to account_workspace_shared_workspace_path(workspace_id: workspace.id, id: workspace.shared_workspaces.find_by(user_id: member.id).id ),
-              remote: true, method: :delete, data: {confirm: "Are you sure?"} do
-        = fa_icon "times"

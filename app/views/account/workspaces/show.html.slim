@@ -23,6 +23,6 @@
               method: :delete, class: "button is-small right", data: { confirm: "Are you sure?" }
     | Members:
     span#new-member
-      = render 'account/shared_workspaces/new_link', workspace: @workspace
+      = render 'account/members/new_link', workspace: @workspace
     #workspace-members
-      = render 'account/shared_workspaces/show_user', members: @members, workspace: @workspace
+      = render 'account/members/show_user', members: @members, workspace: @workspace

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Account::SharedWorkspacesController, type: :controller do
   render_views
-  
+
   let!(:user) { create(:user) }
   let!(:workspace) { create(:workspace, user: user) }
   let!(:user1) { create(:user) }
@@ -15,25 +15,25 @@ RSpec.describe Account::SharedWorkspacesController, type: :controller do
 
   before { sign_in user }
 
-  context '#GET /new_member' do
-    it 'renders new member form' do
-      get :new_member, params: { id: workspace.id },
+  context '#GET /new' do
+    it 'renders form' do
+      get :new, params: { id: workspace.id },
         format: :js, xhr: true
-      expect(response).to render_template :new_member
+      expect(response).to render_template :new
     end
   end
 
-  context '#POST /create_member' do
-    subject { post :create_member, params: { workspace: { user_id: user3.id }, id: workspace.id }, format: :js, xhr: true }
+  context '#POST /create' do
+    subject { post :create, params: { workspace: { user_id: user3.id }, id: workspace.id }, format: :js, xhr: true }
     it 'addes new member to workspace' do
       expect{ subject }.to change{ workspace.members.reload.count }.from(0).to(1)
-      expect(response).to render_template :create_member
+      expect(response).to render_template :create
     end
   end
 
-  context 'DELETE /delete_member' do
+  context 'DELETE /destroy' do
     context 'removes current user from workspace' do
-      subject { delete :delete_member, params: { user_id: user.id, id: workspace1.id  } }
+      subject { delete :destroy, params: { user_id: user.id, id: workspace1.id  } }
       it do
         expect{ subject }.to change{ workspace1.members.count}.from(2).to(1)
         expect(response).to redirect_to account_workspaces_path
@@ -41,10 +41,10 @@ RSpec.describe Account::SharedWorkspacesController, type: :controller do
     end
 
     context 'removes another user from workspace' do
-      subject { delete :delete_member, params: { user_id: user2.id, id: workspace1.id }, format: :js }
+      subject { delete :destroy, params: { user_id: user2.id, id: workspace1.id }, format: :js }
       it do
         expect{ subject }.to change{ workspace1.members.count}.from(2).to(1)
-        expect(response).to render_template :delete_member
+        expect(response).to render_template :destroy
       end
     end
   end
