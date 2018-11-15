@@ -80,7 +80,7 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  def user_initials
+  def initials
     "#{first_name[0]}#{last_name[0]}"
   end
 
