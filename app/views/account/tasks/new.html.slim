@@ -1,4 +1,5 @@
-- title "New Task"
+- title "New #{task_form_title}"
 .container.box
-  .title New Task
+  .title
+    = "New #{task_form_title}"
   = render '/account/tasks/form'
