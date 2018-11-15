@@ -39,7 +39,7 @@
               = link_to "Sign in", new_user_session_path
         - else
           .navbar-item.has-dropdown.is-hoverable
-            a.navbar-link
+            a.navbar-link.prof-avatar
               figure.image.is-24x24
                 = profile_avatar(current_user)
               = current_user.full_name
