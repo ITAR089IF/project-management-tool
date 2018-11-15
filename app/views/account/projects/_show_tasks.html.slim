@@ -26,10 +26,10 @@
       - if task.assignee.present?
         .level-item.image.is-24x24.tooltip[data-tooltip="#{task.assignee.full_name}"]
           - if task.assignee.with_avatar?
-            = profile_initials(task.assignee)
+            = image_tag(task.assignee.avatar)
           - else
             .has-background-light.has_rounded_background
-              = profile_initials(task.assignee)
+              = task.assignee.user_initials
       .level-item
         = link_to "Edit", edit_account_project_task_path(project, task),
           class: "button is-small right"
