@@ -1,12 +1,14 @@
-.user_avatar {
-  display: inline-block;
-}
-.file.optional.user_avatar {
-  margin: 0.5em 0;
-}
-a.prof-avatar figure.image {
-  margin: 5px;
-}
-.prof-avatar:not(.is-arrowless) {
-  padding-right: 3.5em;
+.profile {
+  .user_avatar {
+    display: inline-block;
+  }
+  .file.optional.user_avatar {
+    margin: 0.5em 0;
+  }
+  a.navbar-link figure.image {
+    margin: 5px;
+  }
+  .navbar-link:not(.is-arrowless) {
+    padding-right: 3.5em;
+  }
 }
