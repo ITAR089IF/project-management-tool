@@ -5,7 +5,7 @@
     .title
       = link_to @task.title, account_project_task_url(@task.project, @task)
   .div-row
-    .p #{@user.first_name} completed this task
+    .p was assigned to you
   .div-row
     h1 Task Details:
   - if @task.description.present?
