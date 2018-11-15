@@ -50,8 +50,12 @@ class Account::TasksController < Account::AccountController
   end
 
   def move
-    resource.update(task_movement_params)
-    redirect_to account_workspace_project_path(parent.workspace_id, parent)
+    @project = parent
+    @task = resource
+    @incomplete_tasks = @project.tasks.incomplete.row_order_asc
+    @complete_tasks = @project.tasks.complete.row_order_asc
+    @task.update(task_movement_params)
+    respond_to(:js)
   end
 
   def watch

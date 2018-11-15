@@ -14,7 +14,7 @@
             = link_to project.name, account_workspace_project_path(@workspace, project)
         .level-right
           .level-item.tooltip[data-tooltip="Completed #{project.tasks.complete.count}/#{project.tasks.count}"]
-            = "Tasks: #{project.tasks.count}"
+            = pluralize(project.tasks.count, "Task")
           .level-item
             = link_to "Edit", edit_account_workspace_project_path(@workspace, project),
               class: "button is-small right"
