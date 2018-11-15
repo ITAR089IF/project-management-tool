@@ -30,7 +30,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let!(:user) { create(:user, first_name: 'John', last_name: 'Doe') }
+  let!(:user) { create(:user, first_name: 'John', last_name: 'Doe', role: 'admin') }
   let!(:another_user) { create(:user) }
   let!(:project) { create(:project, users: [user]) }
   let!(:task) { create(:task, project: project) }
@@ -66,5 +66,10 @@ RSpec.describe User, type: :model do
 
   context 'returns user initials' do
     it { expect(user.initials).to eq("JD") }
+  end
+
+  describe '#admin' do
+    it { expect(user.admin?).to eq true }
+    it { expect(another_user.admin?).to eq false }
   end
 end
