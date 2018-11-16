@@ -35,7 +35,6 @@ FactoryBot.define do
     project
 
     trait :completed do
-      complete { true }
       completed_at {Faker::Date.backward(30) }
     end
 
@@ -58,6 +57,6 @@ FactoryBot.define do
     trait :future do
       due_date { Faker::Date.forward(30) }
     end
-    
+
   end
 end
