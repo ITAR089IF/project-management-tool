@@ -2,7 +2,7 @@
   .title Calendar:
   = month_calendar events: @user_tasks do |date, tasks|
     = date.day
-    ul
+    ul#myList
       - tasks.each do |task|
         li
           = link_to account_project_task_url(task.project, task), class: "calendar-task" do
@@ -13,3 +13,5 @@
                 .is-rounded
                   = task.assignee.initials
             = task.title
+    - if tasks.count > 2
+      button more....

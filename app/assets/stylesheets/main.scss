@@ -60,6 +60,9 @@ abbr[title] {
   ul {
     margin-bottom: 5px;
   }
+  #myList li{ display:none;
+  }
+
   li {
     white-space: nowrap;
     overflow: hidden;
