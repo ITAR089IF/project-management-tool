@@ -15,6 +15,9 @@
 .footer-content {
   padding: 10px 10px;
 }
+abbr[title] {
+  text-decoration: none;
+}
 .user_avatar {
   display: inline-block;
 }
@@ -77,8 +80,9 @@ abbr[title] {
     font-size: 14px;
   }
   .is-rounded {
-    width: 20px;
-    height: 20px;
+    border: 2px solid #ddd;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     float: left;
     margin: 3px;
@@ -86,6 +90,7 @@ abbr[title] {
   .day {
     height: 125px;
     width: 14%;
+    overflow-y: hidden;
   }
   .today {
     background: #e7e7e7

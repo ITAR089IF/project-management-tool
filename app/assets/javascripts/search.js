@@ -14,6 +14,7 @@ function globalSearch() {
   var workspacesBlock = document.getElementById('workspaces-block');
   var projectsBlock = document.getElementById('projects-block');
   var tasksBlock = document.getElementById('tasks-block');
+  var noContentBlock = document.getElementById('no-content-block');
 
   search.addEventListener('keyup', e => {
 
@@ -30,6 +31,12 @@ function globalSearch() {
             display(response.workspaces, workspacesBlock, workspaces, 'WORKSPACES', 'name');
             display(response.projects, projectsBlock, projects, 'PROJECTS', 'name');
             display(response.tasks, tasksBlock, tasks, 'TASKS', 'title');
+
+            if(response.workspaces.length <= 0 && response.projects.length <= 0 && response.tasks.length <= 0) {
+              noContentBlock.style.display = 'block';
+            } else {
+              noContentBlock.style.display = 'none';
+            }
           })
           .catch(error => { alert(error) });
       } else {
@@ -96,13 +103,13 @@ function jsonToHTML(data, title, field) {
 }
 
 linkToWorkspace = (id, text) => {
-  return `<a href="${Routes.account_workspace_path(id)}">${text}</a>`;
+  return `<a href="${Routes.account_workspace_path(id)}">> ${text}</a>`;
 }
 
 linkToProject = (id, workspaceId, text) => {
-  return `<a href="${Routes.account_workspace_project_path(workspaceId, id)}">${text}</a>`;
+  return `<a href="${Routes.account_workspace_project_path(workspaceId, id)}">> ${text}</a>`;
 }
 
 linkToTask = (id, projectId, text) => {
-  return `<a href="${Routes.account_project_task_path(projectId, id)}">${text}</a>`;
+  return `<a href="${Routes.account_project_task_path(projectId, id)}">> ${text}</a>`;
 }

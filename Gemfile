@@ -40,6 +40,7 @@ gem 'active_storage_validations'
 gem 'premailer-rails'
 gem "paranoia", '~> 2.2'
 gem "simple_calendar", "~> 2.0"
+gem 'pretender'
 
 
 group :development, :test do
