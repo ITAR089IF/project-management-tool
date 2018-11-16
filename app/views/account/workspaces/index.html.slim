@@ -6,7 +6,7 @@
         | My Workspaces
     .level-right
       = link_to 'Add Workspace', new_account_workspace_path, class: 'title button is-text'
-  - if @workspaces.exists?
+  - if @workspaces.any?
     - @workspaces.each do |workspace|
       .box
         .level

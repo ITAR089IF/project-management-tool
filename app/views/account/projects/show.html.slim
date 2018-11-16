@@ -11,7 +11,7 @@
         = link_to "Add Task", new_account_project_task_path(@project), class: "button is-link"
       .level-item
         = link_to "Add Section", new_account_project_task_path(@project, section: true), class: "button is-link"
-  - if @project.tasks.exists?
+  - if @project.tasks.any?
     .conteiner.box
       .title
         |  To Do List:

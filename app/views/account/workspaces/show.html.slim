@@ -7,7 +7,7 @@
     .level-right
       = link_to "Add project", new_account_workspace_project_path(@workspace), class: "button is-link"
   .container
-    - if @workspace.projects.exists?
+    - if @workspace.projects.any?
       - @workspace.projects.each do |project|
         .level
           .level-left
