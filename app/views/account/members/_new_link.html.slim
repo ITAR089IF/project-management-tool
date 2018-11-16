@@ -1,0 +1,3 @@
+- if workspace.potential_members.any?
+  = link_to new_account_workspace_member_path(workspace_id: workspace.id), remote: true, id: 'link_form' do
+    = fa_icon 'plus'

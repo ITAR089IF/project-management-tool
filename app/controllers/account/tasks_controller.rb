@@ -17,7 +17,7 @@ class Account::TasksController < Account::AccountController
     @task = @project.tasks.build(tasks_params)
 
     if @task.save
-      redirect_to account_project_task_path(@project, @task)
+      redirect_to @task.section? ? account_workspace_project_path(@project.workspace_id, @project) : account_project_task_path(@project, @task)
     else
       render :new
     end
@@ -33,7 +33,7 @@ class Account::TasksController < Account::AccountController
     @task = resource
 
     if resource.update(tasks_params)
-      redirect_to account_project_task_path(@project, @task)
+      redirect_to @task.section? ? account_workspace_project_path(@project.workspace_id, @project) : account_project_task_path(@project, @task)
     else
       render "edit"
     end
@@ -96,14 +96,13 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = resource
     @task.files.find(params[:attachment_id]).purge
-
     redirect_to account_project_task_path(@project, @task)
   end
 
   def complete
     @project = parent
     @task = resource
-    @task.update(complete: true)
+    @task.update(completed_at: Time.now)
     respond_to :js
     TasksMailer.task_completed(@task, current_user).deliver_later
   end
@@ -112,7 +111,7 @@ class Account::TasksController < Account::AccountController
   def uncomplete
     @project = parent
     @task = resource
-    @task.update(complete: false)
+    @task.update(completed_at: nil)
     respond_to :js
   end
 
@@ -131,7 +130,7 @@ class Account::TasksController < Account::AccountController
   end
 
   def tasks_params
-    params.require(:task).permit(:title, :description, :section, :due_date, files: [])
+    params.require(:task).permit(:title, :description, :section, :due_date, :completed_at, files: [])
   end
 
   def task_movement_params

@@ -28,6 +28,8 @@
 #
 
 class User < ApplicationRecord
+  ADMIN = 'admin'
+
   has_many :comments, dependent: :destroy
   has_many :workspaces, dependent: :destroy
   has_many :user_projects, dependent: :destroy
@@ -35,11 +37,12 @@ class User < ApplicationRecord
   has_many :task_watches, dependent: :destroy
   has_many :tasks, through: :task_watches
   has_many :assigned_tasks, class_name: "Task"
+  has_many :shared_workspaces
+  has_many :invited_workspaces, through: :shared_workspaces, source: :workspace
   has_one_attached :avatar
 
   validates :first_name, length: { maximum: 250 }, presence: true
   validates :last_name, length: { maximum: 250 }, presence: true
-
   validates :role, length: { maximum: 250 }
   validates :department, length: { maximum: 250 }
   validates :about, length: { maximum: 250 }
@@ -48,6 +51,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook]
+
+  scope :order_desc, -> { order(:first_name, :last_name) }
 
   def self.from_omniauth(auth)
     user = User.where(email: auth.info.email).first
@@ -80,6 +85,10 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def initials
+    "#{first_name[0]}#{last_name[0]}"
+  end
+
   def can_manage?(comment)
     comments.where(id: comment.id).exists?
   end
@@ -90,5 +99,13 @@ class User < ApplicationRecord
 
   def with_avatar?
     avatar&.attachment&.blob&.persisted?
+  end
+
+  def available_workspaces
+    workspaces.union(self.invited_workspaces)
+  end
+  
+  def admin?
+    self.role == ADMIN
   end
 end
