@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_15_091150) do
+ActiveRecord::Schema.define(version: 2018_11_16_075254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,7 +86,6 @@ ActiveRecord::Schema.define(version: 2018_11_15_091150) do
     t.integer "row_order"
     t.bigint "project_id"
     t.boolean "section", default: false
-    t.boolean "complete", default: false
     t.datetime "deleted_at"
     t.datetime "due_date"
     t.bigint "assignee_id"

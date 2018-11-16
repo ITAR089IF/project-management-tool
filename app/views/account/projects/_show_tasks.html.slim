@@ -5,12 +5,12 @@
         .level-item
           = link_to complete_account_project_task_path(project, task),
             class: 'add_to_complete', method: :patch, remote: true do
-            = check_box_tag :complete
+            = check_box_tag :completed_at
       - else
         .level-item
           = link_to uncomplete_account_project_task_path(project, task),
             class: 'add_to_complete', method: :patch, remote: true do
-            = check_box_tag "mark-complete", :complete, true
+            = check_box_tag "mark-complete", :completed_at, true
     .level-item
       = link_to task.title, task.section? ? '#' : account_project_task_path(project, task), class: task_link_class(task)
     .level-item

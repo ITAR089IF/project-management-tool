@@ -105,7 +105,7 @@ class Account::TasksController < Account::AccountController
   def complete
     @project = parent
     @task = resource
-    @task.update(complete: true, completed_at: Time.now)
+    @task.update(completed_at: Time.now)
     respond_to :js
     TasksMailer.task_completed(@task, current_user).deliver_later
   end
@@ -114,7 +114,7 @@ class Account::TasksController < Account::AccountController
   def uncomplete
     @project = parent
     @task = resource
-    @task.update(complete: false)
+    @task.update(completed_at: nil)
     respond_to :js
   end
 
