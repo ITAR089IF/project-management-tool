@@ -1,4 +1,5 @@
 class Account::TasksController < Account::AccountController
+
   def show
     @project = parent
     @task = @project.tasks.find(params[:id])
@@ -16,7 +17,7 @@ class Account::TasksController < Account::AccountController
     @task = @project.tasks.build(tasks_params)
 
     if @task.save
-      redirect_to account_project_task_path(@project, @task)
+      redirect_to @task.section? ? account_workspace_project_path(@project.workspace_id, @project) : account_project_task_path(@project, @task)
     else
       render :new
     end
@@ -32,7 +33,7 @@ class Account::TasksController < Account::AccountController
     @task = resource
 
     if resource.update(tasks_params)
-      redirect_to account_project_task_path(@project, @task)
+      redirect_to @task.section? ? account_workspace_project_path(@project.workspace_id, @project) : account_project_task_path(@project, @task)
     else
       render "edit"
     end
@@ -49,8 +50,12 @@ class Account::TasksController < Account::AccountController
   end
 
   def move
-    resource.update(task_movement_params)
-    redirect_to account_workspace_project_path(parent.workspace_id, parent)
+    @project = parent
+    @task = resource
+    @incomplete_tasks = @project.tasks.incomplete.row_order_asc
+    @complete_tasks = @project.tasks.complete.row_order_asc
+    @task.update(task_movement_params)
+    respond_to(:js)
   end
 
   def watch
@@ -100,8 +105,16 @@ class Account::TasksController < Account::AccountController
   def complete
     @project = parent
     @task = resource
-    @task.update(complete: true)
-    
+    @task.update(completed_at: Time.now)
+    respond_to :js
+    TasksMailer.task_completed(@task, current_user).deliver_later
+  end
+
+
+  def uncomplete
+    @project = parent
+    @task = resource
+    @task.update(completed_at: nil)
     respond_to :js
   end
 
@@ -120,7 +133,7 @@ class Account::TasksController < Account::AccountController
   end
 
   def tasks_params
-    params.require(:task).permit(:title, :description, :section, files: [])
+    params.require(:task).permit(:title, :description, :section, :due_date, :completed_at, files: [])
   end
 
   def task_movement_params

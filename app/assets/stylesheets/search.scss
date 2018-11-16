@@ -1,0 +1,30 @@
+#search {
+  width: 260px;
+}
+
+#search-results {
+  padding: 3px 20px;
+  display: none;
+  position: absolute;
+  width: 260px;
+  max-height: 300px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+#workspaces-block, #projects-block, #tasks-block {
+  display: none;
+  width: 200px;
+  margin: 0;
+  padding: 0;
+
+  .level {
+    margin: 5px 0;
+
+    .level-item {
+      width: 200px;
+      text-align: left;
+      justify-content: left;
+    }
+  }
+}
