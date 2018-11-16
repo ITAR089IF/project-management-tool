@@ -1,5 +1,50 @@
-.container.has-text-centered
-  h1 Home page
-  .box
-    h1 Project management is not an easy job. In general, 37% of projects fail while that number reaches around 60% for IT projects.
-      There are so many contributing factors which need to be carefully monitored. Use Asana. Take it easy.
+section.hero.is-medium.has-bg-img
+  .hero-body
+    #welcome-banner
+      .container
+        .title
+          | Make more time for the work that matters most
+        .p This is the work management platform teams use to stay focused on the goals, projects, and daily tasks that grow your business.
+        .button.is-medium
+          = link_to "Sign Up", new_user_registration_path, class: "button-link"
+section.section
+  #description
+    .container
+      .title
+        | What you can do with it
+      .columns
+        .column
+          = image_tag ('landing/1_0get_organized.png'), class: "description-image"
+          .h1
+            | Get organized
+          .p
+            | Plan and structure work in a way that’s best for you. Set priorities and deadlines. Share details and assign tasks. All in one place.
+        .column
+          = image_tag ('landing/1_1hit_deadlines.png'), class: "description-image"
+          .h1
+            | Stay on track
+          .p
+            | Follow projects and tasks through every stage. You know where work stands and can keep everyone aligned on goals.
+        .column
+          = image_tag ('landing/1_2stay_on_track.png'), class: "description-image"
+          .h1
+            | Hit deadlines
+          .p
+            | Create visual project plans to see how every step maps out over time. Pinpoint risks. Eliminate roadblocks. Even when plans change.
+      .title
+        | You’ll be in good company
+      .columns
+        .column
+          = image_tag ('landing/comp_4.png'), class: "comp-image"
+        .column
+          = image_tag ('landing/comp_5.png'), class: "comp-image"
+        .column
+          = image_tag ('landing/comp_2.png'), class: "comp-image"
+section.section.has-background
+  #landing-footer
+    .container
+      .title
+        | It’s easy to get started
+      .p And it’s free. Two things everyone loves.
+      .button.is-medium
+        = link_to "Sign Up", new_user_registration_path, class: "button-link"
