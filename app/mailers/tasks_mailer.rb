@@ -4,7 +4,7 @@ class TasksMailer < ApplicationMailer
   def task_assign_to_user_email(task)
     @task = task
     @user = @task.assignee
-    mail(to: @user.email, subject: 'Task detail')
+    mail(to: @user.email, subject: "Task detail")
   end
 
   def task_completed(task, current_user)

@@ -81,7 +81,7 @@ class Account::TasksController < Account::AccountController
   def assign
     @task = parent.tasks.find(params[:id])
     @result = @task.update(assignee_id: assignee_params[:assignee])
-    TasksMailer.task_assign_to_user_email(@task).deliver if @task.saved_change_to_assignee_id?
+    TasksMailer.task_assign_to_user_email(@task).deliver_later if @task.saved_change_to_assignee_id?
     respond_to :js
   end
 
