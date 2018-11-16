@@ -29,6 +29,11 @@
               .level-left
                 .level-item
                   #tasks
+            .level#no-content-block
+              .level-left
+                .level-item
+                  #no-content
+                    | No results found
     .navbar-end
       .navbar-item
         - if (!user_signed_in?)
@@ -38,7 +43,7 @@
             .button.is-light
               = link_to "Sign in", new_user_session_path
         - else
-          .navbar-item.has-dropdown.is-hoverable
+          .navbar-item.has-dropdown.is-hoverable.profile
             a.navbar-link
               figure.image.is-24x24
                 = profile_avatar(current_user)
