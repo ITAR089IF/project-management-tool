@@ -54,7 +54,7 @@ RSpec.describe Task, type: :model do
     it 'should find all tasks' do
       expect(Task.all.search_tasks(user.id, 'deplo').count).to eq 2
       expect(Task.search_tasks(user.id, 'worksp').count).to eq 1
-      expect(Task.search_tasks(user.id, 'igital').count).to eq 0
+      expect(Task.search_tasks(user.id, 'iajshdkas').count).to eq 0
     end
   end
 end

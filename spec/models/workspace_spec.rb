@@ -44,7 +44,7 @@ RSpec.describe Workspace, type: :model do
     it 'should find workspaces with entered text' do
       expect(user.workspaces.search_workspaces('iT').count).to eq 1
       expect(user.workspaces.search_workspaces('in').count).to eq 2
-      expect(user.workspaces.search_workspaces('nfras').count).to eq 0
+      expect(user.workspaces.search_workspaces('hasgd').count).to eq 0
     end
   end
 end
