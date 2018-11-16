@@ -10,6 +10,10 @@ RSpec.describe Account::TasksController, type: :controller do
   let!(:user4) { create(:user) }
   let!(:workspace) { create(:workspace, user: user) }
   let!(:project) { create(:project, workspace: workspace, users: [user, user1]) }
+  let!(:shared_workspace1) { create(:shared_workspace, user: user1, workspace: workspace) }
+  let!(:shared_workspace2) { create(:shared_workspace, user: user2, workspace: workspace) }
+  let!(:shared_workspace3) { create(:shared_workspace, user: user3, workspace: workspace) }
+  let!(:shared_workspace4) { create(:shared_workspace, user: user4, workspace: workspace) }
   let!(:task1) { create(:task, project: project) }
   let!(:task2) { create(:task, project: project, watchers: [user1, user2, user3, user4]) }
   let!(:task3) { create(:task, :completed, project: project) }
