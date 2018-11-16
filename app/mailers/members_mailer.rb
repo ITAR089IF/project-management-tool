@@ -1,4 +1,4 @@
-class MambersMailer < ApplicationMailer
+class MembersMailer < ApplicationMailer
   default template_path: 'mailers/members'
 
   def member_added(member, workspace, current_user)
