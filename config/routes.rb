@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
     resource :profile, only: [:edit, :update]
     resources :workspaces do
+      resources :members, only: [:new, :create, :destroy]
       resources :projects, except: [:index]
     end
 
