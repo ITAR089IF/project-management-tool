@@ -22,6 +22,15 @@
 require 'rails_helper'
 
 RSpec.describe Workspace, type: :model do
+  let!(:user) { create(:user) }
+  let!(:user1) { create(:user) }
+  let!(:user2) { create(:user) }
+  let!(:user3) { create(:user) }
+  let!(:workspace1) { create(:workspace, user: user) }
+  let!(:workspace2) { create(:workspace, user: user) }
+  let!(:workspace3) { create(:workspace, user: user) }
+  let!(:shared_workspace) { create(:shared_workspace, user: user1, workspace: workspace1) }
+
   context 'validation tests' do
     let!(:user) { create(:user) }
     let!(:workspace) { build(:workspace, user: user) }
@@ -46,5 +55,13 @@ RSpec.describe Workspace, type: :model do
       expect(user.workspaces.search_workspaces('in').count).to eq 2
       expect(user.workspaces.search_workspaces('hasgd').count).to eq 0
     end
+  end
+
+  context '.all_members' do
+    it { expect(workspace1.all_members).to contain_exactly(user, user1) }
+  end
+
+  context '.potential_members' do
+    it { expect(workspace1.potential_members).to contain_exactly(user2, user3) }
   end
 end
