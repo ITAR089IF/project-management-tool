@@ -6,7 +6,7 @@ class UsersMailer < ApplicationMailer
     email_admins = User.admins.pluck(:email)
     mail(
       to: email_admins,
-      subject: "New user registration"
+      subject: "New user sign up"
     )
   end
 end

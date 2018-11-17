@@ -30,8 +30,6 @@
 class User < ApplicationRecord
   ADMIN = 'admin'
 
-  after_create :send_admin_mail
-
   has_many :comments, dependent: :destroy
   has_many :workspaces, dependent: :destroy
   has_many :user_projects, dependent: :destroy
@@ -57,6 +55,8 @@ class User < ApplicationRecord
   scope :order_desc, -> { order(:first_name, :last_name) }
   scope :admins, -> { where(role: ADMIN) }
 
+  after_create :send_admin_mail
+  
   def self.from_omniauth(auth)
     user = User.where(email: auth.info.email).first
     if user
