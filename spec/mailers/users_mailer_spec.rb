@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe UsersMailer, type: :mailer do
   let!(:user) { create(:user) }
   let!(:current_user) { create(:user) }
-  
+
   describe "New user registration" do
     it 'job is created' do
       ActiveJob::Base.queue_adapter = :test
