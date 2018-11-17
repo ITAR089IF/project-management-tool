@@ -16,7 +16,6 @@ function globalSearch() {
   var projectsBlock = document.getElementById('projects-block');
   var tasksBlock = document.getElementById('tasks-block');
   var noContentBlock = document.getElementById('no-content-block');
-  var token = document.getElementsByTagName('meta')['csrf-token'].content;
   var element;
 
   if (search) {
