@@ -1,9 +1,9 @@
 jQuery(document).ready(function () {
-  size_li = $("#myList li").length;
+  size_li = $(".task-list #myList li").length;
   x = 2;
-  $('#myList li:lt('+x+')').show();
-  $("button").click(function () {
+  $('.task-list #myList li:lt('+x+')').show();
+  $(".task-list button.show").click(function () {
       x= size_li;
-      $('#myList li:lt('+x+')').show();
+      $('.task-list #myList li:lt('+x+')').show();
   });
 });
