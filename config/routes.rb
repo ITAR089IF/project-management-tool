@@ -33,6 +33,8 @@ Rails.application.routes.draw do
           delete :unassign
           delete :remove_attachment
         end
+
+        get :load_to_pdf, on: :collection, defaults: { format: :pdf }
       end
     end
 

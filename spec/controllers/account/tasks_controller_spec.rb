@@ -184,4 +184,11 @@ RSpec.describe Account::TasksController, type: :controller do
       expect(response).to render_template :unassign
     end
   end
+
+  describe '#load_to_pdf' do
+    it 'it should be success' do
+      get :load_to_pdf, params: { project_id: project.id }, format: :pdf
+      expect(response).to be_successful
+    end
+  end
 end
