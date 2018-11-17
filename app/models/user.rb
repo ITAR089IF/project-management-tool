@@ -104,7 +104,11 @@ class User < ApplicationRecord
   def available_workspaces
     workspaces.union(self.invited_workspaces)
   end
-  
+
+  def available_projects
+    Project.where(workspace_id: available_workspaces.ids)
+  end
+
   def admin?
     self.role == ADMIN
   end
