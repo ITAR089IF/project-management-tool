@@ -1,9 +1,19 @@
-jQuery(document).ready(function () {
-  size_li = $(".task-list #myList li").length;
-  x = 2;
-  $('.task-list #myList li:lt('+x+')').show();
-  $(".task-list button.show").click(function () {
-      x= size_li;
-      $('.task-list #myList li:lt('+x+')').show();
+$( document ).on('turbolinks:load', function() {
+  $('ul.tasks-list').each(function(){
+    var LiN = $(this).find('li').length;
+    if( LiN > 2){
+      $('li', this).eq(1).nextAll().hide().addClass('toggleable');
+      $(this).append('<p class="more">Show more</p>');
+    }
+  });
+
+  $('ul.task-list').on('click','.more', function(){
+
+    if( $(this).hasClass('less') ){
+      $(this).text('Show more').removeClass('less');
+    }else{
+      $(this).text('Show less').addClass('less');
+    }
+    $(this).siblings('li.toggleable').slideToggle();
   });
 });

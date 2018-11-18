@@ -30,7 +30,7 @@ abbr[title] {
 .simple-calendar {
   table {
     table-layout: fixed;
-    border: 1px solid #a8ccbc;
+    border: 1px solid #ffff74;
     border-bottom: 1px solid #ddd;
     box-sizing: border-box;
     max-width: 100%;
@@ -52,15 +52,19 @@ abbr[title] {
     border: 1px solid #ddd;
   }
   thead {
-    background-color: #bde5d4;
+    background-color: #ffff74;
   }
   a {
     color: #363636;
   }
   ul {
     margin-bottom: 5px;
+    list-style:none;
   }
-  #myList li{ display:none;
+  .more{
+    text-align: center;
+    font-size: 14px;
+    cursor:pointer;
   }
 
   li {
@@ -73,7 +77,7 @@ abbr[title] {
   }
   .calendar-heading {
     padding: 7px;
-    background-color: #a8ccbc;
+    background-color: #ffff74;
     text-align: center;
     font-family: 'Roboto' Bold;
     font-size: 25px;
@@ -93,7 +97,6 @@ abbr[title] {
   .day {
     height: 125px;
     width: 14%;
-    overflow-y: hidden;
   }
   .today {
     background: #e7e7e7

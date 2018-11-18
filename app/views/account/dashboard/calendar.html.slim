@@ -2,11 +2,10 @@
   .title Calendar:
   = month_calendar events: @user_tasks do |date, tasks|
     = date.day
-    .task-list
-      ul#myList
-        - tasks.each do |task|
-          li
-            = link_to account_project_task_url(task.project, task), class: "calendar-task" do
+    ul.tasks-list
+      - tasks.each do |task|
+        li
+          = link_to account_project_task_url(task.project, task), class: "calendar-task" do
             - if task.assignee.present?
               - if task.assignee.with_avatar?
                 = profile_avatar(task.assignee)
@@ -14,5 +13,3 @@
                 .is-rounded
                   = task.assignee.initials
             = task.title
-      - if tasks.count > 2
-        button.show more....
