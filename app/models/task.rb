@@ -2,18 +2,18 @@
 #
 # Table name: tasks
 #
-#  id          :bigint(8)        not null, primary key
-#  complete    :boolean          default(FALSE)
-#  deleted_at  :datetime
-#  description :text
-#  due_date    :datetime
-#  row_order   :integer
-#  section     :boolean          default(FALSE)
-#  title       :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  assignee_id :bigint(8)
-#  project_id  :bigint(8)
+#  id           :bigint(8)        not null, primary key
+#  completed_at :datetime
+#  deleted_at   :datetime
+#  description  :text
+#  due_date     :datetime
+#  row_order    :integer
+#  section      :boolean          default(FALSE)
+#  title        :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  assignee_id  :bigint(8)
+#  project_id   :bigint(8)
 #
 # Indexes
 #
@@ -31,6 +31,7 @@
 class Task < ApplicationRecord
   include RankedModel
   include Commentable
+
   acts_as_paranoid
 
   ranks :row_order, with_same: :project_id
@@ -41,21 +42,21 @@ class Task < ApplicationRecord
   has_many :watchers, through: :task_watches, source: :user
   belongs_to :assignee, class_name: "User", required: false
 
-  scope :incomplete, -> { where(complete: false) }
-  scope :complete, -> { where(complete: true) }
+  scope :incomplete, -> { where(completed_at: nil) }
+  scope :complete, -> { where.not(completed_at: nil) }
   scope :row_order_asc, -> { order(row_order: :asc) }
   scope :search_tasks, -> (user_id, search) { select('tasks.id, tasks.title, tasks.project_id').joins('
-                                   INNER JOIN projects ON projects.id = tasks.project_id
-                                   INNER JOIN user_projects as up ON projects.id = up.project_id
-                                   INNER JOIN users ON users.id = up.user_id')
-                                     .where('users.id = ? AND tasks.title ILIKE ?', user_id, "%#{search}%")
-                                     .limit(10) }
+                                 INNER JOIN projects ON projects.id = tasks.project_id
+                                 INNER JOIN user_projects as up ON projects.id = up.project_id
+                                 INNER JOIN users ON users.id = up.user_id')
+                                   .where('users.id = ? AND tasks.title ~* ?', user_id, "\\m#{search}")
+                                   .limit(10) }
 
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }
 
   def pending?
-    !complete?
+    !completed_at?
   end
 
   def expired?
