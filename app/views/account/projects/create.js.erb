@@ -1,0 +1,8 @@
+<% if @project.persisted? %>
+  $('.modal').removeClass('is-active')
+  $('.columns.is-multiline .column').eq(-1).
+  before("<%= j render 'account/projects/show_project', project: @project, workspace: @workspace%>");
+  $('.no-content').remove();
+<% else %>
+  $('.modal-content').html("<%= j render 'account/projects/form', project: @project, workspace: @workspace %> ");
+<% end %>
