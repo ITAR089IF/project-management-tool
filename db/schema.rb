@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_13_142043) do
+ActiveRecord::Schema.define(version: 2018_11_16_075254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,15 @@ ActiveRecord::Schema.define(version: 2018_11_13_142043) do
     t.index ["workspace_id"], name: "index_projects_on_workspace_id"
   end
 
+  create_table "shared_workspaces", force: :cascade do |t|
+    t.bigint "workspace_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_shared_workspaces_on_user_id"
+    t.index ["workspace_id"], name: "index_shared_workspaces_on_workspace_id"
+  end
+
   create_table "task_watches", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "task_id"
@@ -85,11 +94,11 @@ ActiveRecord::Schema.define(version: 2018_11_13_142043) do
     t.datetime "updated_at", null: false
     t.integer "row_order"
     t.bigint "project_id"
-    t.boolean "complete", default: false
-    t.boolean "section"
-    t.bigint "assignee_id"
+    t.boolean "section", default: false
     t.datetime "deleted_at"
     t.datetime "due_date"
+    t.bigint "assignee_id"
+    t.datetime "completed_at"
     t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
     t.index ["deleted_at"], name: "index_tasks_on_deleted_at"
     t.index ["project_id"], name: "index_tasks_on_project_id"
@@ -138,6 +147,8 @@ ActiveRecord::Schema.define(version: 2018_11_13_142043) do
   end
 
   add_foreign_key "projects", "workspaces"
+  add_foreign_key "shared_workspaces", "users"
+  add_foreign_key "shared_workspaces", "workspaces"
   add_foreign_key "task_watches", "tasks"
   add_foreign_key "task_watches", "users"
   add_foreign_key "tasks", "projects"

@@ -7,10 +7,12 @@ Rails.application.routes.draw do
 
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
+    get '/calendar', to: 'dashboard#calendar'
     resources :search, only: [:index], defaults: { format: :json }
 
     resource :profile, only: [:edit, :update]
     resources :workspaces do
+      resources :members, only: [:new, :create, :destroy]
       resources :projects, except: [:index]
     end
 
@@ -36,6 +38,13 @@ Rails.application.routes.draw do
 
     resources :tasks do
       concerns :commentable
+    end
+  end
+
+  namespace :admin do
+    resources :users, only: [] do
+      post :impersonate, on: :member
+      post :stop_impersonating, on: :collection
     end
   end
 end

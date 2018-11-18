@@ -13,3 +13,17 @@
 .required abbr {
   color: red;
 }
+
+.no-content {
+  height: 256px;
+  width: 256px;
+  margin: auto;
+  position: relative;
+
+  .no-content-text {
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    transform: rotate(55deg);
+  }
+}
