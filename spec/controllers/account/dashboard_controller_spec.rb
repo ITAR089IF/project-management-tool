@@ -2,6 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Account::DashboardController, type: :controller do
   let!(:user) { create(:user) }
+  let!(:workspace) { create(:workspace, user: user) }
+  let!(:project) { create(:project, workspace: workspace) }
+  let!(:task1) { create(:task, project: project, watchers: [user]) }
+  let!(:task2) { create(:task, project: project, watchers: [user]) }
+  let!(:task3) { create(:task, project: project, watchers: [user]) }
 
   before do
     sign_in user
