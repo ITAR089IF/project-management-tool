@@ -12,7 +12,13 @@ Rails.application.routes.draw do
 
     resource :profile, only: [:edit, :update]
     resources :workspaces do
-      resources :members, only: [:new, :create, :destroy]
+      post :create_invitation_link
+      resources :members, only: [:new, :create, :destroy] do
+        collection do
+          get :greeting_new_member
+          post :create_thought_link
+        end
+      end
       resources :projects, except: [:index]
     end
 

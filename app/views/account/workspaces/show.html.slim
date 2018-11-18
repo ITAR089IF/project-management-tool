@@ -27,3 +27,6 @@
         = image_tag('undraw_no_data_qbuo.svg', class: 'image')
         .no-content-text.title.is-5
           | NO CONTENT
+    = link_to 'Generate invitation link', account_workspace_create_invitation_link_path(@workspace),
+              method: :post, remote: true, class: 'button'
+    .show_invitation_link

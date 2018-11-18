@@ -97,4 +97,12 @@ RSpec.describe Account::WorkspacesController, type: :controller do
       expect(response).to redirect_to account_workspaces_path
     end
   end
+
+  context '#CREATE /create_invitation_link' do
+    subject { post :create_invitation_link, params: { workspace_id: workspace.id }, format: :js }
+    it 'creates new invitation' do
+      expect{ subject }.to change(Invitation, :count).by(1)
+      expect(response).to render_template :create_invitation_link
+    end
+  end
 end
