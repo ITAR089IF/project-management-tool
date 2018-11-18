@@ -7,5 +7,15 @@ RSpec.describe DashboardController, type: :controller do
       get :index
       expect(response).to be_successful
     end
+
+    it 'should get index page' do
+      get :product
+      expect(response).to be_successful
+    end
+
+    it 'should get index page' do
+      get :pricing
+      expect(response).to be_successful
+    end
   end
 end

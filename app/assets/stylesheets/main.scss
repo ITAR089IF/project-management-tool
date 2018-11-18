@@ -12,8 +12,25 @@
 .site-footer {
   flex: none;
 }
+.footer.has-background{
+  background-color: #ffd600;
+  color: black;
+}
 .footer-content {
   padding: 10px 10px;
+}
+
+.navbar{
+  font-size: 18px;
+}
+.navbar.has-background{
+  background-color: #ffd600;
+}
+.button.nav-bar{
+  background-color: #ad1457;
+}
+.button-link{
+  color: white;
 }
 abbr[title] {
   text-decoration: none;

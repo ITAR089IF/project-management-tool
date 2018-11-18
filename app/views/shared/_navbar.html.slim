@@ -1,7 +1,7 @@
-.navbar.has-background-light[role="navigation" aria-label="main navigation"]
+.navbar.has-background[role="navigation" aria-label="main navigation"]
   .navbar-brand.left
-    .navbar-item.image.is-64x64
-      = link_to image_tag("asana_logo.png", class: "asana_logo"), root_path
+    .navbar-item
+      = link_to image_tag("logo.png", class: "asana_logo"), root_path
     a.navbar-burger.burger[role="button" aria-label="menu" aria-expanded="false" data-target="navMenu"]
       span[aria-hidden="true"]
       span[aria-hidden="true"]
@@ -37,22 +37,28 @@
     .navbar-end
       .navbar-item
         - if (!user_signed_in?)
+          .level-right
+            .navbar-item
+              = link_to "Product", product_path, class: 'navbar-item'
+            .navbar-item
+              = link_to "Pricing", pricing_path, class: 'navbar-item'
           .buttons.is-right
-            .button.is-primary
-              = link_to "Sign Up", new_user_registration_path
-            .button.is-light
-              = link_to "Sign in", new_user_session_path
+            .button.nav-bar
+              = link_to "Sign Up", new_user_registration_path, class: "button-link"
+            .button.nav-bar
+              = link_to "Sign in", new_user_session_path, class: "button-link"
         - else
           .navbar-item.has-dropdown.is-hoverable.profile
             a.navbar-link
               figure.image.is-24x24
                 = profile_avatar(current_user)
               = current_user.full_name
-            .navbar-dropdown
+            .navbar-dropdown.background-color
               = link_to "My workspaces", account_workspaces_path, class: 'navbar-item'
               - current_user.available_workspaces.each do |workspace|
                 = link_to workspace.name, account_workspace_path(workspace), class: 'navbar-item'
               hr.navbar-divider
                 = link_to "My Profile Settings...", edit_account_profile_path, class: 'navbar-item'
           .navbar-item
-          = link_to "Log out", destroy_user_session_path, method: :delete, class: 'button is-primary'
+            .button.nav-bar
+              = link_to "Log out", destroy_user_session_path, method: :delete, class: "button-link"

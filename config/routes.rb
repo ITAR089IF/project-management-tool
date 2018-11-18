@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   root 'dashboard#index'
+  get '/pricing',  to: 'dashboard#pricing'
+  get '/product', to: 'dashboard#product'
   devise_for :users,
               path: '',
               path_names: {sign_in: 'login', sign_out: 'logout', edit: 'profile', sign_up: 'registration'},
