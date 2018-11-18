@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resource :profile, only: [:edit, :update]
     resources :workspaces do
       resources :projects, except: [:index]
+      get :list, on: :member
     end
 
     concern :commentable do

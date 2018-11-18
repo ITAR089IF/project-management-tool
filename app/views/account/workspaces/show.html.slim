@@ -5,7 +5,10 @@
       .title
         = @workspace.name
     .level-right
-      = link_to "Add project", new_account_workspace_project_path(@workspace), class: "button is-link"
+      .level-item
+        = link_to "My tasks", list_account_workspace_path(@workspace), class: "button is-link"
+      .level-item
+        = link_to "Add project", new_account_workspace_project_path(@workspace), class: "button is-link"
   .container
     - @workspace.projects.each do |project|
       .level

@@ -1,0 +1,6 @@
+- if task.due_date.present?
+  - if task.expired?
+    .has-text-danger
+      = l task.due_date, format: :date_month_year_concise
+  - else
+    = l task.due_date, format: :date_month_year_concise 

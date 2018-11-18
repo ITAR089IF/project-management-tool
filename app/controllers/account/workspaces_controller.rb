@@ -7,6 +7,10 @@ class Account::WorkspacesController < Account::AccountController
     @workspace = resource
   end
 
+  def list
+    @workspace = resource
+  end
+
   def new
     @workspace = Workspace.new
   end

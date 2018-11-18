@@ -51,6 +51,9 @@ class Task < ApplicationRecord
                                      .where('users.id = ? AND tasks.title ILIKE ?', user_id, "%#{search}%")
                                      .limit(10) }
 
+  scope :assigned, -> (user) { where(assignee_id: user.id)}
+  scope :current_workspace, -> (workspace) { where(project_id: workspace.projects.ids)}
+
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }
 

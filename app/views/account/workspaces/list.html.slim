@@ -1,0 +1,38 @@
+- title "#{@workspace.name}: My tasks"
+.container
+  .level
+    .level-left
+      .title
+        = link_to @workspace.name, account_workspace_path(@workspace)
+  .container
+    - if @workspace.tasks.assigned(current_user).any? || current_user.tasks.current_workspace(@workspace).any?
+      table.table.is-fullwidth.is-bordered.is-hoverable
+        tbody.tbody
+          tr.tr
+            th.th Title
+            th.th Due Date
+            th.th Project
+          - if @workspace.tasks.assigned(current_user).any?
+            tr.tr
+              th[colspan=3]
+                .th.is-size-4.is-italic Assigned to me:
+            - @workspace.tasks.assigned(current_user).each do |task|
+              tr.tr
+                td.td       
+                  = link_to task.title, account_project_task_path(task.project, task), class: task_link_class(task)
+                td.td
+                  = render "/account/workspaces/show_task_due_date", task: task
+                td.td
+                  = link_to task.project.name, account_workspace_project_path(@workspace, task.project)
+          - if current_user.tasks.current_workspace(@workspace).any?
+            tr.tr
+              th[colspan=3]
+                .th.is-size-4.is-italic Followed:
+            - current_user.tasks.current_workspace(@workspace).each do |task|
+              tr.tr
+                td.td   
+                  = link_to task.title, account_project_task_path(task.project, task), class: task_link_class(task)
+                td.td
+                  = render "/account/workspaces/show_task_due_date", task: task
+                td.td
+                  = link_to task.project.name, account_workspace_project_path(@workspace, task.project)
