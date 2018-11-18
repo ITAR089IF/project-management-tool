@@ -5,7 +5,13 @@ RSpec.describe Account::WorkspacesController, type: :controller do
 
   let!(:user) { create(:user) }
   let!(:workspace) { create(:workspace, user: user) }
-
+  let!(:user1) { create(:user) }
+  let!(:user2) { create(:user) }
+  let!(:user3) { create(:user) }
+  let!(:workspace) { create(:workspace, user: user) }
+  let!(:workspace1) { create(:workspace, user: user1) }
+  let!(:shared_workspace) { create(:shared_workspace, user: user, workspace: workspace1) }
+  let!(:shared_workspace1) { create(:shared_workspace, user: user2, workspace: workspace1) }
   before do
     sign_in user
   end
@@ -27,6 +33,13 @@ RSpec.describe Account::WorkspacesController, type: :controller do
   context 'GET /worspaces/:id' do
     it 'should show page with workspace' do
       get :show, params: { id: workspace.id }
+      expect(response).to be_successful
+    end
+  end
+
+  context 'GET /worspaces/:id/list' do
+    it 'should show page with list of tasks' do
+      get :list, params: { id: workspace.id }
       expect(response).to be_successful
     end
   end
@@ -59,7 +72,7 @@ RSpec.describe Account::WorkspacesController, type: :controller do
       expect(response).to render_template(:new)
     end
   end
-
+  
   context 'PUT /workspace/:id' do
     it 'should update workspace and redirect to workspaces page' do
       put :update, params: {
@@ -84,7 +97,7 @@ RSpec.describe Account::WorkspacesController, type: :controller do
     end
   end
 
-  context 'DELETE /workspace/:id' do
+  context '#DELETE /workspace/:id' do
     it 'should delete workspace' do
       delete :destroy, params: { id: workspace.id }
 

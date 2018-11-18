@@ -1,15 +1,19 @@
-#search {
-  width: 260px;
-}
+#search-form {
+  position: relative;
 
-#search-results {
-  padding: 3px 20px;
-  display: none;
-  position: absolute;
-  width: 260px;
-  max-height: 300px;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  #search {
+    width: 260px;
+  }
+
+  #search-results {
+    padding: 3px 20px;
+    display: none;
+    position: absolute;
+    width: 260px;
+    max-height: 300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
 }
 
 #workspaces-block, #projects-block, #tasks-block {
@@ -17,6 +21,11 @@
   width: 200px;
   margin: 0;
   padding: 0;
+
+  .select-item {
+    text-decoration: underline;
+    font-size: 20px;
+  }
 
   .level {
     margin: 5px 0;

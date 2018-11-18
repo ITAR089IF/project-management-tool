@@ -10,9 +10,15 @@ RSpec.describe Account::TasksController, type: :controller do
   let!(:user4) { create(:user) }
   let!(:workspace) { create(:workspace, user: user) }
   let!(:project) { create(:project, workspace: workspace, users: [user, user1]) }
+  let!(:shared_workspace1) { create(:shared_workspace, user: user1, workspace: workspace) }
+  let!(:shared_workspace2) { create(:shared_workspace, user: user2, workspace: workspace) }
+  let!(:shared_workspace3) { create(:shared_workspace, user: user3, workspace: workspace) }
+  let!(:shared_workspace4) { create(:shared_workspace, user: user4, workspace: workspace) }
   let!(:task1) { create(:task, project: project) }
   let!(:task2) { create(:task, project: project, watchers: [user1, user2, user3, user4]) }
   let!(:task3) { create(:task, :completed, project: project) }
+  let!(:task_valid_params) { { title: "test_task"} }
+  let!(:task_invalid_params) { { title: nil} }
 
   before do
     sign_in user
@@ -45,6 +51,33 @@ RSpec.describe Account::TasksController, type: :controller do
       expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence, description: Faker::Lorem.paragraph }}}.to change(Task, :count).by(1)
     end
   end
+
+  describe "GET #edit" do
+    it "must display edit page" do
+      get :edit, params: { project_id: project.id, id: task1.id }
+      expect(response).to render_template(:edit)
+    end
+  end
+
+  describe "PATCH #update" do
+    context "with valid attributes" do
+      it "must update the project" do
+        put :update, params: { project_id: project.id, id: task1.id, task: task_valid_params}
+        task1.reload
+        expect(task1.title).to eq(task_valid_params[:title])
+      end
+    end
+
+    context "with invalid attributes" do
+      it "must not update the project and render 'edit' form" do
+        put :update, params: { project_id: project.id, id: task1.id, task: task_invalid_params}
+        task1.reload
+        expect(task1.title).not_to eq(task_invalid_params[:title])
+        expect(response).to render_template("account/tasks/_form")
+      end
+    end
+  end
+
 
   context 'DELETE/projects/:project_id/tasks/:id' do
     it 'should delete task with :js' do
