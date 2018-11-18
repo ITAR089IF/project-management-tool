@@ -4,9 +4,11 @@ class UsersMailer < ApplicationMailer
   def send_new_user_message(current_user)
     @user = current_user
     email_admins = User.admins.pluck(:email)
-    mail(
-      to: email_admins,
-      subject: "New user sign up"
-    )
+    if email_admins.any?
+      mail(
+        to: email_admins,
+        subject: "New user sign up"
+      )
+    end
   end
 end

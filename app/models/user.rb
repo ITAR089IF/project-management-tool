@@ -55,8 +55,8 @@ class User < ApplicationRecord
   scope :order_desc, -> { order(:first_name, :last_name) }
   scope :admins, -> { where(role: ADMIN) }
 
-  after_create :send_admin_mail
-  
+  after_create :notify_admins_about_new_user
+
   def self.from_omniauth(auth)
     user = User.where(email: auth.info.email).first
     if user
@@ -116,7 +116,7 @@ class User < ApplicationRecord
     self.role == ADMIN
   end
 
-  def send_admin_mail
+  def notify_admins_about_new_user
     UsersMailer.send_new_user_message(self).deliver_later
   end
 end
