@@ -1,7 +1,7 @@
 $( document ).on('turbolinks:load', function() {
   $('ul.tasks-list').each(function(){
-    var LiN = $(this).find('li').length;
-    if( LiN > 2){
+    var list_length = $(this).find('li').length;
+    if( list_length > 2){
       $('li', this).eq(1).nextAll().hide().addClass('toggleable');
       $(this).append('<p class="more">Show more</p>');
     }
