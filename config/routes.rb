@@ -5,9 +5,9 @@ Rails.application.routes.draw do
               path_names: {sign_in: 'login', sign_out: 'logout', edit: 'profile', sign_up: 'registration'},
               controllers: {omniauth_callbacks: 'omniauth_callbacks', registrations: 'registrations' }
 
-
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
+    get '/calendar', to: 'dashboard#calendar'
     resources :search, only: [:index], defaults: { format: :json }
 
     resource :profile, only: [:edit, :update]
