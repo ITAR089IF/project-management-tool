@@ -6,18 +6,22 @@
         | My Workspaces
     .level-right
       = link_to 'Add Workspace', new_account_workspace_path, class: 'title button is-text'
-  - @workspaces.each do |workspace|
-    .box
-      .level
-        .level-left
-          .title
-            = link_to workspace.name, account_workspace_path(workspace)
-        .level-right
-          .level-item
-            = pluralize(workspace.projects.count, "Project")
-          .level-item
-            = link_to 'Edit', edit_account_workspace_path(workspace),
-              class: 'button right'
-          .level-item
-            = link_to 'Delete', account_workspace_path(workspace),
-              class: 'button right', method: :delete, data: { confirm: 'Are you sure?' }
+  - if @workspaces.any?
+    - @workspaces.each do |workspace|
+      .box
+        .level
+          .level-left
+            .title
+              = link_to workspace.name, account_workspace_path(workspace)
+          .level-right
+            .level-item
+              = link_to 'Edit', edit_account_workspace_path(workspace),
+                class: 'button right'
+            .level-item
+              = link_to 'Delete', account_workspace_path(workspace),
+                class: 'button right', method: :delete, data: { confirm: 'Are you sure?' }
+  - else
+    .no-content
+      = image_tag('undraw_no_data_qbuo.svg', class: 'image')
+      .no-content-text.title.is-5
+        | NO CONTENT
