@@ -14,7 +14,7 @@
           = link_to "Dashboard", account_dashboard_path, class: 'navbar-item'
     - if user_signed_in?
       .navbar-item
-        div
+        #search-form
           input.input placeholder="search" type="text" id="search"
           .box#search-results
             .level#workspaces-block
