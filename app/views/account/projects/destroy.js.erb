@@ -1,4 +1,4 @@
 $('[data-id = "<%= @project.id %>"]').remove();
 <% if @workspace.projects.empty? %>
-  $('.columns').after("<%= j render 'shared/no_content'%>");
+  $('.columns').find('.empty').parent().parent().after("<%= j render 'shared/no_content'%>");
 <% end %>

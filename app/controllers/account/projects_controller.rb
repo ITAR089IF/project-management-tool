@@ -26,6 +26,8 @@ class Account::ProjectsController < Account::AccountController
   def edit
     @workspace = parent
     @project = resource
+
+    respond_to :js
   end
 
   def update

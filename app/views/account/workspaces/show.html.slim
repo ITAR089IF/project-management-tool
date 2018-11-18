@@ -2,30 +2,39 @@
 .container
   h1.title
     = @workspace.name
-  - if @workspace.projects.any?
-    .columns.is-multiline
-      - @workspace.projects.each do |project|
-        = render 'account/projects/show_project', project: project, workspace: @workspace
-      .column.is-2
-        .card.empty
-          = link_to new_account_workspace_project_path(@workspace), remote: true do
-            header.card-header
-              p.card-header-title
-                | Add a project
-            .card-content
-              = fa_icon 'plus 2x'
-            footer.card-footer
-  - else
-      .columns.is-multiline
-        .column.is-2
-          .card.empty
-            = link_to new_account_workspace_project_path(@workspace), remote: true do
-              header.card-header
-                p.card-header-title.is-centered
-                  | Add a project
-              .card-content
-                = fa_icon 'plus 2x'
-      = render 'shared/no_content'
+  .columns
+    .column.is-one-fifth.members
+      h2.subtitle
+        | Members:
+      #workspace-members
+        = render 'account/members/show_user', members: @members, workspace: @workspace
+      #new-member
+        = render 'account/members/new_link', workspace: @workspace
+    .column.is-four-fifths
+      - if @workspace.projects.any?
+        .columns.is-multiline
+          - @workspace.projects.each do |project|
+            = render 'account/projects/show_project', project: project, workspace: @workspace
+          .column.is-2
+            .card.empty
+              = link_to new_account_workspace_project_path(@workspace), remote: true do
+                header.card-header
+                  p.card-header-title
+                    | Add a project
+                .card-content
+                  = fa_icon 'plus 2x'
+                footer.card-footer
+      - else
+          .columns.is-multiline
+            .column.is-2
+              .card.empty
+                = link_to new_account_workspace_project_path(@workspace), remote: true do
+                  header.card-header
+                    p.card-header-title.is-centered
+                      | Add a project
+                  .card-content
+                    = fa_icon 'plus 2x'
+          = render 'shared/no_content'
 
   .modal
     .modal-background
