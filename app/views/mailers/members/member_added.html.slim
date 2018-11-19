@@ -1,0 +1,21 @@
+.email-table
+  .div-row
+    = link_to image_tag("email.jpg"), root_url
+  .div-row
+    .title
+      = link_to @workspace.name, account_workspace_url(@workspace)
+  .div-row
+    .p #{@user.full_name} have added you to the workspace
+  .div-row
+    h1 Workspace Details:
+  .div-row
+    - if @workspace.projects.any?
+      .div-cell PROJECTS:
+      .div-cell
+        - @workspace.projects.each do |project|
+          .p #{project.name}
+  .div-row
+    .div-cell MEMBERS:
+    .div-cell
+      - @workspace.members.each do |member|
+        .p #{member.full_name}
