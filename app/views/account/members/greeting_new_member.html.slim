@@ -1,8 +1,9 @@
 - if current_user.available_workspaces.include?(@workspace)
-  p You are already a member of this workspace
+  p
+    | You are already a member of this workspace
   = link_to "Go to workspace #{@workspace.name}", account_workspace_path(@workspace), class: 'button'
 - else
-  =  "You have invited by #{@invitor.full_name}. To continue, follow the link: "
+  = "You have invited by #{@invitor.full_name}. To continue, follow the link: "
   = link_to @workspace.name, create_thought_link_account_workspace_members_path(workspace_id: @workspace.id, user_id: current_user.id)
 
 = link_to @workspace.name, account_workspace_path(@workspace)

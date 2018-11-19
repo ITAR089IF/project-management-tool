@@ -57,7 +57,7 @@ RSpec.describe Account::MembersController, type: :controller do
   context 'GET /greeting_new_member' do
     context 'invalid token' do
       subject do
-         get :greeting_new_member, params: { invitor_id: user.id,
+        get :greeting_new_member, params: { invitor_id: user.id,
                                              workspace_id: workspace.id,
                                              token: 'wrong_token1234567890' }
       end
