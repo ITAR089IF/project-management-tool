@@ -6,3 +6,9 @@
   text-align: center;
   border: 1px solid lightgrey;
 }
+
+.glyphicon-move:before {
+  content: url('cursor-move.svg');
+  cursor: -webkit-grabbing;
+  padding: 5px;
+}
