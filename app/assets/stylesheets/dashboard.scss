@@ -1,6 +1,5 @@
-.hero-body{
+.hero-body {
   &.welcome-baner {
-    color: black;
     .container {
       padding: 75px 220px;
     }
@@ -13,7 +12,7 @@
     }
     .title {
       font-size: 42px;
-      color: black;
+      color: #000000;
     }
     .p {
       font-size: 22px;
@@ -22,7 +21,7 @@
   }
 }
 .has-bg-img {
-  background: url('img_1.jpg')center center;
+  background: url('img_1.jpg') center center;
   background-repeat: no-repeat;
 }
 .has-background {
@@ -39,7 +38,7 @@
     }
     .title {
       font-size: 40px;
-      color: black;
+      color: #000000;
     }
     .h1 {
       font-size: 32px
@@ -53,16 +52,15 @@
     }
   }
 }
-.container{
+.container {
   &.landing-footer {
     padding: 0px 80px;
     text-align: center;
-    color: black;
     .title {
       font-size: 32px;
-      color: black;
+      color: #000000;
     }
-    .p{
+    .p {
       font-size: 24px;
     }
   }
