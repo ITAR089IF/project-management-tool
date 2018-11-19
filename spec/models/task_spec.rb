@@ -58,7 +58,7 @@ RSpec.describe Task, type: :model do
     end
   end
 
-  describe '#this_week' do
+  describe '.this_week' do
     let!(:task4) { create(:task, created_at: (Date.today - 10), project: project) }
     let!(:task5) { create(:task, created_at: (Date.today - 10), project: project) }
 

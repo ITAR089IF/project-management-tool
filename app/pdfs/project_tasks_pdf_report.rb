@@ -1,9 +1,9 @@
-class TaskPdfLoader < Prawn::Document
+class ProjectTasksPdfReport < Prawn::Document
   def initialize(title, data)
     super()
     text title, align: :center, size: 24
     move_down 15
-    text "Tasks: #{Date.today.beginning_of_week.strftime('%Y:%m:%d')} - #{Date.today.strftime('%Y:%m:%d')}", size: 16
+    text "Tasks: #{ Date.today.beginning_of_week } - #{ Date.today }", size: 16
     move_down 20
     table(tasks_table(data), column_widths: [200, 200, 140])
   end
