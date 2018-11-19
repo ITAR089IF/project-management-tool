@@ -1,6 +1,7 @@
 class Account::WorkspacesController < Account::AccountController
   def index
     @workspaces = collection.order_desc
+    @workspace = Workspace.new
   end
 
   def show
@@ -13,12 +14,10 @@ class Account::WorkspacesController < Account::AccountController
   end
 
   def create
+    @workspaces = collection.order_desc
     @workspace = Workspace.new(workspace_params)
-    if @workspace.save
-      redirect_to account_workspaces_path, notice: 'Workspace was created!'
-    else
-      render :new
-    end
+    @workspace.save
+    respond_to(:js)
   end
 
   def edit

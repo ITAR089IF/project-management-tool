@@ -1,4 +1,4 @@
-= simple_form_for [:account, @workspace] do |f|
+= simple_form_for [:account, @workspace], remote: true do |f|
   = f.input :name, placeholder: 'Name', wrapper: :bulma_input, required: true
   = f.submit 'Save', class: 'button is-link'
   = link_to 'Back', account_workspaces_path(@workspace), class: 'button is-text'

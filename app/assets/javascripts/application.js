@@ -6,3 +6,4 @@
 //= require dashboard
 //= require cable
 //= require js-routes
+//= require workspaces
