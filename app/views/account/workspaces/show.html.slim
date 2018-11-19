@@ -2,9 +2,11 @@
 .container
   h1.title
     = @workspace.name
+  h2.subtitle
+    | My tasks: #
   .columns
     .column.is-one-fifth.members
-      h2.subtitle
+      h3.subtitle
         | Members:
       #workspace-members
         = render 'account/members/show_user', members: @members, workspace: @workspace

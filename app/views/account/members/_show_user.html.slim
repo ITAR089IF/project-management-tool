@@ -1,8 +1,8 @@
 - members.each do |member|
   .box data-attribute = "#{member.id}"
-    .user-info
+    .user-info.is-flex
       - if member.with_avatar?
-          span.image.is-rounded.is-24x24.is-inline-block
+          span.image.is-rounded.is-24x24
             = image_tag(member.avatar)
       - else
         span.has-background-light.has_rounded_background
