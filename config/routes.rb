@@ -14,7 +14,9 @@ Rails.application.routes.draw do
     resources :workspaces do
       resources :members, only: [:new, :create, :destroy]
       resources :projects, except: [:index]
-      get :list, on: :member
+      member do
+        get :list
+      end
     end
 
     concern :commentable do
