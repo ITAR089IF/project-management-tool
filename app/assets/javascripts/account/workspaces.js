@@ -1,6 +1,5 @@
-jQuery(document).ready(function () {
+$( document ).on('turbolinks:load', function() {
   $('.modal-background').click(function(){
-    console.log('hej');
     $('.modal').removeClass('is-active');
   });
 });
