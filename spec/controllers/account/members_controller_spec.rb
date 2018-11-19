@@ -37,6 +37,7 @@ RSpec.describe Account::MembersController, type: :controller do
   context 'DELETE /destroy' do
     context 'removes current user from workspace' do
       subject { delete :destroy, params: { id: user.id, workspace_id: workspace1.id  } }
+
       it do
         expect{ subject }.to change{ workspace1.members.count}.from(2).to(1)
         expect(response).to redirect_to account_workspaces_path
@@ -45,6 +46,7 @@ RSpec.describe Account::MembersController, type: :controller do
 
     context 'removes another user from workspace' do
       subject { delete :destroy, params: { id: user2.id, workspace_id: workspace1.id }, format: :js }
+
       it do
         expect{ subject }.to change{ workspace1.members.count}.from(2).to(1)
         expect(response).to render_template :destroy
@@ -100,6 +102,7 @@ RSpec.describe Account::MembersController, type: :controller do
 
     context 'user is new member' do
       let!(:workspace) { create(:workspace, user: user1) }
+
       subject do
         get :greeting_new_member, params: { invitor_id: user1.id,
                                             workspace_id: workspace.id,
@@ -108,7 +111,6 @@ RSpec.describe Account::MembersController, type: :controller do
 
       it 'redirects to create_thought_link' do
         subject
-
         expect(response).to render_template :greeting_new_member
         expect(response.body).to match(/You have invited by #{user.full_name}. To continue, follow the link:/)
       end
