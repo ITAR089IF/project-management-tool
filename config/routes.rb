@@ -46,5 +46,6 @@ Rails.application.routes.draw do
       post :impersonate, on: :member
       post :stop_impersonating, on: :collection
     end
+    resources :admin, except: [:new]
   end
 end

@@ -4,6 +4,7 @@
 #
 #  id                     :bigint(8)        not null, primary key
 #  about                  :text
+#  deleted_at             :datetime
 #  department             :string
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
@@ -23,6 +24,7 @@
 #
 # Indexes
 #
+#  index_users_on_deleted_at            (deleted_at)
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #

@@ -1,0 +1,18 @@
+- title 'All user'
+.container
+  .level
+    .level-left
+      .title
+        | All user
+  - @users.each do |user|
+    - if user != current_user
+      .box
+        .level
+          .level-left
+            .title
+              = link_to user.full_name, admin_admin_path(user)
+          .level-right
+            .level-item
+              = link_to 'Edit', edit_admin_admin_path(user)
+            .level-item
+              = link_to 'Delete', admin_admin_path(user), method: :delete, data: { confirm: "Are you sure?" }

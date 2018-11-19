@@ -1,0 +1,7 @@
+- title "Profile Settings"
+.container.has-text-centered
+  .column.is-4.is-offset-4.box.profile
+    .title Profile Settings
+    figure.container.image.is-64x64
+      = profile_avatar(@user)
+    = render '/admin/admin/form_edit'

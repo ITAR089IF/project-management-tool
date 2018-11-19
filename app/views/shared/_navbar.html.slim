@@ -54,6 +54,9 @@
               = link_to "My workspaces", account_workspaces_path, class: 'navbar-item'
               - current_user.available_workspaces.each do |workspace|
                 = link_to workspace.name, account_workspace_path(workspace), class: 'navbar-item'
+              - if (current_user.role == "admin")
+                hr.navbar-divider
+                  = link_to "All user", admin_admin_index_path, class: 'navbar-item'
               hr.navbar-divider
                 = link_to "My Profile Settings...", edit_account_profile_path, class: 'navbar-item'
           .navbar-item
