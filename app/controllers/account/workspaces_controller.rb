@@ -8,6 +8,10 @@ class Account::WorkspacesController < Account::AccountController
     @members = @workspace.all_members.order_desc
   end
 
+  def list
+    @workspace = resource
+  end
+
   def new
     @workspace = Workspace.new
   end

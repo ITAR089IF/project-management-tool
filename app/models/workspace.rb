@@ -23,6 +23,7 @@ class Workspace < ApplicationRecord
   acts_as_paranoid
   belongs_to :user, required: true
   has_many :projects, dependent: :destroy
+  has_many :tasks, through: :projects
   has_many :shared_workspaces
   has_many :members, through: :shared_workspaces, source: :user
 
