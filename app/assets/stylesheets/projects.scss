@@ -8,19 +8,16 @@
   line-height: 24px;
 }
 
-.image {
-  display: inline-block;
-  &.is-rounded {
-    img {
-      object-fit: cover;
-      object-position: center center;
-      height: 100%;
-      width: 100%;
-      border-radius: 250983px;
+.user-info {
+  .image {
+    &.is-rounded {
+      img {
+        object-fit: cover;
+        object-position: center center;
+        height: 100%;
+        width: 100%;
+        border-radius: 250983px;
+      }
     }
   }
-}
-
-.user-info {
-  display: flex;
 }

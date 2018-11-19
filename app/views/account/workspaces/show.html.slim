@@ -16,7 +16,7 @@
           - @workspace.projects.each do |project|
             = render 'account/projects/show_project', project: project, workspace: @workspace
           .column.is-2
-            .card.empty
+            .card.project.empty
               = link_to new_account_workspace_project_path(@workspace), remote: true do
                 header.card-header
                   p.card-header-title
@@ -27,7 +27,7 @@
       - else
           .columns.is-multiline
             .column.is-2
-              .card.empty
+              .card.project.empty
                 = link_to new_account_workspace_project_path(@workspace), remote: true do
                   header.card-header
                     p.card-header-title.is-centered

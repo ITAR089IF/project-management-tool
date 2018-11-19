@@ -2,7 +2,7 @@
   .box data-attribute = "#{member.id}"
     .user-info
       - if member.with_avatar?
-          span.image.is-rounded.is-24x24
+          span.image.is-rounded.is-24x24.is-inline-block
             = image_tag(member.avatar)
       - else
         span.has-background-light.has_rounded_background
