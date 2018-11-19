@@ -66,7 +66,7 @@ RSpec.describe Account::TasksController, type: :controller do
     end
   end
 
-  context 'GET /edit' do
+  context 'GET /projects/:project_id/edit' do
     it { expect(get :edit, params: { project_id: project.id, id: task1.id }).to be_successful }
   end
 
