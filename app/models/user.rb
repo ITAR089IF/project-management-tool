@@ -53,6 +53,9 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: %i[facebook]
 
   scope :order_desc, -> { order(:first_name, :last_name) }
+  scope :admins, -> { where(role: ADMIN) }
+
+  after_create :notify_admins_about_new_user
 
   def self.from_omniauth(auth)
     user = User.where(email: auth.info.email).first
@@ -111,5 +114,9 @@ class User < ApplicationRecord
 
   def admin?
     self.role == ADMIN
+  end
+
+  def notify_admins_about_new_user
+    UsersMailer.send_new_user_message(self).deliver_later
   end
 end
