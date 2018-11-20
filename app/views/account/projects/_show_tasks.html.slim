@@ -11,14 +11,8 @@
           = link_to uncomplete_account_project_task_path(project, task),
             class: 'add_to_complete', method: :patch, remote: true do
             = check_box_tag "mark-complete", :completed_at, true
-    .level-item.glyphicon-move id="items"
+    .level-item.glyphicon-move
       = link_to task.title, task.section? ? '#' : account_project_task_path(project, task), class: task_link_class(task)
-    / .level-item
-    /   = link_to "Up", move_account_project_task_path(project, task,
-    /     task: { row_order_position: :up}), method: :put, class: "button is-small left", remote: true
-    / .level-item
-    /   = link_to "Down", move_account_project_task_path(project, task,
-    /     task: { row_order_position: :down }), method: :put, class: "button is-small left", remote: true
   .level-right
     - if task.pending?
       .level-item
@@ -36,7 +30,3 @@
     .level-item
       = link_to "Delete", account_project_task_path(project, task),
         method: :delete,  class: "button is-small right", data: { confirm: "Are you sure?" },remote: true
-script
-  |  Sortable.create(incomplete_tasks, { handle: '.glyphicon-move', animation: 150 })
-script
-  |  Sortable.create(complete_tasks, { handle: '.glyphicon-move', animation: 150 })
