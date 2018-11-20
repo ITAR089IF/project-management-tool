@@ -3,6 +3,10 @@ class Account::DashboardController < Account::AccountController
   end
 
   def calendar
-    @user_tasks = current_user.tasks
+    @user_tasks = current_user.followed_tasks
+  end
+
+  def inbox
+    @user_completed_tasks = current_user.followed_tasks.complete
   end
 end

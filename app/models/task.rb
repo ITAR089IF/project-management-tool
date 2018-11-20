@@ -43,7 +43,7 @@ class Task < ApplicationRecord
   belongs_to :assignee, class_name: "User", required: false
 
   scope :incomplete, -> { where(completed_at: nil) }
-  scope :complete, -> { where.not(completed_at: nil) }
+  scope :complete, -> { where.not(completed_at: nil).order(completed_at: :desc) }
   scope :row_order_asc, -> { order(row_order: :asc) }
   scope :search_tasks, -> (user_id, search) { select('tasks.id, tasks.title, tasks.project_id').joins('
                                  INNER JOIN projects ON projects.id = tasks.project_id

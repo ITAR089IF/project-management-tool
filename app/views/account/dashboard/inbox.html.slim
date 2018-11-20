@@ -1,0 +1,24 @@
+- title "Inbox"
+.container
+  .level
+    .level-left
+      .title Inbox
+  .container
+    - if @user_completed_tasks.any?
+      table.table.is-fullwidth.is-bordered.is-hoverable
+        tbody.tbody
+          tr.tr
+            th.th Title
+            th.th Completed at
+            th.th Project
+            th.th Workspace
+          - @user_completed_tasks.each do |task|
+            tr.tr
+              td.td
+                = link_to task.title, account_project_task_path(task.project, task), class: task_link_class(task)
+              td.td
+                = l task.completed_at, format: :date_month_year_concise
+              td.td
+                = link_to task.project.name, account_workspace_project_path(task.project.workspace, task.project)
+              td.td
+                = link_to task.project.workspace.name, account_workspace_path(task.project.workspace)

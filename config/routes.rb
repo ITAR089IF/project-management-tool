@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
     get '/calendar', to: 'dashboard#calendar'
+    get '/inbox', to: 'dashboard#inbox'
     resources :search, only: [:index], defaults: { format: :json }
 
     resource :profile, only: [:edit, :update]

@@ -36,3 +36,8 @@
                   = render "/account/workspaces/show_task_due_date", task: task
                 td.td
                   = link_to task.project.name, account_workspace_project_path(@workspace, task.project)
+    - else
+      .no-content
+        = image_tag('undraw_no_data_qbuo.svg', class: 'image')
+        .no-content-text.title.is-5
+          | NO CONTENT
