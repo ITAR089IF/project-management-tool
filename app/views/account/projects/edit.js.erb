@@ -1,3 +1,2 @@
-$('.modal-card-body').html("<%= j render 'account/projects/form', project: @project, workspace: @workspace %> ");
-$('.modal-card-title').text("Edit Project");
+$('.modal-content').find('.modal-form').html("<%= j render 'account/projects/form', project: @project, workspace: @workspace %> ");
 $('.modal').addClass('is-active');

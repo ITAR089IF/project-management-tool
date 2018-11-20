@@ -3,7 +3,8 @@
   h1.title
     = @workspace.name
   h2.subtitle
-    | My tasks: #
+    if
+    = link_to "My tasks", list_account_workspace_path(@workspace)
   .columns
     .column.is-one-fifth.members
       h3.subtitle
@@ -37,12 +38,9 @@
                   .card-content
                     = fa_icon 'plus 2x'
           = render 'shared/no_content'
-
   .modal
     .modal-background
-    .modal-card
-      header.modal-card-head
-        p.modal-card-title
-        .close.is-size-4
-          = fa_icon 'times-circle'
-      section.modal-card-body.is-2
+    .modal-content.is-2
+      .modal-form
+      .close.is-size-4
+        = fa_icon 'times-circle'
