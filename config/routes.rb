@@ -1,19 +1,24 @@
 Rails.application.routes.draw do
   root 'dashboard#index'
+  get '/pricing',  to: 'dashboard#pricing'
+  get '/product', to: 'dashboard#product'
   devise_for :users,
               path: '',
               path_names: {sign_in: 'login', sign_out: 'logout', edit: 'profile', sign_up: 'registration'},
               controllers: {omniauth_callbacks: 'omniauth_callbacks', registrations: 'registrations' }
 
-
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
+    get '/calendar', to: 'dashboard#calendar'
     resources :search, only: [:index], defaults: { format: :json }
 
     resource :profile, only: [:edit, :update]
     resources :workspaces do
       resources :members, only: [:new, :create, :destroy]
       resources :projects, except: [:index]
+      member do
+        get :list
+      end
     end
 
     concern :commentable do

@@ -12,6 +12,7 @@ class Account::MembersController < Account::AccountController
     @shared_workspace.save
 
     respond_to :js
+    MembersMailer.member_added(@shared_workspace.user, @workspace, current_user).deliver_later
   end
 
   def destroy

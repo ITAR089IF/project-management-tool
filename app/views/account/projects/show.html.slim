@@ -8,7 +8,7 @@
           = ": #{@project.name}"
     .level-right
       .level-item
-        = link_to "Load PDF", report_account_project_tasks_path(@project), target: :_blank
+        = link_to "Download PDF", report_account_project_tasks_path(@project), target: :_blank
       .level-item
         = link_to "Add Task", new_account_project_task_path(@project), class: "button is-link"
       .level-item
