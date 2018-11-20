@@ -1,4 +1,5 @@
 = simple_form_for :shared_workspace, url: account_workspace_members_path(workspace_id: workspace.id), remote: true do |f|
   = f.input :user_id, label: false, wrapper: :bulma_input, required: true, prompt: "Select user",
-                  collection: workspace.potential_members.map{ |user| [user.full_name, user.id] }
-  = f.submit 'Add member', class: 'button is-link'
+                  collection: workspace.potential_members.map{ |user| [user.full_name, user.id] },
+                  input_html: {class: 'is-one-fifth'}
+  = f.submit 'Add member', class: 'button'
