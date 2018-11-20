@@ -17,8 +17,7 @@ RSpec.describe Account::MembersController, type: :controller do
 
   context '#GET /new' do
     it 'renders form' do
-      get :new, params: { workspace_id: workspace.id },
-        format: :js, xhr: true
+      get :new, params: { workspace_id: workspace.id }, format: :js, xhr: true
       expect(response).to render_template :new
     end
   end

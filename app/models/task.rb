@@ -51,6 +51,7 @@ class Task < ApplicationRecord
                                  INNER JOIN users ON users.id = up.user_id')
                                    .where('users.id = ? AND tasks.title ~* ?', user_id, "\\m#{search}")
                                    .limit(10) }
+  scope :this_week, -> { where('created_at > ?', Date.today.beginning_of_week) }
   scope :current_workspace, -> (workspace) { where(project_id: workspace.projects.ids)}
 
   validates :title, length: { maximum: 250 }, presence: true

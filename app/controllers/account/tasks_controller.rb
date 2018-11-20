@@ -123,6 +123,15 @@ class Account::TasksController < Account::AccountController
     respond_to :js
   end
 
+  def report
+    pdf = ProjectTasksPdfReport.new(parent.name, collection.this_week)
+
+    send_data pdf.render,
+      filename: "weekly_report_for_#{parent.name}.pdf",
+      type: 'application/pdf',
+      disposition: 'attachment'
+  end
+
   private
 
   def parent

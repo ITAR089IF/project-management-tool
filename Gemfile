@@ -42,6 +42,8 @@ gem 'premailer-rails'
 gem "paranoia", '~> 2.2'
 gem "simple_calendar", "~> 2.0"
 gem 'pretender'
+gem 'prawn'
+gem 'prawn-table'
 
 
 group :development, :test do

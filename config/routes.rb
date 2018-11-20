@@ -39,6 +39,8 @@ Rails.application.routes.draw do
           delete :unassign
           delete :remove_attachment
         end
+
+        get :report, on: :collection, defaults: { format: :pdf }
       end
     end
 
