@@ -59,20 +59,7 @@ RSpec.describe Account::TasksController, type: :controller do
           title: Faker::Lorem.sentence
         }
       }
-      task = Task.last
-      expect(task.watchers.count).to eq(1)
-    end
-
-    it 'shouldnt add current_user to watchers tasks if task is section' do
-      post :create, params: {
-        project_id: project.id,
-        task: {
-          title: Faker::Lorem.sentence,
-          section: true
-        }
-      }
-      task = Task.last
-      expect(task.watchers.count).to eq(0)
+    expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence }}}.to change(TaskWatch, :count).by(1)
     end
   end
 
