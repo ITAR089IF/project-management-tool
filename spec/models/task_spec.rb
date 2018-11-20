@@ -57,4 +57,13 @@ RSpec.describe Task, type: :model do
       expect(Task.search_tasks(user.id, 'iajshdkas').count).to eq 0
     end
   end
+
+  describe '.this_week' do
+    let!(:task4) { create(:task, created_at: (Date.today - 10), project: project) }
+    let!(:task5) { create(:task, created_at: (Date.today - 10), project: project) }
+
+    context 'it should take all tasks that was created this week' do
+      it { (expect(project.tasks.this_week.count).to eq 3) }
+    end
+  end
 end

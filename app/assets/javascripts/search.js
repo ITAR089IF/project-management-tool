@@ -1,5 +1,6 @@
 document.addEventListener('turbolinks:load', () => {
   globalSearch();
+  onFocusChange();
 });
 
 function globalSearch() {
@@ -113,6 +114,27 @@ function globalSearch() {
       }
     })
   }
+}
+
+function onFocusChange() {
+  var search = document.getElementById('search');
+  var searchResults = document.getElementById('search-results');
+  var searchResultsMouse = false;
+
+  searchResults.addEventListener('mouseenter', () => { searchResultsMouse = true; });
+  searchResults.addEventListener('mouseleave', () => { searchResultsMouse = false; });
+
+  search.addEventListener('focus', () => {
+    if (search.value) {
+      searchResults.style.display = 'block';
+    }
+  });
+
+  search.addEventListener('blur', () => {
+    if (!searchResultsMouse) {
+      searchResults.style.display = 'none';
+    }
+  });
 }
 
 function display(data, displayObject, innerObject, title, field) {
