@@ -49,7 +49,6 @@ RSpec.describe Account::TasksController, type: :controller do
       }
 
       expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence, description: Faker::Lorem.paragraph }}}.to change(Task, :count).by(1)
-
     end
 
     it 'should add current_user to watchers tasks' do
@@ -60,7 +59,6 @@ RSpec.describe Account::TasksController, type: :controller do
         }
       }
     expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence }}}.to change(TaskWatch, :count).by(1)
-    end
   end
 
   describe "GET #edit" do
@@ -213,11 +211,18 @@ RSpec.describe Account::TasksController, type: :controller do
       expect(response).to render_template :assign
       expect(task1.assignee).to eql user1
     end
+    
     it 'reassign' do
       post :assign, params: { task: { assignee: user1.id }, id: task2.id, project_id: project.id }, format: :js, xhr: true
       task2.reload
       expect(response).to render_template :assign
       expect(task2.assignee).to eql user1
+    end
+
+    it 'assignee user start follow task' do
+      post :assign, params: { task: { assignee: user1.id }, id: task1.id, project_id: project.id }, format: :js, xhr: true
+      task1.reload
+      expect(task1.watchers).to include(task1.assignee)
     end
   end
 
@@ -226,6 +231,13 @@ RSpec.describe Account::TasksController, type: :controller do
       delete :unassign, params: { project_id: project.id, id: task2.id }, format: :js
       expect(task2.reload.assignee).to be_nil
       expect(response).to render_template :unassign
+    end
+  end
+
+  describe '#REPORT /project/project_id/tasks' do
+    it 'it should be success' do
+      get :report, params: { project_id: project.id }, format: :pdf
+      expect(response).to be_successful
     end
   end
 end
