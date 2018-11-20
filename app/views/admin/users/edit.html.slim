@@ -4,4 +4,4 @@
     .title Profile Settings
     figure.container.image.is-64x64
       = profile_avatar(@user)
-    = render '/admin/admin/form_edit'
+    = render '/admin/users/form_edit', user: @user

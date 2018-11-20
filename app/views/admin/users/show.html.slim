@@ -1,0 +1,15 @@
+.container
+  .column.is-6.is-offset-3.box.profile
+    .title.has-text-centered Profile Settings
+    figure.container.image.is-128x128
+      = profile_avatar(@user)
+    .p.left Full name:
+    = @user.full_name
+    .p Email:
+    = @user.email
+    .p Job role:
+    = @user.job_role
+    .p Role:
+    = @user.role
+    .p About:
+    = @user.about
