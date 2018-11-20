@@ -58,7 +58,8 @@ RSpec.describe Account::TasksController, type: :controller do
           title: Faker::Lorem.sentence
         }
       }
-    expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence }}}.to change(TaskWatch, :count).by(1)
+      expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence }}}.to change(TaskWatch, :count).by(1)
+    end
   end
 
   describe "GET #edit" do
@@ -211,7 +212,7 @@ RSpec.describe Account::TasksController, type: :controller do
       expect(response).to render_template :assign
       expect(task1.assignee).to eql user1
     end
-    
+
     it 'reassign' do
       post :assign, params: { task: { assignee: user1.id }, id: task2.id, project_id: project.id }, format: :js, xhr: true
       task2.reload
