@@ -84,7 +84,7 @@ RSpec.describe TasksMailer, type: :mailer do
         TasksMailer.task_assign_to_user_email(task2).deliver_later
       end
       mail = ActionMailer::Base.deliveries.last
-      expect(mail.subject).to eql("Task detail")
+      expect(mail.subject).to eql("New Assignment")
     end
 
     it 'email title' do
