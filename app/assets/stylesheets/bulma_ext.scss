@@ -27,3 +27,10 @@
     transform: rotate(55deg);
   }
 }
+
+.button.is-link, .button.is-link:active, .button.is-link.is-active {
+  background-color: #581c31;
+}
+.button.is-link:hover, .button.is-link.is-hovered {
+  background-color: #a7395f;
+}

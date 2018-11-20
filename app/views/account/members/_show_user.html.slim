@@ -1,7 +1,17 @@
 - members.each do |member|
-  div data-attribute = "#{member.id}"
-    = fa_icon "user-o", text: member.full_name
-    - unless member == workspace.user
-      = link_to account_workspace_member_path(workspace_id: workspace.id, id: member.id),
-                remote: true, method: :delete, data: {confirm: "Are you sure?"} do
-         = fa_icon "times"
+  .box data-attribute = "#{member.id}"
+    .user-info.is-flex
+      - if member.with_avatar?
+          span.image.is-rounded.is-24x24
+            = image_tag(member.avatar)
+      - else
+        span.has-background-light.has_rounded_background
+          = member.initials
+      span.user-name
+        = member.full_name
+      - unless member == workspace.user
+        = link_to account_workspace_member_path(workspace_id: workspace.id, id: member.id),
+                  remote: true, method: :delete, data: {confirm: "Are you sure?"} do
+           = fa_icon "times"
+    .is-size-7.has-text-grey
+      = member.email
