@@ -1,9 +1,3 @@
-h2.title.has-text-centered
-  - if @project.new_record?
-    | New Project
-  - else
-    | Edit Project
 = simple_form_for [:account, @workspace, @project], remote: true do |f|
   = f.input :name, wrapper: :bulma_input, required: true
   = f.submit "Save", class: "button is-link"
-  = link_to 'Back', account_workspace_path(@workspace), class: 'button is-text'
