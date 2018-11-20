@@ -4,7 +4,7 @@ RSpec.describe Account::DashboardController, type: :controller do
   let!(:user) { create(:user) }
   let!(:workspace) { create(:workspace, user: user) }
   let!(:project) { create(:project, workspace: workspace) }
-  let!(:task1) { create(:task, project: project, watchers: [user]) }
+  let!(:task1) { create(:task, :completed, project: project, watchers: [user]) }
   let!(:task2) { create(:task, project: project, watchers: [user]) }
   let!(:task3) { create(:task, project: project, watchers: [user]) }
 
@@ -32,6 +32,21 @@ RSpec.describe Account::DashboardController, type: :controller do
           page.should have_content(task.title)
         end
       end
+    end
+  end
+
+  context 'GET /account/inbox' do
+    it 'should return http status 200' do
+      get :inbox
+      expect(response).to have_http_status(200)
+    end
+
+    it 'show user completed tasks' do
+      get :inbox
+      # binding.pry
+      # user.followed_tasks.complete.each do |task|
+      expect(task1.title).to be
+
     end
   end
 end

@@ -17,12 +17,8 @@ class Account::TasksController < Account::AccountController
     @task = @project.tasks.build(tasks_params)
 
     if @task.save
-      if @task.section?
-        redirect_to account_workspace_project_path(@project.workspace_id, @project)
-      else
-        @task.add_watcher(current_user)
-        redirect_to account_project_task_path(@project, @task)
-      end
+      @task.watchers << current_user if !@task.section?
+      redirect_to @task.section? ? account_workspace_project_path(@project.workspace_id, @project) : account_project_task_path(@project, @task)
     else
       render :new
     end
