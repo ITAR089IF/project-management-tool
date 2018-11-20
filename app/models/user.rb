@@ -38,8 +38,8 @@ class User < ApplicationRecord
   has_many :user_projects, dependent: :destroy
   has_many :projects, through: :user_projects
   has_many :task_watches, dependent: :destroy
-  has_many :tasks, through: :task_watches
-  has_many :assigned_tasks, class_name: "Task"
+  has_many :followed_tasks, through: :task_watches, source: :task
+  has_many :assigned_tasks, class_name: "Task", foreign_key: :assignee_id
   has_many :shared_workspaces
   has_many :invited_workspaces, through: :shared_workspaces, source: :workspace
   has_one_attached :avatar
@@ -56,6 +56,9 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: %i[facebook]
 
   scope :order_desc, -> { order(:first_name, :last_name) }
+  scope :admins, -> { where(role: ADMIN) }
+
+  after_create :notify_admins_about_new_user
 
   def self.from_omniauth(auth)
     user = User.where(email: auth.info.email).first
@@ -97,7 +100,7 @@ class User < ApplicationRecord
   end
 
   def watching?(task)
-    self.tasks.where(id: task.id).exists?
+    self.followed_tasks.where(id: task.id).exists?
   end
 
   def with_avatar?
@@ -114,5 +117,9 @@ class User < ApplicationRecord
 
   def admin?
     self.role == ADMIN
+  end
+
+  def notify_admins_about_new_user
+    UsersMailer.send_new_user_message(self).deliver_later
   end
 end

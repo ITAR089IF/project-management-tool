@@ -37,6 +37,13 @@ RSpec.describe Account::WorkspacesController, type: :controller do
     end
   end
 
+  context 'GET /worspaces/:id/list' do
+    it 'should show page with list of tasks' do
+      get :list, params: { id: workspace.id }
+      expect(response).to be_successful
+    end
+  end
+
   context 'GET /workspaces/:id/edit' do
     it 'should show page edit' do
       get :edit, params: { id: workspace.id }
