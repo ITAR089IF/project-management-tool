@@ -121,8 +121,8 @@ function onFocusChange() {
   var searchResults = document.getElementById('search-results');
   var searchResultsMouse = false;
 
-  searchResults.addEventListener('mouseenter', () => { searchResultsMouse = true; console.log(searchResultsMouse); });
-  searchResults.addEventListener('mouseleave', () => { searchResultsMouse = false; console.log(searchResultsMouse); });
+  searchResults.addEventListener('mouseenter', () => { searchResultsMouse = true; });
+  searchResults.addEventListener('mouseleave', () => { searchResultsMouse = false; });
 
   search.addEventListener('focus', () => {
     if (search.value) {
