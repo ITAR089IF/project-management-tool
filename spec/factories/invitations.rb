@@ -12,8 +12,8 @@
 
 FactoryBot.define do
   factory :invitation do
-    invitor_id { 1 }
-    workspace_id { 1 }
-    token Faker::Lorem.characters(20)
+    association :invitor, factory: :user
+    workspace
+    token { Devise.friendly_token }
   end
 end

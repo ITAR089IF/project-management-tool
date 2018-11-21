@@ -8,12 +8,12 @@ RSpec.describe Account::MembersController, type: :controller do
   let!(:user1) { create(:user) }
   let!(:user2) { create(:user) }
   let!(:user3) { create(:user) }
-  let!(:workspace) { create(:workspace, user: user) }
   let!(:workspace1) { create(:workspace, user: user1) }
+  let!(:workspace2) { create(:workspace, user: user) }
   let!(:shared_workspace) { create(:shared_workspace, user: user, workspace: workspace1) }
   let!(:shared_workspace1) { create(:shared_workspace, user: user2, workspace: workspace1) }
-  let!(:invitation) { create(:invitation, invitor_id: user.id, workspace_id: workspace.id, created_at:  1.days.ago) }
-  let!(:outdated_invitation) { create(:invitation, invitor_id: user.id, workspace_id: workspace.id, token: '1', created_at: 150.days.ago) }
+  let!(:invitation) { create(:invitation, invitor: user, workspace: workspace, created_at:  1.days.ago) }
+  let!(:outdated_invitation) { create(:invitation, invitor: user, workspace: workspace, token: '1', created_at: 150.days.ago) }
 
 
   before { sign_in user }
@@ -57,9 +57,8 @@ RSpec.describe Account::MembersController, type: :controller do
   context 'GET /greeting_new_member' do
     context 'invalid token' do
       subject do
-        get :greeting_new_member, params: { invitor_id: user.id,
-                                             workspace_id: workspace.id,
-                                             token: 'wrong_token1234567890' }
+        get :greeting_new_member, params: { workspace_id: workspace.id,
+                                            token: 'wrong_token1234567890' }
       end
 
       it do
@@ -118,8 +117,8 @@ RSpec.describe Account::MembersController, type: :controller do
   end
 
   context 'POST #create_thought_link' do
-    subject { post :create_thought_link, params: { workspace_id: workspace1.id, user_id: user3.id } }
+    subject { post :create_thought_link, params: { workspace_id: workspace2.id, user_id: user3.id } }
 
-    it { expect{ subject }.to change(workspace1.members, :count).by(1) }
+    it { expect{ subject }.to change(workspace2.members.reload, :count).by(1) }
   end
 end

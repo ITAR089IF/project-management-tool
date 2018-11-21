@@ -29,19 +29,22 @@ class Account::MembersController < Account::AccountController
   def greeting_new_member
     @invitation = Invitation.find_by(token: params[:token], workspace_id: params[:workspace_id])
 
-    if @invitation.present? && @invitation.created_at >= 14.days.ago
-      @workspace = Workspace.find(params[:workspace_id])
-      @invitor = User.find(@invitation.invitor_id)
-    elsif @invitation.present? && @invitation.created_at < 14.days.ago
+    if !@invitation
+      redirect_to root_path, notice: 'Sorry, could not identify following link'
+      return
+    end
+
+    if @invitation.expired?
       redirect_to root_path, notice: 'Sorry, this link is no longer valid'
     else
-      redirect_to root_path, notice: 'Sorry, could not identify following link'
+      @workspace = Workspace.find(params[:workspace_id])
+      @invitor = User.find(@invitation.invitor.id)
     end
   end
 
   def create_thought_link
     @workspace = Workspace.find(params[:workspace_id])
-    @shared_workspace = @workspace.shared_workspaces.build(user_id: params[:user_id])
+    @shared_workspace = @workspace.shared_workspaces.build(user_id: current_user.id)
     if @shared_workspace.save
       redirect_to account_workspace_path(@workspace)
     else

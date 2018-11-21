@@ -11,4 +11,10 @@
 #
 
 class Invitation < ApplicationRecord
+  belongs_to :workspace
+  belongs_to :invitor, class_name: "User"
+
+  def expired?
+    created_at < 14.days.ago
+  end
 end
