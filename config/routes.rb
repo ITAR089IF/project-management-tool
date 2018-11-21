@@ -54,4 +54,10 @@ Rails.application.routes.draw do
       post :stop_impersonating, on: :collection
     end
   end
+
+  namespace :api, defaults: { format: :json } do
+    as :user do
+      resources :workspaces
+    end
+  end
 end
