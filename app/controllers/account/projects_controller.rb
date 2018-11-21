@@ -11,44 +11,45 @@ class Account::ProjectsController < Account::AccountController
   def new
     @workspace = parent
     @project = collection.build
+
+    respond_to :js
   end
 
   def create
     @workspace = parent
     @project = @workspace.projects.build(project_params)
+    @project.save
 
-    if  @project.save
-      redirect_to account_workspace_path(@workspace), notice: "Project was successfully created!"
-    else
-      render :new
-    end
+    respond_to :js
   end
 
   def edit
     @workspace = parent
     @project = resource
+
+    respond_to :js
   end
 
   def update
     @workspace = parent
     @project = resource
+    @result = @project.update(project_params)
 
-    if @project.update(project_params)
-      redirect_to account_workspace_path(@workspace), notice: "Project was successfully updated!"
-    else
-      render :edit
-    end
+    respond_to :js
   end
 
   def destroy
-    resource.destroy
-    redirect_to account_workspace_path(parent), alert: "Project was successfully deleted!"
+    @workspace = parent
+    @project = resource
+    @project.destroy
+
+    respond_to :js
   end
 
   private
 
   def parent
-    current_user.workspaces.find(params[:workspace_id])
+    current_user.available_workspaces.find(params[:workspace_id])
   end
 
   def collection

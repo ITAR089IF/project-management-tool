@@ -13,3 +13,24 @@
 .required abbr {
   color: red;
 }
+
+.no-content {
+  height: 256px;
+  width: 256px;
+  margin: auto;
+  position: relative;
+
+  .no-content-text {
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    transform: rotate(55deg);
+  }
+}
+
+.button.is-link, .button.is-link:active, .button.is-link.is-active {
+  background-color: #581c31;
+}
+.button.is-link:hover, .button.is-link.is-hovered {
+  background-color: #a7395f;
+}

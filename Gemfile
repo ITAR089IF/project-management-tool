@@ -34,11 +34,17 @@ gem 'omniauth-facebook'
 gem 'annotate'
 gem 'ranked-model'
 gem 'meta-tags'
+gem 'active_record_union'
 gem 'jquery-rails'
 gem 'js-routes'
 gem 'active_storage_validations'
 gem 'premailer-rails'
 gem "paranoia", '~> 2.2'
+gem "simple_calendar", "~> 2.0"
+gem 'pretender'
+gem 'prawn'
+gem 'prawn-table'
+
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'

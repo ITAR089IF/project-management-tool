@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   root 'dashboard#index'
+  get '/pricing',  to: 'dashboard#pricing'
+  get '/product', to: 'dashboard#product'
   devise_for :users,
               path: '',
               path_names: {sign_in: 'login', sign_out: 'logout', edit: 'profile', sign_up: 'registration'},
@@ -7,11 +9,16 @@ Rails.application.routes.draw do
 
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
+    get '/calendar', to: 'dashboard#calendar'
     resources :search, only: [:index], defaults: { format: :json }
 
     resource :profile, only: [:edit, :update]
     resources :workspaces do
+      resources :members, only: [:new, :create, :destroy]
       resources :projects, except: [:index]
+      member do
+        get :list
+      end
     end
 
     concern :commentable do
@@ -31,11 +38,20 @@ Rails.application.routes.draw do
           delete :unassign
           delete :remove_attachment
         end
+
+        get :report, on: :collection, defaults: { format: :pdf }
       end
     end
 
     resources :tasks do
       concerns :commentable
+    end
+  end
+
+  namespace :admin do
+    resources :users, only: [] do
+      post :impersonate, on: :member
+      post :stop_impersonating, on: :collection
     end
   end
 end

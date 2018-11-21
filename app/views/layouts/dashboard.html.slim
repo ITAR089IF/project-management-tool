@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    = display_meta_tags site: 'Project management tool', reverse: true
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  body.site
+    .site-header
+      = render 'shared/flash'
+      = render 'shared/navbar'
+    .is-fullheight.site-content
+      = yield
+    .site-footer
+      = render 'shared/footer'
+
+    = any_login_here if defined?(AnyLogin)

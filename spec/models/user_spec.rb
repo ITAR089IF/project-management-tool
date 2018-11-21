@@ -30,9 +30,15 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let!(:user) { create(:user, first_name: 'John', last_name: 'Doe') }
+  let!(:user) { create(:user, first_name: 'John', last_name: 'Doe', role: 'admin') }
   let!(:another_user) { create(:user) }
-  let!(:project) { create(:project, users: [user]) }
+  let!(:workspace) { create(:workspace, user: user) }
+  let!(:workspace1) { create(:workspace, user: another_user) }
+  let!(:workspace2) { create(:workspace, user: another_user) }
+  let!(:shared_workspace) { create(:shared_workspace, user: user, workspace: workspace1) }
+  let!(:project) { create(:project, users: [user], workspace: workspace) }
+  let!(:project1) { create(:project, workspace: workspace1) }
+  let!(:project2) { create(:project, workspace: workspace2) }
   let!(:task) { create(:task, project: project) }
   let!(:projects_comment) { create(:comment, :for_project,  user: user, commentable: project) }
   let!(:tasks_comment) { create(:comment, :for_task,  user: user, commentable: task) }
@@ -62,5 +68,22 @@ RSpec.describe User, type: :model do
     it { should have_many(:projects) }
     it { should validate_length_of(:first_name).is_at_most(250) }
     it { should validate_length_of(:last_name).is_at_most(250) }
+  end
+  
+  context 'returns user initials' do
+    it { expect(user.initials).to eq("JD") }
+  end
+
+  context '.available_projects' do
+    it { expect(user.available_projects).to contain_exactly(project, project1) }
+  end
+
+  context '.available_workspaces' do
+    it { expect(user.available_workspaces).to contain_exactly(workspace, workspace1) }
+  end
+
+  describe '#admin' do
+    it { expect(user.admin?).to eq true }
+    it { expect(another_user.admin?).to eq false }
   end
 end

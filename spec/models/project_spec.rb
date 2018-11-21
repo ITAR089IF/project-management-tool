@@ -48,7 +48,7 @@ RSpec.describe Project, type: :model do
     it 'should find all projects with entered text' do
       expect(workspace.projects.search_projects('Fa').count).to eq 2
       expect(workspace.projects.search_projects('dem').count).to eq 1
-      expect(workspace.projects.search_projects('usion').count).to eq 0
+      expect(workspace.projects.search_projects('uadsfa').count).to eq 0
     end
   end
 end

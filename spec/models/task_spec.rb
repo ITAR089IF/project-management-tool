@@ -2,18 +2,18 @@
 #
 # Table name: tasks
 #
-#  id          :bigint(8)        not null, primary key
-#  complete    :boolean          default(FALSE)
-#  deleted_at  :datetime
-#  description :text
-#  due_date    :datetime
-#  row_order   :integer
-#  section     :boolean
-#  title       :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  assignee_id :bigint(8)
-#  project_id  :bigint(8)
+#  id           :bigint(8)        not null, primary key
+#  completed_at :datetime
+#  deleted_at   :datetime
+#  description  :text
+#  due_date     :datetime
+#  row_order    :integer
+#  section      :boolean          default(FALSE)
+#  title        :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  assignee_id  :bigint(8)
+#  project_id   :bigint(8)
 #
 # Indexes
 #
@@ -54,7 +54,16 @@ RSpec.describe Task, type: :model do
     it 'should find all tasks' do
       expect(Task.all.search_tasks(user.id, 'deplo').count).to eq 2
       expect(Task.search_tasks(user.id, 'worksp').count).to eq 1
-      expect(Task.search_tasks(user.id, 'igital').count).to eq 0
+      expect(Task.search_tasks(user.id, 'iajshdkas').count).to eq 0
+    end
+  end
+
+  describe '.this_week' do
+    let!(:task4) { create(:task, created_at: (Date.today - 10), project: project) }
+    let!(:task5) { create(:task, created_at: (Date.today - 10), project: project) }
+
+    context 'it should take all tasks that was created this week' do
+      it { (expect(project.tasks.this_week.count).to eq 3) }
     end
   end
 end
