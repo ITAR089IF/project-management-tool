@@ -87,7 +87,7 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = @project.tasks.find(params[:id])
     @result = @task.update(assignee_id: assignee_params[:assignee])
-    if !@task.assignee.watching?(@task)
+    unless @task.assignee.watching?(@task)
       @task.add_watcher(@task.assignee)
     end
 

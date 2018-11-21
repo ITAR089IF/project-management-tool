@@ -75,4 +75,8 @@ class Task < ApplicationRecord
     self.task_watches.where(user_id: user.id).delete_all
   end
 
+  def assignee?(user)
+    self.assignee == user
+  end
+
 end

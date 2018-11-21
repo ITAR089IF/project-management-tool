@@ -58,7 +58,7 @@ RSpec.describe Account::TasksController, type: :controller do
           title: Faker::Lorem.sentence
         }
       }
-      expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence }}}.to change(TaskWatch, :count).by(1)
+      expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence }}}.to change(user.followed_tasks, :count).by(1)
     end
   end
 
