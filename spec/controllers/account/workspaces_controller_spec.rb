@@ -14,6 +14,7 @@ RSpec.describe Account::WorkspacesController, type: :controller do
   let!(:shared_workspace1) { create(:shared_workspace, user: user2, workspace: workspace1) }
   before do
     sign_in user
+    allow(Bitly).to receive_message_chain(:client, :shorten, :short_url) { 'http://bit.ly/1111111' }
   end
 
   context 'GET /workspaces' do
@@ -33,6 +34,13 @@ RSpec.describe Account::WorkspacesController, type: :controller do
   context 'GET /worspaces/:id' do
     it 'should show page with workspace' do
       get :show, params: { id: workspace.id }
+      expect(response).to be_successful
+    end
+  end
+
+  context 'GET /worspaces/:id/list' do
+    it 'should show page with list of tasks' do
+      get :list, params: { id: workspace.id }
       expect(response).to be_successful
     end
   end

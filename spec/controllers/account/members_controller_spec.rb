@@ -15,13 +15,11 @@ RSpec.describe Account::MembersController, type: :controller do
   let!(:invitation) { create(:invitation, invitor: user, workspace: workspace, created_at:  1.days.ago) }
   let!(:outdated_invitation) { create(:invitation, invitor: user, workspace: workspace, token: '1', created_at: 150.days.ago) }
 
-
   before { sign_in user }
 
   context '#GET /new' do
     it 'renders form' do
-      get :new, params: { workspace_id: workspace.id },
-        format: :js, xhr: true
+      get :new, params: { workspace_id: workspace.id }, format: :js, xhr: true
       expect(response).to render_template :new
     end
   end

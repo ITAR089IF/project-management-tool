@@ -12,8 +12,24 @@
 .site-footer {
   flex: none;
 }
+.footer {
+  background-color: #ffd600;
+}
 .footer-content {
   padding: 10px 10px;
+}
+
+.navbar {
+  font-size: 18px;
+}
+.navbar {
+  background-color: #ffd600;
+}
+.button.nav-bar {
+  background-color: #ad1457;
+}
+.button-link {
+  color: white;
 }
 abbr[title] {
   text-decoration: none;
@@ -81,7 +97,7 @@ abbr[title] {
     text-align: center;
     font-family: 'Roboto' Bold;
     font-size: 25px;
-    color: black;
+    color: #000000;
   }
   .calendar-task {
     font-size: 14px;

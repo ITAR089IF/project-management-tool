@@ -27,7 +27,7 @@ RSpec.describe Account::DashboardController, type: :controller do
 
     it 'show user task' do
       get :calendar
-      user.tasks.each do |task|
+      user.followed_tasks.each do |task|
         if task.start_time.present?
           page.should have_content(task.title)
         end
