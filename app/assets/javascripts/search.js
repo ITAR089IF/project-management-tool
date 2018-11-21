@@ -157,7 +157,7 @@ function jsonToHTML(data, title, field) {
     <div class='level'>
       <div class='level-left'>
         <div class='level-item'>
-          ${title}
+          <b>${title}</b>
         </div>
       </div>
     </div>
@@ -192,13 +192,13 @@ function jsonToHTML(data, title, field) {
 }
 
 var linkToWorkspace = (id, text) => {
-  return `<a href="${Routes.account_workspace_path(id)}">> ${text}</a>`;
+  return `<a href="${Routes.account_workspace_path(id)}">${text}</a>`;
 }
 
 var linkToProject = (id, workspaceId, text) => {
-  return `<a href="${Routes.account_workspace_project_path(workspaceId, id)}">> ${text}</a>`;
+  return `<a href="${Routes.account_workspace_project_path(workspaceId, id)}">${text}</a>`;
 }
 
 var linkToTask = (id, projectId, text) => {
-  return `<a href="${Routes.account_project_task_path(projectId, id)}">> ${text}</a>`;
+  return `<a href="${Routes.account_project_task_path(projectId, id)}">${text}</a>`;
 }
