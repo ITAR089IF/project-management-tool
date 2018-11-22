@@ -55,3 +55,45 @@ $color: #566473;
     height: 100%;
   }
 }
+
+.navbar-end .navbar-item .profile {
+  width: 250px;
+
+  a, a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
+    color: $color;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+
+    &:after {
+      border-color: $color;
+      transform: rotate(-45deg);
+      transition: 0.3s;
+    }
+  }
+
+  a {
+    &:after {
+      transform: rotate(45deg);
+      transition: 0.3s;
+    }
+  }
+
+  &:hover a:after {
+    transform: rotate(-45deg);
+    transition: 0.3s;
+  }
+
+  .navbar-dropdown .navbar-item {
+    border-radius: 0;
+  }
+
+  .navbar-link {
+    width: 250px;
+    padding: 5px 63px 5px 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
