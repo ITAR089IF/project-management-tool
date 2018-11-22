@@ -20,7 +20,7 @@
 
 FactoryBot.define do
   factory :message do
-    body "you have new message"
+    body { Faker::Lorem.paragraph }
     association :messageable, factory: :task
     user
   end

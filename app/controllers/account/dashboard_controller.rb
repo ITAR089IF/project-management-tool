@@ -9,11 +9,11 @@ class Account::DashboardController < Account::AccountController
   end
 
   def inbox
-    @new_messages = current_user.messages.not_readed.newest
+    @new_messages = current_user.messages.unreaded.newest
     @old_messages = current_user.messages.readed.newest
   end
 
   def change_messages_read
-    current_user.messages.not_readed.update_all(is_read: true)
+    current_user.messages.unreaded.update_all(is_read: true)
   end
 end

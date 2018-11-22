@@ -73,20 +73,24 @@ RSpec.describe Task, type: :model do
     let!(:user3) { create(:user) }
     let!(:task) { create(:task,  project: project)}
 
-    it "must create message after user assigned to the task" do
-      expect(user3.messages.count). to eq(0)
+    it "create message after user assigned to the task" do
+      expect(user3.messages.count).to eq(0)
       task.add_watcher(user3)
       task.assign!(user1.id, user2)
+
       expect(task.assignee). to eq(user1)
-      expect(user3.messages.count). to eq(1)
+      expect(user2.messages.count).to eq(0)
+      expect(user3.messages.count).to eq(1)
     end
 
-    it "must create message after task completed" do
-      expect(user2.messages.count). to eq(0)
+    it "create message after task completed" do
+      expect(user2.messages.count).to eq(0)
       task.add_watcher(user1)
       task.add_watcher(user2)
       task.complete!(user1)
-      expect(user2.messages.count). to eq(1)
+
+      expect(user1.messages.count).to eq(0)
+      expect(user2.messages.count).to eq(1)
     end
   end
 end

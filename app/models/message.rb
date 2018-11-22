@@ -22,7 +22,7 @@ class Message < ApplicationRecord
   belongs_to :messageable, polymorphic: true
   belongs_to :user
 
-  scope :not_readed, -> { where(is_read: false) }
+  scope :unreaded, ->   { where(is_read: false) }
   scope :readed, ->     { where(is_read: true) }
   scope :newest, ->     { order(created_at: :desc) }
 

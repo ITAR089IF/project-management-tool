@@ -1,6 +1,6 @@
-- if current_user.messages.not_readed.count > 0 
-  .badge.is-badge-small.is-badge-outlined[data-badge="#{current_user.messages.not_readed.count}"] 
+- if current_user.messages.unreaded.count > 0
+  .badge.is-badge-small.is-badge-outlined[data-badge="#{current_user.messages.unreaded.count}"]
     = current_user.full_name
 - else
-  .badge.is-badge-small.is-badge-outlined[data-badge=nil] 
+  .badge.is-badge-small.is-badge-outlined[data-badge=nil]
     = current_user.full_name
