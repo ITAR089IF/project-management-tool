@@ -38,16 +38,19 @@ class Account::MembersController < Account::AccountController
     if @invitation.expired?
       redirect_to root_path, notice: 'Sorry, this link is no longer valid'
     else
-      @workspace = Workspace.find(params[:workspace_id])
-      @invitor = User.find(@invitation.invitor.id)
+      @workspace = @invitation.workspace
+      @invitor = @invitation.invitor
+      @token = @invitation.token
     end
   end
 
   def create_thought_link
-    @workspace = Workspace.find(params[:workspace_id])
-    @shared_workspace = @workspace.shared_workspaces.build(user_id: current_user.id)
-    if @shared_workspace.save
-      redirect_to account_workspace_path(@workspace)
+    if @invitation = Invitation.find_by(workspace_id: params[:workspace_id], token: params[:token])
+      @workspace = @invitation.workspace
+      @shared_workspace = @workspace.shared_workspaces.build(user_id: current_user.id)
+      if @shared_workspace.save
+        redirect_to account_workspace_path(@workspace)
+      end
     else
       redirect_to root_path, notice: 'Something went wrong! Please, try again later.'
     end

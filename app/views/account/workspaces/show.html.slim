@@ -13,7 +13,7 @@
       #new-member
         = render 'account/members/new_link', workspace: @workspace
         = link_to 'Generate invitation link', account_workspace_create_invitation_link_path(@workspace),
-                method: :post, remote: true, class: 'button'
+                method: :post, remote: true, class: 'box'
         .show_invitation_link
     .column.is-four-fifths
       - if @workspace.projects.any?
