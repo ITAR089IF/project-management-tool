@@ -21,4 +21,8 @@
 require 'rails_helper'
 
 RSpec.describe Message, type: :model do
+
+  context 'factory' do
+    it { expect(build(:message)).to be_valid }
+  end
 end

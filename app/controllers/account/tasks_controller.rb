@@ -82,7 +82,7 @@ class Account::TasksController < Account::AccountController
   def assign
     @project = parent
     @task = @project.tasks.find(params[:id])
-    @result = @task.assign!(assignee_params[:assignee])
+    @result = @task.assign!(assignee_params[:assignee], current_user)
     
     respond_to :js
   end

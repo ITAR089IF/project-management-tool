@@ -26,4 +26,5 @@ class Message < ApplicationRecord
   scope :readed, ->     { where(is_read: true) }
   scope :newest, ->     { order(created_at: :desc) }
 
+  validates :messageable_id, :messageable_type, presence: true
 end

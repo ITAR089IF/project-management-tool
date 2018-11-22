@@ -20,6 +20,8 @@
 
 FactoryBot.define do
   factory :message do
-
+    body "you have new message"
+    association :messageable, factory: :task
+    user
   end
 end
