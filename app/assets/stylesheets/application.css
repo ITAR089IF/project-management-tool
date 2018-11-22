@@ -10,4 +10,4 @@
  *= require profiles
  *= require workspaces
  *= require header
- */
+ *= require modal
