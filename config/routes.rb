@@ -57,7 +57,23 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     as :user do
-      resources :workspaces
+      resources :workspaces do
+        resources :projects, except: [:index]
+      end
+
+      resources :projects, only: [] do
+        resources :tasks, except: [:index] do
+          member do
+            patch :complete
+            patch :uncomplete
+            patch :watch
+            get :choose_assignee
+            post :assign
+            delete :unassign
+            delete :remove_attachment
+          end
+        end
+      end
     end
   end
 end
