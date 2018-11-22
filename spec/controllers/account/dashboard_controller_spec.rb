@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Account::DashboardController, type: :controller do
+  render_views
+
   let!(:user) { create(:user) }
   let!(:workspace) { create(:workspace, user: user) }
   let!(:project) { create(:project, workspace: workspace) }
@@ -41,12 +43,9 @@ RSpec.describe Account::DashboardController, type: :controller do
       expect(response).to have_http_status(200)
     end
 
-    it 'show user completed tasks' do
+    it 'show users inbox' do
       get :inbox
-      # binding.pry
-      # user.followed_tasks.complete.each do |task|
-      expect(task1.title).to be
-
+      expect(response.body).to have_content("NO CONTENT")
     end
   end
 end

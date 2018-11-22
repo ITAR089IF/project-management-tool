@@ -66,4 +66,27 @@ RSpec.describe Task, type: :model do
       it { (expect(project.tasks.this_week.count).to eq 3) }
     end
   end
+
+  describe "notifications" do
+    let!(:user) { create(:user) }
+    let!(:user2) { create(:user) }
+    let!(:task) { create(:task,  project: project)}
+
+    it "must create message after user assigned to the task" do
+      expect(user.messages.count). to eq(0)
+      task.assign!(user.id)
+      task.reload
+      expect(task.assignee). to eq(user)
+      expect(user.messages.count). to eq(1)
+    end
+
+    it "must create message after task completed" do
+      expect(user2.messages.count). to eq(0)
+      task.add_watcher(user)
+      task.add_watcher(user2)
+      task.reload
+      task.complete!(user)
+      expect(user2.messages.count). to eq(1)
+    end
+  end
 end

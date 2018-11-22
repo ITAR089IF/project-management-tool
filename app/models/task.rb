@@ -75,4 +75,24 @@ class Task < ApplicationRecord
     self.task_watches.where(user_id: user.id).delete_all
   end
 
+  def assign!(assignee_id)
+    result = update(assignee_id: assignee_id)
+    send_notifications("Task '#{self.title}' has been assigned to you", [assignee]) if result
+    result
+  end
+
+  def complete!(by_user)
+    self.update(completed_at: Time.now)
+    send_notifications("Task '#{self.title}' has been completed", self.watchers - [by_user])
+    TasksMailer.task_completed(self, by_user).deliver_later
+  end
+
+  private
+
+  def send_notifications(message, notify_users = self.watchers)
+    notify_users.each do |user|
+      user.messages.create(body: message, messageable: self)
+    end
+  end
+
 end

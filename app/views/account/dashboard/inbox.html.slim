@@ -3,24 +3,29 @@
   .level
     .level-left
       .title Inbox
-  .container
-    - if @user_completed_tasks.any?
-      table.table.is-fullwidth.is-bordered.is-hoverable
-        tbody.tbody
+  - if @new_messages.any? || @old_messages.any?
+    table.table.is-fullwidth.is-hoverable
+      tbody.tbody
+        - if @new_messages.any?
           tr.tr
-            th.th Title
-            th.th Completed at
-            th.th Project
-            th.th Workspace
-          - @user_completed_tasks.each do |task|
+            td[colspan=2]
+              .td.has-text-weight-bold.is-size-5 New messages:
+          - @new_messages.each do |message|
             tr.tr
               td.td
-                = link_to task.title, account_project_task_path(task.project, task), class: task_link_class(task)
+                = message.body
+              td.td.has-text-right
+                = l message.created_at, format: :date_month_year_concise
+        - if @old_messages.any?
+          tr.tr
+            td[colspan=2]
+              .td.has-text-weight-bold.is-size-5 Old messages:
+          - @old_messages.each do |message|
+            tr.tr
               td.td
-                = l task.completed_at, format: :date_month_year_concise
-              td.td
-                = link_to task.project.name, account_workspace_project_path(task.project.workspace, task.project)
-              td.td
-                = link_to task.project.workspace.name, account_workspace_path(task.project.workspace)
-    - else
+                = message.body
+              td.td.has-text-right
+                = l message.created_at, format: :date_month_year_concise
+  - else
+    .container
       = render "shared/no_content"

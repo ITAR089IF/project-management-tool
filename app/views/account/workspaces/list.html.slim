@@ -14,8 +14,8 @@
             th.th Project
           - if current_user.assigned_tasks.current_workspace(@workspace).any?
             tr.tr
-              th[colspan=3]
-                .th.is-size-4.is-italic Assigned to me:
+              td[colspan=3]
+                .td.has-text-weight-bold.is-size-4.is-italic Assigned to me:
             - current_user.assigned_tasks.current_workspace(@workspace).each do |task|
               tr.tr
                 td.td       
@@ -26,8 +26,8 @@
                   = link_to task.project.name, account_workspace_project_path(@workspace, task.project)
           - if current_user.followed_tasks.current_workspace(@workspace).any?
             tr.tr
-              th[colspan=3]
-                .th.is-size-4.is-italic Followed:
+              td[colspan=3]
+                .td.has-text-weight-bold.is-size-4.is-italic Followed:
             - current_user.followed_tasks.current_workspace(@workspace).each do |task|
               tr.tr
                 td.td   

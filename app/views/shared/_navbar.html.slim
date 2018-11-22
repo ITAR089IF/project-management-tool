@@ -54,8 +54,7 @@
             a.navbar-link
               figure.image.is-24x24
                 = profile_avatar(current_user)
-              .badge.is-badge-small.is-badge-outlined.is-badge-warning[data-badge=nil]
-                = current_user.full_name
+              = render "shared/navbar_user_messages_counter"
             .navbar-dropdown.background-color
               = link_to "Inbox", account_inbox_path, class: 'navbar-item'
               = link_to "My workspaces", account_workspaces_path, class: 'navbar-item'
