@@ -16,7 +16,6 @@ class Api::ProjectsController < ActionController::API
     end
   end
 
-
   def update
     @workspace = parent
     @project = resource
