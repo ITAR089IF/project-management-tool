@@ -7,25 +7,9 @@
     table.table.is-fullwidth.is-hoverable
       tbody.tbody
         - if @new_messages.any?
-          tr.tr
-            td[colspan=2]
-              .td.has-text-weight-bold.is-size-5 New messages:
-          - @new_messages.each do |message|
-            tr.tr
-              td.td
-                = message.body
-              td.td.has-text-right
-                = l message.created_at, format: :date_month_year_concise
+          = render "account/dashboard/messages", messages: @new_messages, messages_title: "New message".pluralize(@new_messages.count)
         - if @old_messages.any?
-          tr.tr
-            td[colspan=2]
-              .td.has-text-weight-bold.is-size-5 Old messages:
-          - @old_messages.each do |message|
-            tr.tr
-              td.td
-                = message.body
-              td.td.has-text-right
-                = l message.created_at, format: :date_month_year_concise
+          = render "account/dashboard/messages", messages: @old_messages, messages_title: "Old message".pluralize(@old_messages.count)
+    = paginate @old_messages
   - else
-    .container
-      = render "shared/no_content"
+    = render "shared/no_content"

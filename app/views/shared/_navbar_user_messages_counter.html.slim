@@ -2,5 +2,4 @@
   .badge.is-badge-small.is-badge-outlined[data-badge="#{current_user.messages.unreaded.count}"]
     = current_user.full_name
 - else
-  .badge.is-badge-small.is-badge-outlined[data-badge=nil]
-    = current_user.full_name
+  = current_user.full_name

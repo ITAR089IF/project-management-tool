@@ -3,10 +3,11 @@ require 'rails_helper'
 RSpec.describe Account::DashboardController, type: :controller do
   render_views
 
-  let!(:user) { create(:user) }
+  let!(:user) { create(:user, first_name: "John", last_name: "Doe") }
   let!(:workspace) { create(:workspace, user: user) }
   let!(:project) { create(:project, workspace: workspace) }
-  let!(:task1) { create(:task, :completed, project: project, watchers: [user]) }
+  let!(:task1) { create(:task, :completed, project: project, watchers: [user], title: "task1") }
+  let!(:message) { create(:message, messageable: task1, user: user, body: "#{task1.title} has been completed by #{user.full_name}") }
   let!(:task2) { create(:task, project: project, watchers: [user]) }
   let!(:task3) { create(:task, project: project, watchers: [user]) }
 
@@ -43,9 +44,9 @@ RSpec.describe Account::DashboardController, type: :controller do
       expect(response).to have_http_status(200)
     end
 
-    it 'show users inbox' do
-      get :inbox
-      expect(response.body).to have_content("NO CONTENT")
+    it "show user inbox with message" do
+      get :index
+      expect(user.messages.first.body).to eq("task1 has been completed by John Doe")
     end
   end
 end

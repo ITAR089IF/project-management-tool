@@ -11,6 +11,7 @@ class Account::DashboardController < Account::AccountController
   def inbox
     @new_messages = current_user.messages.unreaded.newest
     @old_messages = current_user.messages.readed.newest
+    @old_messages = @old_messages.page(params[:page]).per(20)
   end
 
   def change_messages_read
