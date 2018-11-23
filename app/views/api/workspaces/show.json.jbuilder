@@ -1,2 +1,4 @@
 json.call(@workspace, :id, :name)
-json.array! (@mambers )
+json.members @members do |member|
+  json.call(member, :id, :first_name, :last_name, :email)
+end

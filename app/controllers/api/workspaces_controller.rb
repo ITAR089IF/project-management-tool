@@ -1,44 +1,36 @@
-class Api::WorkspacesController < ApplicationController
+class Api::WorkspacesController < ActionController::API
 
   def index
     @workspaces = collection
-    render json: @workspaces
-  end
-
-  def new
-    @workspace = Workspace.new
-  end
-
-  def create
-    @workspace = Workspace.new(workspace_params)
-    if @workspace.save
-      respond_with(@workspace, status: 201, default_template: :show)
-    else
-      invalid_resource!(@workspace)
-    end
   end
 
   def show
     @workspace = resource
-    @members = @workspace.all_members.order_desc
+    @members = @workspace.all_members
   end
 
-  def edit
-    @workspace = resource
+  def create
+    @workspace = Workspace.new(workspace_params)
+
+    if @workspace.save
+      render json: { status: 'SUCCESS', message: 'Workspace saved' }, status: :ok
+    else
+      render json: @workspace.errors, status: :unprocessable_entity
+    end
   end
 
   def update
     @workspace = resource
     if @workspace.update(workspace_params)
-      redirect_to account_workspace_path(@workspace), notice: 'Workspace was updated!'
+      render json: { status: 'SUCCESS', message: 'Workspace updated' }, status: :ok
     else
-      render :edit
+      render json: @workspace.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
     resource.destroy
-    redirect_to account_workspaces_path
+    render json: { status: 'SUCCESS', message: 'Workspace deleted' }, status: :ok
   end
 
   private
