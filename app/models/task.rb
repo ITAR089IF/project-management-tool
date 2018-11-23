@@ -43,7 +43,7 @@ class Task < ApplicationRecord
   belongs_to :assignee, class_name: "User", required: false
 
   scope :incomplete, -> { where(completed_at: nil) }
-  scope :complete, -> { where.not(completed_at: nil) }
+  scope :complete, -> { where.not(completed_at: nil).order(completed_at: :desc) }
   scope :row_order_asc, -> { order(row_order: :asc) }
   scope :search_tasks, -> (user_id, search) { select('tasks.id, tasks.title, tasks.project_id').joins('
                                  INNER JOIN projects ON projects.id = tasks.project_id
@@ -73,6 +73,26 @@ class Task < ApplicationRecord
 
   def remove_watcher(user)
     self.task_watches.where(user_id: user.id).delete_all
+  end
+
+  def assign!(assignee_id, by_user)
+    result = update(assignee_id: assignee_id)
+    send_notifications("Task '#{self.title}' has been assigned to #{assignee.full_name} by #{by_user.full_name}", self.watchers - [by_user]) if result
+    result
+  end
+
+  def complete!(by_user)
+    self.update(completed_at: Time.now)
+    send_notifications("Task '#{self.title}' has been completed by #{by_user.full_name}", self.watchers - [by_user])
+    TasksMailer.task_completed(self, by_user).deliver_later
+  end
+
+  private
+
+  def send_notifications(message, notify_users = self.watchers)
+    notify_users.each do |user|
+      user.messages.create(body: message, messageable: self)
+    end
   end
 
 end

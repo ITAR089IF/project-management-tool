@@ -21,7 +21,4 @@
               = link_to 'Delete', account_workspace_path(workspace),
                 class: 'button right', method: :delete, data: { confirm: 'Are you sure?' }
   - else
-    .no-content
-      = image_tag('undraw_no_data_qbuo.svg', class: 'image')
-      .no-content-text.title.is-5
-        | NO CONTENT
+    = render "shared/no_content"
