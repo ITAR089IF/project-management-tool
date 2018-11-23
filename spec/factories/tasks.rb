@@ -4,6 +4,7 @@
 #
 #  id           :bigint(8)        not null, primary key
 #  completed_at :datetime
+#  completed_by :integer
 #  deleted_at   :datetime
 #  description  :text
 #  due_date     :datetime
@@ -17,10 +18,11 @@
 #
 # Indexes
 #
-#  index_tasks_on_assignee_id  (assignee_id)
-#  index_tasks_on_deleted_at   (deleted_at)
-#  index_tasks_on_project_id   (project_id)
-#  index_tasks_on_row_order    (row_order)
+#  index_tasks_on_assignee_id   (assignee_id)
+#  index_tasks_on_completed_by  (completed_by)
+#  index_tasks_on_deleted_at    (deleted_at)
+#  index_tasks_on_project_id    (project_id)
+#  index_tasks_on_row_order     (row_order)
 #
 # Foreign Keys
 #
