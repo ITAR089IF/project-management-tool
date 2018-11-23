@@ -4,6 +4,7 @@
 #
 #  id           :bigint(8)        not null, primary key
 #  deleted_at   :datetime
+#  description  :string
 #  name         :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -32,6 +33,7 @@ RSpec.describe Project, type: :model do
     it { should belong_to(:workspace) }
     it { should have_many(:tasks) }
     it { should validate_length_of(:name).is_at_most(250) }
+    it { should validate_length_of(:description).is_at_most(500) }
   end
 
   context 'scope testing' do

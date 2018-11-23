@@ -4,6 +4,7 @@
 #
 #  id           :bigint(8)        not null, primary key
 #  deleted_at   :datetime
+#  description  :string
 #  name         :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -22,6 +23,7 @@
 FactoryBot.define do
   factory :project do
     name { Faker::App.name }
+    description { Faker::Lorem.paragraph }
 
     workspace
   end

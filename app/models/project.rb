@@ -4,6 +4,7 @@
 #
 #  id           :bigint(8)        not null, primary key
 #  deleted_at   :datetime
+#  description  :string
 #  name         :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -31,4 +32,5 @@ class Project < ApplicationRecord
   scope :search_projects, -> (search) { select('projects.id, projects.name, projects.workspace_id').where("name ILIKE ?", "%#{search}%").order(name: :asc).limit(10) }
 
   validates :name, length: { maximum: 250 }, presence: true
+  validates :description, length: { maximum: 500 }
 end
