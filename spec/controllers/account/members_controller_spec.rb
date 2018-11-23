@@ -63,7 +63,7 @@ RSpec.describe Account::MembersController, type: :controller do
         subject
 
         expect(response).to redirect_to root_path
-        expect(flash[:notice]).to eq('Sorry, could not identify following link')
+        expect(flash[:notice]).to eq('Sorry, we cannot identify provided link or workspace was deleted.')
       end
     end
 
@@ -97,6 +97,22 @@ RSpec.describe Account::MembersController, type: :controller do
       end
     end
 
+    context 'workspace was deleted' do
+      subject do
+        get :greeting_new_member, params: { invitor_id: user.id,
+                                            workspace_id: workspace.id,
+                                            token: invitation.token }
+      end
+
+      it do
+        workspace.destroy
+        subject
+
+        expect(response).to redirect_to root_path
+        expect(flash[:notice]).to eq('Sorry, we cannot identify provided link or workspace was deleted.')
+      end
+    end
+
     context 'user is new member' do
       let!(:workspace) { create(:workspace, user: user1) }
 
@@ -115,8 +131,8 @@ RSpec.describe Account::MembersController, type: :controller do
   end
 
   context 'POST #create_thought_link' do
-    subject { post :create_thought_link, params: { workspace_id: workspace2.id, user_id: user3.id } }
+    subject { post :create_thought_link, params: { workspace_id: workspace.id, token: invitation.token } }
 
-    it { expect{ subject }.to change(workspace2.members.reload, :count).by(1) }
+    it { expect{ subject }.to change(workspace.members.reload, :count).by(1) }
   end
 end
