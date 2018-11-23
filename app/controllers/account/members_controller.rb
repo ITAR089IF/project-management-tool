@@ -47,7 +47,7 @@ class Account::MembersController < Account::AccountController
   def create_thought_link
     if @invitation = Invitation.find_by(workspace_id: params[:workspace_id], token: params[:token])
       @workspace = @invitation.workspace
-      @shared_workspace = @workspace.shared_workspaces.build(user_id: current_user.id)
+      @shared_workspace = @workspace.shared_workspaces.build(user: current_user)
       if @shared_workspace.save
         redirect_to account_workspace_path(@workspace)
       end
