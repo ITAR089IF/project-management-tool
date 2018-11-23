@@ -2,9 +2,9 @@
 .container
   h1.title
     = @workspace.name
-  h2.subtitle
-    if
-    = link_to "My tasks", list_account_workspace_path(@workspace)
+  - if current_user.assigned_tasks.current_workspace(@workspace).any? || current_user.followed_tasks.current_workspace(@workspace).any?
+    h2.subtitle
+      = link_to "My tasks", list_account_workspace_path(@workspace)
   .columns
     .column.is-one-fifth.members
       h3.subtitle
@@ -13,6 +13,9 @@
         = render 'account/members/show_user', members: @members, workspace: @workspace
       #new-member
         = render 'account/members/new_link', workspace: @workspace
+        = link_to 'Generate invitation link', account_workspace_create_invitation_link_path(@workspace),
+                method: :post, remote: true, class: 'box'
+        .show_invitation_link
     .column.is-four-fifths
       - if @workspace.projects.any?
         .columns.is-multiline
