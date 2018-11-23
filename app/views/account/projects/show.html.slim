@@ -1,5 +1,5 @@
 - title "#{@workspace.name}: #{@project.name}"
-.container
+.container data-project-id = "#{@project.id}"
   .level
     .level-left
       .level-item
@@ -20,7 +20,6 @@
       #incomplete_tasks
         - @incomplete_tasks.each do |task|
           = render '/account/projects/show_tasks', task: task, project: @project
-
     .conteiner.box
       .title
         |  Сompleted Tasks:

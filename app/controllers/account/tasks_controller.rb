@@ -83,7 +83,7 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = @project.tasks.find(params[:id])
     @result = @task.assign!(assignee_params[:assignee], current_user)
-    
+
     respond_to :js
   end
 
@@ -108,6 +108,7 @@ class Account::TasksController < Account::AccountController
     @task = resource
     @task.complete!(current_user)
 
+    ActionCable.server.broadcast "project_#{@project.id}", { project_id: @project.id, task_id: @task.id, completed: true }
     respond_to :js
   end
 
@@ -115,6 +116,8 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = resource
     @task.update(completed_at: nil)
+
+    ActionCable.server.broadcast "project_#{@project.id}", { project_id: @project.id, task_id: @task.id, completed: false }
     respond_to :js
   end
 
