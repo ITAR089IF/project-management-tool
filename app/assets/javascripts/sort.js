@@ -1,4 +1,11 @@
-$(document).ready(function() {
-  Sortable.create(incomplete_tasks, { handle: '.glyphicon-move', animation: 150 });
-  Sortable.create(complete_tasks, { handle: '.glyphicon-move', animation: 150 });
+document.addEventListener('turbolinks:load', function() {
+  $('#all_tasks').sortable({
+    update: function(e, ui) {
+      $.ajax({
+        url: $(this).data("url"),
+        type: "PATCH",
+        data: $(this).sortable('serialize'),
+      });
+    }
+  });
 });

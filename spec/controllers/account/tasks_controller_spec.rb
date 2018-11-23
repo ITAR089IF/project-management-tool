@@ -82,35 +82,35 @@ RSpec.describe Account::TasksController, type: :controller do
     end
   end
 
-  context 'PUT /:move' do
-    it 'should move task down' do
-      put :move, params: {
-        project_id: project.id,
-        id: project.tasks.first.id,
-        task: {
-          row_order_position: :down
-        }
-      },
-      format: :js
-
-      expect(response).to render_template :move
-      expect(project.tasks.row_order_asc).to eq [task2, task1, task3]
-    end
-
-    it 'should move task up' do
-      put :move, params: {
-        project_id: project.id,
-        id: project.tasks.last.id,
-        task: {
-          row_order_position: :up
-        }
-      },
-      format: :js
-
-      expect(response).to render_template :move
-      expect(project.tasks.row_order_asc).to eq [task1, task3, task2]
-    end
-  end
+  # context 'PUT /:move' do
+  #   it 'should move task down' do
+  #     put :move, params: {
+  #       project_id: project.id,
+  #       id: project.tasks.first.id,
+  #       task: {
+  #         row_order_position: :down
+  #       }
+  #     },
+  #     format: :js
+  #
+  #     expect(response).to render_template :move
+  #     expect(project.tasks.row_order_asc).to eq [task2, task1, task3]
+  #   end
+  #
+  #   it 'should move task up' do
+  #     put :move, params: {
+  #       project_id: project.id,
+  #       id: project.tasks.last.id,
+  #       task: {
+  #         row_order_position: :up
+  #       }
+  #     },
+  #     format: :js
+  #
+  #     expect(response).to render_template :move
+  #     expect(project.tasks.row_order_asc).to eq [task1, task3, task2]
+  #   end
+  # end
 
   context 'POST /watch' do
     it 'should follow task if no one follow yet' do

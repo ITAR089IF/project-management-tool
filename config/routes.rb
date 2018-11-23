@@ -22,6 +22,9 @@ Rails.application.routes.draw do
 
     resources :projects, only: [] do
       concerns :commentable
+      member do
+        patch :sort
+      end
       resources :tasks, except: [:index] do
         member do
           put :move
@@ -47,4 +50,6 @@ Rails.application.routes.draw do
       post :stop_impersonating, on: :collection
     end
   end
+
+
 end

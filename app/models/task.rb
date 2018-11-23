@@ -29,12 +29,9 @@
 #
 
 class Task < ApplicationRecord
-  include RankedModel
   include Commentable
 
   acts_as_paranoid
-
-  ranks :row_order, with_same: :project_id
 
   has_many_attached :files, dependent: :destroy
   belongs_to :project, required: true

@@ -4,8 +4,7 @@ class Account::ProjectsController < Account::AccountController
     @project = resource
     @comments = @project.comments.order_desc.page(params[:page]).per(5)
     @comment = @project.comments.build
-    @incomplete_tasks = @project.tasks.incomplete.row_order_asc
-    @complete_tasks = @project.tasks.complete.row_order_asc
+    @all_tasks = @project.tasks.row_order_asc
   end
 
   def new
@@ -43,6 +42,13 @@ class Account::ProjectsController < Account::AccountController
   def destroy
     resource.destroy
     redirect_to account_workspace_path(parent), alert: "Project was successfully deleted!"
+  end
+
+  def sort
+    params[:task].each_with_index do |id, index|
+      Task.where(id: id).update_all(row_order: index + 1)
+    end
+    head :ok
   end
 
   private

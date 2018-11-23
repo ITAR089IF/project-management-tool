@@ -1,4 +1,5 @@
 //= require jquery3
+//= require jquery-ui
 //= require jquery_ujs
 //= require activestorage
 //= require turbolinks
@@ -6,5 +7,4 @@
 //= require dashboard
 //= require cable
 //= require js-routes
-//= require sortable-rails
-// = require sort
+//= require sort

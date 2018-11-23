@@ -5,6 +5,7 @@ class Account::TasksController < Account::AccountController
     @task = @project.tasks.find(params[:id])
     @comments = @task.comments.order_desc.page(params[:page]).per(5)
     @comment = @task.comments.build
+    @all_tasks = @project.tasks.row_order_asc
   end
 
   def new
@@ -47,15 +48,6 @@ class Account::TasksController < Account::AccountController
       f.js
       f.html { redirect_to account_workspace_project_path(parent.workspace_id, parent) }
     end
-  end
-
-  def move
-    @project = parent
-    @task = resource
-    @incomplete_tasks = @project.tasks.incomplete.row_order_asc
-    @complete_tasks = @project.tasks.complete.row_order_asc
-    @task.update(task_movement_params)
-    respond_to(:js)
   end
 
   def watch
@@ -105,15 +97,16 @@ class Account::TasksController < Account::AccountController
   def complete
     @project = parent
     @task = resource
+    @all_tasks = @project.tasks.row_order_asc
     @task.update(completed_at: Time.now)
     respond_to :js
     TasksMailer.task_completed(@task, current_user).deliver_later
   end
 
-
   def uncomplete
     @project = parent
     @task = resource
+    @all_tasks = @project.tasks.row_order_asc
     @task.update(completed_at: nil)
     respond_to :js
   end
@@ -134,10 +127,6 @@ class Account::TasksController < Account::AccountController
 
   def tasks_params
     params.require(:task).permit(:title, :description, :section, :due_date, :completed_at, files: [])
-  end
-
-  def task_movement_params
-    params.require(:task).permit(:row_order_position)
   end
 
   def section_params

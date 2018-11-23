@@ -1,2 +1,5 @@
-$('#complete_tasks').append('<%= j render('/account/projects/show_tasks', task: @task, project: @project) %>');
-$('#incomplete_tasks #complete_task_<%= @task.id %>').remove();
+$('#all_tasks').html('');
+<%- @all_tasks.each do |task| %>
+  task_html = $("<%= j render('/account/projects/show_tasks', task: task, project: @project) %>");
+  $('#all_tasks').append(task_html);
+<% end %>
