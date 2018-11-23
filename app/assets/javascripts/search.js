@@ -201,8 +201,8 @@ function jsonToHTML(data, title, field) {
   var html = `
     <div class='level'>
       <div class='level-left'>
-        <div class='level-item'>
-          <b>${title}</b>
+        <div class='level-item has-text-left has-text-weight-bold'>
+          ${title}
         </div>
       </div>
     </div>
@@ -226,7 +226,7 @@ function jsonToHTML(data, title, field) {
     html += `
       <div class="level is-small search-item">
         <div class="level-left">
-          <div class="level-item">
+          <div class="level-item has-text-left">
             ${ link }
           </div>
         </div>

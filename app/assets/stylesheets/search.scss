@@ -17,37 +17,6 @@ $color: #566473;
   position: relative;
 
   .search-box {
-
-    &::after,
-    &::before {
-      content: '';
-      display: block;
-      position: absolute;
-      width: 20%;
-      height: 20%;
-      border: 2px solid;
-      transition: all 0.6s ease;
-      border-radius: 2px;
-    }
-
-    &::after {
-      bottom: 0;
-      right: 0;
-      border-top-color: transparent;
-      border-left-color: transparent;
-      border-bottom-color: $color;
-      border-right-color: $color;
-    }
-
-    &::before {
-      top: 0;
-      left: 0;
-      border-bottom-color: transparent;
-      border-right-color: transparent;
-      border-top-color: $color;
-      border-left-color: $color;
-    }
-
     &:focus-within {
       &:after,
       &:before {
@@ -55,7 +24,6 @@ $color: #566473;
         height: 100%;
       }
     }
-
 
     #search {
       width: 300px;
@@ -103,8 +71,6 @@ $color: #566473;
 
     .level-item {
       max-width: 285px;
-      text-align: left;
-      justify-content: left;
       padding: 0 20px;
       font-size: 20px;
       a {
