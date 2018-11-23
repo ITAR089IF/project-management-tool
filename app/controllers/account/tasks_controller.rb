@@ -18,6 +18,7 @@ class Account::TasksController < Account::AccountController
     @task = @project.tasks.build(tasks_params)
 
     if @task.save
+      @task.watchers << current_user unless @task.section?
       redirect_to @task.section? ? account_workspace_project_path(@project.workspace_id, @project) : account_project_task_path(@project, @task)
     else
       render :new
@@ -73,7 +74,7 @@ class Account::TasksController < Account::AccountController
   def assign
     @project = parent
     @task = @project.tasks.find(params[:id])
-    @result = @task.update(assignee_id: assignee_params[:assignee])
+    @result = @task.assign!(assignee_params[:assignee], current_user)
 
     respond_to :js
   end
@@ -99,8 +100,9 @@ class Account::TasksController < Account::AccountController
     @task = resource
     @all_tasks = @project.tasks.row_order_asc
     @task.update(completed_at: Time.now)
+    @task.complete!(current_user)
+
     respond_to :js
-    TasksMailer.task_completed(@task, current_user).deliver_later
   end
 
   def uncomplete
@@ -109,6 +111,15 @@ class Account::TasksController < Account::AccountController
     @all_tasks = @project.tasks.row_order_asc
     @task.update(completed_at: nil)
     respond_to :js
+  end
+
+  def report
+    pdf = ProjectTasksPdfReport.new(parent.name, collection.this_week)
+
+    send_data pdf.render,
+      filename: "weekly_report_for_#{parent.name}.pdf",
+      type: 'application/pdf',
+      disposition: 'attachment'
   end
 
   private

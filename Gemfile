@@ -39,10 +39,14 @@ gem 'jquery-rails'
 gem 'js-routes'
 gem 'active_storage_validations'
 gem 'premailer-rails'
-gem 'paranoia', '~> 2.2'
+gem "paranoia", '~> 2.2'
+gem "simple_calendar", "~> 2.0"
 gem 'pretender'
 gem 'jquery-ui-rails'
 gem 'rails_sortable'
+gem 'bitly'
+gem 'prawn'
+gem 'prawn-table'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'

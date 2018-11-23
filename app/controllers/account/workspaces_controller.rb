@@ -8,6 +8,10 @@ class Account::WorkspacesController < Account::AccountController
     @members = @workspace.all_members.order_desc
   end
 
+  def list
+    @workspace = resource
+  end
+
   def new
     @workspace = Workspace.new
   end
@@ -37,6 +41,18 @@ class Account::WorkspacesController < Account::AccountController
   def destroy
     resource.destroy
     redirect_to account_workspaces_path
+  end
+
+  def create_invitation_link
+    workspace = collection.find(params[:workspace_id])
+    token = Devise.friendly_token
+    @invitation = Invitation.new(invitor: current_user, workspace: workspace, token: token)
+
+    if @invitation.save
+      @short_link = Bitly.client.shorten("http://www.#{request.host}/account/workspaces/#{workspace.id}/members/greeting_new_member?token=#{token}").short_url
+
+      respond_to :js
+    end
   end
 
   private

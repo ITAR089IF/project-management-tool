@@ -57,4 +57,40 @@ RSpec.describe Task, type: :model do
       expect(Task.search_tasks(user.id, 'iajshdkas').count).to eq 0
     end
   end
+
+  describe '.this_week' do
+    let!(:task4) { create(:task, created_at: (Date.today - 10), project: project) }
+    let!(:task5) { create(:task, created_at: (Date.today - 10), project: project) }
+
+    context 'it should take all tasks that was created this week' do
+      it { (expect(project.tasks.this_week.count).to eq 3) }
+    end
+  end
+
+  describe "notifications" do
+    let!(:user1) { create(:user) }
+    let!(:user2) { create(:user) }
+    let!(:user3) { create(:user) }
+    let!(:task) { create(:task,  project: project)}
+
+    it "create message after user assigned to the task" do
+      expect(user3.messages.count).to eq(0)
+      task.add_watcher(user3)
+      task.assign!(user1.id, user2)
+
+      expect(task.assignee). to eq(user1)
+      expect(user2.messages.count).to eq(0)
+      expect(user3.messages.count).to eq(1)
+    end
+
+    it "create message after task completed" do
+      expect(user2.messages.count).to eq(0)
+      task.add_watcher(user1)
+      task.add_watcher(user2)
+      task.complete!(user1)
+
+      expect(user1.messages.count).to eq(0)
+      expect(user2.messages.count).to eq(1)
+    end
+  end
 end
