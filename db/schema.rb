@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 2018_11_21_194330) do
     t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
 
   create_table "messages", force: :cascade do |t|
     t.text "body"

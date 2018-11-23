@@ -30,8 +30,8 @@ class Account::MembersController < Account::AccountController
   def greeting_new_member
     @invitation = Invitation.find_by(token: params[:token], workspace_id: params[:workspace_id])
 
-    if !@invitation
-      redirect_to root_path, notice: 'Sorry, could not identify following link'
+    if !(@invitation && @invitation.workspace)
+      redirect_to root_path, notice: 'Sorry, we cannot identify provided link or workspace was deleted.'
       return
     end
 
