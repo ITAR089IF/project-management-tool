@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_18_201736) do
+ActiveRecord::Schema.define(version: 2018_11_21_194330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,18 @@ ActiveRecord::Schema.define(version: 2018_11_18_201736) do
     t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+
+  create_table "messages", force: :cascade do |t|
+    t.text "body"
+    t.boolean "is_read", default: false
+    t.string "messageable_type"
+    t.bigint "messageable_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id"
+    t.index ["user_id", "is_read"], name: "index_messages_on_user_id_and_is_read"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "projects", force: :cascade do |t|
