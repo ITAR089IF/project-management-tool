@@ -1,5 +1,5 @@
 - if current_user.messages.unreaded.count > 0
   .badge.is-badge-small.is-badge-outlined[data-badge="#{current_user.messages.unreaded.count}"]
-    = current_user.full_name.truncate(15)
+    = truncate(current_user.full_name, length: 15)
 - else
-  = current_user.full_name.truncate(15)
+  = truncate(current_user.full_name, length: 15)

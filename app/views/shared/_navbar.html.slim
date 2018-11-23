@@ -11,23 +11,23 @@
                 | IF-089.Ruby
       - if user_signed_in?
         .navbar-item
-          = link_to "Dashboard", account_dashboard_path, class: 'button border-effect'
+          = link_to "Dashboard", account_dashboard_path, class: 'button'
         .navbar-item
-          = link_to "Calendar", account_calendar_path, class: 'button border-effect'
+          = link_to "Calendar", account_calendar_path, class: 'button'
       - else
         .navbar-item
-          = link_to "Product", product_path, class: 'button border-effect'
+          = link_to "Product", product_path, class: 'button'
         .navbar-item
-          = link_to "Pricing", pricing_path, class: 'button border-effect'
+          = link_to "Pricing", pricing_path, class: 'button'
       - if user_signed_in?
     .navbar-end
       .navbar-item
         - if (!user_signed_in?)
           .level-right
             .navbar-item
-              = link_to "Sign Up", new_user_registration_path, class: " button border-effect"
+              = link_to "Sign Up", new_user_registration_path, class: "button"
             .navbar-item
-              = link_to "Sign in", new_user_session_path, class: "button border-effect"
+              = link_to "Sign in", new_user_session_path, class: "button"
         - else
           .navbar-item
             #search-form

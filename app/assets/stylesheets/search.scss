@@ -6,34 +6,27 @@ $color: #566473;
 
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #888;
+  border-radius: 5px;
 }
 
 #search-form {
   margin-right: 10px;
   position: relative;
 
-  .search-box {
-    &:focus-within {
-      &:after,
-      &:before {
-        width: 100%;
-        height: 100%;
-      }
-    }
+  #search {
+    width: 300px;
+    padding: 10px 10px;
+    border: none;
+    font-size: 18px;
+    border-radius: 5px;
 
-    #search {
-      width: 300px;
-      padding: 8px 8px;
-      border: none;
-      font-size: 18px;
-
-      &:focus {
-        outline: none;
-      }
+    &:focus {
+      outline: none;
     }
   }
 
@@ -45,14 +38,13 @@ $color: #566473;
     max-height: 300px;
     overflow-x: hidden;
     overflow-y: scroll;
-    border: 2px solid $color;
-    border-radius: 0;
+    border-radius: 5px;
   }
 }
 
 #workspaces-block, #projects-block, #tasks-block, #no-content-block {
   display: none;
-  width: 285px;
+  width: 290px;
   margin: 5px 0 0 0;
   padding: 0;
 
@@ -66,11 +58,11 @@ $color: #566473;
   }
 
   .level {
-    width: 285px;
+    width: 290px;
     margin: 0;
 
     .level-item {
-      max-width: 285px;
+      max-width: 290px;
       padding: 0 20px;
       font-size: 20px;
       a {

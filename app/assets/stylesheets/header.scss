@@ -9,54 +9,17 @@ $color: #566473;
 }
 
 .navbar .navbar-menu .navbar-item {
-  .border-effect {
-    position: relative;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    outline: none;
-    font-size: 18px;
-    color: $color;
-
-    &::after,
-    &::before {
-      content: '';
-      display: block;
-      position: absolute;
-      width: 20%;
-      height: 20%;
-      border: 2px solid;
-      transition: all 0.6s ease;
-      border-radius: 2px;
-    }
-
-    &::after {
-      bottom: 0;
-      right: 0;
-      border-top-color: transparent;
-      border-left-color: transparent;
-      border-bottom-color: $color;
-      border-right-color: $color;
-    }
-
-    &::before {
-      top: 0;
-      left: 0;
-      border-bottom-color: transparent;
-      border-right-color: transparent;
-      border-top-color: $color;
-      border-left-color: $color;
-    }
-  }
-
   .button {
+    border: none;
+    color: $color;
+    background-color: transparent;
     padding: 5px 10px;
     margin: 5px 3px;
+    font-size: 18px;
 
-    &:hover:after,
-    &:hover:before {
-      width: 100%;
-      height: 100%;
+    &:hover {
+      background: white;
+      opacity: 0.5;
     }
   }
 }
