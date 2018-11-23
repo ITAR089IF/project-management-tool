@@ -1,4 +1,3 @@
-json.call(@workspace, :id, :name)
-json.members @members do |member|
-  json.call(member, :id, :first_name, :last_name, :email)
+json.call(@workspace, :id, :name) do
+  json.members @members, :id, :first_name, :last_name, :email
 end
