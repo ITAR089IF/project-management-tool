@@ -90,9 +90,10 @@ class Task < ApplicationRecord
   def assignee?(user)
     assignee == user
   end
-  
+
   private
-   def send_notifications(message, notify_users = self.watchers)
+
+  def send_notifications(message, notify_users = self.watchers)
     notify_users.each do |user|
       user.messages.create(body: message, messageable: self)
     end
