@@ -76,7 +76,7 @@ class Task < ApplicationRecord
   end
 
   def assignee?(user)
-    self.assignee == user
+    assignee == user
   end
 
 end
