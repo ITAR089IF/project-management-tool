@@ -83,6 +83,7 @@ RSpec.describe Task, type: :model do
       expect(task.assignee). to eq(user1)
       expect(user2.messages.count).to eq(0)
       expect(user3.messages.count).to eq(1)
+      expect(task.assigned_by).to eq user2.id
     end
 
     it "create message after task completed" do
@@ -90,8 +91,6 @@ RSpec.describe Task, type: :model do
       task.add_watcher(user1)
       task.add_watcher(user2)
       task.complete!(user1)
-
-      task.reload
 
       expect(user1.messages.count).to eq(0)
       expect(user2.messages.count).to eq(1)

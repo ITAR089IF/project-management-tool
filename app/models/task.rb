@@ -78,7 +78,7 @@ class Task < ApplicationRecord
   end
 
   def assign!(assignee_id, by_user)
-    result = update(assignee_id: assignee_id)
+    result = update(assignee_id: assignee_id, assigned_by: by_user.id)
     send_notifications("Task '#{self.title}' has been assigned to #{assignee.full_name} by #{by_user.full_name}", self.watchers - [by_user]) if result
     result
   end
