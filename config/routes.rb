@@ -64,6 +64,4 @@ Rails.application.routes.draw do
       post :stop_impersonating, on: :collection
     end
   end
-
-
 end
