@@ -90,7 +90,7 @@ class Account::TasksController < Account::AccountController
   def unassign
     @project = parent
     @task = resource
-    @result = @task.update(assignee_id: nil, assigned_by: nil)
+    @result = @task.update(assignee_id: nil, assigned_by_id: nil)
 
     respond_to :js
   end
@@ -114,7 +114,7 @@ class Account::TasksController < Account::AccountController
   def uncomplete
     @project = parent
     @task = resource
-    @task.update(completed_at: nil, completed_by: nil)
+    @task.update(completed_at: nil, completed_by_id: nil)
 
     respond_to :js
   end

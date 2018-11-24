@@ -2,27 +2,29 @@
 #
 # Table name: tasks
 #
-#  id           :bigint(8)        not null, primary key
-#  completed_at :datetime
-#  completed_by :integer
-#  deleted_at   :datetime
-#  description  :text
-#  due_date     :datetime
-#  row_order    :integer
-#  section      :boolean          default(FALSE)
-#  title        :string
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  assignee_id  :bigint(8)
-#  project_id   :bigint(8)
+#  id              :bigint(8)        not null, primary key
+#  completed_at    :datetime
+#  deleted_at      :datetime
+#  description     :text
+#  due_date        :datetime
+#  row_order       :integer
+#  section         :boolean          default(FALSE)
+#  title           :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  assigned_by_id  :integer
+#  assignee_id     :bigint(8)
+#  completed_by_id :integer
+#  project_id      :bigint(8)
 #
 # Indexes
 #
-#  index_tasks_on_assignee_id   (assignee_id)
-#  index_tasks_on_completed_by  (completed_by)
-#  index_tasks_on_deleted_at    (deleted_at)
-#  index_tasks_on_project_id    (project_id)
-#  index_tasks_on_row_order     (row_order)
+#  index_tasks_on_assigned_by_id   (assigned_by_id)
+#  index_tasks_on_assignee_id      (assignee_id)
+#  index_tasks_on_completed_by_id  (completed_by_id)
+#  index_tasks_on_deleted_at       (deleted_at)
+#  index_tasks_on_project_id       (project_id)
+#  index_tasks_on_row_order        (row_order)
 #
 # Foreign Keys
 #

@@ -99,7 +99,9 @@ RSpec.describe Account::TasksController, type: :controller do
     it 'marks task as completed' do
       expect(project.tasks.complete.count).to eq 1
       patch :complete, params: { project_id: project.id, id: task1.id }, format: :js
+      task1.reload
       expect(project.tasks.complete.count).to eq 2
+      expect(task1.completed_by_id).to eq user.id
     end
   end
 
@@ -201,14 +203,14 @@ RSpec.describe Account::TasksController, type: :controller do
       task1.reload
       expect(response).to render_template :assign
       expect(task1.assignee).to eql user1
-      expect(task1.assigned_by).to eq user.id
+      expect(task1.assigned_by_id).to eq user.id
     end
     it 'reassign' do
       post :assign, params: { task: { assignee: user1.id }, id: task2.id, project_id: project.id }, format: :js, xhr: true
       task2.reload
       expect(response).to render_template :assign
       expect(task2.assignee).to eql user1
-      expect(task2.assigned_by).to eq user.id
+      expect(task2.assigned_by_id).to eq user.id
     end
   end
 
@@ -216,7 +218,7 @@ RSpec.describe Account::TasksController, type: :controller do
     it 'delete assignee for task'  do
       delete :unassign, params: { project_id: project.id, id: task2.id }, format: :js
       expect(task2.reload.assignee).to be_nil
-      expect(task2.reload.assigned_by).to be_nil
+      expect(task2.reload.assigned_by_id).to be_nil
       expect(response).to render_template :unassign
     end
   end

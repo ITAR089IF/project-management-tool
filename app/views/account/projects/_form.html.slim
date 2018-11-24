@@ -5,4 +5,5 @@ h2.title.has-text-centered
     | Edit Project
 = simple_form_for [:account, @workspace, @project], remote: true do |f|
   = f.input :name, wrapper: :bulma_input, required: true
+  = f.input :description, as: :text
   = f.submit "Save", class: "button is-link"
