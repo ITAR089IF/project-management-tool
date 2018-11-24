@@ -6,8 +6,13 @@
 #  token        :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  invitor_id   :integer
-#  workspace_id :integer
+#  invitor_id   :bigint(8)
+#  workspace_id :bigint(8)
+#
+# Indexes
+#
+#  index_invitations_on_invitor_id    (invitor_id)
+#  index_invitations_on_workspace_id  (workspace_id)
 #
 
 class Invitation < ApplicationRecord
