@@ -50,6 +50,16 @@ RSpec.describe Account::TasksController, type: :controller do
 
       expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence, description: Faker::Lorem.paragraph }}}.to change(Task, :count).by(1)
     end
+
+    it 'should add current_user to watchers tasks' do
+      post :create, params: {
+        project_id: project.id,
+        task: {
+          title: Faker::Lorem.sentence
+        }
+      }
+      expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence }}}.to change(user.followed_tasks, :count).by(1)
+    end
   end
 
   describe "GET #edit" do
@@ -202,11 +212,18 @@ RSpec.describe Account::TasksController, type: :controller do
       expect(response).to render_template :assign
       expect(task1.assignee).to eql user1
     end
+
     it 'reassign' do
       post :assign, params: { task: { assignee: user1.id }, id: task2.id, project_id: project.id }, format: :js, xhr: true
       task2.reload
       expect(response).to render_template :assign
       expect(task2.assignee).to eql user1
+    end
+
+    it 'assignee user start follow task' do
+      post :assign, params: { task: { assignee: user1.id }, id: task1.id, project_id: project.id }, format: :js, xhr: true
+      task1.reload
+      expect(task1.watchers).to include(task1.assignee)
     end
   end
 

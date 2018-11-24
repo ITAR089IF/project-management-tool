@@ -87,6 +87,10 @@ class Task < ApplicationRecord
     TasksMailer.task_completed(self, by_user).deliver_later
   end
 
+  def assignee?(user)
+    assignee == user
+  end
+
   private
 
   def send_notifications(message, notify_users = self.watchers)
