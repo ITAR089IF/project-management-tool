@@ -8,6 +8,9 @@ RSpec.describe Account::ProjectsController, type: :controller do
   let!(:project)                { create(:project, workspace: workspace) }
   let!(:project_valid_params) { { name: "test_project"} }
   let!(:project_invalid_params) { { name: nil} }
+  let!(:task1) { create(:task, project: project) }
+  let!(:task2) { create(:task, project: project) }
+  let!(:task3) { create(:task, project: project) }
 
   context "when user sign in" do
     before do
@@ -85,6 +88,13 @@ RSpec.describe Account::ProjectsController, type: :controller do
         get :show, params: { workspace_id: workspace.to_param, id: project.to_param }
         expect(response).to redirect_to(new_user_session_path)
       end
+    end
+  end
+
+  context 'PATCH /:sort' do
+    it 'should sort task' do
+      patch :sort, params: { id: project.id, task: [task2.id, task1.id, task3.id] }, format: :js
+      expect(project.tasks.row_order_asc).to eq [task2, task1, task3]
     end
   end
 end

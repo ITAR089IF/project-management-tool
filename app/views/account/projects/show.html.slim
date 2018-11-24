@@ -19,8 +19,7 @@
         |  To Do List:
       #all_tasks. data-url=sort_account_project_path(@project)
         - @all_tasks.each do |task|
-          /= render '/account/projects/show_tasks', task: task, project: @project
-          = link_to task.title, account_project_task_path(@project, task), id: dom_id(task), class: "level-left glyphicon-move"
+          = render '/account/projects/show_tasks', task: task, project: @project
     .content
       h3 Comments
       .new-comment

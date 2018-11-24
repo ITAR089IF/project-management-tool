@@ -1,4 +1,4 @@
-.level id="complete_task_#{task.id}"
+.level id="task_#{task.id}"
   .level-left
     - if !task.section?
       - if task.pending?
@@ -12,7 +12,7 @@
             class: 'add_to_complete', method: :patch, remote: true do
             = check_box_tag "mark-complete", :completed_at, true
     .level-item.glyphicon-move
-      = link_to task.title, task.section? ? '#' : account_project_task_path(project, task), class: task_link_class(task), id: dom_id(task)
+      = link_to task.title, task.section? ? '#' : account_project_task_path(project, task), class: task_link_class(task)
   .level-right
     - if task.pending?
       .level-item
