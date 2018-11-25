@@ -5,6 +5,8 @@ RSpec.describe Admin::UsersController, type: :controller do
 
   let!(:user_admin) { create(:user, :admin) }
   let!(:user) { create(:user) }
+  let!(:user_valid_params) { { first_name: "John" } }
+  let!(:user_invalid_params) { { first_name: "" } }
 
   describe '#impersonate'  do
     context 'impersonate admin as user' do
@@ -37,6 +39,59 @@ RSpec.describe Admin::UsersController, type: :controller do
         expect(response).to redirect_to root_path
         expect(controller.current_user).to eq user_admin
         expect(controller.true_user).to eq user_admin
+      end
+    end
+  end
+
+  describe "if user admin" do
+    before do
+      sign_in user_admin
+    end
+
+    context 'GET #index' do
+      it 'should show all users' do
+        get :index
+        expect(response).to be_successful
+      end
+    end
+
+    context 'GET #show' do
+      it 'should show user page' do
+        get :show, params: { id: user.id }
+        expect(response).to be_successful
+      end
+    end
+
+    context 'GET #edit' do
+      it 'must display edit page' do
+        get :edit, params: { id: user.id }
+        expect(response).to render_template(:edit)
+      end
+    end
+
+    describe 'PUTCH #update' do
+      context 'with valid attributes' do
+        it 'must update the user' do
+          patch :update, params: { id: user.id, user: user_valid_params }
+          user.reload
+          expect(user.first_name).to eq(user_valid_params[:first_name])
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'must update the user' do
+          patch :update, params: { id: user.id, user: user_invalid_params }
+          user.reload
+          expect(user.first_name).not_to eq(user_valid_params[:first_name])
+          expect(response).to render_template(:edit)
+        end
+      end
+    end
+
+    context 'DELETE #destroy' do
+      it 'should delete user' do
+        expect{ (delete :destroy, params: { id: user.id }) }.to change{ User.count }.by(-1)
+        expect(response).to redirect_to admin_users_path
       end
     end
   end
