@@ -14,4 +14,22 @@ $( document ).on('turbolinks:load', function() {
     }
     $(this).siblings('li.toggleable').slideToggle();
   });
+
+  $('.date-button').click(function(e){
+    date = $(this).data("date");
+    check_project(date)
+  });
+
+  function check_project(date) {
+    date = date
+    $('#project_field').parent().hide();
+    projects = $('#project_field').html();
+    $('#workspace_field').change(function(e){
+      workspace = $('#workspace_field :selected').text();
+      options = $(projects).filter('optgroup[label=' + workspace + ']').html();
+      $('#project_field').html(options);
+      $('#project_field').parent().show();
+      $('#date_field').val(date)
+    });
+  };
 });

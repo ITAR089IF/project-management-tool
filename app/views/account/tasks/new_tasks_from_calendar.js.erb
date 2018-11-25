@@ -1,0 +1,2 @@
+$('.double_task_form').html("<%= j render 'account/tasks/form'%>")
+$('.double_task_form').find("input[type='date']").val("<%= @date %>").attr('readonly', true)

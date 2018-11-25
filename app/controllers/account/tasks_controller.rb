@@ -127,6 +127,17 @@ class Account::TasksController < Account::AccountController
       disposition: 'attachment'
   end
 
+  def new_tasks_from_calendar
+    @project = Project.find(params[:projects_values][:project_id])
+    @date = params[:projects_values][:date]
+    if valid_date?(Date.parse(@date))
+      @task = @project.tasks.build
+      respond_to :js
+    else
+      ap '???'
+    end
+  end
+
   private
 
   def parent
@@ -155,5 +166,9 @@ class Account::TasksController < Account::AccountController
 
   def assignee_params
     params.require(:task).permit(:assignee)
+  end
+
+  def valid_date?(date)
+    date >= Date.today
   end
 end
