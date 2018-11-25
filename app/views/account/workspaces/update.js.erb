@@ -1,5 +1,5 @@
 <% if @updated %>
-  $('[data-id="navbar_workspace_<%= @workspace.id %>"]').replaceWith('<%= j render('account/workspaces/show_workspace', workspace: @workspace) %>');
+  $('.navbar-workspaces').html(`<%= j render 'account/workspaces/show_workspaces', workspaces: @workspaces %>`);
   $('.modal').removeClass('is-active');
 <% else %>
   $('.modal .modal-form').html('<%= j render('account/workspaces/form', workspace: @workspace) %>');

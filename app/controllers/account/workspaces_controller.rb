@@ -17,6 +17,7 @@ class Account::WorkspacesController < Account::AccountController
   def create
     @workspace = Workspace.new(workspace_params)
     @workspace.save
+    @workspaces = collection
 
     respond_to(:js)
   end
@@ -30,6 +31,7 @@ class Account::WorkspacesController < Account::AccountController
   def update
     @workspace = resource
     @updated = @workspace.update(workspace_params)
+    @workspaces = collection
 
     respond_to(:js)
   end

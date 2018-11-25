@@ -44,10 +44,10 @@ RSpec.describe Workspace, type: :model do
     let!(:user) { create(:user) }
     let!(:workspace1) { create(:workspace, name: 'IT Innovation', user: user) }
     let!(:workspace2) { create(:workspace, name: 'Inntroduction', user: user) }
-    let!(:workspace3) { create(:workspace, user: user) }
+    let!(:workspace3) { create(:workspace, name: 'Abrams', user: user) }
 
     it 'should be sort by desc' do
-      expect(user.workspaces.order_asc).to eq [workspace1, workspace2, workspace3]
+      expect(user.workspaces.order_asc).to eq [workspace3, workspace2, workspace1]
     end
 
     it 'should find workspaces with entered text' do
