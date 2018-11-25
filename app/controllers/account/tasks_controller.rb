@@ -106,20 +106,24 @@ class Account::TasksController < Account::AccountController
   def complete
     @project = parent
     @task = resource
-    @task.complete!(current_user)
-
-    ActionCable.server.broadcast "project_#{@project.id}", { project_id: @project.id, task_id: @task.id, completed: true }
-    respond_to :js
+    if @task.pending?
+      @task.complete!(current_user)
+    else
+      @task.update(completed_at: nil)
+    end
+    ActionCable.server.broadcast "project_#{@project.id}", { id: @project.id,
+                                                            task_id: @task.id,
+                                                            task: render_task(@project, @task) }
+    # respond_to :js
   end
 
-  def uncomplete
-    @project = parent
-    @task = resource
-    @task.update(completed_at: nil)
-
-    ActionCable.server.broadcast "project_#{@project.id}", { project_id: @project.id, task_id: @task.id, completed: false }
-    respond_to :js
-  end
+  # def uncomplete
+  #   @project = parent
+  #   @task = resource
+  #   @task.update(completed_at: nil)
+  #
+  #   # respond_to :js
+  # end
 
   def report
     pdf = ProjectTasksPdfReport.new(parent.name, collection.this_week)
@@ -158,5 +162,9 @@ class Account::TasksController < Account::AccountController
 
   def assignee_params
     params.require(:task).permit(:assignee)
+  end
+
+  def render_task(project, task)
+    render(partial: 'account/projects/show_tasks', locals: { project: project, task: task })
   end
 end
