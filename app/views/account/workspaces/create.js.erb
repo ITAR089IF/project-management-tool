@@ -1,10 +1,6 @@
-<%- if @workspace.persisted? %>
-  $('.navbar-workspaces').append(`
-    <div class="navbar-item" data-id="navbar_workspace_<%= @workspace.id %>">
-      <%= j render 'account/workspaces/workspace', workspace: @workspace %>
-    </div>
-  `);
+<% if @workspace.persisted? %>
+  $('.navbar-workspaces').append(`<%= j render 'account/workspaces/show_workspace', workspace: @workspace %>`);
   $('.modal').removeClass('is-active');
-<%- else %>
+<% else %>
   $('.modal .modal-form').html('<%= j render('account/workspaces/form', workspace: @workspace) %>');
-<%- end %>
+<% end %>

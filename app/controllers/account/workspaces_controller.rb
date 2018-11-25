@@ -31,7 +31,6 @@ class Account::WorkspacesController < Account::AccountController
     @workspace = resource
     @updated = @workspace.update(workspace_params)
 
-
     respond_to(:js)
   end
 

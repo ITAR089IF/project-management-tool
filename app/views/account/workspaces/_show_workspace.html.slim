@@ -1,0 +1,12 @@
+.navbar-item data-id="navbar_workspace_#{workspace.id}"
+  .level
+    .level-left
+      .level-item
+        = link_to truncate(workspace.name, length: 20), account_workspace_path(workspace)
+    .level-right
+      .level-item
+        = link_to edit_account_workspace_path(workspace), remote: true do
+          = fa_icon 'pencil-square-o'
+      .level-item
+        = link_to account_workspace_path(workspace), remote: true, method: :delete do
+          = fa_icon 'trash-o'
