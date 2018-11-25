@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     resources :search, only: [:index], defaults: { format: :json }
 
     resource :profile, only: [:edit, :update]
-    resources :workspaces do
+    resources :workspaces, except: [:index] do
       post :create_invitation_link
       resources :members, only: [:new, :create, :destroy] do
         collection do
