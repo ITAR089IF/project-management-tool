@@ -8,6 +8,8 @@
           = ": #{@project.name}"
     .level-right
       .level-item
+        = link_to "Download PDF", report_account_project_tasks_path(@project), target: :_blank
+      .level-item
         = link_to "Add Task", new_account_project_task_path(@project), class: "button is-link"
       .level-item
         = link_to "Add Section", new_account_project_task_path(@project, section: true), class: "button is-link"
@@ -32,7 +34,4 @@
       .comments
         = render 'account/comments/show_comments', commentable: @project, comments: @comments
   - else
-    .no-content
-      = image_tag('undraw_no_data_qbuo.svg', class: 'image')
-      .no-content-text.title.is-5
-        | NO CONTENT
+    = render "shared/no_content"

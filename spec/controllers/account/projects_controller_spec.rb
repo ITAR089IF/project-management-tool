@@ -24,7 +24,7 @@ RSpec.describe Account::ProjectsController, type: :controller do
 
     describe "GET #new" do
       it "returns http success" do
-        get :new, params: { workspace_id: workspace.to_param }
+        get :new, params: { workspace_id: workspace.to_param }, format: :js, xhr: true
         expect(response).to have_http_status(200)
         expect(response).to render_template("account/projects/_form")
       end
@@ -33,19 +33,19 @@ RSpec.describe Account::ProjectsController, type: :controller do
     describe "POST #create" do
       context "with valid attributes" do
         it "must create new project" do
-          expect { post :create, params: { workspace_id: workspace.to_param, project: project_valid_params } }.to change(Project, :count).by(1)
+          expect { post :create, params: { workspace_id: workspace.to_param, project: project_valid_params, format: :js } }.to change(Project, :count).by(1)
         end
       end
       context "with invalid attributes" do
         it "must not create a project and render 'new' form" do
-          expect { post(:create, params: { workspace_id: workspace.to_param, project: project_invalid_params }) }.to change(Project, :count).by(0)
+          expect { post(:create, params: { workspace_id: workspace.to_param, project: project_invalid_params, format: :js }) }.to change(Project, :count).by(0)
         end
       end
     end
 
     describe "GET #edit" do
       it "must display edit page" do
-        get :edit, params: { workspace_id: workspace.to_param, id: project.to_param }
+        get :edit, params: { workspace_id: workspace.to_param, id: project.to_param }, format: :js, xhr: true
         expect(response).to render_template(:edit)
       end
     end
@@ -53,7 +53,8 @@ RSpec.describe Account::ProjectsController, type: :controller do
     describe "PATCH #update" do
       context "with valid attributes" do
         it "must update the project" do
-          put :update, params: { workspace_id: workspace.to_param, id: project.to_param, project: project_valid_params}
+          put :update, params: { workspace_id: workspace.to_param, id: project.to_param,
+            project: project_valid_params }, format: :js
           project.reload
           expect(project.name).to eq(project_valid_params[:name])
         end
@@ -61,7 +62,8 @@ RSpec.describe Account::ProjectsController, type: :controller do
 
       context "with invalid attributes" do
         it "must not update the project and render 'edit' form" do
-          put :update, params: { workspace_id: workspace.to_param, id: project.to_param, project: project_invalid_params}
+          put :update, params: { workspace_id: workspace.to_param, id: project.to_param,
+            project: project_invalid_params, format: :js}
           project.reload
           expect(project.name).not_to eq(project_invalid_params[:name])
           expect(response).to render_template("account/projects/_form")
@@ -71,7 +73,8 @@ RSpec.describe Account::ProjectsController, type: :controller do
 
     describe "DELETE #destroy" do
       it "returns http success" do
-        expect { delete(:destroy, params: { workspace_id: workspace.to_param, id: project.to_param }) }.to change(Project, :count).by(-1)
+        expect { delete(:destroy, params: { workspace_id: workspace.to_param,
+          id: project.to_param, format: :js }) }.to change(Project, :count).by(-1)
       end
     end
   end

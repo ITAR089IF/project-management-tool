@@ -43,16 +43,16 @@ RSpec.describe Workspace, type: :model do
   context 'scope tests' do
     let!(:user) { create(:user) }
     let!(:workspace1) { create(:workspace, name: 'IT Innovation', user: user) }
-    let!(:workspace2) { create(:workspace, name: 'Infrastructure', user: user) }
+    let!(:workspace2) { create(:workspace, name: 'Inntroduction', user: user) }
     let!(:workspace3) { create(:workspace, user: user) }
 
     it 'should be sort by desc' do
-      expect(user.workspaces.order_desc).to eq [workspace3, workspace2, workspace1]
+      expect(user.workspaces.order_asc).to eq [workspace1, workspace2, workspace3]
     end
 
     it 'should find workspaces with entered text' do
-      expect(user.workspaces.search_workspaces('iT').count).to eq 1
-      expect(user.workspaces.search_workspaces('in').count).to eq 2
+      expect(user.workspaces.search_workspaces('iT inn').count).to eq 1
+      expect(user.workspaces.search_workspaces('inn').count).to eq 2
       expect(user.workspaces.search_workspaces('hasgd').count).to eq 0
     end
   end

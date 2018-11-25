@@ -1,0 +1,81 @@
+$color: #566473;
+
+.navbar .navbar-menu .navbar-start .navbar-item img {
+  margin-right: 10px;
+}
+
+.navbar .navbar-menu .navbar-item .logo {
+  color: $color;
+}
+
+.navbar .navbar-menu .navbar-item {
+  .button {
+    border: none;
+    color: $color;
+    background-color: transparent;
+    padding: 5px 10px;
+    margin: 5px 3px;
+    font-size: 18px;
+
+    &:hover {
+      background: white;
+      opacity: 0.5;
+    }
+  }
+}
+
+.navbar-end .navbar-item .profile {
+  width: 250px;
+
+  a, a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
+    color: $color;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+
+    &:after {
+      border-color: $color;
+      transform: rotate(-45deg);
+      transition: 0.3s;
+    }
+  }
+
+  a {
+    &:after {
+      transform: rotate(45deg);
+      transition: 0.3s;
+    }
+  }
+
+  &:hover a:after {
+    transform: rotate(-45deg);
+    transition: 0.3s;
+  }
+
+  .navbar-dropdown .navbar-item {
+    border-radius: 0;
+
+    .level {
+      width: 100%;
+    }
+  }
+
+  .navbar-link {
+    width: 250px;
+    padding: 5px 63px 5px 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .navbar-workspaces {
+    max-height: 132px;
+    overflow-y: auto;
+    overflow-x: none;
+
+    .navbar-item:hover {
+      background-color: whitesmoke;
+    }
+  }
+}

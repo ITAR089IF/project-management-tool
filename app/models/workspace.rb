@@ -23,10 +23,11 @@ class Workspace < ApplicationRecord
   acts_as_paranoid
   belongs_to :user, required: true
   has_many :projects, dependent: :destroy
+  has_many :tasks, through: :projects
   has_many :shared_workspaces
   has_many :members, through: :shared_workspaces, source: :user
 
-  scope :order_desc, -> { order(id: :desc) }
+  scope :order_asc, -> { order(id: :asc) }
   scope :search_workspaces, -> (search) { select('workspaces.id, workspaces.name').where("name ILIKE ?", "%#{search}%").order(name: :asc).limit(10) }
 
   validates :name, presence: true, length: { maximum: 250 }
