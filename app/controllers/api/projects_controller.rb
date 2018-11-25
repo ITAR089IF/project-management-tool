@@ -2,8 +2,6 @@ class Api::ProjectsController < ActionController::API
 
   def show
     @project = resource
-    @comments = @project.comments
-    @tasks = @project.tasks
   end
 
   def create
@@ -12,7 +10,7 @@ class Api::ProjectsController < ActionController::API
     if  @project.save
       render json: { status: 'SUCCESS', message: 'Project saved' }, status: :ok
     else
-      render json: @project.errors, status: :unprocessable_entity
+      render json: { status: 'ERROR', errors: @project.errors}, status: 422
     end
   end
 
@@ -22,7 +20,7 @@ class Api::ProjectsController < ActionController::API
     if @project.update(project_params)
       render json: { status: 'SUCCESS', message: 'Project updated' }, status: :ok
     else
-      render json: @project.errors, status: :unprocessable_entity
+      render json: { status: 'ERROR', errors: @project.errors}, status: 422
     end
   end
 

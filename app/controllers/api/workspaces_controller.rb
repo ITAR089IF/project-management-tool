@@ -15,7 +15,7 @@ class Api::WorkspacesController < ActionController::API
     if @workspace.save
       render json: { status: 'SUCCESS', message: 'Workspace saved' }, status: :ok
     else
-      render json: @workspace.errors, status: :unprocessable_entity
+      render json: { status: 'ERROR', errors: @workspace.errors}, status: 422
     end
   end
 
@@ -24,7 +24,7 @@ class Api::WorkspacesController < ActionController::API
     if @workspace.update(workspace_params)
       render json: { status: 'SUCCESS', message: 'Workspace updated' }, status: :ok
     else
-      render json: @workspace.errors, status: :unprocessable_entity
+      render json: { status: 'ERROR', errors: @workspace.errors}, status: 422
     end
   end
 

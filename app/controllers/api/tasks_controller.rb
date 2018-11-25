@@ -2,8 +2,6 @@ class Api::TasksController < ActionController::API
 
   def show
     @project = parent
-    @task = resource
-    @comments = @task.comments
   end
 
   def create
@@ -13,7 +11,7 @@ class Api::TasksController < ActionController::API
     if @task.save
       render json: { status: 'SUCCESS', message: 'Task saved' }, status: :ok
     else
-      render json: @task.errors, status: :unprocessable_entity
+      render json: { status: 'ERROR', errors: @task.errors}, status: 422
     end
   end
 
@@ -24,7 +22,7 @@ class Api::TasksController < ActionController::API
     if resource.update(tasks_params)
       render json: { status: 'SUCCESS', message: 'Task updated' }, status: :ok
     else
-      render json: @task.errors, status: :unprocessable_entity
+      render json: { status: 'ERROR', errors: @task.errors}, status: 422
     end
   end
 
