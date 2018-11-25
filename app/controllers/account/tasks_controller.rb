@@ -87,6 +87,7 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = @project.tasks.find(params[:id])
     @result = @task.assign!(assignee_params[:assignee], current_user)
+
     unless @task.assignee.watching?(@task)
       @task.add_watcher(@task.assignee)
     end
@@ -97,7 +98,7 @@ class Account::TasksController < Account::AccountController
   def unassign
     @project = parent
     @task = resource
-    @result = @task.update(assignee_id: nil)
+    @result = @task.update(assignee_id: nil, assigned_by_id: nil)
 
     respond_to :js
   end
@@ -121,7 +122,8 @@ class Account::TasksController < Account::AccountController
   def uncomplete
     @project = parent
     @task = resource
-    @task.update(completed_at: nil)
+    @task.update(completed_at: nil, completed_by_id: nil)
+
     respond_to :js
   end
 
