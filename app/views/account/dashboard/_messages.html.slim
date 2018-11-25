@@ -1,0 +1,10 @@
+tr.tr
+  td[colspan=2]
+    .td.has-text-weight-bold.is-size-5
+      = messages_title
+- messages.each do |message|
+  tr.tr
+    td.td
+      = message.body
+    td.td.has-text-right
+      = l message.created_at, format: :date_month_year_concise

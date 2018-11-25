@@ -17,7 +17,12 @@ class Account::TasksController < Account::AccountController
     @task = @project.tasks.build(tasks_params)
 
     if @task.save
-      redirect_to @task.section? ? account_workspace_project_path(@project.workspace_id, @project) : account_project_task_path(@project, @task)
+      if @task.section?
+        redirect_to account_workspace_project_path(@project.workspace_id, @project)
+      else
+        @task.add_watcher(current_user)
+        redirect_to account_project_task_path(@project, @task)
+      end
     else
       render :new
     end
@@ -81,7 +86,11 @@ class Account::TasksController < Account::AccountController
   def assign
     @project = parent
     @task = @project.tasks.find(params[:id])
-    @result = @task.update(assignee_id: assignee_params[:assignee])
+    @result = @task.assign!(assignee_params[:assignee], current_user)
+
+    unless @task.assignee.watching?(@task)
+      @task.add_watcher(@task.assignee)
+    end
 
     respond_to :js
   end
@@ -89,7 +98,7 @@ class Account::TasksController < Account::AccountController
   def unassign
     @project = parent
     @task = resource
-    @result = @task.update(assignee_id: nil)
+    @result = @task.update(assignee_id: nil, assigned_by_id: nil)
 
     respond_to :js
   end
@@ -105,16 +114,16 @@ class Account::TasksController < Account::AccountController
   def complete
     @project = parent
     @task = resource
-    @task.update(completed_at: Time.now)
-    respond_to :js
-    TasksMailer.task_completed(@task, current_user).deliver_later
-  end
+    @task.complete!(current_user)
 
+    respond_to :js
+  end
 
   def uncomplete
     @project = parent
     @task = resource
-    @task.update(completed_at: nil)
+    @task.update(completed_at: nil, completed_by_id: nil)
+
     respond_to :js
   end
 

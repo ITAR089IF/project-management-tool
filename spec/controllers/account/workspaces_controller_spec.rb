@@ -14,6 +14,7 @@ RSpec.describe Account::WorkspacesController, type: :controller do
   let!(:shared_workspace1) { create(:shared_workspace, user: user2, workspace: workspace1) }
   before do
     sign_in user
+    allow(Bitly).to receive_message_chain(:client, :shorten, :short_url) { 'http://bit.ly/1111111' }
   end
 
   context 'GET /workspaces' do
@@ -102,6 +103,14 @@ RSpec.describe Account::WorkspacesController, type: :controller do
       delete :destroy, params: { id: workspace.id }
 
       expect(response).to redirect_to account_workspaces_path
+    end
+  end
+
+  context '#CREATE /create_invitation_link' do
+    subject { post :create_invitation_link, params: { workspace_id: workspace.id }, format: :js }
+    it 'creates new invitation' do
+      expect{ subject }.to change(Invitation, :count).by(1)
+      expect(response).to render_template :create_invitation_link
     end
   end
 end
