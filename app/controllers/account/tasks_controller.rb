@@ -103,7 +103,7 @@ class Account::TasksController < Account::AccountController
     redirect_to account_project_task_path(@project, @task)
   end
 
-  def complete
+  def toggle_complete
     @project = parent
     @task = resource
     if @task.pending?
@@ -114,16 +114,7 @@ class Account::TasksController < Account::AccountController
     ActionCable.server.broadcast "project_#{@project.id}", { id: @project.id,
                                                             task_id: @task.id,
                                                             task: render_task(@project, @task) }
-    # respond_to :js
   end
-
-  # def uncomplete
-  #   @project = parent
-  #   @task = resource
-  #   @task.update(completed_at: nil)
-  #
-  #   # respond_to :js
-  # end
 
   def report
     pdf = ProjectTasksPdfReport.new(parent.name, collection.this_week)
@@ -165,6 +156,6 @@ class Account::TasksController < Account::AccountController
   end
 
   def render_task(project, task)
-    render(partial: 'account/projects/show_tasks', locals: { project: project, task: task })
+    render(partial: 'account/projects/show_task', locals: { project: project, task: task })
   end
 end

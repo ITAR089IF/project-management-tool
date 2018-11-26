@@ -37,8 +37,7 @@ Rails.application.routes.draw do
       resources :tasks, except: [:index] do
         member do
           put :move
-          patch :complete
-          patch :uncomplete
+          patch :toggle_complete
           patch :watch
           get :choose_assignee
           post :assign

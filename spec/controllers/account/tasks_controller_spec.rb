@@ -95,18 +95,19 @@ RSpec.describe Account::TasksController, type: :controller do
     end
   end
 
-  context 'PATCH /:complete' do
+  context 'PATCH /:toggle_complete' do
     it 'marks task as completed' do
       expect(project.tasks.complete.count).to eq 1
-      patch :complete, params: { project_id: project.id, id: task1.id }, format: :js
+      patch :toggle_complete, params: { project_id: project.id, id: task1.id }, format: :js
       expect(project.tasks.complete.count).to eq 2
     end
   end
 
-  context 'PATCH /:uncomplete' do
+  context 'PATCH /:toggle_complete' do
     it 'marks task as uncompleted' do
       expect(project.tasks.complete.count).to eq 1
-      patch :uncomplete, params: { project_id: project.id, id: task3.id }, format: :js
+      patch :toggle_complete, params: { project_id: project.id, id: task3.id }, format: :js
+
       expect(project.tasks.complete.count).to eq 0
     end
   end
