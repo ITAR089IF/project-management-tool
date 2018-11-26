@@ -105,6 +105,27 @@ RSpec.describe Account::TasksController, type: :controller do
     end
   end
 
+  context 'GET /projects/:project_id/edit' do
+    it { expect(get :edit, params: { project_id: project.id, id: task1.id }).to be_successful }
+  end
+
+  context 'PUT /perojecs/:project_id/tasks/:id' do
+    it 'should update task' do
+      put :update, params: {
+        project_id: project.id,
+        id: task1.id,
+        task: {
+          title: 'Some text'
+        }
+      }
+
+      task1.reload
+
+      expect(response).to redirect_to account_project_task_path(project, task1)
+      expect(task1.title).to eq 'Some text'
+    end
+  end
+
   context 'PATCH /:complete' do
     it 'marks task as completed' do
       expect(project.tasks.complete.count).to eq 1
