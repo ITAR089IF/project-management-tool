@@ -33,7 +33,6 @@ $color: #566473;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 
-
     &:after {
       border-color: $color;
       transform: rotate(-45deg);
@@ -55,6 +54,10 @@ $color: #566473;
 
   .navbar-dropdown .navbar-item {
     border-radius: 0;
+
+    .level {
+      width: 100%;
+    }
   }
 
   .navbar-link {
@@ -63,5 +66,15 @@ $color: #566473;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .navbar-workspaces {
+    max-height: 132px;
+    overflow-y: auto;
+    overflow-x: none;
+
+    .navbar-item:hover {
+      background-color: whitesmoke;
+    }
   }
 }
