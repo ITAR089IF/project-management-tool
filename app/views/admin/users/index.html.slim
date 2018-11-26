@@ -5,7 +5,7 @@
       .title
         | All users
   - @users.each do |user|
-    - if user != current_user
+    - if (user != current_user && user.role != "admin")
       .level
         .level-left
           .title

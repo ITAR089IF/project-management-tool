@@ -58,6 +58,7 @@ RSpec.describe Admin::UsersController, type: :controller do
     context 'GET #show' do
       it 'should show user page' do
         get :show, params: { id: user.id }
+        expect(response).to render_template(:show)
         expect(response).to be_successful
       end
     end

@@ -3,13 +3,16 @@
     .title.has-text-centered Profile Settings
     figure.container.image.is-128x128
       = profile_avatar(@user)
-    .p.left Full name:
+    .p.has-text-weight-semibold Full name:
     = @user.full_name
-    .p Email:
+    .p.has-text-weight-semibold Email:
     = @user.email
-    .p Job role:
+    .p.has-text-weight-semibold Job role:
     = @user.job_role
-    .p Role:
+    .p.has-text-weight-semibold Role:
     = @user.role
-    .p About:
+    .p.has-text-weight-semibold About:
     = @user.about
+    .p.has-text-weight-semibold Workspace:
+    - @user.available_workspaces.each do |workspace|
+      .p = workspace.name
