@@ -1,9 +1,9 @@
-.level class="task_#{task.id} #{'pending' if task.pending?}"
+.level class="task_#{task.id}"
   .level-left
     - if !task.section?
       .level-item
         = link_to toggle_complete_account_project_task_path(project, task),
-          class: 'change_status', method: :patch, remote: true do
+          method: :patch, remote: true do
           - if task.pending?
             = fa_icon 'check-circle-o', class: 'has-text-grey-light'
           - else
