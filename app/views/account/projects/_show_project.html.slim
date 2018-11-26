@@ -1,0 +1,16 @@
+.column.is-2 data-id="#{project.id}"
+  .card.project
+    = link_to account_workspace_project_path(workspace, project) do
+      header.card-header
+        p.card-header-title.is-centered
+          = project.name
+      .card-content
+        = image_tag('project.svg', class: 'image')
+    footer.card-footer
+      = link_to edit_account_workspace_project_path(workspace, project),
+        remote: true, class: "card-footer-item" do
+          = fa_icon "pencil-square-o"
+      = link_to account_workspace_project_path(workspace, project),
+        method: :delete, remote: true, class: "card-footer-item",
+        data: { confirm: "Are you sure?" } do
+          = fa_icon "trash-o"

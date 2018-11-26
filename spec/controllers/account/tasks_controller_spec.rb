@@ -50,6 +50,16 @@ RSpec.describe Account::TasksController, type: :controller do
 
       expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence, description: Faker::Lorem.paragraph }}}.to change(Task, :count).by(1)
     end
+
+    it 'should add current_user to watchers tasks' do
+      post :create, params: {
+        project_id: project.id,
+        task: {
+          title: Faker::Lorem.sentence
+        }
+      }
+      expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence }}}.to change(user.followed_tasks, :count).by(1)
+    end
   end
 
   describe "GET #edit" do
@@ -95,11 +105,34 @@ RSpec.describe Account::TasksController, type: :controller do
     end
   end
 
+  context 'GET /projects/:project_id/edit' do
+    it { expect(get :edit, params: { project_id: project.id, id: task1.id }).to be_successful }
+  end
+
+  context 'PUT /perojecs/:project_id/tasks/:id' do
+    it 'should update task' do
+      put :update, params: {
+        project_id: project.id,
+        id: task1.id,
+        task: {
+          title: 'Some text'
+        }
+      }
+
+      task1.reload
+
+      expect(response).to redirect_to account_project_task_path(project, task1)
+      expect(task1.title).to eq 'Some text'
+    end
+  end
+
   context 'PATCH /:complete' do
     it 'marks task as completed' do
       expect(project.tasks.complete.count).to eq 1
       patch :complete, params: { project_id: project.id, id: task1.id }, format: :js
+      task1.reload
       expect(project.tasks.complete.count).to eq 2
+      expect(task1.completed_by_id).to eq user.id
     end
   end
 
@@ -201,12 +234,21 @@ RSpec.describe Account::TasksController, type: :controller do
       task1.reload
       expect(response).to render_template :assign
       expect(task1.assignee).to eql user1
+      expect(task1.assigned_by_id).to eq user.id
     end
+
     it 'reassign' do
       post :assign, params: { task: { assignee: user1.id }, id: task2.id, project_id: project.id }, format: :js, xhr: true
       task2.reload
       expect(response).to render_template :assign
       expect(task2.assignee).to eql user1
+      expect(task2.assigned_by_id).to eq user.id
+    end
+
+    it 'assignee user start follow task' do
+      post :assign, params: { task: { assignee: user1.id }, id: task1.id, project_id: project.id }, format: :js, xhr: true
+      task1.reload
+      expect(task1.watchers).to include(task1.assignee)
     end
   end
 
@@ -214,6 +256,7 @@ RSpec.describe Account::TasksController, type: :controller do
     it 'delete assignee for task'  do
       delete :unassign, params: { project_id: project.id, id: task2.id }, format: :js
       expect(task2.reload.assignee).to be_nil
+      expect(task2.reload.assigned_by_id).to be_nil
       expect(response).to render_template :unassign
     end
   end
