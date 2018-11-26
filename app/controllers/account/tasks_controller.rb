@@ -93,7 +93,7 @@ class Account::TasksController < Account::AccountController
     end
 
     TasksMailer.task_assign_to_user_email(@task).deliver_later if @task.saved_change_to_assignee_id?
-    
+
     respond_to :js
   end
 
