@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_23_130644) do
+ActiveRecord::Schema.define(version: 2018_11_25_214849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,15 @@ ActiveRecord::Schema.define(version: 2018_11_23_130644) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "contacts", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "phone"
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -60,11 +69,13 @@ ActiveRecord::Schema.define(version: 2018_11_23_130644) do
   end
 
   create_table "invitations", force: :cascade do |t|
-    t.integer "invitor_id"
-    t.integer "workspace_id"
+    t.bigint "invitor_id"
+    t.bigint "workspace_id"
     t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["invitor_id"], name: "index_invitations_on_invitor_id"
+    t.index ["workspace_id"], name: "index_invitations_on_workspace_id"
   end
 
   create_table "messages", force: :cascade do |t|
