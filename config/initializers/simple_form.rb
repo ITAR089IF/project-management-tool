@@ -26,7 +26,7 @@ SimpleForm.setup do |config|
   end
 
   config.wrappers :dropdown do |b|
-    b.use :input
+    b.use :input, class: "select", wrap_with: { class: 'select' }
   end
 
   config.wrappers :textarea, class: "field", error_class: :field_with_errors do |b|
