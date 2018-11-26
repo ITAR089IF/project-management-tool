@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     resources :search, only: [:index], defaults: { format: :json }
 
     resource :profile, only: [:edit, :update]
-    resources :workspaces do
+    resources :workspaces, except: [:index] do
       post :create_invitation_link
       resources :members, only: [:new, :create, :destroy] do
         collection do
@@ -38,8 +38,7 @@ Rails.application.routes.draw do
       resources :tasks, except: [:index] do
         member do
           put :move
-          patch :complete
-          patch :uncomplete
+          patch :toggle_complete
           patch :watch
           get :choose_assignee
           post :assign
@@ -62,4 +61,6 @@ Rails.application.routes.draw do
       post :stop_impersonating, on: :collection
     end
   end
+
+  mount ActionCable.server => '/cable'
 end

@@ -63,10 +63,10 @@
               = render "shared/navbar_user_messages_counter"
             .navbar-dropdown
               = link_to "Inbox", account_inbox_path, class: 'navbar-item'
-              = link_to "My workspaces", account_workspaces_path, class: 'navbar-item'
-              - current_user.available_workspaces.each do |workspace|
-                = link_to workspace.name, account_workspace_path(workspace), class: 'navbar-item'
+              .navbar-workspaces
+                = render 'account/workspaces/show_workspaces', workspaces: current_user.available_workspaces
+              = link_to 'Add Workspace', new_account_workspace_path, class: 'navbar-item', remote: true
               hr.navbar-divider
-                = link_to "My Profile Settings...", edit_account_profile_path, class: 'navbar-item'
+              = link_to "My Profile Settings...", edit_account_profile_path, class: 'navbar-item'
               hr.navbar-divider
-                = link_to 'Log out', destroy_user_session_path, method: :delete, class: 'navbar-item'
+              = link_to 'Log out', destroy_user_session_path, method: :delete, class: 'navbar-item'

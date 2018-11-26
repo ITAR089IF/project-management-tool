@@ -1,5 +1,5 @@
 - title "#{@workspace.name}: #{@project.name}"
-.container
+.container data-project-id = "#{@project.id}"
   .level
     .level-left
       .level-item
@@ -14,19 +14,11 @@
       .level-item
         = link_to "Add Section", new_account_project_task_path(@project, section: true), class: "button is-link"
   - if @project.tasks.any?
-    .conteiner.box
+    .conteiner.box.tasks
       .title
         |  To Do List:
-      #incomplete_tasks
-        - @incomplete_tasks.each do |task|
-          = render '/account/projects/show_tasks', task: task, project: @project
-
-    .conteiner.box
-      .title
-        |  Сompleted Tasks:
-      #complete_tasks
-        - @complete_tasks.each do |task|
-          = render '/account/projects/show_tasks', task: task, project: @project
+      - @tasks.each do |task|
+        = render '/account/projects/show_task', task: task, project: @project
     .content
       h3 Comments
       .new-comment

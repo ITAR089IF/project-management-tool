@@ -1,5 +1,5 @@
 .email-table {
-  display:  table;
+  display: table;
   width: 270px;
   padding: 40px;
   margin: 50px auto;
@@ -15,8 +15,18 @@
 .email-table {
   .div-row {
     .div-cell {
-      display:table-cell;
+      display: table-cell;
       width: 195px;
+    }
+  }
+}
+
+.email-table {
+  .div-row {
+    .simle_format_style {
+      p {
+        margin: 0;
+      }
     }
   }
 }

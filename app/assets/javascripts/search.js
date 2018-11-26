@@ -1,5 +1,7 @@
 document.addEventListener('turbolinks:load', () => {
-  if(document.search) {
+  var search = document.getElementById('search');
+
+  if(search) {
     globalSearch();
     onFocusChange();
   }
