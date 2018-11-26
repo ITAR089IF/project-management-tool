@@ -92,6 +92,8 @@ class Account::TasksController < Account::AccountController
       @task.add_watcher(@task.assignee)
     end
 
+    TasksMailer.task_assign_to_user_email(@task).deliver_later if @task.saved_change_to_assignee_id?
+    
     respond_to :js
   end
 
@@ -107,7 +109,6 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = resource
     @task.files.find(params[:attachment_id]).purge
-
     redirect_to account_project_task_path(@project, @task)
   end
 
