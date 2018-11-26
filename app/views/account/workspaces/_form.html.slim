@@ -1,4 +1,8 @@
-= simple_form_for [:account, @workspace] do |f|
+h2.title.has-text-centered
+  - if workspace.new_record?
+    | New Workspace
+  - else
+    | Edit Workspace
+= simple_form_for [:account, workspace], remote: true do |f|
   = f.input :name, placeholder: 'Name', wrapper: :bulma_input, required: true
   = f.submit 'Save', class: 'button is-link'
-  = link_to 'Back', account_workspaces_path(@workspace), class: 'button is-text'

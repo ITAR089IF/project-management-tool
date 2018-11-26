@@ -1,6 +1,10 @@
 document.addEventListener('turbolinks:load', () => {
-  globalSearch();
-  onFocusChange();
+  var search = document.getElementById('search');
+
+  if(search) {
+    globalSearch();
+    onFocusChange();
+  }
 });
 
 function globalSearch() {
@@ -19,105 +23,103 @@ function globalSearch() {
   var noContentBlock = document.getElementById('no-content-block');
   var element;
 
-  if (search) {
-    search.addEventListener('keyup', e => {
-      if(!BLOCK_KEYS.includes(e.keyCode)) {
-        var timer;
-        element = -1;
+  search.addEventListener('keyup', e => {
+    if(!BLOCK_KEYS.includes(e.keyCode)) {
+      var timer;
+      element = -1;
 
-        clearTimeout(timer)
-        timer = setTimeout(() => {
-          if(e.target.value) {
-            searchResults.style.display = 'block';
+      clearTimeout(timer)
+      timer = setTimeout(() => {
+        if(e.target.value) {
+          searchResults.style.display = 'block';
 
-            fetch(Routes.account_search_index_path({ format: 'json', search: e.target.value }))
-              .then(response => { return response.json() })
-              .then(response => {
-                display(response.workspaces, workspacesBlock, workspaces, 'WORKSPACES', 'name');
-                display(response.projects, projectsBlock, projects, 'PROJECTS', 'name');
-                display(response.tasks, tasksBlock, tasks, 'TASKS', 'title');
+          fetch(Routes.account_search_index_path({ format: 'json', search: e.target.value }))
+            .then(response => { return response.json() })
+            .then(response => {
+              display(response.workspaces, workspacesBlock, workspaces, 'WORKSPACES', 'name');
+              display(response.projects, projectsBlock, projects, 'PROJECTS', 'name');
+              display(response.tasks, tasksBlock, tasks, 'TASKS', 'title');
 
-                if(response.workspaces.length <= 0 && response.projects.length <= 0 && response.tasks.length <= 0) {
-                  noContentBlock.style.display = 'block';
-                } else {
-                  noContentBlock.style.display = 'none';
-                }
-              })
-              .catch(error => {
-                console.log(error);
-              });
-          } else {
-            workspaces.innerHTML = '';
-            projects.innerHTML = '';
-            tasks.innerHTML = '';
+              if(response.workspaces.length <= 0 && response.projects.length <= 0 && response.tasks.length <= 0) {
+                noContentBlock.style.display = 'block';
+              } else {
+                noContentBlock.style.display = 'none';
+              }
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        } else {
+          workspaces.innerHTML = '';
+          projects.innerHTML = '';
+          tasks.innerHTML = '';
 
-            searchResults.style.display = 'none';
-            workspacesBlock.style.display = 'none';
-            projectsBlock.style.display = 'none';
-            tasksBlock.style.display = 'none';
+          searchResults.style.display = 'none';
+          workspacesBlock.style.display = 'none';
+          projectsBlock.style.display = 'none';
+          tasksBlock.style.display = 'none';
+        }
+      }, 300);
+    }
+  })
+
+  search.addEventListener('keydown', e => {
+    var searchItems = document.getElementsByClassName('search-item');
+
+    if ((e.keyCode == 38 || e.keyCode == 40) && searchItems.length > 0) {
+      e.preventDefault();
+
+      if (getSelectedElement()) {
+        element = getSelectedElement();
+      }
+
+      switch(e.keyCode) {
+        case 38:
+          if (element == 0) {
+            searchItems[element].classList.remove('select-item');
           }
-        }, 300);
+
+          if (element <= 0) {
+            element = searchItems.length;
+          }
+
+          element -= 1;
+
+          if (element + 1 < searchItems.length) {
+            searchItems[element + 1].classList.remove('select-item');
+          }
+
+          searchItems[element].classList.add('select-item');
+          searchItems[element].scrollIntoView(false);
+          break;
+
+        case 40:
+           if (element == 0 || element == searchItems.length - 1) {
+            searchItems[element].classList.remove('select-item');
+          }
+
+          if(element >= searchItems.length - 1) {
+            element = -1;
+          }
+
+          element += 1;
+
+          if (element - 1 > 0) {
+            searchItems[element - 1].classList.remove('select-item');
+          }
+
+          searchItems[element].classList.add('select-item');
+          searchItems[element].scrollIntoView(false);
+          break;
       }
-    })
+    }
 
-    search.addEventListener('keydown', e => {
-      var searchItems = document.getElementsByClassName('search-item');
+    if (e.keyCode == 13) {
+      e.preventDefault();
 
-      if ((e.keyCode == 38 || e.keyCode == 40) && searchItems.length > 0) {
-        e.preventDefault();
-
-        if (getSelectedElement()) {
-          element = getSelectedElement();
-        }
-
-        switch(e.keyCode) {
-          case 38:
-            if (element == 0) {
-              searchItems[element].classList.remove('select-item');
-            }
-
-            if (element <= 0) {
-              element = searchItems.length;
-            }
-
-            element -= 1;
-
-            if (element + 1 < searchItems.length) {
-              searchItems[element + 1].classList.remove('select-item');
-            }
-
-            searchItems[element].classList.add('select-item');
-            searchItems[element].scrollIntoView(false);
-            break;
-
-          case 40:
-            if (element == 0 || element == searchItems.length - 1) {
-              searchItems[element].classList.remove('select-item');
-            }
-
-            if(element >= searchItems.length - 1) {
-              element = -1;
-            }
-
-            element += 1;
-
-            if (element - 1 > 0) {
-              searchItems[element - 1].classList.remove('select-item');
-            }
-
-            searchItems[element].classList.add('select-item');
-            searchItems[element].scrollIntoView(false);
-            break;
-        }
-      }
-
-      if (e.keyCode == 13) {
-        e.preventDefault();
-
-        window.location.href = getUrl();
-      }
-    })
-  }
+      window.location.href = getUrl();
+    }
+  })
 }
 
 function onFocusChange() {

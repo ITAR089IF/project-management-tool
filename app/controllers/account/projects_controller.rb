@@ -60,6 +60,6 @@ class Account::ProjectsController < Account::AccountController
   end
 
   def project_params
-    params.require(:project).permit(:name).merge(users: [current_user])
+    params.require(:project).permit(:name, :description).merge(users: [current_user])
   end
 end

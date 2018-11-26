@@ -14,7 +14,7 @@ html
       = render 'shared/navbar'
     .section.is-fullheight.site-content
       = yield
+      = render 'shared/modal_form'
     .site-footer
       = render 'shared/footer'
-
     = any_login_here if defined?(AnyLogin)
