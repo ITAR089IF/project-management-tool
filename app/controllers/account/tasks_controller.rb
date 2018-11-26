@@ -112,20 +112,17 @@ class Account::TasksController < Account::AccountController
     redirect_to account_project_task_path(@project, @task)
   end
 
-  def complete
+  def toggle_complete
     @project = parent
     @task = resource
-    @task.complete!(current_user)
-
-    respond_to :js
-  end
-
-  def uncomplete
-    @project = parent
-    @task = resource
-    @task.update(completed_at: nil, completed_by_id: nil)
-
-    respond_to :js
+    if @task.pending?
+      @task.complete!(current_user)
+    else
+      @task.update(completed_at: nil)
+    end
+    ActionCable.server.broadcast "project_#{@project.id}", { id: @project.id,
+                                                            task_id: @task.id,
+                                                            task: render_task(@project, @task) }
   end
 
   def report
@@ -165,5 +162,9 @@ class Account::TasksController < Account::AccountController
 
   def assignee_params
     params.require(:task).permit(:assignee)
+  end
+
+  def render_task(project, task)
+    render(partial: 'account/projects/show_task', locals: { project: project, task: task })
   end
 end
