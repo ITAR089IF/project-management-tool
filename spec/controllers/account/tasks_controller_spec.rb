@@ -111,7 +111,7 @@ RSpec.describe Account::TasksController, type: :controller do
       patch :toggle_complete, params: { project_id: project.id, id: task1.id }, format: :js
 
       expect(project.tasks.complete.count).to eq 2
-      expect(task1.completed_by_id).to eq user.id
+      expect(task1.reload.completed_by_id).to eq user.id
     end
   end
 
@@ -121,7 +121,7 @@ RSpec.describe Account::TasksController, type: :controller do
       patch :toggle_complete, params: { project_id: project.id, id: task3.id }, format: :js
 
       expect(project.tasks.complete.count).to eq 0
-      expect(task1.completed_by_id).to eq user.id
+      expect(task3.completed_by_id).to eq nil
     end
   end
 
