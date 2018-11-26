@@ -19,6 +19,8 @@
           = link_to "Product", product_path, class: 'button'
         .navbar-item
           = link_to "Pricing", pricing_path, class: 'button'
+        .navbar-item
+          = link_to "Contact us", new_contact_path, class: 'button'
       - if user_signed_in?
     .navbar-end
       .navbar-item

@@ -1,0 +1,22 @@
+.email-table
+  .div-row
+    = link_to image_tag("email.jpeg"), root_url
+  .div-row
+    h3 Message:
+  .div-row
+    = simple_format @contact.message
+  .div-row
+    .div-cell
+      h3 Name:
+    .div-cell
+      = simple_format @contact.name
+  .div-row
+    .div-cell
+      h3 Email:
+    .div-cell
+      = simple_format @contact.email
+  .div-row
+    .div-cell
+      h3 Phone:
+    .div-cell
+      = simple_format @contact.phone

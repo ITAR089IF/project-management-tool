@@ -1,0 +1,8 @@
+- title "Contact us"
+.hero
+  .hero-body
+    .container.has-text-centered
+      .column.is-6.is-offset-3.box
+        .title Contact us
+        #form_contact
+          = render(partial: 'contacts_form', object: @contact)
