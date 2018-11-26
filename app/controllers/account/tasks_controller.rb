@@ -128,14 +128,11 @@ class Account::TasksController < Account::AccountController
   end
 
   def new_tasks_from_calendar
-    @project = Project.find(params[:projects_values][:project_id])
+    @project = Project.find(params[:projects_values][:project])
     @date = params[:projects_values][:date]
-    if valid_date?(Date.parse(@date))
-      @task = @project.tasks.build
-      respond_to :js
-    else
-      ap '???'
-    end
+    @task = @project.tasks.build
+
+    respond_to :js
   end
 
   private

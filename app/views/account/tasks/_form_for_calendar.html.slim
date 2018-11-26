@@ -1,7 +1,7 @@
 = simple_form_for :projects_values, url: new_tasks_from_calendar_account_tasks_path, remote: true do |f|
-  = f.input :workspace_id, collection: workspaces_wiht_pojects, wrapper: :dropdown,
-                          input_html: { id: 'workspace_field' }
-  = f.input :project_id, collection: workspaces_wiht_pojects, as: :grouped_select,
+  = f.input :workspace, collection: available_workspaces, wrapper: :dropdown,
+                      input_html: { id: 'workspace_field' }
+  = f.input :project, collection: available_workspaces, as: :grouped_select,
                       group_method: :projects, group_label_method: :name, wrapper: :dropdown,
                       input_html: { id: 'project_field' }
   = f.hidden_field :date,  id: 'date_field'

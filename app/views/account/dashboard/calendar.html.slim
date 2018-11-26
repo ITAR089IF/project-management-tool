@@ -2,9 +2,11 @@
   .title Calendar:
   = month_calendar events: @user_tasks do |date, tasks|
     = date.day
+    = link_to '#', class: 'show-modal date-button', data: { date: "#{date.strftime("%F")}"} do
+      = fa_icon "plus", class: 'is-pulled-right has-text-grey-light'
     ul.tasks-list
       - tasks.each do |task|
-        li
+        li.ad
           = link_to account_project_task_url(task.project, task), class: "calendar-task" do
             - if task.assignee.present?
               - if task.assignee.with_avatar?
