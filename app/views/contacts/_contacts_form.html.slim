@@ -1,4 +1,4 @@
-= simple_form_for contacts_form, html: {class: 'form form-horizontal', id: 'new_contact'}, remote: true do |f|
+= simple_form_for contacts_form, html: { id: 'new_contact'}, remote: true do |f|
     = f.input :name, required: true, autofocus: true, label: false,
               input_html: { placeholder:'Name'}, wrapper: :bulma_input
     = f.input :email, required: true, label: false,

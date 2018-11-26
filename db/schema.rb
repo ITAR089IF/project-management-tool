@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 2018_11_25_214849) do
     t.string "name"
     t.string "email"
     t.string "phone"
-    t.string "message"
+    t.text "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
