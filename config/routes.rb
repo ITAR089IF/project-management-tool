@@ -34,9 +34,10 @@ Rails.application.routes.draw do
 
     resources :projects, only: [] do
       concerns :commentable
+
       resources :tasks, except: [:index] do
         member do
-          put :move
+          patch :move
           patch :complete
           patch :uncomplete
           patch :watch

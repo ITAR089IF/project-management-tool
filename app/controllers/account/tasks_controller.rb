@@ -59,8 +59,9 @@ class Account::TasksController < Account::AccountController
     @task = resource
     @incomplete_tasks = @project.tasks.incomplete.row_order_asc
     @complete_tasks = @project.tasks.complete.row_order_asc
-    @task.update(task_movement_params)
-    respond_to(:js)
+    params[:move][:move_positions].to_i.times do
+      @task.update(row_order_position: params[:move][:move_option].to_sym)
+    end
   end
 
   def watch
@@ -152,10 +153,6 @@ class Account::TasksController < Account::AccountController
 
   def tasks_params
     params.require(:task).permit(:title, :description, :section, :due_date, :completed_at, files: [])
-  end
-
-  def task_movement_params
-    params.require(:task).permit(:row_order_position)
   end
 
   def section_params

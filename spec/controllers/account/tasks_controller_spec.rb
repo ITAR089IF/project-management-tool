@@ -123,33 +123,35 @@ RSpec.describe Account::TasksController, type: :controller do
     end
   end
 
-  context 'PUT /:move' do
+  context 'PATCH /:move' do
     it 'should move task down' do
-      put :move, params: {
+      patch :move, params: {
         project_id: project.id,
         id: project.tasks.first.id,
-        task: {
-          row_order_position: :down
+        move: {
+        move_option: :down,
+        move_positions: 2
         }
       },
       format: :js
 
       expect(response).to render_template :move
-      expect(project.tasks.row_order_asc).to eq [task2, task1, task3]
+      expect(project.tasks.row_order_asc).to eq [task2, task3, task1]
     end
 
     it 'should move task up' do
-      put :move, params: {
+      patch :move, params: {
         project_id: project.id,
         id: project.tasks.last.id,
-        task: {
-          row_order_position: :up
+        move: {
+        move_option: :up,
+        move_positions: 2
         }
       },
       format: :js
 
       expect(response).to render_template :move
-      expect(project.tasks.row_order_asc).to eq [task1, task3, task2]
+      expect(project.tasks.row_order_asc).to eq [task3, task1, task2]
     end
   end
 
