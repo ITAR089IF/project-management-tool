@@ -1,4 +1,4 @@
-.level class="task_#{task.id}" data-project-id="#{project.id}" data-task-id="#{task.id}"
+.level class="task_#{task.id}"
   .level-left
     - if !task.section?
       .level-item
@@ -8,8 +8,14 @@
             = fa_icon 'check-circle-o', class: 'has-text-grey-light'
           - else
             = fa_icon 'check-circle-o', class: 'has-text-success'
-    .level-item.glyphicon-move
+    .level-item
       = link_to task.title, task.section? ? '#' : account_project_task_path(project, task), class: task_link_class(task)
+    .level-item
+      = link_to "Up", move_account_project_task_path(project, task,
+        task: { row_order_position: :up}), method: :put, class: "button is-small left", remote: true
+    .level-item
+      = link_to "Down", move_account_project_task_path(project, task,
+        task: { row_order_position: :down }), method: :put, class: "button is-small left", remote: true
   .level-right
     - if task.pending?
       .level-item

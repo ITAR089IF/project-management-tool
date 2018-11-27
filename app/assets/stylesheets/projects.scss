@@ -8,13 +8,6 @@
   line-height: 24px;
 }
 
-.glyphicon-move:before {
-  content: url('cursor-move.png');
-  cursor: -webkit-grabbing;
-  padding: 5px;
-  line-height: 24px;
-}
-
 .user-info {
   .image {
     &.is-rounded {

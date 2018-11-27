@@ -105,53 +105,74 @@ RSpec.describe Account::TasksController, type: :controller do
     end
   end
 
-  context 'PATCH /:complete' do
+  context 'PATCH /:toggle_complete' do
     it 'marks task as completed' do
       expect(project.tasks.complete.count).to eq 1
-      patch :complete, params: { project_id: project.id, id: task1.id }, format: :js
-      task1.reload
+      patch :toggle_complete, params: { project_id: project.id, id: task1.id }, format: :js
+
       expect(project.tasks.complete.count).to eq 2
-      expect(task1.completed_by_id).to eq user.id
+      expect(task1.reload.completed_by_id).to eq user.id
     end
   end
 
-  context 'PATCH /:uncomplete' do
+  context 'PATCH /:toggle_complete' do
     it 'marks task as uncompleted' do
       expect(project.tasks.complete.count).to eq 1
-      patch :uncomplete, params: { project_id: project.id, id: task3.id }, format: :js
+      patch :toggle_complete, params: { project_id: project.id, id: task3.id }, format: :js
+
       expect(project.tasks.complete.count).to eq 0
+      expect(task3.completed_by_id).to eq nil
     end
   end
 
-  context 'PATCH /:move' do
+  context 'GET /projects/:project_id/edit' do
+    it { expect(get :edit, params: { project_id: project.id, id: task1.id }).to be_successful }
+  end
+
+  context 'PUT /perojecs/:project_id/tasks/:id' do
+    it 'should update task' do
+      put :update, params: {
+        project_id: project.id,
+        id: task1.id,
+        task: {
+          title: 'Some text'
+        }
+      }
+
+      task1.reload
+
+      expect(response).to redirect_to account_project_task_path(project, task1)
+      expect(task1.title).to eq 'Some text'
+    end
+  end
+
+  context 'PUT /:move' do
     it 'should move task down' do
-      patch :move, params: {
+      put :move, params: {
         project_id: project.id,
         id: project.tasks.first.id,
-        move: {
-        move_option: :down,
-        move_positions: 2
+        task: {
+          row_order_position: :down
         }
       },
       format: :js
 
       expect(response).to render_template :move
-      expect(project.tasks.row_order_asc).to eq [task2, task3, task1]
+      expect(project.tasks.row_order_asc).to eq [task2, task1, task3]
     end
 
     it 'should move task up' do
-      patch :move, params: {
+      put :move, params: {
         project_id: project.id,
         id: project.tasks.last.id,
-        move: {
-        move_option: :up,
-        move_positions: 2
+        task: {
+          row_order_position: :up
         }
       },
       format: :js
 
       expect(response).to render_template :move
-      expect(project.tasks.row_order_asc).to eq [task3, task1, task2]
+      expect(project.tasks.row_order_asc).to eq [task1, task3, task2]
     end
   end
 
