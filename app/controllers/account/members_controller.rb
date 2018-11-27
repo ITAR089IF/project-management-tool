@@ -27,6 +27,35 @@ class Account::MembersController < Account::AccountController
     end
   end
 
+  def greeting_new_member
+    @invitation = Invitation.find_by(token: params[:token], workspace_id: params[:workspace_id])
+
+    if @invitation.nil? || @invitation.workspace.nil?
+      redirect_to root_path, notice: 'Sorry, we cannot identify provided link or workspace was deleted.'
+      return
+    end
+
+    if @invitation.expired?
+      redirect_to root_path, notice: 'Sorry, this link is no longer valid'
+    else
+      @workspace = @invitation.workspace
+      @invitor = @invitation.invitor
+      @token = @invitation.token
+    end
+  end
+
+  def create_thought_link
+    if @invitation = Invitation.find_by(workspace_id: params[:workspace_id], token: params[:token])
+      @workspace = @invitation.workspace
+      @shared_workspace = @workspace.shared_workspaces.build(user: current_user)
+      if @shared_workspace.save
+        redirect_to account_workspace_path(@workspace)
+      end
+    else
+      redirect_to root_path, notice: 'Something went wrong! Please, try again later.'
+    end
+  end
+
   private
 
   def collection
