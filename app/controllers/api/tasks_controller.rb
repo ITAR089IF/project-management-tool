@@ -1,7 +1,7 @@
 class Api::TasksController < ActionController::API
 
   def show
-    @project = parent
+    @task = resource
   end
 
   def create
