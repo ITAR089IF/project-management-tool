@@ -68,8 +68,8 @@
               = link_to 'Add Workspace', new_account_workspace_path, class: 'navbar-item', remote: true
               - if (current_user.role == "admin")
                 hr.navbar-divider
-                  = link_to "All user", admin_users_path, class: 'navbar-item'
+                  = link_to "All users", admin_users_path, class: 'navbar-item'
               hr.navbar-divider
-              = link_to "My Profile Settings...", edit_account_profile_path, class: 'navbar-item'
+              = link_to "My Profile Settings", edit_account_profile_path, class: 'navbar-item'
               hr.navbar-divider
               = link_to 'Log out', destroy_user_session_path, method: :delete, class: 'navbar-item'

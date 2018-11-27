@@ -2,9 +2,9 @@
   = f.input :avatar, label: "Select your profile avatar", wrapper: :upload_file
   = f.input :first_name, wrapper: :bulma_input, required: true, label_html: { class: "has-text-left"}
   = f.input :last_name, wrapper: :bulma_input, required: true, label_html: { class: "has-text-left"}
+  = f.input :role, collection: ["admin", "user"], include_blank: false, wrapper: :fullwidth
   = f.input :job_role, wrapper: :bulma_input, label_html: { class: "has-text-left"}
   = f.input :department, wrapper: :bulma_input, label_html: { class: "has-text-left"}
-  = f.input :role, wrapper: :bulma_input, label_html: { class: "has-text-left"}
   = f.input :about, wrapper: :textarea, label_html: { class: "has-text-left"}
   = f.submit "Update Profile", class: "button is-link"
   = link_to 'Back', admin_users_path, class: 'button is-text'
