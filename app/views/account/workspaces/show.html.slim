@@ -16,9 +16,9 @@
         | Members:
       #workspace-members
         = render 'account/members/show_user', members: @members, workspace: @workspace
-        - if @workspace.potential_members.any?
-          .button.is-fullwidth
-            = link_to 'Add new member', new_account_workspace_member_path(workspace_id: @workspace.id), remote: true
+      - if @workspace.potential_members.any?
+        .button.is-fullwidth
+          = link_to 'Add new member', new_account_workspace_member_path(workspace_id: @workspace.id), remote: true
     .column.is-four-fifths
       - if @workspace.projects.any?
         .columns.is-multiline
