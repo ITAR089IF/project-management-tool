@@ -6,7 +6,7 @@ h2.title.has-text-centered Add new member
     = f.submit 'Add member', class: 'button'
 .is-divider[data-content="OR"]
 
-.has-text-centered
+.has-text-centered.link_generator
   = link_to 'Generate invitation link', account_workspace_create_invitation_link_path(@workspace),
     method: :post, remote: true, class: 'box is-paddingless is-link button'
   
