@@ -127,12 +127,32 @@ class Account::TasksController < Account::AccountController
       disposition: 'attachment'
   end
 
-  def new_tasks_from_calendar
-    @project = Project.find(params[:projects_values][:project])
-    @date = params[:projects_values][:date]
-    @task = @project.tasks.build
+  def create_task_from_calendar
+    @project = current_user
+    @task = @project.tasks.build(tasks_params)
+
+    if @task.save
+      @task.watchers << current_user
+    end
 
     respond_to :js
+  end
+
+  def new_task_from_calendar
+    @task = Task.new
+    respond_to :js
+  end
+
+  def create
+    if task_params[:id].include?(current_user.followed_tasks.pluck(:project_id))
+      @task = @project.tasks.build(tasks_params)
+
+      if @task.save
+        @task.watchers << current_user unless @task.section?
+        redirect_to @task.section? ? account_workspace_project_path(@project.workspace_id, @project) : account_project_task_path(@project, @task)
+      else
+        render :new
+      end
   end
 
   private

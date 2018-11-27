@@ -2,11 +2,11 @@
   .title Calendar:
   = month_calendar events: @user_tasks do |date, tasks|
     = date.day
-    = link_to '#', class: 'show-modal date-button', data: { date: "#{date.strftime("%F")}"} do
+    = link_to new_task_from_calendar_account_tasks_path, class: 'show-modal date-button', remote: true do
       = fa_icon "plus", class: 'is-pulled-right has-text-grey-light'
     ul.tasks-list
       - tasks.each do |task|
-        li.ad
+        li
           = link_to account_project_task_url(task.project, task), class: "calendar-task" do
             - if task.assignee.present?
               - if task.assignee.with_avatar?
@@ -15,11 +15,4 @@
                 .is-rounded
                   = task.assignee.initials
             = task.title
-  .modal
-    .modal-background
-    .modal-content.is-2
-      .modal-form
-        .double_task_form
-          = render 'account/tasks/form_for_calendar'
-      .close.is-size-4
-        = fa_icon 'times-circle'
+  = render 'shared/modal'
