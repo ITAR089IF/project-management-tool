@@ -6,7 +6,7 @@
         | All users
   .index-margin
     - @users.each do |user|
-      - if (user != current_user && !user.admin?)
+      - if !user.admin?
         hr.navbar-divider
           .level
             .level-left
