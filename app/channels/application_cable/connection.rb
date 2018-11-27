@@ -7,12 +7,15 @@ module ApplicationCable
     end
 
     private
-      def find_verified_user
-        if verified_user = env['warden'].user
-          verified_user
-        else
-          reject_unauthorized_connection
-        end
+    
+    def find_verified_user
+      if verified_user = env['warden'].user
+        verified_user
+      else
+        reject_unauthorized_connection
       end
+    end
+
+    logger.add_tags 'ActionCable', current_user.email
   end
 end

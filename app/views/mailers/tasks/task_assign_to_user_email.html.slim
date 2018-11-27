@@ -5,20 +5,20 @@
     .title
       = link_to @task.title, account_project_task_url(@task.project, @task)
   .div-row
-    p #{@user.first_name} completed this task
+    p Task was assigned to you
   .div-row
     h1 Task Details:
   - if @task.description.present?
     .div-row DESCRIPTION:
     .div-row
-      p #{@task.description}
-  - if @task.assignee.present?
-    .div-row
-      .div-cell ASSIGNEE:
-      .div-cell
-        p #{@task.assignee.full_name}
+      .simle_format_style
+        = simple_format @task.description
   .div-row
-    .div-cell PROJECTS:
+    .div-cell ASSIGNEE:
+    .div-cell
+      p #{@task.assignee.full_name}
+  .div-row
+    .div-cell PROJECT:
     .div-cell
       p #{@task.project.name}
   .div-row

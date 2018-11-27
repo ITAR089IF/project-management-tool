@@ -1,28 +1,32 @@
 .email-table {
-  display:  table;
+  display: table;
   width: 270px;
   padding: 40px;
   margin: 50px auto;
   border: 3px solid;
   text-align: left;
   font-family: "Trebuchet MS", Helvetica, sans-serif;
-  background: url(asset-path('email-background.png'));
+  background: url(asset-path('email-background1.png'));
   background-position: right bottom;
-  background-size: 44%;
+  background-size: 50%;
   background-repeat: no-repeat;
 }
 
 .email-table {
   .div-row {
-    padding: 5px;
+    .div-cell {
+      display: table-cell;
+      width: 195px;
+    }
   }
 }
 
-.email-table{
-  .div-row{
-    .div-cell {
-      display:table-cell;
-      width: 195px;
+.email-table {
+  .div-row {
+    .simle_format_style {
+      p {
+        margin: 0;
+      }
     }
   }
 }
@@ -31,4 +35,8 @@
   font-size: 24px;
   text-align: center;
   padding: 5px;
+}
+
+p {
+  font-size: 18px;
 }
