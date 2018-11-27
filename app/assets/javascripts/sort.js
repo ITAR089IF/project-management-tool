@@ -1,5 +1,5 @@
 $(document).on('turbolinks:load', function() {
-  Sortable.create(incomplete_tasks, {
+  Sortable.create(all_tasks, {
     handle: '.glyphicon-move',
     animation: 150,
     onEnd: function(evt) {
