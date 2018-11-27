@@ -63,10 +63,6 @@ class Task < ApplicationRecord
 
   alias_attribute :start_time, :due_date
 
-  # after_initialize do |task|
-  #   puts "You have initialized a task!"
-  # end
-
   def pending?
     !completed_at?
   end
