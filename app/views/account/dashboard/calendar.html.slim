@@ -2,7 +2,7 @@
   .title Calendar:
   = month_calendar events: @user_tasks do |date, tasks|
     = date.day
-    = link_to new_task_from_calendar_account_tasks_path, class: 'show-modal date-button', remote: true do
+    = link_to new_task_from_calendar_account_tasks_path, method: :post, class: 'show-modal date-button', remote: true do
       = fa_icon "plus", class: 'is-pulled-right has-text-grey-light'
     ul.tasks-list
       - tasks.each do |task|

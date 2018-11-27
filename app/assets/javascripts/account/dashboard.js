@@ -31,5 +31,5 @@ $( document ).on('turbolinks:load', function() {
   //     $('#project_field').parent().show();
   //     $('#date_field').val(date)
   //   });
-  };
+  // };
 });

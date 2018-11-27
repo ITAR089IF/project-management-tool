@@ -127,32 +127,20 @@ class Account::TasksController < Account::AccountController
       disposition: 'attachment'
   end
 
-  def create_task_from_calendar
-    @project = current_user
-    @task = @project.tasks.build(tasks_params)
-
-    if @task.save
-      @task.watchers << current_user
-    end
-
-    respond_to :js
-  end
-
   def new_task_from_calendar
     @task = Task.new
     respond_to :js
   end
 
-  def create
-    if task_params[:id].include?(current_user.followed_tasks.pluck(:project_id))
-      @task = @project.tasks.build(tasks_params)
+  def create_task_from_calendar
+    @project = current_user.available_projects.find(calendar_task_params[:project_id])
+    @task = @project.tasks.build(tasks_params)
 
-      if @task.save
-        @task.watchers << current_user unless @task.section?
-        redirect_to @task.section? ? account_workspace_project_path(@project.workspace_id, @project) : account_project_task_path(@project, @task)
-      else
-        render :new
-      end
+    if @task.save
+      @task.watchers << current_user
+    end
+    ap @task.errors
+    respond_to :js
   end
 
   private
@@ -171,6 +159,10 @@ class Account::TasksController < Account::AccountController
 
   def tasks_params
     params.require(:task).permit(:title, :description, :section, :due_date, :completed_at, files: [])
+  end
+
+  def calendar_task_params
+    params.require(:task).permit(:project_id, :title, :description, :due_date, files: [])
   end
 
   def task_movement_params

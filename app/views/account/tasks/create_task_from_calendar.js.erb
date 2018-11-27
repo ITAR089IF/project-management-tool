@@ -1,0 +1,6 @@
+<% if @task.persisted? %>
+  $('.modal-form').html('');
+  $('.modal').removeClass('is-active');
+<% else %>
+  $('.modal-form').html("<%= j render 'account/tasks/form_for_calendar'%>");
+<% end %>

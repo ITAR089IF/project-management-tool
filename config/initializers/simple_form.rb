@@ -18,23 +18,25 @@ SimpleForm.setup do |config|
     b.use :error, wrap_with: { tag: :div, class: "help is-danger" }
   end
 
-  config.wrappers :inline_checkbox, class: 'field', error_class: :field_with_errors do |b|
+  config.wrappers :inline_checkbox, class: 'field is-fullwidth', error_class: :field_with_errors do |b|
     b.use :html5
     b.use :label_input, wrap_with: { class: 'checkbox inline' }
     b.use :error, wrap_with: { tag: :div, class: 'help is-danger' }
     b.use :hint, wrap_with: { tag: :div, class: 'help' }
   end
 
-  config.wrappers :dropdown, error_class: :field_with_errors do |b|
-    b.use :input, class: 'select', wrap_with: { tag: :div, class: 'select' }, error_class: 'is-danger'
+  config.wrappers :dropdown, class: "field", error_class: :field_with_errors do |b|
     b.use :label, class: 'label', error_class: 'is-danger'
+    b.use :input, class: 'select', wrap_with: { tag: :div, class: 'select' }, error_class: 'is-danger'
+    b.use :error, wrap_with: { tag: :div, class: 'help is-danger' }
+    b.use :hint, wrap_with: { tag: :div, class: 'help' }
   end
 
   config.wrappers :textarea, class: "field", error_class: :field_with_errors do |b|
     b.use :html5
     b.use :placeholder
     b.use :label, class: "label", error_class: 'is-danger'
-    b.use :input, class: "textarea", error_class: 'is-danger'
+    b.use :input, class: "textarea", tag: 'textarea', error_class: 'is-danger'
     b.use :hint,  wrap_with: { tag: :div, class: "help" }
     b.use :error, wrap_with: { tag: :div, class: "help is-danger" }
   end
