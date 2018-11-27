@@ -29,10 +29,6 @@ SimpleForm.setup do |config|
     b.use :input
   end
 
-  config.wrappers :fullwidth, class: "is-fullwidth"  do |b|
-    b.use :input
-  end
-
   config.wrappers :textarea, class: "field", error_class: :field_with_errors do |b|
     b.use :html5
     b.use :placeholder
