@@ -60,7 +60,16 @@ span#new-member {
   }
 }
 
-.column.is-one-fifth.members {
+.have_background {
+  margin-top: 12px;
   background-color: #f3f3f3;
   border-radius: 10px;
+}
+
+.is-vertical-center {
+  display: flext;
+  align-items: center;
+}
+#show_invitation_link {
+  max-width: 50%;
 }

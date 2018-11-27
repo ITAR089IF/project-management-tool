@@ -1,7 +1,4 @@
 <% if @shared_workspace.persisted? %>
   $('#workspace-members')
   .append("<%= j render 'account/members/show_user', members: [@shared_workspace.user], workspace: @workspace %>")
-  $('#link_form').html("<%= j render 'account/members/new_link', workspace: @workspace %>")
-<% else %>
-  $('#link_form').html("<%= j render 'account/members/form', workspace: @workspace, shared_workspace: @shared_workspace %>");
 <% end %>

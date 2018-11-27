@@ -8,3 +8,4 @@
 //= require account/dashboard
 //= require cable
 //= require js-routes
+//= require account/members
