@@ -2,7 +2,7 @@ class Admin::UsersController < Admin::AdminController
   before_action :require_admin!
 
   def impersonate
-    user = parent
+    user = resource
     impersonate_user(user)
     redirect_to root_path
   end
@@ -11,21 +11,21 @@ class Admin::UsersController < Admin::AdminController
     stop_impersonating_user
     redirect_to root_path
   end
- 
+
   def index
     @users = User.all
   end
 
   def show
-    @user = parent
+    @user = resource
   end
 
   def edit
-    @user = parent
+    @user = resource
   end
 
   def update
-    @user = parent
+    @user = resource
     if @user.update(users_params)
       redirect_to admin_users_path
     else
@@ -34,7 +34,7 @@ class Admin::UsersController < Admin::AdminController
   end
 
   def destroy
-    @user = parent
+    @user = resource
     @user.destroy
     redirect_to  admin_users_path
   end
@@ -45,7 +45,7 @@ class Admin::UsersController < Admin::AdminController
    params.require(:user).permit(:first_name, :last_name, :role, :department, :about, :avatar, :job_role)
  end
 
- def parent
+ def resource
    User.find_by(id: params[:id])
  end
 
