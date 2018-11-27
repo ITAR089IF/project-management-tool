@@ -4,7 +4,8 @@ class Account::ProjectsController < Account::AccountController
     @project = resource
     @comments = @project.comments.order_desc.page(params[:page]).per(5)
     @comment = @project.comments.build
-    @tasks = @project.tasks.row_order_asc
+    @incomplete_tasks = @project.tasks.incomplete.row_order_asc
+    @complete_tasks = @project.tasks.complete.row_order_asc
   end
 
   def new

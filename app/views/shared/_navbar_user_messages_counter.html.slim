@@ -1,6 +1,5 @@
 - if current_user.messages.unreaded.count > 0
-  #notifications_counter.badge.is-badge-small.is-badge-outlined[data-badge="#{current_user.messages.unreaded.count}"]
+  .badge.is-badge-small.is-badge-outlined[data-badge="#{current_user.messages.unreaded.count}"]
     = truncate(current_user.full_name, length: 15)
 - else
-  #notifications_counter
-    = truncate(current_user.full_name, length: 15)
+  = truncate(current_user.full_name, length: 15)

@@ -27,7 +27,7 @@ class Workspace < ApplicationRecord
   has_many :shared_workspaces
   has_many :members, through: :shared_workspaces, source: :user
 
-  scope :order_asc, -> { order(name: :asc) }
+  scope :order_desc, -> { order(id: :desc) }
   scope :search_workspaces, -> (search) { select('workspaces.id, workspaces.name').where("name ILIKE ?", "%#{search}%").order(name: :asc).limit(10) }
 
   validates :name, presence: true, length: { maximum: 250 }

@@ -106,7 +106,7 @@ class User < ApplicationRecord
   end
 
   def available_workspaces
-    workspaces.union(self.invited_workspaces).order_asc
+    workspaces.union(self.invited_workspaces)
   end
 
   def available_projects

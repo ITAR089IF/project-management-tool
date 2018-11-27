@@ -14,7 +14,7 @@
       .level-item
         = link_to "Add Section", new_account_project_task_path(@project, section: true), class: "button is-link"
   - if @project.tasks.any?
-    .conteiner.box.tasks
+    #all_tasks.conteiner.box.tasks
       .title
         |  To Do List:
       - @tasks.each do |task|
