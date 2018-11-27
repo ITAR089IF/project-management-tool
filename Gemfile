@@ -45,7 +45,6 @@ gem 'pretender'
 gem 'bitly'
 gem 'prawn'
 gem 'prawn-table'
-gem 'sortable-rails'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'
