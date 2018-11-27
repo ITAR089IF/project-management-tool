@@ -3,24 +3,24 @@
     .title.has-text-centered Profile Settings
     figure.container.image.is-128x128
       = profile_avatar(@user)
-    .p.has-text-weight-semibold Full name:
+    p.has-text-weight-semibold Full name:
     = @user.full_name
     hr.navbar-divider
-    .p.has-text-weight-semibold Email:
+    p.has-text-weight-semibold Email:
     = @user.email
     hr.navbar-divider
-    .p.has-text-weight-semibold Job role:
+    p.has-text-weight-semibold Job role:
     = @user.job_role
     hr.navbar-divider
-    .p.has-text-weight-semibold Role:
+    p.has-text-weight-semibold Role:
     = @user.role
     hr.navbar-divider
-    .p.has-text-weight-semibold About:
+    p.has-text-weight-semibold About:
     = @user.about
     hr.navbar-divider
-    .p.has-text-weight-semibold Workspace:
+    p.has-text-weight-semibold Workspace:
     - @user.available_workspaces.each do |workspace|
-      .p = workspace.name
+      p = workspace.name
     hr.navbar-divider
     .level-left
       .level-item
