@@ -8,3 +8,5 @@
 //= require account/dashboard
 //= require cable
 //= require js-routes
+//= require sortable-rails
+//= require sort

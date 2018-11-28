@@ -31,8 +31,9 @@
 
 class User < ApplicationRecord
   ADMIN = 'admin'
+  USER = 'user'
   acts_as_paranoid
-  
+
   has_many :comments, dependent: :destroy
   has_many :messages, dependent: :destroy
   has_many :workspaces, dependent: :destroy
@@ -58,6 +59,7 @@ class User < ApplicationRecord
 
   scope :order_desc, -> { order(:first_name, :last_name) }
   scope :admins, -> { where(role: ADMIN) }
+  scope :none_admins, -> { where(role: USER) }
 
   after_create :notify_admins_about_new_user
 
@@ -109,7 +111,7 @@ class User < ApplicationRecord
   end
 
   def available_workspaces
-    workspaces.union(self.invited_workspaces).order_asc
+    workspaces.union(self.invited_workspaces)
   end
 
   def available_projects

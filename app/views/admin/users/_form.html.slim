@@ -5,7 +5,7 @@
   = f.input :job_role, wrapper: :bulma_input, label_html: { class: "has-text-left"}
   = f.input :department, wrapper: :bulma_input, label_html: { class: "has-text-left"}
   = f.input :about, wrapper: :textarea, label_html: { class: "has-text-left"}
-  = f.label :role, class: 'label has-text-left'
-  = f.input :role, collection: ["admin", "user"], include_blank: false, wrapper: :dropdown, wrapper_html: { class: 'is-fullwidth' }
+  = f.input :role, as: :select, collection: ["admin", "user"],
+            include_blank: false, wrapper: :dropdown_form, wrapper_html: { class: 'is-fullwidth' }, label_html: { class: "has-text-left"}
   = f.submit "Update Profile", class: "button is-link button-margin"
   = link_to 'Back', admin_users_path, class: 'button is-text button-margin'

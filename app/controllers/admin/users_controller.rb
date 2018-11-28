@@ -13,7 +13,7 @@ class Admin::UsersController < Admin::AdminController
   end
 
   def index
-    @users = User.all
+    @users = User.none_admins
   end
 
   def show
@@ -46,7 +46,7 @@ class Admin::UsersController < Admin::AdminController
  end
 
  def resource
-   User.find_by(id: params[:id])
+   User.find(params[:id])
  end
 
 end

@@ -37,7 +37,7 @@ FactoryBot.define do
     password { Faker::Internet.password }
     job_role { Faker::Job.title }
     department { Faker::Job.field }
-    about { Faker::Lorem.sentences }
+    about { Faker::Lorem.sentence }
   end
 
   trait :admin do

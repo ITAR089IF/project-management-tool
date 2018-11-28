@@ -1,0 +1,24 @@
+- title 'My Workspaces'
+.container
+  .level
+    .level-left
+      .title
+        | My Workspaces
+    .level-right
+      = link_to 'Add Workspace', new_account_workspace_path, class: 'title button is-text'
+  - if @workspaces.any?
+    - @workspaces.each do |workspace|
+      .box
+        .level
+          .level-left
+            .title
+              = link_to workspace.name, account_workspace_path(workspace)
+          .level-right
+            .level-item
+              = link_to 'Edit', edit_account_workspace_path(workspace),
+                class: 'button right'
+            .level-item
+              = link_to 'Delete', account_workspace_path(workspace),
+                class: 'button right', method: :delete, data: { confirm: 'Are you sure?' }
+  - else
+    = render "shared/no_content"

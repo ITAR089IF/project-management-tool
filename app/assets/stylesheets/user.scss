@@ -5,5 +5,11 @@
 }
 
 .button-margin {
-  margin-top: 12px;
+  margin-top: 37px;
+}
+
+.column {
+  .select:not(.is-multiple):not(.is-loading)::after {
+    margin: 25px 0 0 0;
+  }
 }

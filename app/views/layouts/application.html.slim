@@ -4,7 +4,6 @@ html
     = display_meta_tags site: 'Project management tool', reverse: true
     = csrf_meta_tags
     = csp_meta_tag
-    = action_cable_meta_tag
 
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
@@ -14,7 +13,7 @@ html
       = render 'shared/navbar'
     .section.is-fullheight.site-content
       = yield
-      = render 'shared/modal_form'
     .site-footer
       = render 'shared/footer'
+
     = any_login_here if defined?(AnyLogin)

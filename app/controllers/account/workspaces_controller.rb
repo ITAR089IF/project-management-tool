@@ -1,4 +1,8 @@
 class Account::WorkspacesController < Account::AccountController
+  def index
+    @workspaces = collection.order_desc
+  end
+
   def show
     @workspace = resource
     @members = @workspace.all_members.order_desc
@@ -10,37 +14,33 @@ class Account::WorkspacesController < Account::AccountController
 
   def new
     @workspace = Workspace.new
-
-    respond_to(:js)
   end
 
   def create
     @workspace = Workspace.new(workspace_params)
-    @workspace.save
-    @workspaces = collection
-
-    respond_to(:js)
+    if @workspace.save
+      redirect_to account_workspaces_path, notice: 'Workspace was created!'
+    else
+      render :new
+    end
   end
 
   def edit
     @workspace = resource
-
-    respond_to(:js)
   end
 
   def update
     @workspace = resource
-    @updated = @workspace.update(workspace_params)
-    @workspaces = collection
-
-    respond_to(:js)
+    if @workspace.update(workspace_params)
+      redirect_to account_workspace_path(@workspace), notice: 'Workspace was updated!'
+    else
+      render :edit
+    end
   end
 
   def destroy
-    @workspace = resource
-    @workspace.destroy
-
-    respond_to(:js)
+    resource.destroy
+    redirect_to account_workspaces_path
   end
 
   def create_invitation_link
@@ -56,7 +56,6 @@ class Account::WorkspacesController < Account::AccountController
   end
 
   private
-
   def collection
     current_user.available_workspaces
   end
