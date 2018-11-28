@@ -1,6 +1,7 @@
 <% if @task.persisted? %>
   $('.modal-form').html('');
   $('.modal').removeClass('is-active');
+  $('[data-date="<%= @task.due_date.strftime('%F') %>"]').parent().find('a').find('ul').append('li').html("<%= j render 'account/tasks/show_task_on_calendar', task: @task%>");
 <% else %>
-  $('.modal-form').html("<%= j render 'account/tasks/form_for_calendar'%>");
+  $('.modal-form').html("<%= j render 'account/tasks/form_for_calendar', task: @task%>");
 <% end %>

@@ -129,17 +129,19 @@ class Account::TasksController < Account::AccountController
 
   def new_task_from_calendar
     @task = Task.new
+    @task.due_date = params[:due_date]
+
     respond_to :js
   end
 
   def create_task_from_calendar
-    @project = current_user.available_projects.find(calendar_task_params[:project_id])
-    @task = @project.tasks.build(tasks_params)
-
-    if @task.save
-      @task.watchers << current_user
+    if @project = current_user.available_projects.find(calendar_task_params[:project_id])
+      @task = @project.tasks.build(calendar_task_params)
+      if @task.save
+        @task.watchers << current_user
+      end
     end
-    ap @task.errors
+
     respond_to :js
   end
 
