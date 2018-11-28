@@ -13,7 +13,6 @@ $(document).on('turbolinks:load', function() {
         moveOption = 'down';
         movePositions = evt.newIndex + evt.oldIndex;
       }
-
       $.ajax({
         type: "PATCH",
         url: Routes.move_account_project_task_path($(evt.item).data('project-id'), $(evt.item).data('task-id')),
