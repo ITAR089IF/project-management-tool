@@ -16,5 +16,5 @@
                       input_html: { placeholder: "New Password" }, wrapper: :bulma_input
             = f.input :password_confirmation, required: true, label: false,
                       input_html: { placeholder: "Cofirm Password" }, wrapper: :bulma_input
-            = f.submit 'Sign up', class: 'button is-primary is-fullwidth'
+            = f.submit 'Sign up', class: 'button is-link is-fullwidth'
       = render 'devise/shared/links'
