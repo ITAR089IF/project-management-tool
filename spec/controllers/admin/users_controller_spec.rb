@@ -43,34 +43,30 @@ RSpec.describe Admin::UsersController, type: :controller do
     end
   end
 
-  describe "if user admin" do
+  describe "GET #index" do
     before do
       sign_in user_admin
     end
 
-    context 'GET #index' do
-      it 'should show all users' do
-        get :index
-        expect(response).to be_successful
-      end
+    it 'should show all users' do
+      get :index
+      expect(response).to be_successful
     end
 
-    context 'GET #show' do
-      it 'should show user page' do
-        get :show, params: { id: user.id }
-        expect(response).to render_template(:show)
-        expect(response).to be_successful
-      end
+  describe 'GET #show' do
+    it 'should show user page' do
+      get :show, params: { id: user.id }
+      expect(response).to render_template(:show)
+      expect(response).to be_successful
     end
 
-    context 'GET #edit' do
-      it 'must display edit page' do
-        get :edit, params: { id: user.id }
-        expect(response).to render_template(:edit)
-      end
+  describe 'GET #edit' do
+    it 'must display edit page' do
+      get :edit, params: { id: user.id }
+      expect(response).to render_template(:edit)
     end
 
-    describe 'PUTCH #update' do
+    describe 'PUT #update' do
       context 'with valid attributes' do
         it 'must update the user' do
           patch :update, params: { id: user.id, user: user_valid_params }
@@ -80,7 +76,7 @@ RSpec.describe Admin::UsersController, type: :controller do
       end
 
       context 'with invalid attributes' do
-        it 'must update the user' do
+        it 'shouldnt update and redirects to edit' do
           patch :update, params: { id: user.id, user: user_invalid_params }
           user.reload
           expect(user.first_name).not_to eq(user_valid_params[:first_name])
@@ -89,7 +85,7 @@ RSpec.describe Admin::UsersController, type: :controller do
       end
     end
 
-    context 'DELETE #destroy' do
+    describe 'DELETE #destroy' do
       it 'should delete user' do
         expect{ (delete :destroy, params: { id: user.id }) }.to change{ User.count }.by(-1)
         expect(response).to redirect_to admin_users_path
