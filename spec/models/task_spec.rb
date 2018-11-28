@@ -2,25 +2,29 @@
 #
 # Table name: tasks
 #
-#  id           :bigint(8)        not null, primary key
-#  completed_at :datetime
-#  deleted_at   :datetime
-#  description  :text
-#  due_date     :datetime
-#  row_order    :integer
-#  section      :boolean          default(FALSE)
-#  title        :string
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  assignee_id  :bigint(8)
-#  project_id   :bigint(8)
+#  id              :bigint(8)        not null, primary key
+#  completed_at    :datetime
+#  deleted_at      :datetime
+#  description     :text
+#  due_date        :datetime
+#  row_order       :integer
+#  section         :boolean          default(FALSE)
+#  title           :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  assigned_by_id  :integer
+#  assignee_id     :bigint(8)
+#  completed_by_id :integer
+#  project_id      :bigint(8)
 #
 # Indexes
 #
-#  index_tasks_on_assignee_id  (assignee_id)
-#  index_tasks_on_deleted_at   (deleted_at)
-#  index_tasks_on_project_id   (project_id)
-#  index_tasks_on_row_order    (row_order)
+#  index_tasks_on_assigned_by_id   (assigned_by_id)
+#  index_tasks_on_assignee_id      (assignee_id)
+#  index_tasks_on_completed_by_id  (completed_by_id)
+#  index_tasks_on_deleted_at       (deleted_at)
+#  index_tasks_on_project_id       (project_id)
+#  index_tasks_on_row_order        (row_order)
 #
 # Foreign Keys
 #
@@ -64,6 +68,35 @@ RSpec.describe Task, type: :model do
 
     context 'it should take all tasks that was created this week' do
       it { (expect(project.tasks.this_week.count).to eq 3) }
+    end
+  end
+
+  describe "notifications" do
+    let!(:user1) { create(:user) }
+    let!(:user2) { create(:user) }
+    let!(:user3) { create(:user) }
+    let!(:task) { create(:task,  project: project)}
+
+    it "create message after user assigned to the task" do
+      expect(user3.messages.count).to eq(0)
+      task.add_watcher(user3)
+      task.assign!(user1.id, user2)
+
+      expect(task.assignee). to eq(user1)
+      expect(user2.messages.count).to eq(0)
+      expect(user3.messages.count).to eq(1)
+      expect(task.assigned_by_id).to eq user2.id
+    end
+
+    it "create message after task completed" do
+      expect(user2.messages.count).to eq(0)
+      task.add_watcher(user1)
+      task.add_watcher(user2)
+      task.complete!(user1)
+
+      expect(user1.messages.count).to eq(0)
+      expect(user2.messages.count).to eq(1)
+      expect(task.completed_by_id).to eq user1.id
     end
   end
 end

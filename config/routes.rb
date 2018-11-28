@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'dashboard#index'
   get '/pricing',  to: 'dashboard#pricing'
   get '/product', to: 'dashboard#product'
+  resources :contacts, only: [:new, :create]
   devise_for :users,
               path: '',
               path_names: {sign_in: 'login', sign_out: 'logout', edit: 'profile', sign_up: 'registration'},
@@ -10,11 +11,18 @@ Rails.application.routes.draw do
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
     get '/calendar', to: 'dashboard#calendar'
+    get '/inbox', to: 'dashboard#inbox'
     resources :search, only: [:index], defaults: { format: :json }
 
     resource :profile, only: [:edit, :update]
-    resources :workspaces do
-      resources :members, only: [:new, :create, :destroy]
+    resources :workspaces, except: [:index] do
+      post :create_invitation_link
+      resources :members, only: [:new, :create, :destroy] do
+        collection do
+          get :greeting_new_member
+          post :create_thought_link
+        end
+      end
       resources :projects, except: [:index]
       member do
         get :list
@@ -29,9 +37,8 @@ Rails.application.routes.draw do
       concerns :commentable
       resources :tasks, except: [:index] do
         member do
-          put :move
-          patch :complete
-          patch :uncomplete
+          patch :move
+          patch :toggle_complete
           patch :watch
           get :choose_assignee
           post :assign
@@ -54,4 +61,6 @@ Rails.application.routes.draw do
       post :stop_impersonating, on: :collection
     end
   end
+
+  mount ActionCable.server => '/cable'
 end

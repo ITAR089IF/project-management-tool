@@ -4,8 +4,7 @@ class Account::ProjectsController < Account::AccountController
     @project = resource
     @comments = @project.comments.order_desc.page(params[:page]).per(5)
     @comment = @project.comments.build
-    @incomplete_tasks = @project.tasks.incomplete.row_order_asc
-    @complete_tasks = @project.tasks.complete.row_order_asc
+    @tasks = @project.tasks.row_order_asc
   end
 
   def new
@@ -61,6 +60,6 @@ class Account::ProjectsController < Account::AccountController
   end
 
   def project_params
-    params.require(:project).permit(:name).merge(users: [current_user])
+    params.require(:project).permit(:name, :description).merge(users: [current_user])
   end
 end

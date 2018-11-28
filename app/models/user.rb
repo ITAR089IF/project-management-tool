@@ -31,6 +31,7 @@ class User < ApplicationRecord
   ADMIN = 'admin'
 
   has_many :comments, dependent: :destroy
+  has_many :messages, dependent: :destroy
   has_many :workspaces, dependent: :destroy
   has_many :user_projects, dependent: :destroy
   has_many :projects, through: :user_projects
@@ -105,7 +106,7 @@ class User < ApplicationRecord
   end
 
   def available_workspaces
-    workspaces.union(self.invited_workspaces)
+    workspaces.union(self.invited_workspaces).order_asc
   end
 
   def available_projects
