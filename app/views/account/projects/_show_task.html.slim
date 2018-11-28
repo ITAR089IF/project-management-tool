@@ -1,4 +1,4 @@
-.level class="task_#{task.id}"
+.level class="task_#{task.id}" data-project-id="#{project.id}" data-task-id="#{task.id}"
   .level-left
     - if !task.section?
       .level-item
@@ -8,7 +8,7 @@
             = fa_icon 'check-circle-o', class: 'has-text-grey-light'
           - else
             = fa_icon 'check-circle-o', class: 'has-text-success'
-    .level-item
+    .level-item.glyphicon-move
       = link_to task.title, task.section? ? '#' : account_project_task_path(project, task), class: task_link_class(task)
   .level-right
     - if task.pending?
