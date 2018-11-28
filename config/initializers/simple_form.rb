@@ -30,6 +30,16 @@ SimpleForm.setup do |config|
     b.use :label, class: 'label', error_class: 'is-danger'
   end
 
+  config.wrappers :dropdown_form, class: "field", error_class: :field_with_errors do |b|
+    b.use :html5
+    b.wrapper tag: 'div', class: 'has-text-left' do |ba|
+      ba.use :label_text, wrap_with: { class: 'label' }
+      ba.use :input, class: "input", error_class: 'is-danger'
+      ba.use :error, wrap_with:  { tag: :div, class: 'help-inline' }
+      ba.use :hint,  wrap_with:  { tag: :div, class: 'help-block' }
+    end
+  end
+
   config.wrappers :textarea, class: "field", error_class: :field_with_errors do |b|
     b.use :html5
     b.use :placeholder
