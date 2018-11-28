@@ -65,3 +65,36 @@
     }
   }
 }
+
+.price {
+  .title {
+    margin-top: 10px;
+  }
+  .pricing-table {
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  p {
+    font-size: 12px;
+  }
+}
+
+.price {
+
+}
+
+.pricing-table {
+  .pricing-plan {
+    .button {
+      background-color: #ad1457;
+    }
+  }
+}
+
+.pricing-table {
+  .pricing-plan {
+    .plan-item {
+      text-align: left;
+    }
+  }
+}
