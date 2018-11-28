@@ -1,6 +1,6 @@
 /*
  *= require bulma_ext
- *= require font-awesome
+ *= require font_awesome5_webfont
  *= require dashboard
  *= require main
  *= require search
@@ -11,4 +11,5 @@
  *= require workspaces
  *= require header
  *= require modal
+ *= require reports
  */

@@ -6,8 +6,11 @@
           = link_to truncate(workspace.name, length: 20), account_workspace_path(workspace)
       .level-right
         .level-item
+          = link_to account_workspace_report_path(workspace) do
+            = fa_icon 'chart-pie'
+        .level-item
           = link_to edit_account_workspace_path(workspace), remote: true do
-            = fa_icon 'pencil-square-o'
+            = fa_icon 'edit', type: :regular
         .level-item
           = link_to account_workspace_path(workspace), remote: true, method: :delete do
-            = fa_icon 'trash-o'
+            = fa_icon 'trash-alt', type: :regular

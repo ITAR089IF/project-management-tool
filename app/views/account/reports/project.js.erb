@@ -1,0 +1,4 @@
+$('.modal .modal-form').html('<%= j render('account/reports/project_report', project: @project) %>');
+// chart(JSON.parse($('.modal .modal-form canvas').data('graph')), $('.modal .modal-form canvas').data('title'));
+console.log(JSON.parse($('.modal .modal-form canvas').data('graph')));
+$('.modal').addClass('is-active');
