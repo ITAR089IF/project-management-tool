@@ -7,6 +7,5 @@
       = fa_icon "plus", class: 'is-pulled-right has-text-grey-light'
     ul.tasks-list
       - tasks.each do |task|
-        li
-          = render 'account/tasks/show_task_on_calendar', task: task
+        = render 'account/tasks/show_task_on_calendar', task: task
   = render 'shared/modal'

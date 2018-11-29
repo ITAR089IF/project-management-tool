@@ -25,9 +25,9 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: { tag: :div, class: 'help' }
   end
 
-  config.wrappers :dropdown, class: "field", error_class: :field_with_errors do |b|
+  config.wrappers :dropdown, class: "select", error_class: 'field_with_errors is-danger' do |b|
     b.use :label, class: 'label', error_class: 'is-danger'
-    b.use :input, class: 'select', wrap_with: { tag: :div, class: 'select' }, error_class: 'is-danger'
+    b.use :input, error_class: 'is-danger'
     b.use :error, wrap_with: { tag: :div, class: 'help is-danger' }
     b.use :hint, wrap_with: { tag: :div, class: 'help' }
   end

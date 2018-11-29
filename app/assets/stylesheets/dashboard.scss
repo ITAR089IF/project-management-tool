@@ -66,9 +66,12 @@
   }
 }
 
-.modal .task_form {
+form.new_task {
   .select {
-    width: 100%;
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
+    &:not(.is-multiple):not(.is-loading)::after {
+      right: 1rem;
+      top: 3rem;
+    }
   }
 }

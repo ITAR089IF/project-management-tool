@@ -21,6 +21,16 @@
     vertical-align: top;
     width: 120px;
     border: 1px solid #ddd;
+    a {
+      i.fa-plus {
+        visibility: hidden;
+      }
+    }
+    &:hover {
+      i.fa-plus {
+        visibility: visible;
+      }
+    }
   }
   thead {
     background-color: #ffff74;
