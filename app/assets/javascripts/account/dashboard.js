@@ -14,9 +14,4 @@ $( document ).on('turbolinks:load', function() {
     }
     $(this).siblings('li.toggleable').slideToggle();
   });
-
-  $('.date-button').click(function(){
-    date = $(this).data("date");
-    $('.task_form').find('.date').val(date)
-  });
 });

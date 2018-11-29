@@ -175,10 +175,6 @@ class Account::TasksController < Account::AccountController
     params.require(:task).permit(:project_id, :title, :description, :due_date, files: [])
   end
 
-  def task_movement_params
-    params.require(:task).permit(:row_order_position)
-  end
-
   def section_params
     params.permit(:section)
   end
@@ -187,10 +183,6 @@ class Account::TasksController < Account::AccountController
     params.require(:task).permit(:assignee)
   end
 
-  def valid_date?(date)
-    date >= Date.today
-  end
-  
   def render_task(project, task)
     render(partial: 'account/projects/show_task', locals: { project: project, task: task })
   end
