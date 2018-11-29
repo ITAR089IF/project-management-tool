@@ -189,7 +189,8 @@ class Account::TasksController < Account::AccountController
 
   def valid_date?(date)
     date >= Date.today
-
+  end
+  
   def render_task(project, task)
     render(partial: 'account/projects/show_task', locals: { project: project, task: task })
   end

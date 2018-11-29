@@ -30,7 +30,8 @@ SimpleForm.setup do |config|
     b.use :input, error_class: 'is-danger'
     b.use :error, wrap_with: { tag: :div, class: 'help is-danger' }
     b.use :hint, wrap_with: { tag: :div, class: 'help' }
-
+  end
+  
   config.wrappers :dropdown, error_class: :field_with_errors do |b|
     b.use :input, class: 'select', error_class: 'is-danger'
     b.use :label, class: 'label', error_class: 'is-danger'
