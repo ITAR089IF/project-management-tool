@@ -2,25 +2,29 @@
 #
 # Table name: tasks
 #
-#  id           :bigint(8)        not null, primary key
-#  completed_at :datetime
-#  deleted_at   :datetime
-#  description  :text
-#  due_date     :datetime
-#  row_order    :integer
-#  section      :boolean          default(FALSE)
-#  title        :string
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  assignee_id  :bigint(8)
-#  project_id   :bigint(8)
+#  id              :bigint(8)        not null, primary key
+#  completed_at    :datetime
+#  deleted_at      :datetime
+#  description     :text
+#  due_date        :datetime
+#  row_order       :integer
+#  section         :boolean          default(FALSE)
+#  title           :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  assigned_by_id  :integer
+#  assignee_id     :bigint(8)
+#  completed_by_id :integer
+#  project_id      :bigint(8)
 #
 # Indexes
 #
-#  index_tasks_on_assignee_id  (assignee_id)
-#  index_tasks_on_deleted_at   (deleted_at)
-#  index_tasks_on_project_id   (project_id)
-#  index_tasks_on_row_order    (row_order)
+#  index_tasks_on_assigned_by_id   (assigned_by_id)
+#  index_tasks_on_assignee_id      (assignee_id)
+#  index_tasks_on_completed_by_id  (completed_by_id)
+#  index_tasks_on_deleted_at       (deleted_at)
+#  index_tasks_on_project_id       (project_id)
+#  index_tasks_on_row_order        (row_order)
 #
 # Foreign Keys
 #
@@ -75,23 +79,28 @@ class Task < ApplicationRecord
     self.task_watches.where(user_id: user.id).delete_all
   end
 
-  def assign!(assignee_id, by_user)
-    result = update(assignee_id: assignee_id)
-    send_notifications("Task '#{self.title}' has been assigned to #{assignee.full_name} by #{by_user.full_name}", self.watchers - [by_user]) if result
+  def assign!(assignee_id, user)
+    result = update(assignee_id: assignee_id, assigned_by_id: user.id)
+    send_notifications("Task '#{self.title}' has been assigned to #{assignee.full_name} by #{user.full_name}", self.watchers - [user] + [assignee]) if result
     result
   end
 
-  def complete!(by_user)
-    self.update(completed_at: Time.now)
-    send_notifications("Task '#{self.title}' has been completed by #{by_user.full_name}", self.watchers - [by_user])
-    TasksMailer.task_completed(self, by_user).deliver_later
+  def complete!(user)
+    self.update(completed_at: Time.now, completed_by_id: user.id)
+    send_notifications("Task '#{self.title}' has been completed by #{user.full_name}", self.watchers - [user])
+    TasksMailer.task_completed(self, user).deliver_later
+  end
+
+  def assignee?(user)
+    assignee == user
   end
 
   private
 
   def send_notifications(message, notify_users = self.watchers)
-    notify_users.each do |user|
+    notify_users.uniq.each do |user|
       user.messages.create(body: message, messageable: self)
+      NotificationsJob.perform_later(user)
     end
   end
 

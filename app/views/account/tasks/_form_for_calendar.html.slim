@@ -6,7 +6,7 @@ h2.title.has-text-centered
                       as: :grouped_select,
                       group_method: :projects,
                       group_label_method: :name,
-                      wrapper: :dropdown,
+                      wrapper: :select,
                       prompt: 'Select project'
   = f.input :title, wrapper: :bulma_input
   = f.input :description, as: :text, wrapper: :textarea, required: false

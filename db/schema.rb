@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_21_194330) do
+ActiveRecord::Schema.define(version: 2018_11_25_214849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,15 @@ ActiveRecord::Schema.define(version: 2018_11_21_194330) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "contacts", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "phone"
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -60,11 +69,13 @@ ActiveRecord::Schema.define(version: 2018_11_21_194330) do
   end
 
   create_table "invitations", force: :cascade do |t|
-    t.integer "invitor_id"
-    t.integer "workspace_id"
+    t.bigint "invitor_id"
+    t.bigint "workspace_id"
     t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["invitor_id"], name: "index_invitations_on_invitor_id"
+    t.index ["workspace_id"], name: "index_invitations_on_workspace_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -86,6 +97,7 @@ ActiveRecord::Schema.define(version: 2018_11_21_194330) do
     t.datetime "updated_at", null: false
     t.bigint "workspace_id"
     t.datetime "deleted_at"
+    t.text "description"
     t.index ["deleted_at"], name: "index_projects_on_deleted_at"
     t.index ["workspace_id"], name: "index_projects_on_workspace_id"
   end
@@ -120,7 +132,11 @@ ActiveRecord::Schema.define(version: 2018_11_21_194330) do
     t.datetime "due_date"
     t.bigint "assignee_id"
     t.datetime "completed_at"
+    t.integer "completed_by_id"
+    t.integer "assigned_by_id"
+    t.index ["assigned_by_id"], name: "index_tasks_on_assigned_by_id"
     t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
+    t.index ["completed_by_id"], name: "index_tasks_on_completed_by_id"
     t.index ["deleted_at"], name: "index_tasks_on_deleted_at"
     t.index ["project_id"], name: "index_tasks_on_project_id"
     t.index ["row_order"], name: "index_tasks_on_row_order"
@@ -153,6 +169,8 @@ ActiveRecord::Schema.define(version: 2018_11_21_194330) do
     t.string "department"
     t.text "about"
     t.string "job_role"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

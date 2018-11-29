@@ -13,6 +13,8 @@ html
       = render 'shared/navbar'
     .is-fullheight.site-content
       = yield
+      - if user_signed_in?
+        = render 'shared/modal_form'
     .site-footer
       = render 'shared/footer'
 

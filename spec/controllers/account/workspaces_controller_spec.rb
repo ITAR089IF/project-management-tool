@@ -12,28 +12,22 @@ RSpec.describe Account::WorkspacesController, type: :controller do
   let!(:workspace1) { create(:workspace, user: user1) }
   let!(:shared_workspace) { create(:shared_workspace, user: user, workspace: workspace1) }
   let!(:shared_workspace1) { create(:shared_workspace, user: user2, workspace: workspace1) }
+
   before do
     sign_in user
     allow(Bitly).to receive_message_chain(:client, :shorten, :short_url) { 'http://bit.ly/1111111' }
   end
 
-  context 'GET /workspaces' do
-    it 'should show all user workspaces' do
-      get :index
-      expect(response).to be_successful
-    end
-  end
-
   context 'GET /workspace/new' do
     it 'should show page create new workspace' do
-      get :new
+      get :new, format: :js, xhr: true
       expect(response).to be_successful
     end
   end
 
   context 'GET /worspaces/:id' do
     it 'should show page with workspace' do
-      get :show, params: { id: workspace.id }
+      get :show, params: { id: workspace.id }, format: :js, xhr: true
       expect(response).to be_successful
     end
   end
@@ -47,33 +41,29 @@ RSpec.describe Account::WorkspacesController, type: :controller do
 
   context 'GET /workspaces/:id/edit' do
     it 'should show page edit' do
-      get :edit, params: { id: workspace.id }
+      get :edit, params: { id: workspace.id }, format: :js, xhr: true
       expect(response).to be_successful
     end
   end
 
   context 'POST /workspaces' do
-    it 'should create a workspace and redirect to workspaces page' do
-      post :create, params: {
+    it 'should create a workspace' do
+      expect { post :create, params: {
         workspace: {
-          name: 'Test workspace'
+          name: Faker::Job.field
         }
-      }
-
-      expect(response).to redirect_to account_workspaces_path
+      }, format: :js, xhr: true }.to change(Workspace, :count).by(1)
     end
 
-    it 'shouldn`t create a workspace and render page new' do
-      post :create, params: {
+    it 'shouldn`t create a workspace' do
+      expect { post :create, params: {
         workspace: {
           name: ''
         }
-      }
-
-      expect(response).to render_template(:new)
+      }, format: :js, xhr: true }.to change(Workspace, :count).by(0)
     end
   end
-  
+
   context 'PUT /workspace/:id' do
     it 'should update workspace and redirect to workspaces page' do
       put :update, params: {
@@ -81,28 +71,31 @@ RSpec.describe Account::WorkspacesController, type: :controller do
         workspace: {
           name: 'Test text'
         }
-      }
+      }, format: :js, xhr: true
 
-      expect(response).to redirect_to account_workspace_path(workspace.id)
+      workspace.reload
+
+      expect(workspace.name).to eq 'Test text'
     end
 
-    it 'shouldn`t update workspace and render page edit' do
+
+    it 'shouldn`t update workspace' do
       put :update, params: {
         id: workspace.id,
         workspace: {
           name: ''
         }
-      }
+      }, format: :js, xhr: true
 
-      expect(response).to render_template(:edit)
+      workspace.reload
+
+      expect(workspace.name).to_not eq ''
     end
   end
 
   context '#DELETE /workspace/:id' do
     it 'should delete workspace' do
-      delete :destroy, params: { id: workspace.id }
-
-      expect(response).to redirect_to account_workspaces_path
+      expect{ delete :destroy, params: { id: workspace.id }, format: :js, xhr: true }.to change(Workspace, :count).by(-1)
     end
   end
 

@@ -17,8 +17,12 @@ class Account::TasksController < Account::AccountController
     @task = @project.tasks.build(tasks_params)
 
     if @task.save
-      @task.watchers << current_user unless @task.section?
-      redirect_to @task.section? ? account_workspace_project_path(@project.workspace_id, @project) : account_project_task_path(@project, @task)
+      if @task.section?
+        redirect_to account_workspace_project_path(@project.workspace_id, @project)
+      else
+        @task.add_watcher(current_user)
+        redirect_to account_project_task_path(@project, @task)
+      end
     else
       render :new
     end
@@ -53,10 +57,10 @@ class Account::TasksController < Account::AccountController
   def move
     @project = parent
     @task = resource
-    @incomplete_tasks = @project.tasks.incomplete.row_order_asc
-    @complete_tasks = @project.tasks.complete.row_order_asc
-    @task.update(task_movement_params)
-    respond_to(:js)
+    @tasks = @project.tasks.row_order_asc
+    params[:move][:move_positions].to_i.times do
+      @task.update(row_order_position: params[:move][:move_option].to_sym)
+    end
   end
 
   def watch
@@ -83,14 +87,18 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = @project.tasks.find(params[:id])
     @result = @task.assign!(assignee_params[:assignee], current_user)
+    unless @task.assignee.watching?(@task)
+      @task.add_watcher(@task.assignee)
+    end
 
+    TasksMailer.task_assign_to_user_email(@task).deliver_later if @task.saved_change_to_assignee_id?
     respond_to :js
   end
 
   def unassign
     @project = parent
     @task = resource
-    @result = @task.update(assignee_id: nil)
+    @result = @task.update(assignee_id: nil, assigned_by_id: nil)
 
     respond_to :js
   end
@@ -99,23 +107,20 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = resource
     @task.files.find(params[:attachment_id]).purge
-
     redirect_to account_project_task_path(@project, @task)
   end
 
-  def complete
+  def toggle_complete
     @project = parent
     @task = resource
-    @task.complete!(current_user)
-
-    respond_to :js
-  end
-
-  def uncomplete
-    @project = parent
-    @task = resource
-    @task.update(completed_at: nil)
-    respond_to :js
+    if @task.pending?
+      @task.complete!(current_user)
+    else
+      @task.update(completed_at: nil)
+    end
+    ActionCable.server.broadcast "project_#{@project.id}", { id: @project.id,
+                                                            task_id: @task.id,
+                                                            task: render_task(@project, @task) }
   end
 
   def report
@@ -184,5 +189,8 @@ class Account::TasksController < Account::AccountController
 
   def valid_date?(date)
     date >= Date.today
+
+  def render_task(project, task)
+    render(partial: 'account/projects/show_task', locals: { project: project, task: task })
   end
 end
