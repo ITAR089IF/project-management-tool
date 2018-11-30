@@ -27,7 +27,12 @@ RSpec.describe Account::WorkspacesController, type: :controller do
 
   context 'GET /worspaces/:id' do
     it 'should show page with workspace' do
-      get :show, params: { id: workspace.id }, format: :js, xhr: true
+      get :show, params: { id: workspace.id }
+      expect(response).to be_successful
+    end
+
+    it 'should show pdf page for workspace' do
+      get :show, params: { id: workspace.id }, format: :pdf
       expect(response).to be_successful
     end
   end
