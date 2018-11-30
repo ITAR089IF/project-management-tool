@@ -11,12 +11,13 @@ document.addEventListener('turbolinks:load', () => {
 
 });
 
-function chart(hash, element) {
-  console.log(element);
+function options(element) {
+}
 
+function chart(hash, element) {
   var ctx = document.getElementById(element.id).getContext('2d');
   var chart = new Chart(ctx, {
-    type: 'pie',
+    type: 'doughnut',
     data: {
       datasets: [{
         data: [hash.complete, hash.incomplete],
@@ -36,13 +37,46 @@ function chart(hash, element) {
         display: true,
         labels: {
           usePointStyle: true
-        }
-      },
-      title: {
+          }
+        },
+        title: {
+          display: true,
+          text: element.dataset.title
+        },
+        maintainAspectRatio: false
+      }
+  });
+}
+
+function horizontalBar(element) {
+  var ctx = document.getElementById(element.id).getContext('2d');
+  var myBarChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: {
+      datasets: [{
+        data: [10, 20, 30]
+      }],
+      labels: ['Busko Bogdan', 'Andriy Semegen']
+    },
+    options: {
+      legend: {
         display: true,
-        text: element.dataset.title
+        labels: {
+          usePointStyle: true
+          }
+        },
+        title: {
+          display: true,
+          text: element.dataset.title
       },
-      maintainAspectRatio: false
+      maintainAspectRatio: false,
+      scales: {
+        xAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
     }
   });
 }

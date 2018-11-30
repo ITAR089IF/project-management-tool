@@ -58,6 +58,7 @@ class Task < ApplicationRecord
                                    .limit(10) }
   scope :this_week, -> { where('created_at > ?', Date.today.beginning_of_week) }
   scope :current_workspace, -> (workspace) { where(project_id: workspace.projects.ids)}
+  scope :user_info, -> { select('CONCAT()')}
 
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }
@@ -98,6 +99,10 @@ class Task < ApplicationRecord
 
   def self.report
     { complete: complete.count, incomplete: incomplete.count }.to_json
+  end
+
+  def self.user_report
+    where.not(assignee_id: nil, completed_at: nil).group(:assignee_id).count
   end
 
   private

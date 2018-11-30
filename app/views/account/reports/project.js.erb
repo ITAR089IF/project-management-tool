@@ -1,4 +1,15 @@
-$('.modal .modal-form').html('<%= j render('account/reports/project_report', project: @project) %>');
-// chart(JSON.parse($('.modal .modal-form canvas').data('graph')), $('.modal .modal-form canvas').data('title'));
-console.log(JSON.parse($('.modal .modal-form canvas').data('graph')));
-$('.modal').addClass('is-active');
+var modal = document.querySelector('.modal');
+
+modal.querySelector('.modal-form').innerHTML = '<%= j render('account/reports/project_report', project: @project)%>';
+modal.classList.add('is-active');
+
+var project_report = modal.querySelector('.modal-form .project-report .project-doughnut');
+var user_progress_report = modal.querySelector('.modal-form .project-report .user-horizontal-bar');
+
+chart(
+  JSON.parse(project_report.getAttribute('data-graph')),
+  project_report
+);
+
+horizontalBar(user_progress_report);
+
