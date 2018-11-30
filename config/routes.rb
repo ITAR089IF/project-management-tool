@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'dashboard#index'
   get '/pricing',  to: 'dashboard#pricing'
   get '/product', to: 'dashboard#product'
+  resources :contacts, only: [:new, :create]
   devise_for :users,
               path: '',
               path_names: {sign_in: 'login', sign_out: 'logout', edit: 'profile', sign_up: 'registration'},
@@ -38,9 +39,8 @@ Rails.application.routes.draw do
       concerns :commentable
       resources :tasks, except: [:index] do
         member do
-          put :move
-          patch :complete
-          patch :uncomplete
+          patch :move
+          patch :toggle_complete
           patch :watch
           get :choose_assignee
           post :assign
@@ -58,9 +58,11 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :users, only: [] do
+    resources :users, except: [:new, :create] do
       post :impersonate, on: :member
       post :stop_impersonating, on: :collection
     end
   end
+
+  mount ActionCable.server => '/cable'
 end

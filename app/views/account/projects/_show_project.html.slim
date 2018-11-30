@@ -1,5 +1,5 @@
 .column.is-2 data-id="#{project.id}"
-  .card.project
+  .card.project.tooltip[data-tooltip="Completed #{project.tasks.complete.count}/#{project.tasks.count}"]
     = link_to account_workspace_project_path(workspace, project) do
       header.card-header
         p.card-header-title.is-centered

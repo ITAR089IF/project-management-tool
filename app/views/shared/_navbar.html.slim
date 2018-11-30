@@ -16,9 +16,9 @@
           = link_to "Calendar", account_calendar_path, class: 'button'
       - else
         .navbar-item
-          = link_to "Product", product_path, class: 'button'
-        .navbar-item
           = link_to "Pricing", pricing_path, class: 'button'
+        .navbar-item
+          = link_to "Contact us", new_contact_path, class: 'button'
       - if user_signed_in?
     .navbar-end
       .navbar-item
@@ -64,6 +64,9 @@
               .navbar-workspaces
                 = render 'account/workspaces/show_workspaces', workspaces: current_user.available_workspaces
               = link_to 'Add Workspace', new_account_workspace_path, class: 'navbar-item', remote: true
+              - if current_user.admin?
+                hr.navbar-divider
+                  = link_to "All users", admin_users_path, class: 'navbar-item'
               hr.navbar-divider
               = link_to "My Profile Settings...", edit_account_profile_path, class: 'navbar-item'
               hr.navbar-divider

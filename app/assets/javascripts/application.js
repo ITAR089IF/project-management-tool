@@ -11,3 +11,6 @@
 //= require cable
 //= require js-routes
 //= require chart.min
+//= require account/members
+//= require sortable-rails
+//= require sort

@@ -83,7 +83,7 @@ class Task < ApplicationRecord
 
   def assign!(assignee_id, user)
     result = update(assignee_id: assignee_id, assigned_by_id: user.id)
-    send_notifications("Task '#{self.title}' has been assigned to #{assignee.full_name} by #{user.full_name}", self.watchers - [user]) if result
+    send_notifications("Task '#{self.title}' has been assigned to #{assignee.full_name} by #{user.full_name}", self.watchers - [user] + [assignee]) if result
     result
   end
 
@@ -108,8 +108,9 @@ class Task < ApplicationRecord
   private
 
   def send_notifications(message, notify_users = self.watchers)
-    notify_users.each do |user|
+    notify_users.uniq.each do |user|
       user.messages.create(body: message, messageable: self)
+      NotificationsJob.perform_later(user)
     end
   end
 

@@ -25,8 +25,19 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: { tag: :div, class: 'help' }
   end
 
-  config.wrappers :dropdown do |b|
-    b.use :input
+  config.wrappers :dropdown, error_class: :field_with_errors do |b|
+    b.use :input, class: 'select', error_class: 'is-danger'
+    b.use :label, class: 'label', error_class: 'is-danger'
+  end
+
+  config.wrappers :dropdown_form, class: "field", error_class: :field_with_errors do |b|
+    b.use :html5
+    b.wrapper tag: 'div', class: 'has-text-left' do |ba|
+      ba.use :label_text, wrap_with: { class: 'label' }
+      ba.use :input, class: "input", error_class: 'is-danger'
+      ba.use :error, wrap_with:  { tag: :div, class: 'help-inline' }
+      ba.use :hint,  wrap_with:  { tag: :div, class: 'help-block' }
+    end
   end
 
   config.wrappers :textarea, class: "field", error_class: :field_with_errors do |b|
@@ -181,7 +192,7 @@ SimpleForm.setup do |config|
   # in this configuration, which is recommended due to some quirks from different browsers.
   # To stop SimpleForm from generating the novalidate option, enabling the HTML5 validations,
   # change this configuration to true.
-  config.browser_validations = false
+  config.browser_validations = true
 
   # Collection of methods to detect if a file type was given.
   # config.file_methods = [ :mounted_as, :file?, :public_filename, :attached? ]
