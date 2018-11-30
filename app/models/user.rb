@@ -57,8 +57,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook]
 
-  scope :order_desc, -> { order(:first_name, :last_name) }
-  scope :admins, -> { where(role: ADMIN) }
+  scope :order_desc,  -> { order(:first_name, :last_name) }
+  scope :admins,      -> { where(role: ADMIN) }
   scope :none_admins, -> { where(role: USER) }
 
   after_create :notify_admins_about_new_user

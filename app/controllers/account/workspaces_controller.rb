@@ -2,6 +2,12 @@ class Account::WorkspacesController < Account::AccountController
   def show
     @workspace = resource
     @members = @workspace.all_members.order_desc
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render template: "account/workspaces/workspace_info", pdf: "Workspace info"
+      end
+    end
   end
 
   def list

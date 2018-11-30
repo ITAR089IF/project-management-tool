@@ -3,12 +3,12 @@
   .level
     .level-left
       .title Inbox
-  - if @new_messages.any? || @old_messages.any?
+  - if @new_messages.exists? || @old_messages.exists?
     table.table.is-fullwidth.is-hoverable
       tbody.tbody
-        - if @new_messages.any?
+        - if @new_messages.exists?
           = render "account/dashboard/messages", messages: @new_messages, messages_title: "New message".pluralize(@new_messages.count)
-        - if @old_messages.any?
+        - if @old_messages.exists?
           = render "account/dashboard/messages", messages: @old_messages, messages_title: "Old message".pluralize(@old_messages.count)
     = paginate @old_messages
   - else

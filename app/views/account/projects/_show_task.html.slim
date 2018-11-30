@@ -15,7 +15,7 @@
       .level-item
         p
           | Created  #{time_ago_in_words(task.created_at)} ago
-      = render '/account/projects/show_task_assignee', task: task
+      = render '/account/projects/show_task_assignee', assignee: task.assignee
       .level-item
         = link_to edit_account_project_task_path(project, task) do
           = fa_icon 'pencil-square-o'
@@ -23,7 +23,7 @@
       .level-item
         p
           | Completed #{time_ago_in_words(task.completed_at)} ago
-      = render '/account/projects/show_task_assignee', task: task
+      = render '/account/projects/show_task_assignee', assignee: task.assignee
     .level-item
       = link_to account_project_task_path(project, task), method: :delete,
         data: { confirm: "Are you sure?" }, remote: true do
