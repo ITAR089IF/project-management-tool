@@ -9,6 +9,7 @@
  *= require projects
  *= require profiles
  *= require workspaces
+ *= require calendar
  *= require header
  *= require modal
  *= require user
