@@ -58,7 +58,8 @@ class Task < ApplicationRecord
                                    .limit(10) }
   scope :this_week, -> { where('created_at > ?', Date.today.beginning_of_week) }
   scope :current_workspace, -> (workspace) { where(project_id: workspace.projects.ids)}
-  scope :user_info, -> { select('CONCAT()')}
+  scope :completed_tasks_with_assignee, -> { where.not(assignee_id: nil, completed_at: nil).group(:assignee_id).count }
+  scope :completed_tasks_without_assignee, -> { where("completed_at IS NOT NULL AND completed_by_id IS NOT NULL and assignee_id IS NULL").group(:completed_by_id).count }
 
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }
@@ -102,7 +103,16 @@ class Task < ApplicationRecord
   end
 
   def self.user_report
-    where.not(assignee_id: nil, completed_at: nil).group(:assignee_id).count
+    completed_tasks = completed_tasks_with_assignee.merge(completed_tasks_without_assignee){ |key, old_value, new_value| old_value + new_value }
+
+    report = {}
+
+    completed_tasks.each_key do |key|
+      user = User.find(key).full_name
+      report[user] = completed_tasks[key]
+    end
+
+    report.to_json
   end
 
   private

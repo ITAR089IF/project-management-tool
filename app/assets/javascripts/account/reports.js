@@ -8,11 +8,7 @@ document.addEventListener('turbolinks:load', () => {
       chart(JSON.parse(ids[i].dataset.graph), ids[i]);
     }
   }
-
 });
-
-function options(element) {
-}
 
 function chart(hash, element) {
   var ctx = document.getElementById(element.id).getContext('2d');
@@ -48,26 +44,31 @@ function chart(hash, element) {
   });
 }
 
-function horizontalBar(element) {
+function horizontalBar(hash, element) {
+  users = [];
+  completed_tasks = [];
+
+  for(var i in hash) {
+    users.push(i);
+    completed_tasks.push(hash[i]);
+  }
+
   var ctx = document.getElementById(element.id).getContext('2d');
   var myBarChart = new Chart(ctx, {
     type: 'horizontalBar',
     data: {
       datasets: [{
-        data: [10, 20, 30]
+        data: completed_tasks
       }],
-      labels: ['Busko Bogdan', 'Andriy Semegen']
+      labels: users
     },
     options: {
       legend: {
+        display: false
+      },
+      title: {
         display: true,
-        labels: {
-          usePointStyle: true
-          }
-        },
-        title: {
-          display: true,
-          text: element.dataset.title
+        text: element.dataset.title
       },
       maintainAspectRatio: false,
       scales: {

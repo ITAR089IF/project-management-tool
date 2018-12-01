@@ -4,4 +4,4 @@
       canvas class="project-doughnut" id="#{dom_id(project)}" data-graph="#{project.tasks.report}" data-title="Report for project #{project.name}"
   .level
     .level-item
-      canvas class="user-horizontal-bar" id="user_bar_#{project.id}" data-title="User progress report for #{project.name}"
+      canvas class="user-horizontal-bar" id="user_bar_#{project.id}" data-graph="#{project.tasks.user_report}" data-title="User progress report for #{project.name}"
