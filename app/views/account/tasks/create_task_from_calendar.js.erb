@@ -4,7 +4,7 @@
   <% if @task.due_date %>
     $("[data-date='<%= @task.due_date.strftime("%F") %>']").parent().find('ul').
       prepend("<%= j render 'account/tasks/show_task_on_calendar', task: @task%>").
-      find('li').first().css('border-color', '#23d160');
+      find('li').first().addClass('has-border-success');
   <% end %>
 <% else %>
   $('.modal-form').html("<%= j render 'account/tasks/form_for_calendar', task: @task%>");

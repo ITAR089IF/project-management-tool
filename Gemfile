@@ -46,6 +46,7 @@ gem 'bitly'
 gem 'prawn'
 gem 'prawn-table'
 gem 'sortable-rails'
+gem 'remotipart'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'
