@@ -141,11 +141,14 @@ class Account::TasksController < Account::AccountController
 
   def create_task_from_calendar
     @task = Task.new(calendar_task_params)
-    if @project = current_user.available_projects.where(id: calendar_task_params[:project_id]).first
+    @project = current_user.available_projects.where(id: calendar_task_params[:project_id]).first
+
+    if @project
       @task.project = @project
     else
       @task.project = nil
     end
+
     if @task.save
       @task.watchers << current_user
     end
