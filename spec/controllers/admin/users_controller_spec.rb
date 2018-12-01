@@ -53,17 +53,19 @@ RSpec.describe Admin::UsersController, type: :controller do
       expect(response).to be_successful
     end
 
-  describe 'GET #show' do
-    it 'should show user page' do
-      get :show, params: { id: user.id }
-      expect(response).to render_template(:show)
-      expect(response).to be_successful
+    describe 'GET #show' do
+      it 'should show user page' do
+        get :show, params: { id: user.id }
+        expect(response).to render_template(:show)
+        expect(response).to be_successful
+      end
     end
 
-  describe 'GET #edit' do
-    it 'must display edit page' do
-      get :edit, params: { id: user.id }
-      expect(response).to render_template(:edit)
+    describe 'GET #edit' do
+      it 'must display edit page' do
+        get :edit, params: { id: user.id }
+        expect(response).to render_template(:edit)
+      end
     end
 
     describe 'PUT #update' do

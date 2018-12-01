@@ -73,11 +73,11 @@ FactoryBot.define do
     after(:create) do |user|
       user.workspaces.each do |workspace|
         workspace.projects.each do |project|
-          user.reload
+          # user.reload
           FactoryBot.create(:task, :future, project: project)
           FactoryBot.create(:task, :expired, project: project)
-          FactoryBot.create_list(:task, 25, :in_range, project: project, completed_by_id: user.id, assignee: user)
-          FactoryBot.create_list(:task, 25, :in_range, project: project, completed_by_id: user.id)
+          FactoryBot.create_list(:task, 25, :random_completed_in_range, project: project, completed_by_id: user.id, assignee: user)
+          FactoryBot.create_list(:task, 25, :random_completed_in_range, project: project, completed_by_id: user.id)
           FactoryBot.create_list(:task, 50, project: project)
           FactoryBot.create(:task, :completed, :expired, project: project, completed_by_id: user.id)
         end
@@ -110,7 +110,7 @@ FactoryBot.define do
     end
   end
 
-  trait :with_assignee do
+  trait :with_member_assignee do
     after(:create) do |user|
       user.workspaces.each do |workspace|
         workspace.shared_workspaces.create(workspace_id: workspace.id, user_id: User.second.id)
