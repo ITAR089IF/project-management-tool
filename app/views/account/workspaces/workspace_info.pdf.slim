@@ -1,37 +1,30 @@
-doctype html
-html
-  head
-    = wicked_pdf_stylesheet_link_tag "pdf"
-  body.container.box
-    h1.title.has-text-bold.has-text-centered = link_to "#{@workspace.name} report" , account_workspace_url(@workspace)
-    - if @workspace.projects.exists?
-      h2.subtitle = "#{@workspace.name} progress"
-      table.table.is-fullwidth
-        thead.thead
-          tr.tr
-            th.th = "Progect".pluralize(@workspace.projects.count)
-            th.th N of tasks:
-            th.th Progress:
-            th.th.has-text-right = "Link".pluralize(@workspace.projects.count)
-        tbody.tbody
-          - @workspace.projects.each do |project|
-            tr.tr
-              td.td = project.name
-              td.td = "#{project.tasks.complete.count}/#{project.tasks.count}"
-              td.td
-                progress.progress.is-primary[value="#{project.tasks.complete.count}" max="#{project.tasks.count}"]
-              td.td.has-text-right = link_to project.name , account_workspace_project_path(@workspace, project)
-
-    h2.subtitle = "#{@workspace.name} member".pluralize(@workspace.all_members.count)
-    table.table.is-fullwidth
-      thead.thead
+h1.title.has-text-bold.has-text-centered = link_to "#{@workspace.name} details for #{Date.current.strftime("%d-%m-%Y")}" , account_workspace_url(@workspace)
+- if @workspace.projects.exists?
+  h2.subtitle = "#{@workspace.name} progress"
+  table.table.is-fullwidth
+    thead.thead
+      tr.tr
+        th.th = "Progect".pluralize(@workspace.projects.count)
+        th.th N of tasks:
+        th.th Progress:
+    tbody.tbody
+      - @workspace.projects.each do |project|
         tr.tr
-          th.th = "Member".pluralize(@workspace.all_members.count)
-          th.th N of assigned tasks:
-          th.th N of complted tasks:
-      tbody.tbody
-        - @workspace.all_members.each do |member|
-          tr.tr
-            td.td = member.full_name
-            td.td = member.assigned_tasks.current_workspace(@workspace).count
-            td.td = @workspace.tasks.complete_by(member).count
+          td.td = link_to project.name , account_workspace_project_path(@workspace, project)
+          td.td = "#{project.tasks.complete.count}/#{project.tasks.count}"
+          td.td
+            progress.progress.is-primary[value="#{project.tasks.complete.count}" max="#{project.tasks.count}"]
+
+h2.subtitle = "#{@workspace.name} member".pluralize(@workspace.all_members.count)
+table.table.is-fullwidth
+  thead.thead
+    tr.tr
+      th.th = "Member".pluralize(@workspace.all_members.count)
+      th.th N of assigned tasks:
+      th.th N of complted tasks:
+  tbody.tbody
+    - @workspace.all_members.each do |member|
+      tr.tr
+        td.td = member.full_name
+        td.td = member.assigned_tasks.current_workspace(@workspace).count
+        td.td = @workspace.tasks.complete_by(member).count

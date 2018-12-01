@@ -5,7 +5,7 @@ class Account::WorkspacesController < Account::AccountController
     respond_to do |format|
       format.html
       format.pdf do
-        render template: "account/workspaces/workspace_info", pdf: "Workspace info"
+        render layout: "pdf_layout", template: "account/workspaces/workspace_info", pdf: "#{@workspace.name} details for #{Date.current.strftime("%d-%m-%Y")}"
       end
     end
   end

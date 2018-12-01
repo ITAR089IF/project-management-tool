@@ -99,7 +99,7 @@ class Task < ApplicationRecord
   private
 
   def send_notifications(message, notify_users = self.watchers)
-    notify_users.each do |user|
+    notify_users.uniq.each do |user|
       user.messages.create(body: message, messageable: self)
       NotificationsJob.perform_later(user)
     end
