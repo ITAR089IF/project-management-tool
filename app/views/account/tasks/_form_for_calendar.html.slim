@@ -1,0 +1,12 @@
+h2.title.has-text-centered
+  | New Task
+= simple_form_for @task, url: create_task_from_calendar_account_tasks_path, method: :post,
+                  class: 'task-form', remote: true do |f|
+  = f.association :project, collection: current_user.available_workspaces,
+                      as: :grouped_select, group_method: :projects,
+                      group_label_method: :name, wrapper: :select, prompt: 'Select project'
+  = f.input :title, wrapper: :bulma_input
+  = f.input :description, as: :text, wrapper: :textarea, required: false
+  = f.input :due_date, wrapper: :date, as: :date, html5: true, id: 'date_field', required: false
+  = f.input :files, input_html: { multiple: true }, wrapper: :file, as: :file, label: false
+  = f.submit "Save", class: "button is-link"

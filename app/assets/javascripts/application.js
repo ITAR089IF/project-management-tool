@@ -4,8 +4,8 @@
 //= require turbolinks
 //= require search
 //= require dashboard
-//= require account/workspaces
 //= require account/dashboard
+//= require main
 //= require cable
 //= require js-routes
 //= require account/members
