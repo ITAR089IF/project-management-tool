@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  mount Ckeditor::Engine => '/ckeditor'
   root 'dashboard#index'
   get '/pricing',  to: 'dashboard#pricing'
   get '/product', to: 'dashboard#product'
@@ -66,6 +65,6 @@ Rails.application.routes.draw do
       post :stop_impersonating, on: :collection
     end
   end
-
+  mount Ckeditor::Engine => '/ckeditor'
   mount ActionCable.server => '/cable'
 end
