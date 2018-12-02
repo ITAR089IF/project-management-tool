@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
   root 'dashboard#index'
   get '/pricing',  to: 'dashboard#pricing'
   get '/product', to: 'dashboard#product'

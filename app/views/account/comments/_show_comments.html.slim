@@ -3,7 +3,7 @@
     .media-content
       .content
         strong = comment.user.full_name
-        = simple_format(comment.body)
+        = raw comment.body
         small = comment.created_at.to_date
     .media-right
       - if comment.user.can_manage?(comment)

@@ -11,3 +11,5 @@
 //= require account/members
 //= require sortable-rails
 //= require sort
+//= require jquery.remotipart
+//= require ckeditor/init

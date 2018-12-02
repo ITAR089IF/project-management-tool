@@ -5,7 +5,8 @@
       .level-left
         .level-item
           .title
-            = "#{@project.name}: #{@task.title}"
+            = link_to @project.name, account_workspace_project_path(workspace_id: @project.workspace, id: @project.id)
+            = ": #{@task.title}"
       .level-right
         .level-item id="watch_task_#{@task.id}"
           = render('/account/tasks/watch_link', task: @task, project: @project)
