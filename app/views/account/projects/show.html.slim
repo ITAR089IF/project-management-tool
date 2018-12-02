@@ -12,7 +12,7 @@
       .level-item
         = link_to "Add Task", new_account_project_task_path(@project), class: "button is-link"
       .level-item
-        = link_to "Add Section", new_account_project_task_path(@project, section: true), class: "button is-link"
+        = link_to "Add Section", new_account_project_task_path(@project, section: true), class: "button"
   - if @project.tasks.any?
     .title
       |  To Do List:

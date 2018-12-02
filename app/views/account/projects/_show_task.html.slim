@@ -1,14 +1,10 @@
-.level class="task_#{task.id}" data-project-id="#{project.id}" data-task-id="#{task.id}"
+.level class="task_#{task.id} #{'pending' if task.pending?}" data-project-id="#{project.id}" data-task-id="#{task.id}"
   .level-left
-    - if !task.section?
-      .level-item
+    .level-item.glyphicon-move
+      - if !task.section?
         = link_to toggle_complete_account_project_task_path(project, task),
           method: :patch, remote: true do
-          - if task.pending?
-            = fa_icon 'check-circle-o', class: 'has-text-grey-light'
-          - else
-            = fa_icon 'check-circle-o', class: 'has-text-success'
-    .level-item.glyphicon-move
+            = image_tag('complete-icon.svg')
       = link_to task.title, task.section? ? '#' : account_project_task_path(project, task), class: task_link_class(task)
   .level-right
     - if task.pending?
