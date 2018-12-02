@@ -49,7 +49,6 @@ class Task < ApplicationRecord
   scope :incomplete, -> { where(completed_at: nil) }
   scope :complete, -> { where.not(completed_at: nil).order(completed_at: :desc) }
   scope :row_order_asc, -> { order(row_order: :asc) }
-  # scope :order_by_completed_at_asc, -> { complete.order(completed_at: :asc) }
   scope :search_tasks, -> (user_id, search) { select('tasks.id, tasks.title, tasks.project_id').joins('
                                  INNER JOIN projects ON projects.id = tasks.project_id
                                  INNER JOIN user_projects as up ON projects.id = up.project_id
@@ -102,7 +101,7 @@ class Task < ApplicationRecord
     { complete: complete.count, incomplete: incomplete.count }.to_json
   end
 
-  def self.user_report
+  def self.users_report
     completed_tasks = completed_tasks_with_assignee.merge(completed_tasks_without_assignee){ |key, old_value, new_value| old_value + new_value }
 
     report = {}

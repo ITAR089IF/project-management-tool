@@ -36,6 +36,7 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
   let!(:user) { create(:user) }
+  let!(:member) { create(:user) }
   let!(:workspace) { create(:workspace, user: user) }
   let!(:project) { create(:project, workspace: workspace, users: [user]) }
   let!(:task1) { create(:task, title: 'deploy to heroku', project: project) }
@@ -98,5 +99,20 @@ RSpec.describe Task, type: :model do
       expect(user2.messages.count).to eq(1)
       expect(task.completed_by_id).to eq user1.id
     end
+  end
+
+  describe '.report' do
+    let!(:completed_tasks){ create_list(:task, 15, project: project, completed_at: Date.today) }
+    let!(:incompleted_tasks){ create_list(:task, 15, project: project) }
+
+    it { expect(project.tasks.report).to eq({ complete: 15, incomplete: 18 }.to_json) }
+  end
+
+  describe '.users_report' do
+    let!(:completed_tasks){ create_list(:task, 15, project: project, completed_at: Date.today, assignee: user, completed_by_id: user.id) }
+    let!(:completed_tasks_by_member){ create_list(:task, 15, project: project, completed_at: Date.today, assignee: member, completed_by_id: member.id) }
+    let!(:completed_tasks_without_assignee){ create_list(:task, 15, project: project, completed_at: Date.today, completed_by_id: user.id) }
+
+    it { expect(project.tasks.users_report).to eq({ user.full_name => 30, member.full_name => 15 }.to_json) }
   end
 end
