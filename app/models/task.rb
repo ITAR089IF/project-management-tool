@@ -58,7 +58,7 @@ class Task < ApplicationRecord
   scope :this_week, -> { where('created_at > ?', Date.today.beginning_of_week) }
   scope :current_workspace, -> (workspace) { where(project_id: workspace.projects.ids)}
   scope :completed_tasks_with_assignee, -> { where.not(assignee_id: nil, completed_at: nil).group(:assignee_id).count }
-  scope :completed_tasks_without_assignee, -> { where("completed_at IS NOT NULL AND completed_by_id IS NOT NULL and assignee_id IS NULL").group(:completed_by_id).count }
+  scope :completed_tasks_without_assignee, -> { where(assignee_id: nil).where.not(completed_at: nil, completed_by_id: nil).group(:completed_by_id).count }
 
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }
