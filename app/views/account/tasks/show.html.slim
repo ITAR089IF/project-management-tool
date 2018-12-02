@@ -31,7 +31,7 @@
                 = fa_icon "download"
             .level-item
               = link_to remove_attachment_account_project_task_path(@project, @task, attachment_id: file.id), method: :delete, data: { confirm: "Are you sure?" } do
-                = fa_icon "trash"
+                = fa_icon 'trash-alt', type: :regular
   .level
     .level-left
       - if @task.pending?
