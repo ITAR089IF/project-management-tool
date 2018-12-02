@@ -1,6 +1,7 @@
 class Account::ReportsController < Account::AccountController
   def workspace
     @workspace = parent
+    @projects = @workspace.projects.order_title_asc
   end
 
   def project

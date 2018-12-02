@@ -1,22 +1,22 @@
 document.addEventListener('turbolinks:load', () => {
-  var graphs = document.getElementById('graphs');
+  var graph = document.getElementById('graph');
 
-  if(graphs) {
-    var ids = graphs.querySelectorAll('*[id]');
+  if(graph) {
+    var canvas_elements = graph.querySelectorAll('.js-report');
 
-    for(var i = 0; i < ids.length; i++) {
-      chart(JSON.parse(ids[i].dataset.graph), ids[i]);
+    for(var i = 0; i < canvas_elements.length; i++) {
+      projectReport(JSON.parse(canvas_elements[i].dataset.graph), canvas_elements[i]);
     }
   }
 });
 
-function chart(workspaceReport, element) {
+function projectReport(projectData, element) {
   var ctx = document.getElementById(element.id).getContext('2d');
-  var chart = new Chart(ctx, {
+  var projectReport = new Chart(ctx, {
     type: 'doughnut',
     data: {
       datasets: [{
-        data: [workspaceReport.complete, workspaceReport.incomplete],
+        data: [projectData.complete, projectData.incomplete],
         backgroundColor: [
           '#daf7A6',
           '#F7DC6F'
@@ -44,17 +44,17 @@ function chart(workspaceReport, element) {
   });
 }
 
-function horizontalBar(userReport, element) {
+function userProgressReport(usersData, element) {
   users = [];
   completed_tasks = [];
 
-  for(var i in userReport) {
+  for(var i in usersData) {
     users.push(i);
-    completed_tasks.push(userReport[i]);
+    completed_tasks.push(usersData[i]);
   }
 
   var ctx = document.getElementById(element.id).getContext('2d');
-  var myBarChart = new Chart(ctx, {
+  var userProgressReport = new Chart(ctx, {
     type: 'horizontalBar',
     data: {
       datasets: [{
