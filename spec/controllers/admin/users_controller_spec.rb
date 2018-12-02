@@ -43,7 +43,7 @@ RSpec.describe Admin::UsersController, type: :controller do
     end
   end
 
-  describe 'user admin'
+  describe 'user admin' do
     before { sign_in user_admin }
 
     context "GET #index" do
@@ -59,6 +59,7 @@ RSpec.describe Admin::UsersController, type: :controller do
         expect(response).to render_template(:show)
         expect(response).to be_successful
       end
+    end
 
     context 'GET #edit' do
       it 'must display edit page' do
