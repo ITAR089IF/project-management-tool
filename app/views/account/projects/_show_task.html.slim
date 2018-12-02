@@ -4,7 +4,7 @@
       - if !task.section?
         = link_to toggle_complete_account_project_task_path(project, task),
           method: :patch, remote: true do
-            = image_tag('complete-icon.svg')
+          = image_tag('complete-icon.svg')
       = link_to task.title, task.section? ? '#' : account_project_task_path(project, task), class: task_link_class(task)
   .level-right
     - if task.pending?
@@ -14,7 +14,7 @@
       = render '/account/projects/show_task_assignee', task: task
       .level-item
         = link_to edit_account_project_task_path(project, task) do
-          = fa_icon 'pencil-square-o'
+          = fa_icon 'edit', type: :regular
     - else
       .level-item
         p
@@ -23,4 +23,4 @@
     .level-item
       = link_to account_project_task_path(project, task), method: :delete,
         data: { confirm: "Are you sure?" }, remote: true do
-        = fa_icon 'trash-o'
+        = fa_icon 'trash-alt', type: :regular
