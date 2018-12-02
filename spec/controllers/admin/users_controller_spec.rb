@@ -43,17 +43,17 @@ RSpec.describe Admin::UsersController, type: :controller do
     end
   end
 
-  describe "GET #index" do
-    before do
-      sign_in user_admin
+  describe 'user admin'
+    before { sign_in user_admin }
+
+    context "GET #index" do
+      it 'should show all users' do
+        get :index
+        expect(response).to be_successful
+      end
     end
 
-    it 'should show all users' do
-      get :index
-      expect(response).to be_successful
-    end
-
-    describe 'GET #show' do
+    context 'GET #show' do
       it 'should show user page' do
         get :show, params: { id: user.id }
         expect(response).to render_template(:show)
@@ -61,14 +61,14 @@ RSpec.describe Admin::UsersController, type: :controller do
       end
     end
 
-    describe 'GET #edit' do
+    context 'GET #edit' do
       it 'must display edit page' do
         get :edit, params: { id: user.id }
         expect(response).to render_template(:edit)
       end
     end
 
-    describe 'PUT #update' do
+    context 'PUT #update' do
       context 'with valid attributes' do
         it 'must update the user' do
           patch :update, params: { id: user.id, user: user_valid_params }
@@ -87,9 +87,9 @@ RSpec.describe Admin::UsersController, type: :controller do
       end
     end
 
-    describe 'DELETE #destroy' do
+    context 'DELETE #destroy' do
       it 'should delete user' do
-        expect{ (delete :destroy, params: { id: user.id }) }.to change{ User.count }.by(-1)
+        expect{ delete :destroy, params: { id: user.id } }.to change{ User.count }.by(-1)
         expect(response).to redirect_to admin_users_path
       end
     end

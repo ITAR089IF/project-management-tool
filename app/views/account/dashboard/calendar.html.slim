@@ -1,15 +1,10 @@
 .container
   .title Calendar:
   = month_calendar events: @user_tasks do |date, tasks|
-    = date.day
+    span data-date="#{date}"
+      = date.day
+    = link_to new_task_from_calendar_account_tasks_path(due_date: date), method: :post, class: 'show-modal date-button', remote: true do
+      = fa_icon "plus", class: 'is-pulled-right has-text-grey-light'
     ul.tasks-list
       - tasks.each do |task|
-        li
-          = link_to account_project_task_url(task.project, task), class: "calendar-task" do
-            - if task.assignee.present?
-              - if task.assignee.with_avatar?
-                = profile_avatar(task.assignee)
-              - else
-                .is-rounded
-                  = task.assignee.initials
-            = task.title
+        = render 'account/tasks/show_task_on_calendar', task: task

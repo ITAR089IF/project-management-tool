@@ -54,6 +54,10 @@ Rails.application.routes.draw do
 
     resources :tasks do
       concerns :commentable
+      collection do
+        post :new_task_from_calendar
+        post :create_task_from_calendar
+      end
     end
   end
 

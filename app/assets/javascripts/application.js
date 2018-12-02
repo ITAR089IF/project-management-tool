@@ -5,12 +5,13 @@
 //= require turbolinks
 //= require search
 //= require dashboard
-//= require account/workspaces
 //= require account/dashboard
 //= require account/reports
+//= require main
 //= require cable
 //= require js-routes
 //= require chart.min
 //= require account/members
 //= require sortable-rails
 //= require sort
+//= require jquery.remotipart
