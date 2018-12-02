@@ -43,7 +43,7 @@ RSpec.describe Admin::UsersController, type: :controller do
     end
   end
 
-  describe 'user admin'
+  describe 'user admin' do
     before { sign_in user_admin }
 
     context "GET #index" do
