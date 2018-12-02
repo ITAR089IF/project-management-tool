@@ -102,17 +102,17 @@ RSpec.describe Task, type: :model do
   end
 
   describe '.report' do
-    let!(:completed_tasks){ create_list(:task, 15, project: project, completed_at: Date.today) }
-    let!(:incompleted_tasks){ create_list(:task, 15, project: project) }
+    let!(:completed_tasks){ create_list(:task, 5, project: project, completed_at: Date.today) }
+    let!(:incompleted_tasks){ create_list(:task, 5, project: project) }
 
-    it { expect(project.tasks.report).to eq({ complete: 15, incomplete: 18 }.to_json) }
+    it { expect(project.tasks.report).to eq({ complete: 5, incomplete: 8 }) }
   end
 
   describe '.users_report' do
-    let!(:completed_tasks){ create_list(:task, 15, project: project, completed_at: Date.today, assignee: user, completed_by_id: user.id) }
-    let!(:completed_tasks_by_member){ create_list(:task, 15, project: project, completed_at: Date.today, assignee: member, completed_by_id: member.id) }
-    let!(:completed_tasks_without_assignee){ create_list(:task, 15, project: project, completed_at: Date.today, completed_by_id: user.id) }
+    let!(:completed_tasks){ create_list(:task, 5, project: project, completed_at: Date.today, assignee: user, completed_by_id: user.id) }
+    let!(:completed_tasks_by_member){ create_list(:task, 5, project: project, completed_at: Date.today, assignee: member, completed_by_id: member.id) }
+    let!(:completed_tasks_without_assignee){ create_list(:task, 5, project: project, completed_at: Date.today, completed_by_id: user.id) }
 
-    it { expect(project.tasks.users_report).to eq({ user.full_name => 30, member.full_name => 15 }.to_json) }
+    it { expect(project.tasks.users_report).to eq({ user.full_name => 10, member.full_name => 5 }) }
   end
 end

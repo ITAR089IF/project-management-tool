@@ -13,6 +13,6 @@ class Account::ReportsController < Account::AccountController
   private
 
   def parent
-    current_user.workspaces.find(params[:workspace_id])
+    current_user.available_workspaces.find(params[:workspace_id])
   end
 end

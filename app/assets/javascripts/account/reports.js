@@ -10,13 +10,13 @@ document.addEventListener('turbolinks:load', () => {
   }
 });
 
-function chart(hash, element) {
+function chart(workspaceReport, element) {
   var ctx = document.getElementById(element.id).getContext('2d');
   var chart = new Chart(ctx, {
     type: 'doughnut',
     data: {
       datasets: [{
-        data: [hash.complete, hash.incomplete],
+        data: [workspaceReport.complete, workspaceReport.incomplete],
         backgroundColor: [
           '#daf7A6',
           '#F7DC6F'
@@ -44,13 +44,13 @@ function chart(hash, element) {
   });
 }
 
-function horizontalBar(hash, element) {
+function horizontalBar(userReport, element) {
   users = [];
   completed_tasks = [];
 
-  for(var i in hash) {
+  for(var i in userReport) {
     users.push(i);
-    completed_tasks.push(hash[i]);
+    completed_tasks.push(userReport[i]);
   }
 
   var ctx = document.getElementById(element.id).getContext('2d');

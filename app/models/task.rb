@@ -97,21 +97,21 @@ class Task < ApplicationRecord
     assignee == user
   end
 
-  def self.report
-    { complete: complete.count, incomplete: incomplete.count }.to_json
+  def Task.report
+    { complete: complete.count, incomplete: incomplete.count }
   end
 
-  def self.users_report
+  def Task.users_report
     completed_tasks = completed_tasks_with_assignee.merge(completed_tasks_without_assignee){ |key, old_value, new_value| old_value + new_value }
 
     report = {}
 
-    completed_tasks.each_key do |key|
-      user = User.find(key).full_name
-      report[user] = completed_tasks[key]
+    completed_tasks.each_key do |user_id|
+      user = User.find(user_id).full_name
+      report[user] = completed_tasks[user_id]
     end
 
-    report.to_json
+    report
   end
 
   private

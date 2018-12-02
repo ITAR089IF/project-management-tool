@@ -12,5 +12,5 @@
           = link_to edit_account_workspace_path(workspace), remote: true do
             = fa_icon 'edit', type: :regular
         .level-item
-          = link_to account_workspace_path(workspace), remote: true, method: :delete do
+          = link_to account_workspace_path(workspace), remote: true, method: :delete, data: { confirm: 'Are you sure?' } do
             = fa_icon 'trash-alt', type: :regular

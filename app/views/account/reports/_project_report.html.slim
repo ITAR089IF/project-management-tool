@@ -1,7 +1,7 @@
 .project-report.report
   .level
     .level-item
-      canvas class="project-doughnut" id="#{dom_id(project)}" data-graph="#{project.tasks.report}" data-title="Report for project #{project.name}"
+      canvas class="project-doughnut" id="#{dom_id(project)}" data-graph="#{project.tasks.report.to_json}" data-title="Report for project #{project.name}"
   .level
     .level-item
-      canvas class="user-horizontal-bar" id="user_bar_#{project.id}" data-graph="#{project.tasks.users_report}" data-title="User progress report for #{project.name}"
+      canvas class="user-horizontal-bar" id="user_bar_#{project.id}" data-graph="#{project.tasks.users_report.to_json}" data-title="User progress report for #{project.name}"

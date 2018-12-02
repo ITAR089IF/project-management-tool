@@ -12,8 +12,8 @@ Rails.application.routes.draw do
     get '/dashboard', to: 'dashboard#index'
     get '/calendar', to: 'dashboard#calendar'
     get '/inbox', to: 'dashboard#inbox'
-    get '/workspaces/:workspace_id/report', to: 'reports#workspace', as: :workspace_report
-    get '/workspaces/:workspace_id/projects/:id/report', to: 'reports#project', as: :project_report
+    get '/reports/workspaces/:workspace_id', to: 'reports#workspace', as: :workspace_report
+    get '/reports/workspaces/:workspace_id/projects/:id', to: 'reports#project', as: :project_report
 
     resources :search, only: [:index], defaults: { format: :json }
     resource :profile, only: [:edit, :update]
