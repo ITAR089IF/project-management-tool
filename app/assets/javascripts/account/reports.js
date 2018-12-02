@@ -44,7 +44,7 @@ function projectReport(projectData, element) {
   });
 }
 
-function userProgressReport(usersData, element) {
+function usersProgressReport(usersData, element) {
   users = [];
   completed_tasks = [];
 
