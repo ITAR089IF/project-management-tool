@@ -7,10 +7,13 @@
       .card-content
         = image_tag('project.svg', class: 'image')
     footer.card-footer
+      = link_to account_project_report_path(workspace, project),
+        remote: true, class: 'card-footer-item' do
+        = fa_icon "chart-pie"
       = link_to edit_account_workspace_project_path(workspace, project),
         remote: true, class: "card-footer-item" do
-          = fa_icon "pencil-square-o"
+        = fa_icon "edit", type: :regular
       = link_to account_workspace_project_path(workspace, project),
         method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "card-footer-item",
         data: { confirm: "Are you sure?" } do
-          = fa_icon "trash-o"
+        = fa_icon "trash-alt", type: :regular

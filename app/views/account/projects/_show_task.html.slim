@@ -5,9 +5,9 @@
         = link_to toggle_complete_account_project_task_path(project, task),
           method: :patch, remote: true do
           - if task.pending?
-            = fa_icon 'check-circle-o', class: 'has-text-grey-light'
+            = fa_icon 'check-circle', type: :regular, class: 'has-text-grey-light'
           - else
-            = fa_icon 'check-circle-o', class: 'has-text-success'
+            = fa_icon 'check-circle', type: :regular, class: 'has-text-success'
     .level-item.glyphicon-move
       = link_to task.title, task.section? ? '#' : account_project_task_path(project, task), class: task_link_class(task)
   .level-right
@@ -18,7 +18,7 @@
       = render '/account/projects/show_task_assignee', task: task
       .level-item
         = link_to edit_account_project_task_path(project, task) do
-          = fa_icon 'pencil-square-o'
+          = fa_icon 'edit', type: :regular
     - else
       .level-item
         p
@@ -27,4 +27,4 @@
     .level-item
       = link_to account_project_task_path(project, task), method: :delete,
         data: { confirm: "Are you sure?" }, remote: true do
-        = fa_icon 'trash-o'
+        = fa_icon 'trash-alt', type: :regular
