@@ -49,6 +49,7 @@ class Task < ApplicationRecord
   has_many :watchers, through: :task_watches, source: :user
   belongs_to :assignee, class_name: "User", required: false
   belongs_to :creator, class_name: "User", required: true
+  belongs_to :completed_by, class_name: "User", foreign_key: :completed_by_id, optional: true
 
   scope :incomplete, -> { where(completed_at: nil) }
   scope :complete, -> { where.not(completed_at: nil).order(completed_at: :desc) }
@@ -92,7 +93,7 @@ class Task < ApplicationRecord
   end
 
   def complete!(user)
-    self.update(completed_at: Time.now, completed_by_id: user.id)
+    self.update(completed_at: Time.now, completed_by: user)
     send_notifications("Task '#{self.title}' has been completed by #{user.full_name}", self.watchers - [user])
     TasksMailer.task_completed(self, user).deliver_later
   end

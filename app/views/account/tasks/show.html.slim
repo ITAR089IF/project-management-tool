@@ -20,7 +20,7 @@
 
     - if @task.completed_at.present?
       h3 Completed at
-      = "#{l @task.completed_at, format: :date_month_year_concise} by #{@task.completed_by_id}"
+      = "#{l @task.completed_at, format: :date_month_year_concise} by #{@task.completed_by.full_name}"
 
     .level
       #assingnee_user_bar
