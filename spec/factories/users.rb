@@ -73,12 +73,12 @@ FactoryBot.define do
     after(:create) do |user|
       user.workspaces.each do |workspace|
         workspace.projects.each do |project|
-          FactoryBot.create(:task, :future, project: project)
-          FactoryBot.create(:task, :expired, project: project)
-          FactoryBot.create_list(:task, 25, :random_completed_in_range, project: project, completed_by_id: user.id, assignee: user)
-          FactoryBot.create_list(:task, 25, :random_completed_in_range, project: project, completed_by_id: user.id)
-          FactoryBot.create_list(:task, 50, project: project)
-          FactoryBot.create(:task, :completed, :expired, project: project, completed_by_id: user.id)
+          FactoryBot.create(:task, :future, project: project, created_by_id: user.id)
+          FactoryBot.create(:task, :expired, project: project, created_by_id: user.id)
+          FactoryBot.create_list(:task, 25, :random_completed_in_range, project: project, completed_by_id: user.id, assignee: user, created_by_id: user.id)
+          FactoryBot.create_list(:task, 25, :random_completed_in_range, project: project, completed_by_id: user.id, created_by_id: user.id)
+          FactoryBot.create_list(:task, 50, project: project, created_by_id: user.id)
+          FactoryBot.create(:task, :completed, :expired, project: project, completed_by_id: user.id, created_by_id: user.id)
         end
       end
     end
