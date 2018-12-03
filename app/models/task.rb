@@ -15,6 +15,7 @@
 #  assigned_by_id  :integer
 #  assignee_id     :bigint(8)
 #  completed_by_id :integer
+#  creator_id      :bigint(8)
 #  project_id      :bigint(8)
 #
 # Indexes
@@ -22,6 +23,7 @@
 #  index_tasks_on_assigned_by_id   (assigned_by_id)
 #  index_tasks_on_assignee_id      (assignee_id)
 #  index_tasks_on_completed_by_id  (completed_by_id)
+#  index_tasks_on_creator_id       (creator_id)
 #  index_tasks_on_deleted_at       (deleted_at)
 #  index_tasks_on_project_id       (project_id)
 #  index_tasks_on_row_order        (row_order)
@@ -29,6 +31,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (assignee_id => users.id)
+#  fk_rails_...  (creator_id => users.id)
 #  fk_rails_...  (project_id => projects.id)
 #
 
@@ -45,6 +48,8 @@ class Task < ApplicationRecord
   has_many :task_watches, dependent: :destroy
   has_many :watchers, through: :task_watches, source: :user
   belongs_to :assignee, class_name: "User", required: false
+  belongs_to :creator, class_name: "User", required: true
+  belongs_to :completed_by, class_name: "User", foreign_key: :completed_by_id, optional: true
 
   scope :incomplete,        -> { where(completed_at: nil) }
   scope :complete,          -> { where.not(completed_at: nil).order(completed_at: :desc) }
@@ -89,7 +94,7 @@ class Task < ApplicationRecord
   end
 
   def complete!(user)
-    self.update(completed_at: Time.now, completed_by_id: user.id)
+    self.update(completed_at: Time.now, completed_by: user)
     send_notifications("Task '#{self.title}' has been completed by #{user.full_name}", self.watchers - [user])
     TasksMailer.task_completed(self, user).deliver_later
   end

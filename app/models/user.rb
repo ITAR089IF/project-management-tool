@@ -40,6 +40,7 @@ class User < ApplicationRecord
   has_many :user_projects, dependent: :destroy
   has_many :projects, through: :user_projects
   has_many :task_watches, dependent: :destroy
+  has_many :created_tasks, class_name: "Task", foreign_key: :creator_id
   has_many :followed_tasks, through: :task_watches, source: :task
   has_many :assigned_tasks, class_name: "Task", foreign_key: :assignee_id
   has_many :shared_workspaces
