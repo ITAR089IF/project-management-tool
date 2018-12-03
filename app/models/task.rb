@@ -46,17 +46,18 @@ class Task < ApplicationRecord
   has_many :watchers, through: :task_watches, source: :user
   belongs_to :assignee, class_name: "User", required: false
 
-  scope :incomplete, -> { where(completed_at: nil) }
-  scope :complete, -> { where.not(completed_at: nil).order(completed_at: :desc) }
-  scope :row_order_asc, -> { order(row_order: :asc) }
-  scope :search_tasks, -> (user_id, search) { select('tasks.id, tasks.title, tasks.project_id').joins('
+  scope :incomplete,        -> { where(completed_at: nil) }
+  scope :complete,          -> { where.not(completed_at: nil).order(completed_at: :desc) }
+  scope :complete_by,       -> (user) { where("completed_by_id = ?", user.id) }
+  scope :row_order_asc,     -> { order(row_order: :asc) }
+  scope :search_tasks,      -> (user_id, search) { select('tasks.id, tasks.title, tasks.project_id').joins('
                                  INNER JOIN projects ON projects.id = tasks.project_id
                                  INNER JOIN user_projects as up ON projects.id = up.project_id
                                  INNER JOIN users ON users.id = up.user_id')
                                    .where('users.id = ? AND tasks.title ~* ?', user_id, "\\m#{search}")
                                    .limit(10) }
-  scope :this_week, -> { where('created_at > ?', Date.today.beginning_of_week) }
-  scope :current_workspace, -> (workspace) { where(project_id: workspace.projects.ids)}
+  scope :this_week,         -> { where('created_at > ?', Date.today.beginning_of_week) }
+  scope :current_workspace, -> (workspace) { joins(:project).merge(workspace.projects) }
   scope :completed_tasks_with_assignee, -> { where.not(assignee_id: nil, completed_at: nil).group(:assignee_id).count }
   scope :completed_tasks_without_assignee, -> { where(assignee_id: nil).where.not(completed_at: nil, completed_by_id: nil).group(:completed_by_id).count }
 
@@ -83,7 +84,7 @@ class Task < ApplicationRecord
 
   def assign!(assignee_id, user)
     result = update(assignee_id: assignee_id, assigned_by_id: user.id)
-    send_notifications("Task '#{self.title}' has been assigned to #{assignee.full_name} by #{user.full_name}", self.watchers - [user] + [assignee]) if result
+    send_notifications("Task '#{self.title}' has been assigned to #{assignee.full_name} by #{user.full_name}", self.watchers + [assignee] - [user]) if result
     result
   end
 
