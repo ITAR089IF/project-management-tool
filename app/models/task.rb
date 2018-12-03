@@ -58,6 +58,8 @@ class Task < ApplicationRecord
                                    .limit(10) }
   scope :this_week,         -> { where('created_at > ?', Date.today.beginning_of_week) }
   scope :current_workspace, -> (workspace) { joins(:project).merge(workspace.projects) }
+  scope :completed_tasks_with_assignee, -> { where.not(assignee_id: nil, completed_at: nil).group(:assignee_id).count }
+  scope :completed_tasks_without_assignee, -> { where(assignee_id: nil).where.not(completed_at: nil, completed_by_id: nil).group(:completed_by_id).count }
 
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }
@@ -94,6 +96,23 @@ class Task < ApplicationRecord
 
   def assignee?(user)
     assignee == user
+  end
+
+  def Task.report
+    { complete: complete.count, incomplete: incomplete.count }
+  end
+
+  def Task.users_report
+    completed_tasks = completed_tasks_with_assignee.merge(completed_tasks_without_assignee){ |key, old_value, new_value| old_value + new_value }
+
+    report = {}
+
+    completed_tasks.each_key do |user_id|
+      user = User.find(user_id).full_name
+      report[user] = completed_tasks[user_id]
+    end
+
+    report
   end
 
   private

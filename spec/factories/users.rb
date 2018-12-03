@@ -75,6 +75,9 @@ FactoryBot.define do
         workspace.projects.each do |project|
           FactoryBot.create(:task, :future, project: project)
           FactoryBot.create(:task, :expired, project: project)
+          FactoryBot.create_list(:task, 25, :random_completed_in_range, project: project, completed_by_id: user.id, assignee: user)
+          FactoryBot.create_list(:task, 25, :random_completed_in_range, project: project, completed_by_id: user.id)
+          FactoryBot.create_list(:task, 50, project: project)
           FactoryBot.create(:task, :completed, :expired, project: project, completed_by_id: user.id)
         end
       end
@@ -100,6 +103,21 @@ FactoryBot.define do
         workspace.projects.each do |project|
           project.tasks.each do |task|
             task.update(watchers: [user])
+          end
+        end
+      end
+    end
+  end
+
+  trait :with_member_assignee do
+    after(:create) do |user|
+      user.workspaces.each do |workspace|
+        workspace.shared_workspaces.create(workspace_id: workspace.id, user_id: User.second.id)
+        workspace.projects.each do |project|
+          workspace.members.each do |member|
+            project.tasks.incomplete.limit(20).each do |task|
+              task.update(assignee: member, completed_at: Date.today, completed_by_id: member.id)
+            end
           end
         end
       end

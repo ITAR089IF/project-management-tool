@@ -39,9 +39,11 @@ RSpec.describe Admin::UsersController, type: :controller do
       end
     end
 
-    it 'should show all users' do
-      get :index
-      expect(response).to be_successful
+    context "GET #index" do
+      it 'should show all users' do
+        get :index
+        expect(response).to be_successful
+      end
     end
 
     it 'should show user page' do

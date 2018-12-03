@@ -24,5 +24,5 @@ document.addEventListener('DOMContentLoaded', () => {
   function dismiss(e) {
     this.parentNode.classList.add('is-hidden');
   }
-  
+
 });

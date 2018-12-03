@@ -12,8 +12,10 @@ Rails.application.routes.draw do
     get '/dashboard', to: 'dashboard#index'
     get '/calendar', to: 'dashboard#calendar'
     get '/inbox', to: 'dashboard#inbox'
-    resources :search, only: [:index], defaults: { format: :json }
+    get '/reports/workspaces/:workspace_id', to: 'reports#workspace', as: :workspace_report
+    get '/reports/workspaces/:workspace_id/projects/:id', to: 'reports#project', as: :project_report
 
+    resources :search, only: [:index], defaults: { format: :json }
     resource :profile, only: [:edit, :update]
     resources :workspaces, except: [:index] do
       post :create_invitation_link
@@ -52,6 +54,10 @@ Rails.application.routes.draw do
 
     resources :tasks do
       concerns :commentable
+      collection do
+        post :new_task_from_calendar
+        post :create_task_from_calendar
+      end
     end
   end
 
