@@ -15,7 +15,7 @@ class Account::TasksController < Account::AccountController
   def create
     @project = parent
     @task = @project.tasks.build(tasks_params)
-    @task.created_by_id = current_user.id
+    @task.creator = current_user
 
     if @task.save
       if @task.section?
@@ -142,6 +142,7 @@ class Account::TasksController < Account::AccountController
 
   def create_task_from_calendar
     @task = Task.new(calendar_task_params)
+    @task.creator = current_user
     @project = current_user.available_projects.where(id: calendar_task_params[:project_id]).first
 
     if @project
