@@ -15,6 +15,7 @@ class Account::TasksController < Account::AccountController
   def create
     @project = parent
     @task = @project.tasks.build(tasks_params)
+    @task.created_by_id = current_user.id
 
     if @task.save
       if @task.section?
