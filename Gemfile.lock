@@ -298,6 +298,7 @@ GEM
       execjs (~> 2.5)
       rails (>= 3.2)
       rainbow (~> 3.0)
+    redis (4.0.3)
     remotipart (1.4.2)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
@@ -453,6 +454,7 @@ DEPENDENCIES
   ranked-model
   ransack
   react_on_rails
+  redis
   remotipart
   rspec-rails
   sass-rails (~> 5.0)

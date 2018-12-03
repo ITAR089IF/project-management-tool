@@ -49,6 +49,7 @@ gem 'sortable-rails'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 gem 'remotipart'
+gem 'redis'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'
