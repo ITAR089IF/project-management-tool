@@ -1,13 +1,5 @@
-<% if @task.pending? %>
-  $('#incomplete_tasks').html('');
-  <%- @incomplete_tasks.each do |task| %>
-    task_html = $("<%= j render('/account/projects/show_task', task: task, project: @project) %>");
-    $('#incomplete_tasks').append(task_html);
-  <% end %>
-<% else %>
-  $('#complete_tasks').html('');
-  <%- @complete_tasks.each do |task| %>
-    task_html = $("<%= j render('/account/projects/show_task', task: task, project: @project) %>");
-    $('#complete_tasks').append(task_html);
-  <% end %>
+$('.tasks').html('');
+<%- @tasks.each do |task| %>
+  task_html = $("<%= j render('/account/projects/show_task', task: task, project: @project) %>");
+  $('.tasks').append(task_html);
 <% end %>

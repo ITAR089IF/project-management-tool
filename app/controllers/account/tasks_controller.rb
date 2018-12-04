@@ -15,6 +15,7 @@ class Account::TasksController < Account::AccountController
   def create
     @project = parent
     @task = @project.tasks.build(tasks_params)
+    @task.creator = current_user
 
     if @task.save
       if @task.section?
@@ -57,10 +58,10 @@ class Account::TasksController < Account::AccountController
   def move
     @project = parent
     @task = resource
-    @incomplete_tasks = @project.tasks.incomplete.row_order_asc
-    @complete_tasks = @project.tasks.complete.row_order_asc
-    @task.update(task_movement_params)
-    respond_to(:js)
+    @tasks = @project.tasks.row_order_asc
+    params[:move][:move_positions].to_i.times do
+      @task.update(row_order_position: params[:move][:move_option].to_sym)
+    end
   end
 
   def watch
@@ -87,13 +88,11 @@ class Account::TasksController < Account::AccountController
     @project = parent
     @task = @project.tasks.find(params[:id])
     @result = @task.assign!(assignee_params[:assignee], current_user)
-
     unless @task.assignee.watching?(@task)
       @task.add_watcher(@task.assignee)
     end
 
     TasksMailer.task_assign_to_user_email(@task).deliver_later if @task.saved_change_to_assignee_id?
-
     respond_to :js
   end
 
@@ -134,6 +133,31 @@ class Account::TasksController < Account::AccountController
       disposition: 'attachment'
   end
 
+  def new_task_from_calendar
+    @task = Task.new
+    @task.due_date = params[:due_date]
+
+    respond_to :js
+  end
+
+  def create_task_from_calendar
+    @task = Task.new(calendar_task_params)
+    @task.creator = current_user
+    @project = current_user.available_projects.where(id: calendar_task_params[:project_id]).first
+
+    if @project
+      @task.project = @project
+    else
+      @task.project = nil
+    end
+
+    if @task.save
+      @task.watchers << current_user
+    end
+
+    respond_to :js
+  end
+
   private
 
   def parent
@@ -152,8 +176,8 @@ class Account::TasksController < Account::AccountController
     params.require(:task).permit(:title, :description, :section, :due_date, :completed_at, files: [])
   end
 
-  def task_movement_params
-    params.require(:task).permit(:row_order_position)
+  def calendar_task_params
+    params.require(:task).permit(:project_id, :title, :description, :due_date, files: [])
   end
 
   def section_params

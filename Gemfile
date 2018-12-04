@@ -15,7 +15,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'slim-rails'
-gem 'font-awesome-rails'
+gem 'font_awesome5_rails'
 gem 'figaro'
 gem 'devise'
 gem 'any_login'
@@ -45,6 +45,11 @@ gem 'pretender'
 gem 'bitly'
 gem 'prawn'
 gem 'prawn-table'
+gem 'sortable-rails'
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
+gem 'remotipart'
+gem 'redis'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'

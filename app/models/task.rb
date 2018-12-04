@@ -15,6 +15,7 @@
 #  assigned_by_id  :integer
 #  assignee_id     :bigint(8)
 #  completed_by_id :integer
+#  creator_id      :bigint(8)
 #  project_id      :bigint(8)
 #
 # Indexes
@@ -22,6 +23,7 @@
 #  index_tasks_on_assigned_by_id   (assigned_by_id)
 #  index_tasks_on_assignee_id      (assignee_id)
 #  index_tasks_on_completed_by_id  (completed_by_id)
+#  index_tasks_on_creator_id       (creator_id)
 #  index_tasks_on_deleted_at       (deleted_at)
 #  index_tasks_on_project_id       (project_id)
 #  index_tasks_on_row_order        (row_order)
@@ -29,6 +31,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (assignee_id => users.id)
+#  fk_rails_...  (creator_id => users.id)
 #  fk_rails_...  (project_id => projects.id)
 #
 
@@ -45,18 +48,23 @@ class Task < ApplicationRecord
   has_many :task_watches, dependent: :destroy
   has_many :watchers, through: :task_watches, source: :user
   belongs_to :assignee, class_name: "User", required: false
+  belongs_to :creator, class_name: "User", required: true
+  belongs_to :completed_by, class_name: "User", foreign_key: :completed_by_id, optional: true
 
-  scope :incomplete, -> { where(completed_at: nil) }
-  scope :complete, -> { where.not(completed_at: nil).order(completed_at: :desc) }
-  scope :row_order_asc, -> { order(row_order: :asc) }
-  scope :search_tasks, -> (user_id, search) { select('tasks.id, tasks.title, tasks.project_id').joins('
+  scope :incomplete,        -> { where(completed_at: nil) }
+  scope :complete,          -> { where.not(completed_at: nil).order(completed_at: :desc) }
+  scope :complete_by,       -> (user) { where("completed_by_id = ?", user.id) }
+  scope :row_order_asc,     -> { order(row_order: :asc) }
+  scope :search_tasks,      -> (user_id, search) { select('tasks.id, tasks.title, tasks.project_id').joins('
                                  INNER JOIN projects ON projects.id = tasks.project_id
                                  INNER JOIN user_projects as up ON projects.id = up.project_id
                                  INNER JOIN users ON users.id = up.user_id')
                                    .where('users.id = ? AND tasks.title ~* ?', user_id, "\\m#{search}")
                                    .limit(10) }
-  scope :this_week, -> { where('created_at > ?', Date.today.beginning_of_week) }
-  scope :current_workspace, -> (workspace) { where(project_id: workspace.projects.ids)}
+  scope :this_week,         -> { where('created_at > ?', Date.today.beginning_of_week) }
+  scope :current_workspace, -> (workspace) { joins(:project).merge(workspace.projects) }
+  scope :completed_tasks_with_assignee, -> { where.not(assignee_id: nil, completed_at: nil).group(:assignee_id).count }
+  scope :completed_tasks_without_assignee, -> { where(assignee_id: nil).where.not(completed_at: nil, completed_by_id: nil).group(:completed_by_id).count }
 
   validates :title, length: { maximum: 250 }, presence: true
   validates :description, length: { maximum: 250 }
@@ -81,18 +89,35 @@ class Task < ApplicationRecord
 
   def assign!(assignee_id, user)
     result = update(assignee_id: assignee_id, assigned_by_id: user.id)
-    send_notifications("Task '#{self.title}' has been assigned to #{assignee.full_name} by #{user.full_name}", self.watchers - [user] + [assignee]) if result
+    send_notifications("Task '#{self.title}' has been assigned to #{assignee.full_name} by #{user.full_name}", self.watchers + [assignee] - [user]) if result
     result
   end
 
   def complete!(user)
-    self.update(completed_at: Time.now, completed_by_id: user.id)
+    self.update(completed_at: Time.now, completed_by: user)
     send_notifications("Task '#{self.title}' has been completed by #{user.full_name}", self.watchers - [user])
     TasksMailer.task_completed(self, user).deliver_later
   end
 
   def assignee?(user)
     assignee == user
+  end
+
+  def Task.report
+    { complete: complete.count, incomplete: incomplete.count }
+  end
+
+  def Task.users_report
+    completed_tasks = completed_tasks_with_assignee.merge(completed_tasks_without_assignee){ |key, old_value, new_value| old_value + new_value }
+
+    report = {}
+
+    completed_tasks.each_key do |user_id|
+      user = User.find(user_id).full_name
+      report[user] = completed_tasks[user_id]
+    end
+
+    report
   end
 
   private

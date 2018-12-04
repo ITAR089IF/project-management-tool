@@ -1,1 +1,2 @@
-$('.show_invitation_link').html('<%= j @short_link %>')
+$('#show_invitation_link').val('<%= j @short_link %>').removeClass("is-invisible");
+$('#copy_to_clipboard_button').removeClass("is-invisible");

@@ -15,6 +15,7 @@
 #  assigned_by_id  :integer
 #  assignee_id     :bigint(8)
 #  completed_by_id :integer
+#  creator_id      :bigint(8)
 #  project_id      :bigint(8)
 #
 # Indexes
@@ -22,6 +23,7 @@
 #  index_tasks_on_assigned_by_id   (assigned_by_id)
 #  index_tasks_on_assignee_id      (assignee_id)
 #  index_tasks_on_completed_by_id  (completed_by_id)
+#  index_tasks_on_creator_id       (creator_id)
 #  index_tasks_on_deleted_at       (deleted_at)
 #  index_tasks_on_project_id       (project_id)
 #  index_tasks_on_row_order        (row_order)
@@ -29,6 +31,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (assignee_id => users.id)
+#  fk_rails_...  (creator_id => users.id)
 #  fk_rails_...  (project_id => projects.id)
 #
 
@@ -36,11 +39,12 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
   let!(:user) { create(:user) }
+  let!(:member) { create(:user) }
   let!(:workspace) { create(:workspace, user: user) }
   let!(:project) { create(:project, workspace: workspace, users: [user]) }
   let!(:task1) { create(:task, title: 'deploy to heroku', project: project) }
   let!(:task2) { create(:task, title: 'workspace', project: project) }
-  let!(:task3) { create(:task, title: 'deploy to digital oceane',   project: project) }
+  let!(:task3) { create(:task, title: 'deploy to digital oceane', project: project) }
 
   context 'scope testing' do
     it 'shold order by row_order asc' do
@@ -98,5 +102,20 @@ RSpec.describe Task, type: :model do
       expect(user2.messages.count).to eq(1)
       expect(task.completed_by_id).to eq user1.id
     end
+  end
+
+  describe '.report' do
+    let!(:completed_tasks){ create_list(:task, 5, project: project, completed_at: Date.today) }
+    let!(:incompleted_tasks){ create_list(:task, 5, project: project) }
+
+    it { expect(project.tasks.report).to eq({ complete: 5, incomplete: 8 }) }
+  end
+
+  describe '.users_report' do
+    let!(:completed_tasks){ create_list(:task, 5, project: project, completed_at: Date.today, assignee: user, completed_by_id: user.id) }
+    let!(:completed_tasks_by_member){ create_list(:task, 5, project: project, completed_at: Date.today, assignee: member, completed_by_id: member.id) }
+    let!(:completed_tasks_without_assignee){ create_list(:task, 5, project: project, completed_at: Date.today, completed_by_id: user.id) }
+
+    it { expect(project.tasks.users_report).to eq({ user.full_name => 10, member.full_name => 5 }) }
   end
 end

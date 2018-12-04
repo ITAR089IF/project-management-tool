@@ -1,0 +1,14 @@
+h2.title.has-text-centered Add new member
+.column.is-offset-3
+  = simple_form_for :shared_workspace, url: account_workspace_members_path(workspace_id: @workspace.id), remote: true do |f|
+    = f.input :user_id, label: false, wrapper: :dropdown, required: true, prompt: "Select user",
+                    collection: workspace.potential_members.map{ |user| [user.full_name, user.id] }
+    = f.submit 'Add member', class: 'button'
+.is-divider[data-content="OR"]
+
+.has-text-centered.link_generator
+  = link_to 'Generate invitation link', account_workspace_create_invitation_link_path(@workspace),
+    method: :post, remote: true, class: 'box is-paddingless is-link button'
+  
+  input#show_invitation_link.input.is-invisible
+  button#copy_to_clipboard_button.button.is-invisible[onclick="CopyToClipboard()"] Copy

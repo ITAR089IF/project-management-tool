@@ -14,11 +14,17 @@ RSpec.describe Account::TasksController, type: :controller do
   let!(:shared_workspace2) { create(:shared_workspace, user: user2, workspace: workspace) }
   let!(:shared_workspace3) { create(:shared_workspace, user: user3, workspace: workspace) }
   let!(:shared_workspace4) { create(:shared_workspace, user: user4, workspace: workspace) }
-  let!(:task1) { create(:task, project: project) }
+  let!(:task1) { create(:task, project: project, creator: user1) }
   let!(:task2) { create(:task, project: project, watchers: [user1, user2, user3, user4]) }
   let!(:task3) { create(:task, :completed, project: project) }
   let!(:task_valid_params) { { title: "test_task"} }
   let!(:task_invalid_params) { { title: nil} }
+  let!(:task_from_calendar_valid_params) { { task: { project_id: project.id, title: "test", due_date: Date.today } } }
+  let!(:task_from_calendar_without_project_params) { { task: { title: "test", due_date: Date.today } } }
+  let!(:task_from_calendar_without_date_params) { { task: { project_id: project.id, title: "test", due_date: Date.today } } }
+  let!(:task_from_calendar_without_both_date_project_params) { { task: { title: "test" } } }
+
+
 
   before do
     sign_in user
@@ -49,6 +55,7 @@ RSpec.describe Account::TasksController, type: :controller do
       }
 
       expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence, description: Faker::Lorem.paragraph }}}.to change(Task, :count).by(1)
+      expect(task1.creator).to eq(user1)
     end
 
     it 'should add current_user to watchers tasks' do
@@ -146,33 +153,35 @@ RSpec.describe Account::TasksController, type: :controller do
     end
   end
 
-  context 'PUT /:move' do
+  context 'PATCH /:move' do
     it 'should move task down' do
-      put :move, params: {
+      patch :move, params: {
         project_id: project.id,
         id: project.tasks.first.id,
-        task: {
-          row_order_position: :down
+        move: {
+          move_option: :down,
+          move_positions: 2
         }
       },
       format: :js
 
       expect(response).to render_template :move
-      expect(project.tasks.row_order_asc).to eq [task2, task1, task3]
+      expect(project.tasks.row_order_asc).to eq [task2, task3, task1]
     end
 
     it 'should move task up' do
-      put :move, params: {
+      patch :move, params: {
         project_id: project.id,
         id: project.tasks.last.id,
-        task: {
-          row_order_position: :up
+        move: {
+          move_option: :up,
+          move_positions: 2
         }
       },
       format: :js
 
       expect(response).to render_template :move
-      expect(project.tasks.row_order_asc).to eq [task1, task3, task2]
+      expect(project.tasks.row_order_asc).to eq [task3, task1, task2]
     end
   end
 
@@ -267,6 +276,48 @@ RSpec.describe Account::TasksController, type: :controller do
     it 'it should be success' do
       get :report, params: { project_id: project.id }, format: :pdf
       expect(response).to be_successful
+    end
+  end
+
+  context '#POST /new_task_from_calendar' do
+    it 'should show new task form without date' do
+      post :new_task_from_calendar, params: { task: { date: '' } }, format: :js
+      expect(response).to render_template :new_task_from_calendar
+    end
+
+    it 'should show new task form' do
+      post :new_task_from_calendar, params: { task: { date: Date.today } }, format: :js
+      expect(response).to render_template :new_task_from_calendar
+    end
+  end
+
+  context '#POST /create_task_from_calendar' do
+    context 'success' do
+      subject{ post :create_task_from_calendar, params: task_from_calendar_valid_params, format: :js }
+      it 'should show new task form' do
+        expect{ subject }.to change{ project.tasks.reload.count }.by(1)
+        expect(response).to render_template :create_task_from_calendar
+      end
+
+      subject { post :create_task_from_calendar, params: task_from_calendar_without_date_params, format: :js }
+      it 'should show new task form' do
+        expect{ subject }.to change{ project.tasks.reload.count }.by(1)
+        expect(response).to render_template :create_task_from_calendar
+      end
+    end
+
+    context 'fail' do
+      subject { post :create_task_from_calendar, params: task_from_calendar_without_project_params, format: :js }
+      it 'should not create task without project' do
+        expect{ subject }.not_to change{ Task.all.count }
+        expect(response).to render_template :create_task_from_calendar
+      end
+
+      subject { post :create_task_from_calendar, params: task_from_calendar_without_both_date_project_params, format: :js }
+      it 'should not create task without both project and date' do
+        expect{ subject }.not_to change{ Task.all.count }
+        expect(response).to render_template :create_task_from_calendar
+      end
     end
   end
 end

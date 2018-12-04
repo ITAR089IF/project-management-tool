@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_25_214849) do
+ActiveRecord::Schema.define(version: 2018_12_03_095121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,9 +134,11 @@ ActiveRecord::Schema.define(version: 2018_11_25_214849) do
     t.datetime "completed_at"
     t.integer "completed_by_id"
     t.integer "assigned_by_id"
+    t.bigint "creator_id"
     t.index ["assigned_by_id"], name: "index_tasks_on_assigned_by_id"
     t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
     t.index ["completed_by_id"], name: "index_tasks_on_completed_by_id"
+    t.index ["creator_id"], name: "index_tasks_on_creator_id"
     t.index ["deleted_at"], name: "index_tasks_on_deleted_at"
     t.index ["project_id"], name: "index_tasks_on_project_id"
     t.index ["row_order"], name: "index_tasks_on_row_order"
@@ -169,6 +171,8 @@ ActiveRecord::Schema.define(version: 2018_11_25_214849) do
     t.string "department"
     t.text "about"
     t.string "job_role"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -190,6 +194,7 @@ ActiveRecord::Schema.define(version: 2018_11_25_214849) do
   add_foreign_key "task_watches", "users"
   add_foreign_key "tasks", "projects"
   add_foreign_key "tasks", "users", column: "assignee_id"
+  add_foreign_key "tasks", "users", column: "creator_id"
   add_foreign_key "user_projects", "projects"
   add_foreign_key "user_projects", "users"
   add_foreign_key "workspaces", "users"

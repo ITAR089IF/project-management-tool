@@ -4,37 +4,37 @@
     .level-left
       .title
         = link_to @workspace.name, account_workspace_path(@workspace)
-  .container
-    - if current_user.assigned_tasks.current_workspace(@workspace).any? || current_user.followed_tasks.current_workspace(@workspace).any?
-      table.table.is-fullwidth.is-bordered.is-hoverable
+  .container.box
+    - if current_user.assigned_tasks.current_workspace(@workspace).exists? || current_user.followed_tasks.current_workspace(@workspace).exists?
+      table.table.is-fullwidth.is-hoverable
         tbody.tbody
           tr.tr
             th.th Title
             th.th Due Date
-            th.th Project
-          - if current_user.assigned_tasks.current_workspace(@workspace).any?
+            th.th.has-text-right Project
+          - if current_user.assigned_tasks.current_workspace(@workspace).exists?
             tr.tr
               td[colspan=3]
-                .td.has-text-weight-bold.is-size-4.is-italic Assigned to me:
+                .td.has-text-weight-bold.is-size-5.is-italic Assigned to me:
             - current_user.assigned_tasks.current_workspace(@workspace).each do |task|
               tr.tr
                 td.td       
                   = link_to task.title, account_project_task_path(task.project, task), class: task_link_class(task)
                 td.td
                   = render "/account/workspaces/show_task_due_date", task: task
-                td.td
+                td.td.has-text-right
                   = link_to task.project.name, account_workspace_project_path(@workspace, task.project)
-          - if current_user.followed_tasks.current_workspace(@workspace).any?
+          - if current_user.followed_tasks.current_workspace(@workspace).exists?
             tr.tr
               td[colspan=3]
-                .td.has-text-weight-bold.is-size-4.is-italic Followed:
+                .td.has-text-weight-bold.is-size-5.is-italic Followed:
             - current_user.followed_tasks.current_workspace(@workspace).each do |task|
               tr.tr
                 td.td   
                   = link_to task.title, account_project_task_path(task.project, task), class: task_link_class(task)
                 td.td
                   = render "/account/workspaces/show_task_due_date", task: task
-                td.td
+                td.td.has-text-right
                   = link_to task.project.name, account_workspace_project_path(@workspace, task.project)
     - else
       = render "shared/no_content"

@@ -8,6 +8,45 @@
   line-height: 24px;
 }
 
+.tasks {
+  .level {
+    background-color: #ffff7461;
+    margin-bottom: 0;
+    padding: 0.5rem;
+    border-bottom: 1px solid #d0d0d0;
+    &:hover {
+      background-color: #f7f7f7;
+    }
+  }
+  .glyphicon-move {
+    &:before {
+      content: image-url('drag-icon.svg');
+      cursor: -webkit-grabbing;
+      line-height: 15px;
+    }
+    &:hover::before {
+      visibility: visible;
+    }
+    a {
+      img {
+        padding: 3px;
+        margin: 0 5px;
+        border: 1px solid #4dc56d;
+        border-radius: 50%;
+        background-color: #4dc56d78;
+      }
+    }
+  }
+  .pending {
+    background-color: #fff;
+    .glyphicon-move {
+      img {
+        background-color: #fff;
+      }
+    }
+  }
+}
+
 .user-info {
   .image {
     &.is-rounded {
