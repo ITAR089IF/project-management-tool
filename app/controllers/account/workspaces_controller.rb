@@ -2,12 +2,13 @@ class Account::WorkspacesController < Account::AccountController
   def show
     @workspace = resource
     @members = @workspace.all_members.order_desc
-    respond_to do |format|
-      format.html
-      format.pdf do
-        render layout: "pdf_layout", template: "account/workspaces/workspace_info", pdf: "#{@workspace.name} details for #{Date.current.strftime("%d-%m-%Y")}"
-      end
-    end
+  end
+
+  def generate_email
+    @workspace = resource
+    @members = @workspace.all_members.order_desc
+    WorkspaceDetailsJob.perform_later(@workspace.id, current_user.id)
+    render :show
   end
 
   def list

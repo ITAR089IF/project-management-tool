@@ -68,7 +68,14 @@ FactoryBot.define do
 
     trait :random_completed_in_range do
       due_date { Faker::Date.between(30 .days.ago, Date.today) }
-      completed_at { [true, false].sample ? Faker::Date.between(30.days.ago, Date.today) : nil }
+      chance = [true, false].sample
+      if chance
+        completed_at { Faker::Date.between(30.days.ago, Date.today) }
+        completed_by { creator }
+      else
+        completed_at { nil }
+        completed_by { nil }
+      end
     end
   end
 end
