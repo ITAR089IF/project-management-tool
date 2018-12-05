@@ -42,9 +42,9 @@ RSpec.describe Task, type: :model do
   let!(:member) { create(:user) }
   let!(:workspace) { create(:workspace, user: user) }
   let!(:project) { create(:project, workspace: workspace, users: [user]) }
-  let!(:task1) { create(:task, title: 'deploy to heroku', project: project) }
-  let!(:task2) { create(:task, title: 'workspace', project: project) }
-  let!(:task3) { create(:task, title: 'deploy to digital oceane', project: project) }
+  let!(:task1) { create(:task, title: 'deploy to heroku', project: project, due_date: (Date.today - 1), watchers: [user]) }
+  let!(:task2) { create(:task, title: 'workspace', project: project, due_date: Date.today) }
+  let!(:task3) { create(:task, title: 'deploy to digital oceane', project: project, assignee: user) }
 
   context 'scope testing' do
     it 'shold order by row_order asc' do
@@ -117,5 +117,19 @@ RSpec.describe Task, type: :model do
     let!(:completed_tasks_without_assignee){ create_list(:task, 5, project: project, completed_at: Date.today, completed_by_id: user.id) }
 
     it { expect(project.tasks.users_report).to eq({ user.full_name => 10, member.full_name => 5 }) }
+  end
+
+  describe '.assignee?' do
+    it { expect(task1.assignee?(user)).to eq false }
+    it { expect(task3.assignee?(user)).to eq true }
+  end
+
+  describe '.expired?' do
+    it { expect(task1.expired?).to eq true }
+    it { expect(task2.expired?).to eq false }
+  end
+
+  describe '.remove_watcher' do
+    it { expect{task1.remove_watcher(user)}.to change{ TaskWatch.count }.by(-1) }
   end
 end
