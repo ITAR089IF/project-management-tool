@@ -6,9 +6,7 @@ class Account::WorkspacesController < Account::AccountController
 
   def prepare_pdf
     @workspace = resource
-    @members = @workspace.all_members.order_desc
     WorkspaceDetailsJob.perform_later(@workspace.id, current_user.id)
-    render :show
   end
 
   def list

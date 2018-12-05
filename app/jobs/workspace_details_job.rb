@@ -2,8 +2,8 @@ class WorkspaceDetailsJob < ApplicationJob
   queue_as :default
 
   def perform(workspace_id, current_user_id)
-    @workspace = Workspace.find(workspace_id)
-    @user = @workspace.members.find(current_user_id)
+    @user = User.find(current_user_id)
+    @workspace = @user.available_workspaces.find(workspace_id)
     viewer = ActionView::Base.new()
     viewer.view_paths = ActionController::Base.view_paths
 
