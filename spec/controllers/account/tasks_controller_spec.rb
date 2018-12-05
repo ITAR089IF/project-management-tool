@@ -14,7 +14,7 @@ RSpec.describe Account::TasksController, type: :controller do
   let!(:shared_workspace2) { create(:shared_workspace, user: user2, workspace: workspace) }
   let!(:shared_workspace3) { create(:shared_workspace, user: user3, workspace: workspace) }
   let!(:shared_workspace4) { create(:shared_workspace, user: user4, workspace: workspace) }
-  let!(:task1) { create(:task, project: project) }
+  let!(:task1) { create(:task, project: project, creator: user1) }
   let!(:task2) { create(:task, project: project, watchers: [user1, user2, user3, user4]) }
   let!(:task3) { create(:task, :completed, project: project) }
   let!(:task_valid_params) { { title: "test_task"} }
@@ -54,8 +54,8 @@ RSpec.describe Account::TasksController, type: :controller do
         }
       }
 
-      expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence,
-        description: Faker::Lorem.paragraph }}}.to change(Task, :count).by(1)
+      expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence, description: Faker::Lorem.paragraph }}}.to change(Task, :count).by(1)
+      expect(task1.creator).to eq(user1)
     end
 
     it 'should create section' do
