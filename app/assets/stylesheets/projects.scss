@@ -7,7 +7,9 @@
   border: 1px solid lightgrey;
   line-height: 24px;
 }
-
+.sort {
+  cursor: pointer;
+}
 .tasks {
   .level {
     background-color: #ffff7461;
