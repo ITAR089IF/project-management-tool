@@ -57,6 +57,18 @@ RSpec.describe Account::TasksController, type: :controller do
       expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence, description: Faker::Lorem.paragraph }}}.to change(Task, :count).by(1)
     end
 
+    it 'should create section' do
+      post :create, params: {
+        project_id: project.id,
+        task: {
+          title: Faker::Lorem.sentence,
+          description: Faker::Lorem.paragraph,
+          section: true
+        }
+      }
+       expect(Task.last.section).to be true
+    end
+
     it 'should add current_user to watchers tasks' do
       post :create, params: {
         project_id: project.id,
@@ -65,6 +77,19 @@ RSpec.describe Account::TasksController, type: :controller do
         }
       }
       expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence }}}.to change(user.followed_tasks, :count).by(1)
+    end
+
+    it 'should not create task' do
+      post :create, params: {
+        project_id: project.id,
+        task: {
+          title: '',
+          description: Faker::Lorem.paragraph,
+        }
+      }
+       expect{ post :create, params: { project_id: project.id, task: { title: '',
+        description: Faker::Lorem.paragraph }}}.to_not change(Task, :count)
+      expect(response).to render_template(:new)
     end
   end
 
