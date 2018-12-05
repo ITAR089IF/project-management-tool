@@ -28,7 +28,7 @@ Rails.application.routes.draw do
       resources :projects, except: [:index]
       member do
         get :list
-        get :generate_email
+        get :prepare_pdf
       end
     end
 

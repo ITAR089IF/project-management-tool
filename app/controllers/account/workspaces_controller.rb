@@ -4,7 +4,7 @@ class Account::WorkspacesController < Account::AccountController
     @members = @workspace.all_members.order_desc
   end
 
-  def generate_email
+  def prepare_pdf
     @workspace = resource
     @members = @workspace.all_members.order_desc
     WorkspaceDetailsJob.perform_later(@workspace.id, current_user.id)
