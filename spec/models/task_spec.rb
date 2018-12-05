@@ -42,7 +42,7 @@ RSpec.describe Task, type: :model do
   let!(:member) { create(:user) }
   let!(:workspace) { create(:workspace, user: user) }
   let!(:project) { create(:project, workspace: workspace, users: [user]) }
-  let!(:task1) { create(:task, title: 'deploy to heroku', project: project, due_date: (Date.today - 1)) }
+  let!(:task1) { create(:task, title: 'deploy to heroku', project: project, due_date: (Date.today - 1), watchers: [user]) }
   let!(:task2) { create(:task, title: 'workspace', project: project, due_date: Date.today) }
   let!(:task3) { create(:task, title: 'deploy to digital oceane', project: project, assignee: user) }
 
@@ -127,5 +127,9 @@ RSpec.describe Task, type: :model do
   describe '.expired?' do
     it { expect(task1.expired?).to eq true }
     it { expect(task2.expired?).to eq false }
+  end
+
+  describe '.remove_watcher' do
+    it { expect{task1.remove_watcher(user)}.to change{ TaskWatch.count }.by(-1) }
   end
 end
