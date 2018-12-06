@@ -35,8 +35,7 @@ RSpec.describe Account::WorkspacesController, type: :controller do
   context 'GET /worspaces/:id/prepare_pdf' do
     it 'should send workspace details to email' do
       get :prepare_pdf, params: { id: workspace.id }, xhr: true
-      ActiveJob::Base.queue_adapter = :test
-      expect{ WorkspaceDetailsJob.perform_later(workspace, user) }.to enqueue_job
+      allow(WorkspaceDetailsJob).to receive(:perform_later).with(workspace.id, user.id)
     end
   end
 
