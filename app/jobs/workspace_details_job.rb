@@ -9,7 +9,6 @@ class WorkspaceDetailsJob < ApplicationJob
 
     viewer.class_eval do
       include Rails.application.routes.url_helpers
-      include ApplicationHelper
     end
 
     viewer.instance_variable_set(:@workspace, @workspace)
