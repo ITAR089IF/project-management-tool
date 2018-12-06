@@ -12,13 +12,13 @@ $( document ).on('turbolinks:load', function() {
       }
     });
 
-    userInfo.sort(function(a, b) {
-      var A = a[1].toUpperCase();
-      var B = b[1].toUpperCase();
-      if (A < B) {
+    userInfo.sort(function(firstUser, secondUser) {
+      var name1 = firstUser[1].toUpperCase();
+      var name2 = secondUser[1].toUpperCase();
+      if (name1 < name2) {
         return -1;
       }
-      if (A > B) {
+      if (name1 > name2) {
         return 1;
       }
       return 0;
@@ -37,10 +37,11 @@ $( document ).on('turbolinks:load', function() {
       taskInfo[user[0]] = [];
     });
     taskInfo['unassigned'] = [];
+
     $('.tasks').children('.level').each(function() {
       var taskId = $(this).data('task-id');
       var assigneeId = $(this).data('assignee-id');
-      if (assigneeId != false) {
+      if (assigneeId) {
         taskInfo[assigneeId].push(taskId);
       }
       else {
@@ -50,17 +51,19 @@ $( document ).on('turbolinks:load', function() {
 
     if ($('.sorted').length == 0) {
       $('.tasks').after('<div class="container box tasks sorted" id ="all_tasks"></div>');
-      userInfo.forEach(function(user){
 
+      userInfo.forEach(function(user){
         $('.sorted').append('<h2 class="has-text-weight-bold">'+user[1]+'</h2>');
         taskInfo[user[0]].forEach(function(taskId){
           $('.sorted').append($(".unsorted").find(`[data-task-id='${taskId}']`));
         });
       });
+
       $('.sorted').append('<h2 class="has-text-weight-bold">Unassigned</h2>');
       taskInfo['unassigned'].forEach(function(taskId){
         $('.sorted').append($(".unsorted").find(`[data-task-id='${taskId}']`));
       });
+
       $('.unsorted').remove();
     }
     else {
@@ -68,6 +71,7 @@ $( document ).on('turbolinks:load', function() {
       positions.forEach(function(taskId){
         $('.unsorted').append($(".sorted").find(`[data-task-id='${taskId}']`));
       });
+
       $('.sorted').remove();
     };
   });
