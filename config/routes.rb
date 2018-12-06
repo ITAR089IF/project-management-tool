@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  default_url_options host: "localhost"
+
   root 'dashboard#index'
   get '/pricing',  to: 'dashboard#pricing'
   get '/product', to: 'dashboard#product'
