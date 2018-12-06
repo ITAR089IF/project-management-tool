@@ -1,4 +1,4 @@
-class Api::TasksController < ActionController::API
+class Api::TasksController <  Api::BaseController
 
   def show
     @task = resource

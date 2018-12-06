@@ -69,6 +69,10 @@ Rails.application.routes.draw do
   end
 
   namespace :api, defaults: { format: :json } do
+    devise_scope :user do
+      post 'login', to: 'sessions#create'
+      delete 'logout', to: 'sessions#destroy'
+    end
     resources :workspaces do
       resources :projects, except: [:index]
     end

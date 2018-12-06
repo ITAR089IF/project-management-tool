@@ -1,4 +1,4 @@
-class Api::ProjectsController < ActionController::API
+class Api::ProjectsController <  Api::BaseController
 
   def show
     @project = resource
