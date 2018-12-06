@@ -34,8 +34,8 @@ RSpec.describe Account::WorkspacesController, type: :controller do
 
   context 'GET /worspaces/:id/prepare_pdf' do
     it 'should send workspace details to email' do
+      expect(WorkspaceDetailsJob).to receive(:perform_later).with(workspace.id, user.id)
       get :prepare_pdf, params: { id: workspace.id }, xhr: true
-      allow(WorkspaceDetailsJob).to receive(:perform_later).with(workspace.id, user.id)
     end
   end
 

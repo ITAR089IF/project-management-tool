@@ -40,7 +40,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.asset_host = 'http://localhost:3000'
   config.action_controller.asset_host = 'localhost:3000'
-  Rails.application.routes.default_url_options[:host] = 'localhost'
+  routes.default_url_options[:host] = 'localhost'
   config.active_job.queue_adapter = :async
 
   # Print deprecation notices to the Rails logger.
