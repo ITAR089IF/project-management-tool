@@ -13,7 +13,7 @@ class Api::WorkspacesController <  Api::BaseController
     @workspace = Workspace.new(workspace_params)
 
     if @workspace.save
-      render json: { status: 'SUCCESS', message: 'Workspace saved' }, status: :ok
+      render :show,  status: :created, location: api_workspace_url(@workspace)
     else
       render json: { status: 'ERROR', errors: @workspace.errors}, status: 422
     end
@@ -22,7 +22,7 @@ class Api::WorkspacesController <  Api::BaseController
   def update
     @workspace = resource
     if @workspace.update(workspace_params)
-      render json: { status: 'SUCCESS', message: 'Workspace updated' }, status: :ok
+      render :show,  status: :created, location: api_workspace_url(@workspace)
     else
       render json: { status: 'ERROR', errors: @workspace.errors}, status: 422
     end

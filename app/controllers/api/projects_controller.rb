@@ -8,7 +8,7 @@ class Api::ProjectsController <  Api::BaseController
     @workspace = parent
     @project = @workspace.projects.build(project_params)
     if  @project.save
-      render json: { status: 'SUCCESS', message: 'Project saved' }, status: :ok
+      render :show, status: :created, location: api_workspace_project_url(@workspace, @project)
     else
       render json: { status: 'ERROR', errors: @project.errors}, status: 422
     end
@@ -18,7 +18,7 @@ class Api::ProjectsController <  Api::BaseController
     @workspace = parent
     @project = resource
     if @project.update(project_params)
-      render json: { status: 'SUCCESS', message: 'Project updated' }, status: :ok
+      render :show, status: :created, location: api_workspace_project_url(@workspace, @project)
     else
       render json: { status: 'ERROR', errors: @project.errors}, status: 422
     end
@@ -47,6 +47,6 @@ class Api::ProjectsController <  Api::BaseController
   end
 
   def project_params
-    params.require(:project).permit(:name).merge(users: [current_user])
+    params.require(:project).permit(:name, :description).merge(users: [current_user])
   end
 end
