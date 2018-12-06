@@ -24,8 +24,6 @@ RSpec.describe Account::TasksController, type: :controller do
   let!(:task_from_calendar_without_date_params) { { task: { project_id: project.id, title: "test", due_date: Date.today } } }
   let!(:task_from_calendar_without_both_date_project_params) { { task: { title: "test" } } }
 
-
-
   before do
     sign_in user
   end
@@ -68,8 +66,7 @@ RSpec.describe Account::TasksController, type: :controller do
         }
       }
       expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence,
-        description: Faker::Lorem.paragraph, section: true }}}.to change(Task, :count).by(1)
-      expect(Task.last.section).to eq(true)
+        description: Faker::Lorem.paragraph, section: true }}}.to change(Task.all.where(section: true), :count).by(1)
     end
 
     it 'should add current_user to watchers tasks' do
