@@ -22,8 +22,10 @@ class Account::WorkspacesController < Account::AccountController
 
   def create
     @workspace = Workspace.new(workspace_params)
-    @workspace.save
-    @workspaces = collection
+    if @workspace.save
+      flash[:success] = 'Workspace was sccessful created!'
+      @workspaces = collection
+    end
 
     respond_to(:js)
   end
@@ -37,7 +39,11 @@ class Account::WorkspacesController < Account::AccountController
   def update
     @workspace = resource
     @updated = @workspace.update(workspace_params)
-    @workspaces = collection
+
+    if @updated
+      flash[:success] = 'Workspace was sccessful updated!'
+      @workspaces = collection
+    end
 
     respond_to(:js)
   end

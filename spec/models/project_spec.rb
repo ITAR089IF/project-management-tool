@@ -13,6 +13,7 @@
 # Indexes
 #
 #  index_projects_on_deleted_at    (deleted_at)
+#  index_projects_on_name          (name)
 #  index_projects_on_workspace_id  (workspace_id)
 #
 # Foreign Keys
