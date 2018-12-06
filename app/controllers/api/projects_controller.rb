@@ -47,6 +47,6 @@ class Api::ProjectsController < ActionController::API
   end
 
   def project_params
-    params.require(:project).permit(:name).merge(users: [current_user])
+    params.require(:project).permit(:name, :description).merge(users: [current_user])
   end
 end

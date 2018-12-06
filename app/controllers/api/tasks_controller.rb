@@ -7,7 +7,7 @@ class Api::TasksController < ActionController::API
   def create
     @project = parent
     @task = @project.tasks.build(tasks_params)
-
+    @task.creator = current_user
     if @task.save
       render json: { status: 'SUCCESS', message: 'Task saved' }, status: :ok
     else
