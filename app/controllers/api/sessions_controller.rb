@@ -1,5 +1,4 @@
 class Api::SessionsController < Devise::SessionsController
-  skip_before_action :authenticate_user!
 
   def create
     user = warden.authenticate!(:scope => :user)
