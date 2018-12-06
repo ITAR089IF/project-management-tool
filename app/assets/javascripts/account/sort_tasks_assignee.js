@@ -1,11 +1,11 @@
 $( document ).on('turbolinks:load', function() {
-  var positions = $('.tasks').children('.level').map(function() {
+  var positions = $('.tasks .level').map(function() {
     return $(this).data('task-id');
   }).get();
 
   $( ".sort" ).click(function() {
     var userInfo = [];
-    $('.tasks').children('.level').each(function() {
+    $('.tasks .level').each(function() {
       var assigneeId = $(this).data('assignee-id');
       if (assigneeId != false) {
         userInfo.push([assigneeId, $(this).children('.level-right').children('.image').data('tooltip')]);
@@ -38,7 +38,7 @@ $( document ).on('turbolinks:load', function() {
     });
     taskInfo['unassigned'] = [];
 
-    $('.tasks').children('.level').each(function() {
+    $('.tasks .level').each(function() {
       var taskId = $(this).data('task-id');
       var assigneeId = $(this).data('assignee-id');
       if (assigneeId) {
