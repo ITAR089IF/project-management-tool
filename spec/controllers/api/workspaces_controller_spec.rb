@@ -41,7 +41,7 @@ RSpec.describe Api::WorkspacesController, type: :controller do
           name: Faker::Job.field
         }
       }
-      expect(response).to have_http_status(:ok)
+      expect(response).to render_template(:show)
     end
 
     it 'shouldn`t create a workspace ' do
@@ -63,7 +63,7 @@ RSpec.describe Api::WorkspacesController, type: :controller do
           name: Faker::Job.field
         }
       }
-      expect(response).to have_http_status(:ok)
+      expect(response).to render_template(:show)
     end
 
     it 'shouldn`t update workspace' do

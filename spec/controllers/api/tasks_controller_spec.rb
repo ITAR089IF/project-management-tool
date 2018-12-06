@@ -36,7 +36,8 @@ RSpec.describe Api::TasksController, type: :controller do
         }
 
         expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence, description: Faker::Lorem.paragraph }}}.to change(Task, :count).by(1)
-        expect(response).to have_http_status(:ok)
+        expect(response).to have_http_status(201)
+        expect(response).to render_template(:show)
       end
     end
     context "with invalid attributes" do
@@ -60,7 +61,8 @@ RSpec.describe Api::TasksController, type: :controller do
         put :update, params: { project_id: project.id, id: task1.id, task: task_valid_params}
         task1.reload
         expect(task1.title).to eq(task_valid_params[:title])
-        expect(response).to have_http_status(:ok)
+        expect(response).to have_http_status(201)
+        expect(response).to render_template(:show)
       end
     end
 

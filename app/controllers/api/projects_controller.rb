@@ -8,7 +8,7 @@ class Api::ProjectsController < ActionController::API
     @workspace = parent
     @project = @workspace.projects.build(project_params)
     if  @project.save
-      render json: { status: 'SUCCESS', message: 'Project saved' }, status: :ok
+      render :show, status: :created, location: api_workspace_project_url(@workspace, @project)
     else
       render json: { status: 'ERROR', errors: @project.errors}, status: 422
     end
@@ -18,7 +18,7 @@ class Api::ProjectsController < ActionController::API
     @workspace = parent
     @project = resource
     if @project.update(project_params)
-      render json: { status: 'SUCCESS', message: 'Project updated' }, status: :ok
+      render :show, status: :created, location: api_workspace_project_url(@workspace, @project)
     else
       render json: { status: 'ERROR', errors: @project.errors}, status: 422
     end

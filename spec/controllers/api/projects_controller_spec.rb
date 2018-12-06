@@ -29,7 +29,7 @@ RSpec.describe Api::ProjectsController, type: :controller do
             name: Faker::Job.field
           }
          }
-         expect(response).to have_http_status(200)
+         expect(response).to render_template(:show)
       end
     end
 
@@ -56,7 +56,8 @@ RSpec.describe Api::ProjectsController, type: :controller do
             name: Faker::Job.field
           }
         }
-        expect(response).to have_http_status(200)
+        expect(response).to render_template(:show)
+        expect(response).to have_http_status(201)
       end
     end
 
