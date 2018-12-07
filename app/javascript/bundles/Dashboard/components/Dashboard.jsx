@@ -1,11 +1,14 @@
 import React from "react";
+import PropTypes from "prop-types";
 import _ from "lodash";
-import GridLayout from "react-grid-layout";
+import { Responsive as ResponsiveGridLayout } from "react-grid-layout";
+
+import "./dashboard.scss";
 
 
 export class Dashboard extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     const layout = [
       {i: 'a', x: 0, y: 0, w: 1, h: 2},
@@ -18,10 +21,10 @@ export class Dashboard extends React.Component {
     this.onLayoutChange = this.onLayoutChange.bind(this);
   }
 
-  generateDOM() {
-    return(_.map(this.state.layout, (l, i) => {
+  generateLayout() {
+    return(_.map(this.state.layout, (element) => {
       return(
-        <div className='box' key={l.i} data-grid={l}>{l.i}</div>
+        <div className="box" key={element.i} data-grid={element}>{element.i}</div>
       );
     }));
   }
@@ -33,21 +36,31 @@ export class Dashboard extends React.Component {
 
   render() {
     return (
-      <GridLayout
+      <ResponsiveGridLayout
         {...this.props}
         layout={this.state.layout}
         onLayoutChange={this.onLayoutChange}
       >
-        {this.generateDOM()}
-      </GridLayout>
+        {this.generateLayout()}
+      </ResponsiveGridLayout>
     )
   }
 }
 
 Dashboard.defaultProps = {
   className: "layout",
-  cols: 12,
+  breakpoints: {lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0},
+  cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
   rowHeight: 30,
   width: 1200,
   onLayoutChange: function() {}
+}
+
+Dashboard.propTypes = {
+  className: PropTypes.string,
+  breakpoints: PropTypes.object,
+  cols: PropTypes.object,
+  rowHeight: PropTypes.number,
+  width: PropTypes.number,
+  onLayoutChange: PropTypes.func
 }
