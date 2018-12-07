@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types"
 import _ from "lodash";
-import RGL, { WidthProvider } from "react-grid-layout";
+import GridLayout from "react-grid-layout";
 
-const ReactGridLayout = WidthProvider(RGL);
 
 export class Dashboard extends React.Component {
   constructor() {
@@ -35,13 +34,13 @@ export class Dashboard extends React.Component {
 
   render() {
     return (
-      <ReactGridLayout
+      <GridLayout
         {...this.props}
         layout={this.state.layout}
         onLayoutChange={this.onLayoutChange}
       >
         {this.generateDOM()}
-      </ReactGridLayout>
+      </GridLayout>
     )
   }
 }
