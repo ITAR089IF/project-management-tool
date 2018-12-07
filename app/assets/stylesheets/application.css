@@ -14,6 +14,6 @@
  *= require modal
  *= require reports
  *= require user
- *= require styles1
- *= require styles2
+ *= require react-grid-layout/css/styles
+ *= require react-resizable/css/styles
  */

@@ -1,18 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types"
 import _ from "lodash";
 import RGL, { WidthProvider } from "react-grid-layout";
 
 const ReactGridLayout = WidthProvider(RGL);
 
-class Dashboard extends React.Component {
-  static defaultProps = {
-    className: "layout",
-    items: 20,
-    rowHeight: 30,
-    onLayoutChange: function() {},
-    cols: 12
-  };
-
+export class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
@@ -21,7 +14,7 @@ class Dashboard extends React.Component {
   }
 
   generateDOM() {
-    return _.map(_.range(this.props.items), function(i) {
+    return _.map(_.range(this.props.items), (i) => {
       return (
         <div className="box" key={i}>
           <span className="text">{i}</span>
@@ -32,7 +25,7 @@ class Dashboard extends React.Component {
 
   generateLayout() {
     const p = this.props;
-    return _.map(new Array(p.items), function(item, i) {
+    return _.map(new Array(p.items), (item, i) => {
       const y = _.result(p, "y") || Math.ceil(Math.random() * 4) + 1;
       return {
         x: (i * 2) % 12,
@@ -61,4 +54,10 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+Dashboard.defaultProps = {
+  className: "layout",
+  items: 20,
+  rowHeight: 30,
+  onLayoutChange: () => {},
+  cols: 12
+}
