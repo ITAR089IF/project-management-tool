@@ -44,9 +44,10 @@ FactoryBot.define do
 
     trait :completed do
       completed_at { Faker::Date.backward(30) }
+      completed_by { creator }
     end
 
-    trait :random_completed_in_range do
+    trait :completed_in_range do
       due_date { Faker::Date.between(30 .days.ago, Date.today) }
       completed_at { Faker::Date.between(30.days.ago, Date.today) }
       completed_by { creator }

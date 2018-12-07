@@ -77,8 +77,8 @@ FactoryBot.define do
           FactoryBot.create(:task, :expired, project: project, creator: user)
           FactoryBot.create(:task, :completed, :expired, completed_by: user, project: project, creator: user)
           FactoryBot.create_list(:task, rand(10), project: project, creator: user)
-          FactoryBot.create_list(:task, rand(10), :random_completed_in_range, project: project, assignee: user, creator: user)
-          FactoryBot.create_list(:task, rand(10), :random_completed_in_range, project: project, creator: user)
+          FactoryBot.create_list(:task, rand(10), :completed_in_range, project: project, assignee: user, creator: user)
+          FactoryBot.create_list(:task, rand(10), :completed_in_range, project: project, creator: user)
         end
       end
     end
