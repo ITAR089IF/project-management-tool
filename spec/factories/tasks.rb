@@ -46,6 +46,12 @@ FactoryBot.define do
       completed_at { Faker::Date.backward(30) }
     end
 
+    trait :random_completed_in_range do
+      due_date { Faker::Date.between(30 .days.ago, Date.today) }
+      completed_at { Faker::Date.between(30.days.ago, Date.today) }
+      completed_by { creator }
+    end
+
     trait :with_files do
       transient do
         files_count { 3 }
@@ -66,16 +72,5 @@ FactoryBot.define do
       due_date { Faker::Date.forward(30) }
     end
 
-    trait :random_completed_in_range do
-      due_date { Faker::Date.between(30 .days.ago, Date.today) }
-      chance = [true, false].sample
-      if chance
-        completed_at { Faker::Date.between(30.days.ago, Date.today) }
-        completed_by { creator }
-      else
-        completed_at { nil }
-        completed_by { nil }
-      end
-    end
   end
 end
