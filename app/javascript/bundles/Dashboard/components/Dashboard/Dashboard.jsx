@@ -30,11 +30,7 @@ export class Dashboard extends React.Component {
     this.state = {
       layout,
       layouts: {
-        lg: layout,
-        md: layout,
-        sm: layout,
-        xs: layout,
-        xxs: layout
+        lg: layout
       }
     };
 
@@ -50,7 +46,6 @@ export class Dashboard extends React.Component {
   }
 
   onLayoutChange(layout, layouts) {
-    console.log(layouts);
     this.setState({ layouts });
   }
 
@@ -69,8 +64,8 @@ export class Dashboard extends React.Component {
 
 Dashboard.defaultProps = {
   className: "layout",
-  breakpoints: {lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0},
-  cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
+  breakpoints: {lg: 1200},
+  cols: {lg: 12},
   rowHeight: 30,
   width: 1200,
   onLayoutChange: function() {}
