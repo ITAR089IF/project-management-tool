@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import { Responsive as ResponsiveGridLayout } from "react-grid-layout";
+import { WidthProvider, Responsive } from "react-grid-layout";
+
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 import "./dashboard.scss";
 
@@ -12,11 +14,29 @@ export class Dashboard extends React.Component {
 
     const layout = [
       {i: 'a', x: 0, y: 0, w: 1, h: 2},
-      {i: 'b', x: 1, y: 0, w: 3, h: 2},
-      {i: 'c', x: 4, y: 0, w: 1, h: 2}
+      {i: 'b', x: 1, y: 0, w: 1, h: 2},
+      {i: 'c', x: 2, y: 0, w: 1, h: 2},
+      {i: 'd', x: 3, y: 0, w: 1, h: 2},
+      {i: 'e', x: 4, y: 0, w: 1, h: 2},
+      {i: 'f', x: 5, y: 0, w: 1, h: 2},
+      {i: 'g', x: 6, y: 0, w: 1, h: 2},
+      {i: 'h', x: 7, y: 0, w: 1, h: 2},
+      {i: 'i', x: 8, y: 0, w: 1, h: 2},
+      {i: 'j', x: 9, y: 0, w: 1, h: 2},
+      {i: 'k', x: 10, y: 0, w: 1, h: 2},
+      {i: 'l', x: 11, y: 0, w: 1, h: 2}
     ];
 
-    this.state = { layout };
+    this.state = {
+      layout,
+      layouts: {
+        lg: layout,
+        md: layout,
+        sm: layout,
+        xs: layout,
+        xxs: layout
+      }
+    };
 
     this.onLayoutChange = this.onLayoutChange.bind(this);
   }
@@ -29,20 +49,20 @@ export class Dashboard extends React.Component {
     }));
   }
 
-  onLayoutChange(layout) {
-    this.setState({ layout });
-    this.props.onLayoutChange(layout);
+  onLayoutChange(layout, layouts) {
+    console.log(layouts);
+    this.setState({ layouts });
   }
 
   render() {
     return (
-      <ResponsiveGridLayout
+      <ResponsiveReactGridLayout
         {...this.props}
-        layout={this.state.layout}
-        onLayoutChange={this.onLayoutChange}
+        layouts={this.state.layouts}
+        onLayoutChange={(layout, layouts) => this.onLayoutChange(layout, layouts)}
       >
         {this.generateLayout()}
-      </ResponsiveGridLayout>
+      </ResponsiveReactGridLayout>
     )
   }
 }
