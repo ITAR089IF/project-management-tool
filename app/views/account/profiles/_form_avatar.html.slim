@@ -1,0 +1,10 @@
+/ = simple_form_for @user, url: [:account, :profile] do |f|
+/ - if user.with_avatar?
+/ input[type="file"]
+/   = link_to 'Delete avatar', delete_image_attachment_account_profile_url(@image.id)
+/ - else
+/   = f.input[type="file" name="avatar" id="upload"]
+
+form#frmupload[action="do_upload.php"]
+  input#inpupload[type="file" style="display:none"]
+  input#btnupload[type="button" value="Upload Avatar"]

@@ -14,7 +14,11 @@ Rails.application.routes.draw do
     get '/inbox', to: 'dashboard#inbox'
     resources :search, only: [:index], defaults: { format: :json }
 
-    resource :profile, only: [:edit, :update]
+    resource :profile, only: [:edit, :update] do
+      member do
+        delete :delete_image_attachment
+      end
+    end
     resources :workspaces, except: [:index] do
       post :create_invitation_link
       resources :members, only: [:new, :create, :destroy] do
