@@ -12,7 +12,7 @@ export class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
-    const layout = [
+    const carts = [
       {i: 'a', x: 0, y: 0, w: 1, h: 2},
       {i: 'b', x: 1, y: 0, w: 1, h: 2},
       {i: 'c', x: 2, y: 0, w: 1, h: 2},
@@ -27,18 +27,13 @@ export class Dashboard extends React.Component {
       {i: 'l', x: 11, y: 0, w: 1, h: 2}
     ];
 
-    this.state = {
-      layout,
-      layouts: {
-        lg: layout
-      }
-    };
+    this.state = { carts };
 
     this.onLayoutChange = this.onLayoutChange.bind(this);
   }
 
-  generateLayout() {
-    return(_.map(this.state.layout, (element) => {
+  generateCarts() {
+    return(_.map(this.state.carts, (element) => {
       return(
         <div className="box" key={element.i} data-grid={element}>{element.i}</div>
       );
@@ -53,10 +48,10 @@ export class Dashboard extends React.Component {
     return (
       <ResponsiveReactGridLayout
         {...this.props}
-        layouts={this.state.layouts}
+        layouts={{ lg: this.state.carts }}
         onLayoutChange={(layout, layouts) => this.onLayoutChange(layout, layouts)}
       >
-        {this.generateLayout()}
+        {this.generateCarts()}
       </ResponsiveReactGridLayout>
     )
   }
