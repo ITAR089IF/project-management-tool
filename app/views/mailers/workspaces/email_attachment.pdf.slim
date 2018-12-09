@@ -10,7 +10,7 @@ h1.title.has-text-bold.has-text-centered = link_to "#{@workspace.name} details f
     tbody.tbody
       - @workspace.projects.each do |project|
         tr.tr
-          td.td = link_to project.name , account_workspace_project_path(@workspace, project)
+          td.td = link_to project.name , account_workspace_project_url(@workspace, project)
           td.td = "#{project.tasks.complete.count}/#{project.tasks.count}"
           td.td
             progress.progress.is-primary[value="#{project.tasks.complete.count}" max="#{project.tasks.count}"]

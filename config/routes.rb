@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       resources :projects, except: [:index]
       member do
         get :list
+        get :prepare_pdf
       end
     end
 
