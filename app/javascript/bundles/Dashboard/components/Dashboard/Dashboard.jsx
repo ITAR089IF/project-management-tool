@@ -8,69 +8,40 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 import "./dashboard.scss";
 
 
-export class Dashboard extends React.Component {
+class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
-    const carts = [
-      {i: 'a', x: 0, y: 0, w: 1, h: 2},
-      {i: 'b', x: 1, y: 0, w: 1, h: 2},
-      {i: 'c', x: 2, y: 0, w: 1, h: 2},
-      {i: 'd', x: 3, y: 0, w: 1, h: 2},
-      {i: 'e', x: 4, y: 0, w: 1, h: 2},
-      {i: 'f', x: 5, y: 0, w: 1, h: 2},
-      {i: 'g', x: 6, y: 0, w: 1, h: 2},
-      {i: 'h', x: 7, y: 0, w: 1, h: 2},
-      {i: 'i', x: 8, y: 0, w: 1, h: 2},
-      {i: 'j', x: 9, y: 0, w: 1, h: 2},
-      {i: 'k', x: 10, y: 0, w: 1, h: 2},
-      {i: 'l', x: 11, y: 0, w: 1, h: 2}
-    ];
-
-    this.state = { carts };
+    this.state = {
+      layout: []
+    }
 
     this.onLayoutChange = this.onLayoutChange.bind(this);
   }
 
-  generateCarts() {
-    return(_.map(this.state.carts, (element) => {
-      return(
-        <div className="box" key={element.i} data-grid={element}>{element.i}</div>
-      );
-    }));
-  }
-
-  onLayoutChange(layout, layouts) {
-    this.setState({ layouts });
+  onLayoutChange(layout) {
+    this.setState({ layout });
   }
 
   render() {
     return (
       <ResponsiveReactGridLayout
-        {...this.props}
-        layouts={{ lg: this.state.carts }}
-        onLayoutChange={(layout, layouts) => this.onLayoutChange(layout, layouts)}
+        className="layout"
+        breakpoints={{lg: 1200}}
+        cols={{lg: 12}}
+        rowHeight={30}
+        width={1200}
+        onLayoutChange={(layout) => this.onLayoutChange(layout)}
+        layouts={{lg: this.state.layout}}
       >
-        {this.generateCarts()}
+        <div className="box" key="a" data-grid={{i: 'a', x: 0, y: 0, w: 1, h: 2}}>a</div>
+        <div className="box" key="b" data-grid={{i: 'b', x: 1, y: 0, w: 1, h: 2}}>b</div>
+        <div className="box" key="c" data-grid={{i: 'c', x: 2, y: 0, w: 1, h: 2}}>c</div>
+        <div className="box" key="d" data-grid={{i: 'd', x: 3, y: 0, w: 1, h: 2}}>d</div>
+        <div className="box" key="e" data-grid={{i: 'e', x: 4, y: 0, w: 1, h: 2}}>e</div>
       </ResponsiveReactGridLayout>
     )
   }
 }
 
-Dashboard.defaultProps = {
-  className: "layout",
-  breakpoints: {lg: 1200},
-  cols: {lg: 12},
-  rowHeight: 30,
-  width: 1200,
-  onLayoutChange: function() {}
-}
-
-Dashboard.propTypes = {
-  className: PropTypes.string,
-  breakpoints: PropTypes.object,
-  cols: PropTypes.object,
-  rowHeight: PropTypes.number,
-  width: PropTypes.number,
-  onLayoutChange: PropTypes.func
-}
+export { Dashboard };
