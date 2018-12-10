@@ -14,6 +14,9 @@ class Account::DashboardController < Account::AccountController
     @old_messages = @old_messages.page(params[:page]).per(20)
   end
 
+  def top_users
+  end
+
   def change_messages_read
     current_user.messages.unreaded.update_all(is_read: true)
   end
