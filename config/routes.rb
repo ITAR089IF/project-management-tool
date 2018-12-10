@@ -69,5 +69,16 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api, defaults: { format: :json } do
+
+    resources :workspaces do
+      resources :projects, except: [:index]
+    end
+
+    resources :projects, only: [] do
+      resources :tasks, except: [:index]
+    end
+  end
+
   mount ActionCable.server => '/cable'
 end
