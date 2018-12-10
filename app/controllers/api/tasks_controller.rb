@@ -1,4 +1,4 @@
-class Api::TasksController < ActionController::API
+class Api::TasksController < Api::BaseController
   before_action :set_default_response_format
 
   def show

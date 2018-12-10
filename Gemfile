@@ -50,6 +50,7 @@ gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 gem 'remotipart'
 gem 'redis'
+gem 'tiddle'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'

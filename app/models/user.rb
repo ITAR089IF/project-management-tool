@@ -46,6 +46,7 @@ class User < ApplicationRecord
   has_many :shared_workspaces
   has_many :invited_workspaces, through: :shared_workspaces, source: :workspace
   has_one_attached :avatar
+  has_many :authentication_tokens
 
   validates :first_name, length: { maximum: 250 }, presence: true
   validates :last_name, length: { maximum: 250 }, presence: true
@@ -56,7 +57,9 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
+         :token_authenticatable,
          :omniauthable, omniauth_providers: %i[facebook]
+
 
   scope :order_desc,  -> { order(:first_name, :last_name) }
   scope :admins,      -> { where(role: ADMIN) }

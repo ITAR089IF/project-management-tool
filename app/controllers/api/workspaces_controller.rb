@@ -1,4 +1,4 @@
-class Api::WorkspacesController < ActionController::API
+class Api::WorkspacesController <  Api::BaseController
 
   def index
     @workspaces = collection
