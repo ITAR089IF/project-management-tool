@@ -1,7 +1,7 @@
-$(document).ready(function() {
+// $(document).ready(function() {
 //   $('.upload-button').click(function() {
 //     $(this).css({background: 'red'});
-$("#btnupload").click(function(){ $("#inpupload").trigger("click");
+// $("#btnupload").click(function(){ $("#inpupload").trigger("click");
     window.addEventListener('load', function() {
       document.querySelector('input[type="file"]').addEventListener('change', function() {
         if (this.files && this.files[0]) {
@@ -23,8 +23,8 @@ $("#btnupload").click(function(){ $("#inpupload").trigger("click");
         }
       });
     });
-    });
-});
+//     });
+// });
     // var parentEl = document.getElementById("avatar"),
     // img = document.createElement("IMG");
     // img.src = "http://www.stihi.ru/pics/2010/02/27/2487.jpg";
