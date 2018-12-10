@@ -69,6 +69,7 @@ Rails.application.routes.draw do
     end
   end
 
+
   namespace :api, defaults: { format: :json } do
 
     resources :workspaces do
@@ -81,4 +82,5 @@ Rails.application.routes.draw do
   end
 
   mount ActionCable.server => '/cable'
+  mount Ckeditor::Engine => '/ckeditor'
 end
