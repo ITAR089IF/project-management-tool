@@ -6,7 +6,8 @@ import { WidthProvider, Responsive } from "react-grid-layout";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 import "./dashboard.scss";
-
+import "../../../../../../node_modules/react-grid-layout/css/styles.css";
+import "../../../../../../node_modules/react-resizable/css/styles.css";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -44,4 +45,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export { Dashboard };
+export default Dashboard;
