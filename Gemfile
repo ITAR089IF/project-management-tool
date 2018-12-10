@@ -48,7 +48,10 @@ gem 'prawn'
 gem 'prawn-table'
 gem 'sortable-rails'
 gem 'ckeditor'
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
 gem 'remotipart'
+gem 'redis'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'
@@ -82,3 +85,5 @@ group :test do
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'mini_racer', platforms: :ruby

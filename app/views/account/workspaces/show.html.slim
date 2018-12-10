@@ -7,9 +7,10 @@
             = @workspace.name
       .level-right
         .level-item
+          = link_to "Send details to email", prepare_pdf_account_workspace_path(@workspace), remote: true, class: "button is-link"
+        .level-item
           - if current_user.assigned_tasks.current_workspace(@workspace).any? || current_user.followed_tasks.current_workspace(@workspace).any?
-            h2.subtitle
-              = link_to "My tasks", list_account_workspace_path(@workspace)
+            = link_to "My tasks", list_account_workspace_path(@workspace), class: "button is-link"
   .columns
     .column.have_background.members
       h3.subtitle

@@ -30,7 +30,7 @@
 #
 
 FactoryBot.define do
-  factory :user do
+  factory :user, aliases: [:creator] do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     sequence(:email) { |index| Faker::Internet.email.sub(/\@/, "_#{index}@") }
@@ -73,12 +73,12 @@ FactoryBot.define do
     after(:create) do |user|
       user.workspaces.each do |workspace|
         workspace.projects.each do |project|
-          FactoryBot.create(:task, :future, project: project)
-          FactoryBot.create(:task, :expired, project: project)
-          FactoryBot.create_list(:task, 25, :random_completed_in_range, project: project, completed_by_id: user.id, assignee: user)
-          FactoryBot.create_list(:task, 25, :random_completed_in_range, project: project, completed_by_id: user.id)
-          FactoryBot.create_list(:task, 50, project: project)
-          FactoryBot.create(:task, :completed, :expired, project: project, completed_by_id: user.id)
+          FactoryBot.create(:task, :future, project: project, creator: user)
+          FactoryBot.create(:task, :expired, project: project, creator: user)
+          FactoryBot.create(:task, :completed, :expired, completed_by: user, project: project, creator: user)
+          FactoryBot.create_list(:task, rand(10), project: project, creator: user)
+          FactoryBot.create_list(:task, rand(10), :completed_in_range, project: project, assignee: user, creator: user)
+          FactoryBot.create_list(:task, rand(10), :completed_in_range, project: project, creator: user)
         end
       end
     end

@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       resources :projects, except: [:index]
       member do
         get :list
+        get :prepare_pdf
       end
     end
 
@@ -67,6 +68,19 @@ Rails.application.routes.draw do
       post :stop_impersonating, on: :collection
     end
   end
-  mount Ckeditor::Engine => '/ckeditor'
+
+
+  namespace :api, defaults: { format: :json } do
+
+    resources :workspaces do
+      resources :projects, except: [:index]
+    end
+
+    resources :projects, only: [] do
+      resources :tasks, except: [:index]
+    end
+  end
+
   mount ActionCable.server => '/cable'
+  mount Ckeditor::Engine => '/ckeditor'
 end

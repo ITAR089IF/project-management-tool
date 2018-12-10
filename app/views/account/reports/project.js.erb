@@ -4,12 +4,12 @@ $('.modal').addClass('is-active');
 var project_report = $('.modal .modal-form .project-report .project-doughnut');
 var user_progress_report = $('.modal .modal-form .project-report .user-horizontal-bar');
 
-chart(
+projectReport(
   project_report.data('graph'),
   project_report[0]
 );
 
-horizontalBar(
+usersProgressReport(
   user_progress_report.data('graph'),
   user_progress_report[0]
 );
