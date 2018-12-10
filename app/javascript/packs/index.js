@@ -5,5 +5,5 @@ import TaskInfoCard from '../bundles/Dashboard/components/TaskInfoCard';
 
 ReactOnRails.register({
   Dashboard,
-  TaskInfoCard
+  TasksInfoCard
 });
