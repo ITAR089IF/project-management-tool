@@ -1,4 +1,6 @@
-$(document).on('turbolinks:load', function() {
+$(document).on('turbolinks:load', dragAndDrop);
+
+function dragAndDrop() {
   Sortable.create(all_tasks, {
     handle: '.glyphicon-move',
     animation: 150,
@@ -25,4 +27,4 @@ $(document).on('turbolinks:load', function() {
       });
     }
   });
-});
+};

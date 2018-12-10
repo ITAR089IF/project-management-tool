@@ -65,6 +65,7 @@ $( document ).on('turbolinks:load', function() {
       });
 
       $('.unsorted').remove();
+      dragAndDrop();
     }
     else {
       $('.sorted').after('<div class="container box tasks unsorted" id ="all_tasks"></div>');
@@ -73,6 +74,7 @@ $( document ).on('turbolinks:load', function() {
       });
 
       $('.sorted').remove();
+      dragAndDrop();
     };
   });
 });
