@@ -2,9 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 
-import "./top_users.scss";
-// import "react-grid-layout/css/styles.css";
-// import "react-resizable/css/styles.css";
+import "./top-users.scss";
 
 class TopUsers extends React.Component {
   render() {
