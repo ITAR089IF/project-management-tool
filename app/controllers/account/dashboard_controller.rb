@@ -5,11 +5,11 @@ class Account::DashboardController < Account::AccountController
   end
 
   def user_info_card
-  end
   
-  def tasks_info_card
   end
+
   def tasks_info_card
+
   end
 
   def calendar
