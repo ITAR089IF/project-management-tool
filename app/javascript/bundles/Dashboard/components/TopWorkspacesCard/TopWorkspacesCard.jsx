@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import "./top_workspaces_card.scss";
+import "./top-workspaces-card.scss";
 
 class TopWorkspacesCard extends React.Component {
   render() {
