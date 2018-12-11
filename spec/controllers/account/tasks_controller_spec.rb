@@ -150,7 +150,9 @@ RSpec.describe Account::TasksController, type: :controller do
     it 'marks task as uncompleted' do
       expect(project.tasks.complete.count).to eq 1
       patch :toggle_complete, params: { project_id: project.id, id: task3.id }, format: :js
-      expect(project.tasks.complete.count).to eq 0   
+      task3.reload
+      expect(project.tasks.complete.count).to eq 0
+      expect(task3.completed_by_id).to eq nil
     end
   end
 
