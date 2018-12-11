@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
     get '/top-workspaces-card', to: 'dashboard#top_workspaces_card'
-    get '/user_info_card', to: 'dashboard#user_info_card'
+    get '/user-info-card', to: 'dashboard#user_info_card'
     get '/top-users', to: 'dashboard#top_users_card'
     get '/tasks-info-card', to: 'dashboard#tasks_info_card'
     get '/calendar', to: 'dashboard#calendar'
