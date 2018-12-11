@@ -4,6 +4,9 @@ class Account::DashboardController < Account::AccountController
   def index
   end
 
+  def top_workspaces_card
+  end
+
   def calendar
     @user_tasks = current_user.followed_tasks
   end
