@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
     get '/top-users', to: 'dashboard#top_users_card'
+    get '/tasks-info-card', to: 'dashboard#tasks_info_card'
     get '/calendar', to: 'dashboard#calendar'
     get '/inbox', to: 'dashboard#inbox'
     get '/reports/workspaces/:workspace_id', to: 'reports#workspace', as: :workspace_report
@@ -70,6 +71,7 @@ Rails.application.routes.draw do
     end
   end
 
+
   namespace :api, defaults: { format: :json } do
 
     resources :workspaces do
@@ -82,4 +84,5 @@ Rails.application.routes.draw do
   end
 
   mount ActionCable.server => '/cable'
+  mount Ckeditor::Engine => '/ckeditor'
 end
