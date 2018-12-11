@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 
-import "./tasks_info_card.scss";
+import "./tasks-info-card.scss";
 
 class TasksInfoCard extends React.Component {
   render() {
