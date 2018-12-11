@@ -5,6 +5,15 @@ class Account::DashboardController < Account::AccountController
   end
 
   def top_workspaces_card
+
+  end
+  
+  def user_info_card
+
+  end
+
+  def tasks_info_card
+
   end
 
   def calendar
@@ -15,6 +24,9 @@ class Account::DashboardController < Account::AccountController
     @new_messages = current_user.messages.unreaded.newest
     @old_messages = current_user.messages.readed.newest
     @old_messages = @old_messages.page(params[:page]).per(20)
+  end
+
+  def top_users_card
   end
 
   def change_messages_read

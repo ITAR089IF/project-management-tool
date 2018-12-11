@@ -24,8 +24,6 @@ RSpec.describe Account::TasksController, type: :controller do
   let!(:task_from_calendar_without_date_params) { { task: { project_id: project.id, title: "test", due_date: Date.today } } }
   let!(:task_from_calendar_without_both_date_project_params) { { task: { title: "test" } } }
 
-
-
   before do
     sign_in user
   end
@@ -58,6 +56,19 @@ RSpec.describe Account::TasksController, type: :controller do
       expect(task1.creator).to eq(user1)
     end
 
+    it 'should create section' do
+      post :create, params: {
+        project_id: project.id,
+        task: {
+          title: Faker::Lorem.sentence,
+          description: Faker::Lorem.paragraph,
+          section: true
+        }
+      }
+      expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence,
+        description: Faker::Lorem.paragraph, section: true }}}.to change(Task.all.where(section: true), :count).by(1)
+    end
+
     it 'should add current_user to watchers tasks' do
       post :create, params: {
         project_id: project.id,
@@ -66,6 +77,19 @@ RSpec.describe Account::TasksController, type: :controller do
         }
       }
       expect{ post :create, params: { project_id: project.id, task: { title: Faker::Lorem.sentence }}}.to change(user.followed_tasks, :count).by(1)
+    end
+
+    it 'should not create task' do
+      post :create, params: {
+        project_id: project.id,
+        task: {
+          title: '',
+          description: Faker::Lorem.paragraph,
+        }
+      }
+       expect{ post :create, params: { project_id: project.id, task: { title: '',
+        description: Faker::Lorem.paragraph }}}.to_not change(Task, :count)
+      expect(response).to render_template(:new)
     end
   end
 
@@ -126,7 +150,7 @@ RSpec.describe Account::TasksController, type: :controller do
     it 'marks task as uncompleted' do
       expect(project.tasks.complete.count).to eq 1
       patch :toggle_complete, params: { project_id: project.id, id: task3.id }, format: :js
-
+      task3.reload
       expect(project.tasks.complete.count).to eq 0
       expect(task3.completed_by_id).to eq nil
     end
