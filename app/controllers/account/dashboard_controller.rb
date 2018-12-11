@@ -8,13 +8,13 @@ class Account::DashboardController < Account::AccountController
   end
 
   def tasks_info
-    @task_info = {}
+    @task_info = []
     current_user.available_workspaces.each do |workspace|
       @incomplete = workspace.tasks.assigned_to(current_user).incomplete
       @due_soon = @incomplete.due_soon.count
       @outdated = @incomplete.outdated.count
       @incomplete = @incomplete.count
-      @task_info[workspace.name] = {incomplete: @incomplete, due_soon: @due_soon, outdated: @outdated}
+      @task_info.push({name: workspace.name, uncompleted: @incomplete, 'due soon' => @due_soon, outdated: @outdated})
     end
 
     render json: @task_info

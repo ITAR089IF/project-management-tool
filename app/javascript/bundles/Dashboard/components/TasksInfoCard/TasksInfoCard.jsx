@@ -4,18 +4,24 @@ import _ from "lodash";
 import { ComposedChart, Line, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import "./tasks-info-card.scss";
 
-const data = [{name: '12/12', Uncompleted: 15, 'Due soon': 8, Outdated: 4},
-              {name: '12/13', Uncompleted: 18, 'Due soon': 9, Outdated: 6},
-              {name: '12/14', Uncompleted: 16, 'Due soon': 1, Outdated: 5},
-              {name: '12/15', Uncompleted: 14, 'Due soon': 12, Outdated: 2},
-              {name: '12/16', Uncompleted: 15, 'Due soon': 1, Outdated: 1},
-              {name: '12/17', Uncompleted: 10, 'Due soon': 2, Outdated: 0},
-              {name: '12/18', Uncompleted: 14, 'Due soon': 6, Outdated: 5}];
-
 class TasksInfoCard extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: null
+    };
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:3000/account/tasks-info')
+      .then(response => response.json())
+      .then(data => this.setState({ data: data }));
+  }
+
   render() {
     return (
-      <SameDataComposedChart />
+      <SameDataComposedChart data={this.state.data}/>
     )
   }
 }
@@ -23,16 +29,16 @@ class TasksInfoCard extends React.Component {
 class SameDataComposedChart extends React.Component {
 	render () {
   	return (
-      <ComposedChart width={600} height={400} data={data}
+      <ComposedChart width={600} height={400} data={this.props.data}
         margin={{top: 20, right: 20, bottom: 20, left: 20}}>
         <CartesianGrid stroke='#777'/>
         <XAxis dataKey="name"/>
         <YAxis />
         <Tooltip/>
         <Legend/>
-        <Bar dataKey='Uncompleted' barSize={20} fill='#413ea0'/>
-        <Line type='monotone' dataKey='Due soon' stroke='#ff7300'/>
-        <Line type='monotone' dataKey='Outdated' stroke='#ff4306'/>
+        <Bar dataKey='uncompleted' barSize={20} fill='#413ea0'/>
+        <Line type='monotone' dataKey='due soon' stroke='#ff7300'/>
+        <Line type='monotone' dataKey='outdated' stroke='#ff4306'/>
       </ComposedChart>
     );
   }
