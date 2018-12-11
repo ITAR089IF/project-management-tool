@@ -1,9 +1,9 @@
 import ReactOnRails from 'react-on-rails';
 
 import Dashboard from '../bundles/Dashboard/components/Dashboard';
-import TaskInfoCard from '../bundles/Dashboard/components/TaskInfoCard';
+import TasksInfoCard from '../bundles/Dashboard/components/TasksInfoCard';
 
 ReactOnRails.register({
   Dashboard,
-  TaskInfoCard
+  TasksInfoCard
 });
