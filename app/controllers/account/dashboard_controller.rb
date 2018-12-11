@@ -4,8 +4,12 @@ class Account::DashboardController < Account::AccountController
   def index
   end
 
-  def user_info_card
+  def top_workspaces_card
+
+  end
   
+  def user_info_card
+
   end
 
   def tasks_info_card
