@@ -52,6 +52,8 @@ class Task < ApplicationRecord
   belongs_to :completed_by, class_name: "User", foreign_key: :completed_by_id, optional: true
 
   scope :incomplete,        -> { where(completed_at: nil) }
+  scope :due_soon,          -> { where("due_date >= ? AND due_date >= ?", Date.today-2, Date.today) }
+  scope :outdated,          -> { where("due_date < ?", Date.today) }
   scope :complete,          -> { where.not(completed_at: nil).order(completed_at: :desc) }
   scope :complete_by,       -> (user) { where("completed_by_id = ?", user.id) }
   scope :row_order_asc,     -> { order(row_order: :asc) }

@@ -7,6 +7,14 @@ class Account::DashboardController < Account::AccountController
   def tasks_info_card
   end
 
+  def tasks_info
+    @incomplete = current_user.assigned_tasks.incomplete
+    @due_soon = @incomplete.due_soon.count
+    @outdated = @incomplete.outdated.count
+    @incomplete = @incomplete.count
+    render json: { incomplete: @incomplete, due_soon: @due_soon, outdated: @outdated }
+  end
+
   def calendar
     @user_tasks = current_user.followed_tasks
   end
