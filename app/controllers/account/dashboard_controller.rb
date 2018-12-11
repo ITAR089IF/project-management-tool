@@ -14,7 +14,7 @@ class Account::DashboardController < Account::AccountController
     @old_messages = @old_messages.page(params[:page]).per(20)
   end
 
-  def top_users
+  def top_users_card
   end
 
   def change_messages_read

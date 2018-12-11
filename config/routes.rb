@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
-    get '/top-users', to: 'dashboard#top_users'
+    get '/top-users', to: 'dashboard#top_users_card'
     get '/calendar', to: 'dashboard#calendar'
     get '/inbox', to: 'dashboard#inbox'
     get '/reports/workspaces/:workspace_id', to: 'reports#workspace', as: :workspace_report

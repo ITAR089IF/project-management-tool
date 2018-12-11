@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 
-import "./top-users.scss";
+import "./top-users-card.scss";
 
-class TopUsers extends React.Component {
+class TopUsersCard extends React.Component {
   render() {
     return (
       <h1> Hello World </h1>
@@ -13,4 +13,4 @@ class TopUsers extends React.Component {
   }
 }
 
-export default TopUsers;
+export default TopUsersCard;
