@@ -1,43 +1,39 @@
 import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { ComposedChart, Line, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import "./tasks-info-card.scss";
 
-import "./tasks_info_card.scss";
-
-const data = [
-      {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
-      {name: 'Page B', uv: 3000, pv: 1398, amt: 2210},
-      {name: 'Page C', uv: 2000, pv: 9800, amt: 2290},
-      {name: 'Page D', uv: 2780, pv: 3908, amt: 2000},
-      {name: 'Page E', uv: 1890, pv: 4800, amt: 2181},
-      {name: 'Page F', uv: 2390, pv: 3800, amt: 2500},
-      {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
-];
+const data = [{name: '12/12', Uncompleted: 15, 'Due soon': 8, Outdated: 4},
+              {name: '12/13', Uncompleted: 18, 'Due soon': 9, Outdated: 6},
+              {name: '12/14', Uncompleted: 16, 'Due soon': 1, Outdated: 5},
+              {name: '12/15', Uncompleted: 14, 'Due soon': 12, Outdated: 2},
+              {name: '12/16', Uncompleted: 15, 'Due soon': 1, Outdated: 1},
+              {name: '12/17', Uncompleted: 10, 'Due soon': 2, Outdated: 0},
+              {name: '12/18', Uncompleted: 14, 'Due soon': 6, Outdated: 5}];
 
 class TasksInfoCard extends React.Component {
   render() {
     return (
-      <container>
-        <StackedAreaChart />
-      </container>
+      <SameDataComposedChart />
     )
   }
 }
 
-class StackedAreaChart extends React.Component {
+class SameDataComposedChart extends React.Component {
 	render () {
   	return (
-    	<AreaChart width={600} height={400} data={data}
-            margin={{top: 10, right: 30, left: 0, bottom: 0}}>
-        <CartesianGrid strokeDasharray="3 3"/>
+      <ComposedChart width={600} height={400} data={data}
+        margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <CartesianGrid stroke='#777'/>
         <XAxis dataKey="name"/>
-        <YAxis/>
+        <YAxis />
         <Tooltip/>
-        <Area type='monotone' dataKey='uv' stackId="1" stroke='#8884d8' fill='#8884d8' />
-        <Area type='monotone' dataKey='pv' stackId="1" stroke='#82ca9d' fill='#82ca9d' />
-        <Area type='monotone' dataKey='amt' stackId="1" stroke='#ffc658' fill='#ffc658' />
-      </AreaChart>
+        <Legend/>
+        <Bar dataKey='Uncompleted' barSize={20} fill='#413ea0'/>
+        <Line type='monotone' dataKey='Due soon' stroke='#ff7300'/>
+        <Line type='monotone' dataKey='Outdated' stroke='#ff4306'/>
+      </ComposedChart>
     );
   }
 }
