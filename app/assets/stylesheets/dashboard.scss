@@ -52,6 +52,7 @@
     }
   }
 }
+
 .container {
   &.landing-footer {
     padding: 0px 80px;
@@ -79,14 +80,26 @@
   }
 }
 
-.price {
-
-}
-
-.pricing-table {
+.premium, .enterprise {
   .pricing-plan {
     .button {
       background-color: #ad1457;
+      color: #fff;
+    }
+    span {
+      color: #ad1457;
+    }
+  }
+}
+
+.busines {
+  .pricing-plan {
+    .button {
+      background-color: #ffc623;
+      color: #fff;
+    }
+    span {
+      color: #ffc623;
     }
   }
 }
