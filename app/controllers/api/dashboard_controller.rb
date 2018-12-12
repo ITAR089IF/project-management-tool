@@ -14,7 +14,6 @@ class Api::DashboardController < ActionController::API
   private
 
   def layout_params
-    params.permit(layout: [:i, :x, :y, :w, :h, :moved, :static])
+    params.permit(layout: [:i, :x, :y, :w, :h, :moved, :static, :minH, :minW, :maxH, :maxW])
   end
-
 end
