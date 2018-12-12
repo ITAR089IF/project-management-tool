@@ -111,3 +111,13 @@
     }
   }
 }
+
+form.new_task {
+  .select {
+    margin-bottom: 3rem;
+    &:not(.is-multiple):not(.is-loading)::after {
+      right: 1rem;
+      top: 3rem;
+    }
+  }
+}
