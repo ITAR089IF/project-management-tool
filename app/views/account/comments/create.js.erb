@@ -1,6 +1,9 @@
 <% if @comment.persisted? %>
   $('.comments').prepend('<%= j render(partial: "show_comments", locals: {commentable: @commentable, comments: [@comment] } ) %>');
   $('.new-comment').find('form')[0].reset();
+  for (instance in CKEDITOR.instances){
+    CKEDITOR.instances[instance].setData('');
+  }
 <% else %>
   $('.new-comment').html('<%= j render(partial: "form", locals: { commentable: @commentable, comment: @comment } ) %>');
 <% end %>

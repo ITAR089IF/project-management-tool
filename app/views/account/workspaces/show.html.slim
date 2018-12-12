@@ -1,21 +1,25 @@
 - title "#{@workspace.name} projects"
 .container
-  h1.title
-    = @workspace.name
-  - if current_user.assigned_tasks.current_workspace(@workspace).any? || current_user.followed_tasks.current_workspace(@workspace).any?
-    h2.subtitle
-      = link_to "My tasks", list_account_workspace_path(@workspace)
+  .level
+      .level-left
+        .level-item
+          .title
+            = @workspace.name
+      .level-right
+        .level-item
+          = link_to "Send details to email", prepare_pdf_account_workspace_path(@workspace), remote: true, class: "button is-link"
+        .level-item
+          - if current_user.assigned_tasks.current_workspace(@workspace).any? || current_user.followed_tasks.current_workspace(@workspace).any?
+            = link_to "My tasks", list_account_workspace_path(@workspace), class: "button is-link"
   .columns
-    .column.is-one-fifth.members
+    .column.have_background.members
       h3.subtitle
         | Members:
       #workspace-members
         = render 'account/members/show_user', members: @members, workspace: @workspace
-      #new-member
-        = render 'account/members/new_link', workspace: @workspace
-        = link_to 'Generate invitation link', account_workspace_create_invitation_link_path(@workspace),
-                method: :post, remote: true, class: 'box'
-        .show_invitation_link
+      - if @workspace.potential_members.any?
+        .button.is-fullwidth
+          = link_to 'Add new member', new_account_workspace_member_path(workspace_id: @workspace.id), remote: true
     .column.is-four-fifths
       - if @workspace.projects.any?
         .columns.is-multiline

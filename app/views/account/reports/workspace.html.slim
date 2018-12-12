@@ -1,0 +1,8 @@
+#graph
+  .container.workspace-report.report
+    .title
+      = "Report for workpsace #{@workspace.name}"
+    .level
+      - @projects.each do |project|
+        .level-item
+          canvas class='js-report' id="#{dom_id(project)}" data-graph="#{project.tasks.report.to_json}" data-title="#{project.name}"
