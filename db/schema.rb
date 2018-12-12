@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_03_095121) do
+ActiveRecord::Schema.define(version: 2018_12_12_095902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,6 +147,7 @@ ActiveRecord::Schema.define(version: 2018_12_03_095121) do
     t.integer "completed_by_id"
     t.integer "assigned_by_id"
     t.bigint "creator_id"
+    t.datetime "assigned_at"
     t.index ["assigned_by_id"], name: "index_tasks_on_assigned_by_id"
     t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
     t.index ["completed_by_id"], name: "index_tasks_on_completed_by_id"
