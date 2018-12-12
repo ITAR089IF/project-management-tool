@@ -72,6 +72,9 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
 
+    get '/dashboard/load', to: 'dashboard#load'
+    put '/dashboard/save', to: 'dashboard#save'
+
     resources :workspaces do
       resources :projects, except: [:index]
     end
