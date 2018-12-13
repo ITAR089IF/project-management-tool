@@ -21,20 +21,14 @@ class Dashboard extends React.Component {
       response: ""
     }
 
-    this.onDragStop = this.onDragStop.bind(this);
-    this.onResizeStop = this.onResizeStop.bind(this);
+    this.onLayoutChange = this.onLayoutChange.bind(this);
   }
 
   componentDidMount() {
     api.load_layout(this);
   }
 
-  onDragStop(layout) {
-    this.setState({ layout: layout });
-    api.save_layout(this.state.layout);
-  }
-
-  onResizeStop(layout) {
+  onLayoutChange(layout) {
     this.setState({ layout: layout });
     api.save_layout(this.state.layout);
   }
@@ -47,8 +41,7 @@ class Dashboard extends React.Component {
         cols={{lg: 12}}
         rowHeight={30}
         width={1200}
-        onDragStop={(layout) => this.onDragStop(layout)}
-        onResizeStop={(layout) => this.onResizeStop(layout)}
+        onLayoutChange={(layout) => this.onLayoutChange(layout)}
         layouts={{lg: this.state.layout}}
       >
         <div className="box layout-js" key="a" data-grid={{i: 'a', x: 0, y: 0, w: 1, h: 2}}>a</div>
