@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import { WidthProvider, Responsive } from "react-grid-layout";
+
+import * as api from '../../Api/layout_api';
 import * as config from '../config.js';
 
 import "./dashboard.scss";
@@ -20,26 +22,21 @@ class Dashboard extends React.Component {
     }
 
     this.onDragStop = this.onDragStop.bind(this);
+    this.onResizeStop = this.onResizeStop.bind(this);
   }
 
   componentDidMount() {
-    fetch(`${config.DEFAULT_URL}/api/dashboard/load`)
-      .then(response => response.json())
-      .then(parsedJSON => this.setState(parsedJSON))
-      .catch(error => console.error('Error:', error));
+    api.load_layout(this);
   }
 
   onDragStop(layout) {
     this.setState({ layout: layout });
+    api.save_layout(this.state.layout);
+  }
 
-    fetch(`${config.DEFAULT_URL}/api/dashboard/save`, {
-        method: 'PUT',
-        body: JSON.stringify({layout: this.state.layout}),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    ).catch(error => console.error('Error:', error));
+  onResizeStop(layout) {
+    this.setState({ layout: layout });
+    api.save_layout(this.state.layout);
   }
 
   render() {
@@ -51,6 +48,7 @@ class Dashboard extends React.Component {
         rowHeight={30}
         width={1200}
         onDragStop={(layout) => this.onDragStop(layout)}
+        onResizeStop={(layout) => this.onResizeStop(layout)}
         layouts={{lg: this.state.layout}}
       >
         <div className="box layout-js" key="a" data-grid={{i: 'a', x: 0, y: 0, w: 1, h: 2}}>a</div>
