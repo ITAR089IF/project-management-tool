@@ -12,8 +12,9 @@
 .close {
   position: absolute;
   top: 0;
-  right: 5px;
+  right: 10px;
   &:hover {
     color: #5f0d31;
+    cursor: pointer;
   }
 }

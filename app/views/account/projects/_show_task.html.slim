@@ -1,29 +1,26 @@
-.level class="task_#{task.id}" data-project-id="#{project.id}" data-task-id="#{task.id}"
+.level class="task_#{task.id} #{'pending' if task.pending?}" data-project-id="#{project.id}" data-task-id="#{task.id}"
   .level-left
-    - if !task.section?
-      .level-item
+    .level-item.glyphicon-move
+      - if !task.section?
         = link_to toggle_complete_account_project_task_path(project, task),
           method: :patch, remote: true do
-          - if task.pending?
-            = fa_icon 'check-circle-o', class: 'has-text-grey-light'
-          - else
-            = fa_icon 'check-circle-o', class: 'has-text-success'
-    .level-item.glyphicon-move
+          = image_tag('complete-icon.svg')
       = link_to task.title, task.section? ? '#' : account_project_task_path(project, task), class: task_link_class(task)
   .level-right
     - if task.pending?
       .level-item
         p
           | Created  #{time_ago_in_words(task.created_at)} ago
-      = render '/account/projects/show_task_assignee', task: task
+      = render '/account/projects/show_task_assignee', assignee: task.assignee
       .level-item
-        = link_to "Edit", edit_account_project_task_path(project, task),
-          class: "button is-small right"
+        = link_to edit_account_project_task_path(project, task) do
+          = fa_icon 'edit', type: :regular
     - else
       .level-item
         p
           | Completed #{time_ago_in_words(task.completed_at)} ago
-      = render '/account/projects/show_task_assignee', task: task
+      = render '/account/projects/show_task_assignee', assignee: task.assignee
     .level-item
-      = link_to "Delete", account_project_task_path(project, task),
-        method: :delete,  class: "button is-small right", data: { confirm: "Are you sure?" },remote: true
+      = link_to account_project_task_path(project, task), method: :delete,
+        data: { confirm: "Are you sure?" }, remote: true do
+        = fa_icon 'trash-alt', type: :regular

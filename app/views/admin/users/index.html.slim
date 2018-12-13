@@ -1,0 +1,18 @@
+- title 'All users'
+.container
+  .level
+    .level-left
+      .title
+        | All users
+  .index-margin
+    - @users.each do |user|
+      hr.navbar-divider
+        .level
+          .level-left
+            .is-size-4= link_to user.full_name, admin_user_path(user)
+          .level-right
+            .level-item
+              = link_to 'Edit',  edit_admin_user_path(user)
+            .level-item
+              = link_to 'Delete', admin_user_path(user), method: :delete, data: { confirm: "Are you sure?" }
+  hr.navbar-divider

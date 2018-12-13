@@ -27,8 +27,15 @@ RSpec.describe Account::WorkspacesController, type: :controller do
 
   context 'GET /worspaces/:id' do
     it 'should show page with workspace' do
-      get :show, params: { id: workspace.id }, format: :js, xhr: true
+      get :show, params: { id: workspace.id }
       expect(response).to be_successful
+    end
+  end
+
+  context 'GET /worspaces/:id/prepare_pdf' do
+    it 'should send workspace details to email' do
+      expect(WorkspaceDetailsJob).to receive(:perform_later).with(workspace.id, user.id)
+      get :prepare_pdf, params: { id: workspace.id }, xhr: true
     end
   end
 

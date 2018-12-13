@@ -8,5 +8,5 @@
             = f.input :email, input_html: { placeholder: 'Email' }, wrapper: :bulma_input, label: false, required: true
             = f.input :password, input_html: { placeholder: "Password" }, wrapper: :bulma_input, label: false, required: true
             = f.input :remember_me, wrapper: :inline_checkbox, as: :boolean if devise_mapping.rememberable?
-            = f.submit "Log in", class: 'button is-primary is-fullwidth'
+            = f.submit "Log in", class: 'button is-link is-fullwidth'
       = render "devise/shared/links"

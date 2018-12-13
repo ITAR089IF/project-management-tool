@@ -8,11 +8,13 @@
           = ": #{@project.name}"
     .level-right
       .level-item
+        = link_to "Report", account_project_report_path(@workspace, @project), remote: true
+      .level-item
         = link_to "Download PDF", report_account_project_tasks_path(@project), target: :_blank
       .level-item
         = link_to "Add Task", new_account_project_task_path(@project), class: "button is-link"
       .level-item
-        = link_to "Add Section", new_account_project_task_path(@project, section: true), class: "button is-link"
+        = link_to "Add Section", new_account_project_task_path(@project, section: true), class: "button"
   - if @project.tasks.any?
     .title
       |  To Do List:
