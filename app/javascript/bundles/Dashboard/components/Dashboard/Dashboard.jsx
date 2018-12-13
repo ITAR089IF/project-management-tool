@@ -22,7 +22,7 @@ class Dashboard extends React.Component {
     this.onDragStop = this.onDragStop.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     fetch(`${config.DEFAULT_URL}/api/dashboard/load`)
       .then(response => response.json())
       .then(parsedJSON => this.setState(parsedJSON))

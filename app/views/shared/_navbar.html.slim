@@ -11,7 +11,7 @@
                 | IF-089.Ruby
       - if user_signed_in?
         .navbar-item
-          = link_to "Dashboard", account_dashboard_path, class: 'button'
+          = link_to "Dashboard", account_dashboard_path, class: 'button', "data-no-turbolinks" => true
         .navbar-item
           = link_to "Calendar", account_calendar_path, class: 'button'
       - else
