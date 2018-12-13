@@ -7,9 +7,8 @@ class Account::DashboardController < Account::AccountController
   def top_workspaces_card
 
   end
-  
-  def user_info_card
 
+  def user_info_card
   end
 
   def tasks_info_card
@@ -27,6 +26,20 @@ class Account::DashboardController < Account::AccountController
   end
 
   def top_users_card
+  end
+
+  def top_users
+    @top_users = []
+    @workspace = current_user.available_workspaces.first
+    @workspace.all_members.each do |member|
+      name = member.full_name
+      completed = @workspace.tasks.complete_by(member).count
+      @top_users.push( name: name, completed:completed)
+    end
+    @top_users = @top_users.sort_by{ |k| -k[:completed]}
+    @top_five_users = @top_users[0..4]
+    render json: @top_five_users
+
   end
 
   def change_messages_read

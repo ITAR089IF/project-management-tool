@@ -4,14 +4,6 @@ import _ from "lodash";
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LabelList, Legend} from 'recharts';
 import "./top-users-card.scss";
 
-const data = [
-      {name: 'user', completed: 25},
-      {name: 'user 2', completed: 30},
-      {name: 'user 3', completed: 24},
-      {name: 'user 4', completed: 15},
-      {name: 'user 5', completed: 3},
-];
-
 const renderCustomizedLabel = (props) => {
   const { x, y, width, height, value } = props;
   const radius = 10;
@@ -27,16 +19,28 @@ const renderCustomizedLabel = (props) => {
 };
 
 class TopUsersCard extends React.Component {
+  constructor(props) {
+  super(props);
+   this.state = {
+    data: null
+  };
+}
+ componentDidMount() {
+  fetch('http://localhost:3000/account/top_users')
+    .then(response => response.json())
+    .then(data => this.setState({ data: data }));
+}
+
   render() {
     return (
-      <SimpleBarChart />
+      <SimpleBarChart data={this.state.data} />
     )
   }
 }
 class SimpleBarChart extends React.Component {
   render () {
   	return (
-    	<BarChart width={600} height={300} data={data}
+    	<BarChart width={600} height={300} data={this.props.data}
             margin={{top: 5, right: 30, left: 40, bottom: 5}}>
        <CartesianGrid strokeDasharray="10 10"/>
        <XAxis dataKey="name"/>
