@@ -120,6 +120,10 @@ class User < ApplicationRecord
     Project.where(workspace_id: available_workspaces.ids)
   end
 
+  def available_tasks
+    Task.where(project_id: available_projects.ids)
+  end
+
   def admin?
     self.role == ADMIN
   end
