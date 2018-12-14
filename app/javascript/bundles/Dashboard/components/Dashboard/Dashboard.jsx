@@ -3,33 +3,25 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 import { WidthProvider, Responsive } from "react-grid-layout";
 
-import * as api from '../../Api/layout_api';
-import * as config from '../config.js';
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 import "./dashboard.scss";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      layout: [],
-      response: ""
+      layout: []
     }
 
     this.onLayoutChange = this.onLayoutChange.bind(this);
   }
 
-  componentDidMount() {
-    api.load_layout().then(data => this.setState({ layout: data.layout}));;
-  }
-
   onLayoutChange(layout) {
-    api.save_layout(layout);
+    this.setState({ layout });
   }
 
   render() {

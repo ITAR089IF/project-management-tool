@@ -9,8 +9,7 @@
     "react-dom": "^16.5.2",
     "react-grid-layout": "^0.16.6",
     "react-on-rails": "11.2.1",
-    "lodash": "4.17.11",
-    "axios": "^0.18.0"
+    "lodash": "4.17.11"
   },
   "devDependencies": {
     "webpack-dev-server": "2.11.2"

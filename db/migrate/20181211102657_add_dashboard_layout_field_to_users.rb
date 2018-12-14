@@ -1,5 +1,0 @@
-class AddDashboardLayoutFieldToUsers < ActiveRecord::Migration[5.2]
-  def change
-    add_column :users, :dashboard_layout, :json
-  end
-end

@@ -4,7 +4,6 @@
 #
 #  id                     :bigint(8)        not null, primary key
 #  about                  :text
-#  dashboard_layout       :json
 #  deleted_at             :datetime
 #  department             :string
 #  email                  :string           default(""), not null
