@@ -22,7 +22,7 @@ class Account::WorkspacesController < Account::AccountController
   def create
     @workspace = Workspace.new(workspace_params)
     if @workspace.save
-      flash[:success] = 'Workspace was sccessful created!'
+      flash[:success] = 'Workspace was successful created!'
       @workspaces = collection
     end
 
@@ -40,7 +40,7 @@ class Account::WorkspacesController < Account::AccountController
     @updated = @workspace.update(workspace_params)
 
     if @updated
-      flash[:success] = 'Workspace was sccessful updated!'
+      flash[:success] = 'Workspace was successful updated!'
       @workspaces = collection
     end
 
