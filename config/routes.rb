@@ -10,6 +10,10 @@ Rails.application.routes.draw do
 
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
+    get '/top-workspaces-card', to: 'dashboard#top_workspaces_card'
+    get '/user_info_card', to: 'dashboard#user_info_card'
+    get '/top-users', to: 'dashboard#top_users_card'
+    get '/tasks-info-card', to: 'dashboard#tasks_info_card'
     get '/calendar', to: 'dashboard#calendar'
     get '/inbox', to: 'dashboard#inbox'
     get '/reports/workspaces/:workspace_id', to: 'reports#workspace', as: :workspace_report
@@ -28,6 +32,7 @@ Rails.application.routes.draw do
       resources :projects, except: [:index]
       member do
         get :list
+        get :prepare_pdf
       end
     end
 
@@ -68,5 +73,21 @@ Rails.application.routes.draw do
     end
   end
 
+
+  namespace :api, defaults: { format: :json } do
+
+    get '/dashboard/load', to: 'dashboard#load'
+    put '/dashboard/save', to: 'dashboard#save'
+
+    resources :workspaces do
+      resources :projects, except: [:index]
+    end
+
+    resources :projects, only: [] do
+      resources :tasks, except: [:index]
+    end
+  end
+
   mount ActionCable.server => '/cable'
+  mount Ckeditor::Engine => '/ckeditor'
 end

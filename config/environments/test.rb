@@ -38,6 +38,7 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method =  :test
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  routes.default_url_options[:host] = 'localhost'
   config.action_mailer.perform_deliveries = true
   config.active_job.queue_adapter = :test
   # Print deprecation notices to the stderr.

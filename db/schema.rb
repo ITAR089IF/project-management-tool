@@ -36,6 +36,18 @@ ActiveRecord::Schema.define(version: 2018_12_06_084255) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "ckeditor_assets", force: :cascade do |t|
+    t.string "data_file_name", null: false
+    t.string "data_content_type"
+    t.integer "data_file_size"
+    t.string "type", limit: 30
+    t.integer "width"
+    t.integer "height"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["type"], name: "index_ckeditor_assets_on_type"
+  end
+
   create_table "comments", force: :cascade do |t|
     t.string "body"
     t.string "commentable_type"
@@ -174,6 +186,7 @@ ActiveRecord::Schema.define(version: 2018_12_06_084255) do
     t.text "about"
     t.string "job_role"
     t.datetime "deleted_at"
+    t.json "dashboard_layout"
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
