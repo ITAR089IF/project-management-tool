@@ -1,6 +1,6 @@
 <% if @workspace.persisted? %>
   $('.navbar-workspaces').html('<%= j render 'account/workspaces/show_workspaces', workspaces: @workspaces %>');
-  $('.modal .modal-form').html('<%= j render 'account/workspaces/modal_flesh' %>');
+  $('.modal .modal-form').html('<%= j render 'account/workspaces/modal_flash' %>');
   setTimeout(function(){ $('.modal').removeClass('is-active') }, 1000);
 <% else %>
   $('.modal .modal-form').html('<%= j render('account/workspaces/form', workspace: @workspace) %>');
