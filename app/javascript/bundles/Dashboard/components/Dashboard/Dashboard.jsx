@@ -25,12 +25,12 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    api.load_layout(this);
+    api.load_layout().then(data => this.setState({ layout: data.layout}));;
   }
 
   onLayoutChange(layout) {
     this.setState({ layout: layout });
-    api.save_layout(this.state.layout);
+    api.save_layout(layout);
   }
 
   render() {
@@ -44,11 +44,11 @@ class Dashboard extends React.Component {
         onLayoutChange={(layout) => this.onLayoutChange(layout)}
         layouts={{lg: this.state.layout}}
       >
-        <div className="box layout-js" key="a" data-grid={{i: 'a', x: 0, y: 0, w: 1, h: 2}}>a</div>
-        <div className="box layout-js" key="b" data-grid={{i: 'b', x: 1, y: 0, w: 1, h: 2}}>b</div>
-        <div className="box layout-js" key="c" data-grid={{i: 'c', x: 2, y: 0, w: 1, h: 2}}>c</div>
-        <div className="box layout-js" key="d" data-grid={{i: 'd', x: 3, y: 0, w: 1, h: 2}}>d</div>
-        <div className="box layout-js" key="e" data-grid={{i: 'e', x: 4, y: 0, w: 1, h: 2}}>e</div>
+        <div className="box" key="a" data-grid={{i: 'a', x: 0, y: 0, w: 1, h: 2}}>a</div>
+        <div className="box" key="b" data-grid={{i: 'b', x: 1, y: 0, w: 1, h: 2}}>b</div>
+        <div className="box" key="c" data-grid={{i: 'c', x: 2, y: 0, w: 1, h: 2}}>c</div>
+        <div className="box" key="d" data-grid={{i: 'd', x: 3, y: 0, w: 1, h: 2}}>d</div>
+        <div className="box" key="e" data-grid={{i: 'e', x: 4, y: 0, w: 1, h: 2}}>e</div>
       </ResponsiveReactGridLayout>
     )
   }

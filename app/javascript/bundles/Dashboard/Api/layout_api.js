@@ -1,10 +1,9 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:3000';
-
-export const load_layout = (object) => {
-  axios.get('/api/dashboard/load')
-  .then(response => object.setState(response.data))
+export const load_layout = () => {
+  return axios.get('/api/dashboard/load')
+  .then(response => { return response.data; })
+  .then(data => { return data; })
   .catch(error => console.error('Error:', error));
 }
 
