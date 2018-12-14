@@ -18,21 +18,17 @@ class TasksInfoCard extends React.Component {
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    if (this.state.active=='All Workspaces'){
-      fetch('http://localhost:3000/account/tasks-info')
-        .then(response => response.json())
-        .then(data => this.setState({ data: data.info, workspaces: data.workspaces, collection: data.workspaces, isLoading: false }));
-    }
+    fetch('http://localhost:3000/account/tasks-info')
+      .then(response => response.json())
+      .then(data => this.setState({ data: data.info, workspaces: data.workspaces, collection: data.workspaces, isLoading: false }));
   }
 
   handleClick(id){
-    console.log(id.toString()+'hello');
-    console.log('fdgsdgsdfhagdfgadfg');
     const encodedId = encodeURIComponent(id);
     this.setState({ isLoading: true });
     fetch(`http://localhost:3000/account/tasks-info?id=${encodeURIComponent(id)}`)
       .then(response => response.json())
-      .then(data => this.setState({ data: data.info, active: id, isLoading: false }))
+      .then(data => this.setState({ data: data.info, active: this.state.workspaces[id], isLoading: false }))
   }
 
   render() {
@@ -83,9 +79,9 @@ class SelectWorkspace extends React.Component {
         </div>
         <div className="dropdown-menu" id="dropdown-menu" role="menu">
           <div className="dropdown-content">
-            <li className="dropdown-item" key='all' onClick={() => this.props.onClick()}>All Workspaces</li>
+            <li className="dropdown-item" key='all' onClick={() => this.props.onClick('all')}>All Workspaces</li>
             { Object.entries(workspaces).map(([key, value]) => {
-              return <li href="#" className="dropdown-item" key={key} onClick={(key) => this.props.onClick(key)}>
+              return <li href="#" className="dropdown-item" key={key} onClick={() => this.props.onClick(key)}>
                         {value}
                       </li>
             })}

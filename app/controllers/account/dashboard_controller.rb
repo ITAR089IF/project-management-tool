@@ -11,7 +11,7 @@ class Account::DashboardController < Account::AccountController
     @task_info = []
     @workspaces = current_user.available_workspaces
     if params[:id]
-      @collection = @workspaces.find(params[:id])
+      @collection = @workspaces.find(params[:id]).projects
     else
       @collection = @workspaces
     end
