@@ -29,7 +29,6 @@ class Dashboard extends React.Component {
   }
 
   onLayoutChange(layout) {
-    this.setState({ layout: layout });
     api.save_layout(layout);
   }
 
