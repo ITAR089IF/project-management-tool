@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import { WidthProvider, Responsive } from "react-grid-layout";
-import { TasksInfoCard } from '../TasksInfoCard'
+import TasksInfoCard from '../TasksInfoCard'
 
 import * as api from '../../Api/layout_api';
 import * as config from '../config.js';
