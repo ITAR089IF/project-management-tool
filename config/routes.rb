@@ -10,6 +10,9 @@ Rails.application.routes.draw do
 
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
+    get '/top-workspaces-card', to: 'dashboard#top_workspaces_card'
+    get '/user_info_card', to: 'dashboard#user_info_card'
+    get '/top-users', to: 'dashboard#top_users_card'
     get '/tasks-info-card', to: 'dashboard#tasks_info_card'
     get '/tasks-info', to: 'dashboard#tasks_info'
     get '/calendar', to: 'dashboard#calendar'
@@ -73,6 +76,9 @@ Rails.application.routes.draw do
 
 
   namespace :api, defaults: { format: :json } do
+
+    get '/dashboard/load', to: 'dashboard#load'
+    put '/dashboard/save', to: 'dashboard#save'
 
     resources :workspaces do
       resources :projects, except: [:index]

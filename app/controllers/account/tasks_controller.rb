@@ -117,7 +117,7 @@ class Account::TasksController < Account::AccountController
     if @task.pending?
       @task.complete!(current_user)
     else
-      @task.update(completed_at: nil)
+      @task.update(completed_at: nil, completed_by_id: nil)
     end
     ActionCable.server.broadcast "project_#{@project.id}", { id: @project.id,
                                                             task_id: @task.id,
