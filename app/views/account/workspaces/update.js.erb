@@ -1,10 +1,6 @@
 <% if @updated %>
-  $('.navbar-workspaces').html(`<%= j render 'account/workspaces/show_workspaces', workspaces: @workspaces %>`);
-  $('.modal .modal-form').html(`
-    <% flash.each do |key, value| %>
-      <div><%= value %></div>
-    <% end %>
-  `);
+  $('.navbar-workspaces').html('<%= j render 'account/workspaces/show_workspaces', workspaces: @workspaces %>');
+  $('.modal .modal-form').html('<%= j render 'account/workspaces/modal_flesh' %>');
   setTimeout(function(){ $('.modal').removeClass('is-active') }, 1000);
 <% else %>
   $('.modal .modal-form').html('<%= j render('account/workspaces/form', workspace: @workspace) %>');
