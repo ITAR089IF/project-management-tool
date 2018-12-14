@@ -20,15 +20,18 @@ class TasksInfoCard extends React.Component {
     this.setState({ isLoading: true });
     fetch('http://localhost:3000/account/tasks-info')
       .then(response => response.json())
-      .then(data => this.setState({ data: data.info, workspaces: data.workspaces, collection: data.workspaces, isLoading: false }));
+      .then(data => this.setState({ data: data.info, workspaces: data.workspaces, collection: data.collection, isLoading: false }));
   }
 
   handleClick(id){
-    const encodedId = encodeURIComponent(id);
+    let workspaceUrl='';
+    if (id != 'all'){
+      workspaceUrl=`?id=${encodeURIComponent(id)}`;
+    }
     this.setState({ isLoading: true });
-    fetch(`http://localhost:3000/account/tasks-info?id=${encodeURIComponent(id)}`)
+    fetch(`http://localhost:3000/account/tasks-info${workspaceUrl}`)
       .then(response => response.json())
-      .then(data => this.setState({ data: data.info, active: this.state.workspaces[id], isLoading: false }))
+      .then(data => this.setState({ data: data.info, active: this.state.workspaces[id] || 'All Workspaces', isLoading: false }))
   }
 
   render() {
@@ -48,8 +51,7 @@ class TasksInfoCard extends React.Component {
 class SameDataComposedChart extends React.Component {
 	render () {
   	return (
-      <ComposedChart width={600} height={400} data={this.props.data}
-        margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+      <ComposedChart width={600} height={400} data={this.props.data}>
         <CartesianGrid stroke='#777'/>
         <XAxis dataKey="name"/>
         <YAxis />
