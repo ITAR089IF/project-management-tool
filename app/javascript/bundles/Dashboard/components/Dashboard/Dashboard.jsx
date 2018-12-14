@@ -2,26 +2,35 @@ import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import { WidthProvider, Responsive } from "react-grid-layout";
+import UserInfoCard  from '../UserInfoCard'
 
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
+import * as api from '../../Api/layout_api';
+import * as config from '../config.js';
 
 import "./dashboard.scss";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
+
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      layout: []
+      layout: [],
+      response: ""
     }
 
     this.onLayoutChange = this.onLayoutChange.bind(this);
   }
 
+  componentDidMount() {
+    api.load_layout().then(data => this.setState({ layout: data.layout}));;
+  }
+
   onLayoutChange(layout) {
-    this.setState({ layout });
+    api.save_layout(layout);
   }
 
   render() {
@@ -35,10 +44,10 @@ class Dashboard extends React.Component {
         onLayoutChange={(layout) => this.onLayoutChange(layout)}
         layouts={{lg: this.state.layout}}
       >
-        <div className="box" key="a" data-grid={{i: 'a', x: 0, y: 0, w: 7, h: 8}}>
-        User info card
+        <div className="box" key="a" data-grid={{i: 'a', x: 0, y: 0, w: 7, h: 8, minW: 7, minH: 8}}>
+        <UserInfoCard/>
         </div>
-        <div className="box" key="b" data-grid={{i: 'b', x: 1, y: 0, w: 1, h: 2}}>b</div>
+        <div className="box" key="b" data-grid={{i: 'a', x: 0, y: 0, w: 2, h: 3, minW: 2, minH: 2}}>b</div>
         <div className="box" key="c" data-grid={{i: 'c', x: 2, y: 0, w: 1, h: 2}}>c</div>
         <div className="box" key="d" data-grid={{i: 'd', x: 3, y: 0, w: 1, h: 2}}>d</div>
         <div className="box" key="e" data-grid={{i: 'e', x: 4, y: 0, w: 1, h: 2}}>e</div>
