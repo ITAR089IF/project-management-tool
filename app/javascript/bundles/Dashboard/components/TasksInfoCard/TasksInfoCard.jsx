@@ -13,7 +13,6 @@ class TasksInfoCard extends React.Component {
       workspaces: null,
       active: 'All Workspaces',
       isLoading: true,
-      collection: null
     };
   }
 
@@ -21,7 +20,7 @@ class TasksInfoCard extends React.Component {
     this.setState({ isLoading: true });
     fetch('http://localhost:3000/account/tasks-info')
       .then(response => response.json())
-      .then(data => this.setState({ data: data.info, workspaces: data.workspaces, collection: data.collection, isLoading: false }));
+      .then(data => this.setState({ data: data.info, workspaces: data.workspaces, isLoading: false }));
   }
 
   handleClick(id){
@@ -41,15 +40,12 @@ class TasksInfoCard extends React.Component {
     }
 
     return (
-      <div>
+      <div className="task-info">
         <SelectWorkspace workspaces={this.state.workspaces} active={this.state.active} onClick={(id) => this.handleClick(id)}/>
-        <SameDataComposedChart data={this.state.data} width={300}/>
+        <SameDataComposedChart data={this.state.data}/>
       </div>
     )
   }
 }
-
-
-
 
 export default TasksInfoCard;

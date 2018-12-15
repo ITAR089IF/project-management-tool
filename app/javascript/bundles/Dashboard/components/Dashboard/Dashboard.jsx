@@ -44,8 +44,8 @@ class Dashboard extends React.Component {
         onLayoutChange={(layout) => this.onLayoutChange(layout)}
         layouts={{lg: this.state.layout}}
       >
-        <div className="box" key="a" width={this.props.width} data-grid={{i: 'a', x: 0, y: 0, w: 2, h: 2}}>
-          <TasksInfoCard width={this.props.width}/>
+        <div className="box" key="a" data-grid={{i: 'a', x: 0, y: 0, w: 2, h: 2}}>
+          <TasksInfoCard/>
         </div>
 
       </ResponsiveReactGridLayout>
