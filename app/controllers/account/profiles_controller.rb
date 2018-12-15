@@ -13,13 +13,13 @@ class Account::ProfilesController < ApplicationController
     end
   end
 
-  def delete_image_attachment
-    @image = ActiveStorage::Blob.find_by(params[:id])
-    @image.purge
+  def delete_avatar
+    @avatar = ActiveStorage::Attachment.find_by(params[:id])
+    @avatar.purge_later
     redirect_back(fallback_location: account_profile_path)
   end
 
   def users_params
-    params.require(:user).permit(:first_name, :last_name, :role, :department, :about, :job_role)
+    params.require(:user).permit(:first_name, :last_name, :role, :department, :about, :job_role, :avatar)
   end
 end

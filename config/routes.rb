@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
     resource :profile, only: [:edit, :update] do
       member do
-        delete :delete_image_attachment
+        delete :delete_avatar
       end
     end
     resources :workspaces, except: [:index] do
