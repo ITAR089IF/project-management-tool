@@ -5,6 +5,7 @@ import { WidthProvider, Responsive } from "react-grid-layout";
 
 import * as api from '../../Api/layout_api';
 import * as config from '../config.js';
+import TestComponent from '../TestComponent';
 
 import "./dashboard.scss";
 import "react-grid-layout/css/styles.css";
@@ -58,7 +59,9 @@ class Dashboard extends React.Component {
         onResizeStop={(layout) => this.onResizeStop(layout)}
         layouts={{lg: this.state.layout}}
       >
-        <div className="box" key="a">a</div>
+        <div className="box" key="a">
+          <TestComponent />
+        </div>
         <div className="box" key="b">b</div>
         <div className="box" key="c">c</div>
         <div className="box" key="d">d</div>
