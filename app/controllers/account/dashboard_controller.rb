@@ -18,7 +18,7 @@ class Account::DashboardController < Account::AccountController
   def tasks_info
     @task_info = []
     @workspaces = current_user.available_workspaces
-    if params[:id]
+    if params[:id].is_i
       @collection = @workspaces.find(params[:id]).projects
     else
       @collection = @workspaces
@@ -32,7 +32,7 @@ class Account::DashboardController < Account::AccountController
     end
     @workspaces = @workspaces.pluck(:id, :name).to_h
 
-    render json: { info: @task_info, collection: @collection, workspaces: @workspaces }
+    render json: { info: @task_info, workspaces: @workspaces }
   end
 
   def calendar
