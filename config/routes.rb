@@ -10,15 +10,21 @@ Rails.application.routes.draw do
 
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
+    get '/top-workspaces-card', to: 'dashboard#top_workspaces_card'
+    get '/user_info_card', to: 'dashboard#user_info_card'
+    get '/top-users', to: 'dashboard#top_users_card'
+    get '/tasks-info-card', to: 'dashboard#tasks_info_card'
     get '/calendar', to: 'dashboard#calendar'
     get '/inbox', to: 'dashboard#inbox'
-    resources :search, only: [:index], defaults: { format: :json }
+    get '/reports/workspaces/:workspace_id', to: 'reports#workspace', as: :workspace_report
+    get '/reports/workspaces/:workspace_id/projects/:id', to: 'reports#project', as: :project_report
 
     resource :profile, only: [:edit, :update] do
       member do
         delete :delete_avatar
       end
     end
+    resources :search, only: [:index], defaults: { format: :json }
     resources :workspaces, except: [:index] do
       post :create_invitation_link
       resources :members, only: [:new, :create, :destroy] do
@@ -30,6 +36,7 @@ Rails.application.routes.draw do
       resources :projects, except: [:index]
       member do
         get :list
+        get :prepare_pdf
       end
     end
 
@@ -56,6 +63,10 @@ Rails.application.routes.draw do
 
     resources :tasks do
       concerns :commentable
+      collection do
+        post :new_task_from_calendar
+        post :create_task_from_calendar
+      end
     end
   end
 
@@ -66,5 +77,21 @@ Rails.application.routes.draw do
     end
   end
 
+
+  namespace :api, defaults: { format: :json } do
+
+    get '/dashboard/load', to: 'dashboard#load'
+    put '/dashboard/save', to: 'dashboard#save'
+
+    resources :workspaces do
+      resources :projects, except: [:index]
+    end
+
+    resources :projects, only: [] do
+      resources :tasks, except: [:index]
+    end
+  end
+
   mount ActionCable.server => '/cable'
+  mount Ckeditor::Engine => '/ckeditor'
 end

@@ -4,6 +4,7 @@
 #
 #  id                     :bigint(8)        not null, primary key
 #  about                  :text
+#  dashboard_layout       :json
 #  deleted_at             :datetime
 #  department             :string
 #  email                  :string           default(""), not null
@@ -40,6 +41,7 @@ class User < ApplicationRecord
   has_many :user_projects, dependent: :destroy
   has_many :projects, through: :user_projects
   has_many :task_watches, dependent: :destroy
+  has_many :created_tasks, class_name: "Task", foreign_key: :creator_id
   has_many :followed_tasks, through: :task_watches, source: :task
   has_many :assigned_tasks, class_name: "Task", foreign_key: :assignee_id
   has_many :shared_workspaces
@@ -57,8 +59,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook]
 
-  scope :order_desc, -> { order(:first_name, :last_name) }
-  scope :admins, -> { where(role: ADMIN) }
+  scope :order_desc,  -> { order(:first_name, :last_name) }
+  scope :admins,      -> { where(role: ADMIN) }
   scope :none_admins, -> { where(role: USER) }
 
   after_create :notify_admins_about_new_user
@@ -116,6 +118,10 @@ class User < ApplicationRecord
 
   def available_projects
     Project.where(workspace_id: available_workspaces.ids)
+  end
+
+  def available_tasks
+    Task.where(project_id: available_projects.ids)
   end
 
   def admin?

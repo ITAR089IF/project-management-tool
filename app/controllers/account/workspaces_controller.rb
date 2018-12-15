@@ -4,6 +4,11 @@ class Account::WorkspacesController < Account::AccountController
     @members = @workspace.all_members.order_desc
   end
 
+  def prepare_pdf
+    @workspace = resource
+    WorkspaceDetailsJob.perform_later(@workspace.id, current_user.id)
+  end
+
   def list
     @workspace = resource
   end
@@ -16,8 +21,10 @@ class Account::WorkspacesController < Account::AccountController
 
   def create
     @workspace = Workspace.new(workspace_params)
-    @workspace.save
-    @workspaces = collection
+    if @workspace.save
+      flash[:success] = 'Workspace was successfully created!'
+      @workspaces = collection
+    end
 
     respond_to(:js)
   end
@@ -31,7 +38,11 @@ class Account::WorkspacesController < Account::AccountController
   def update
     @workspace = resource
     @updated = @workspace.update(workspace_params)
-    @workspaces = collection
+
+    if @updated
+      flash[:success] = 'Workspace was successfully updated!'
+      @workspaces = collection
+    end
 
     respond_to(:js)
   end

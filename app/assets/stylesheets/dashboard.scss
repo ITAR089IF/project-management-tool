@@ -52,6 +52,7 @@
     }
   }
 }
+
 .container {
   &.landing-footer {
     padding: 0px 80px;
@@ -62,6 +63,58 @@
     }
     .p {
       font-size: 24px;
+    }
+  }
+}
+
+.price {
+  .title {
+    margin-top: 10px;
+  }
+  .pricing-table {
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+}
+
+.premium, .enterprise {
+  .pricing-plan {
+    .button {
+      background-color: #ad1457;
+      color: #fff;
+    }
+    span {
+      color: #ad1457;
+    }
+  }
+}
+
+.business {
+  .pricing-plan {
+    .button {
+      background-color: #ffc623;
+      color: #fff;
+    }
+    span {
+      color: #ffc623;
+    }
+  }
+}
+
+.pricing-table {
+  .pricing-plan {
+    .plan-item {
+      text-align: left;
+    }
+  }
+}
+
+form.new_task {
+  .select {
+    margin-bottom: 3rem;
+    &:not(.is-multiple):not(.is-loading)::after {
+      right: 1rem;
+      top: 3rem;
     }
   }
 }

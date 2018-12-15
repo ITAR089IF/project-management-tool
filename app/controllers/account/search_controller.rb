@@ -1,9 +1,9 @@
 class Account::SearchController < Account::AccountController
   def index
     render json: {
-      workspaces: current_user.workspaces.search_workspaces(params[:search]),
-      projects: current_user.projects.search_projects(params[:search]),
-      tasks: Task.search_tasks(current_user.id, params[:search])
+      workspaces: current_user.available_workspaces.search_workspaces(params[:search]),
+      projects: current_user.available_projects.search_projects(params[:search]),
+      tasks: current_user.available_tasks.search_tasks(params[:search])
     }
   end
 end

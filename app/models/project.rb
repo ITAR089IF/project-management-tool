@@ -13,6 +13,7 @@
 # Indexes
 #
 #  index_projects_on_deleted_at    (deleted_at)
+#  index_projects_on_name          (name)
 #  index_projects_on_workspace_id  (workspace_id)
 #
 # Foreign Keys
@@ -28,7 +29,8 @@ class Project < ApplicationRecord
   has_many :user_projects, dependent: :destroy
   has_many :users, through: :user_projects
 
-  scope :order_desc, -> { order(id: :desc) }
+  scope :order_desc,      -> { order(id: :desc) }
+  scope :order_name_asc,  -> { order(name: :asc) }
   scope :search_projects, -> (search) { select('projects.id, projects.name, projects.workspace_id').where("name ILIKE ?", "%#{search}%").order(name: :asc).limit(10) }
 
   validates :name, length: { maximum: 250 }, presence: true

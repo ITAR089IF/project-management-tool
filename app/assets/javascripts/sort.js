@@ -1,6 +1,6 @@
 $(document).on('turbolinks:load', function() {
   var all_tasks = document.getElementById('all_tasks');
-  if (all_tasks){
+  if (all_tasks) {
     Sortable.create(all_tasks, {
       handle: '.glyphicon-move',
       animation: 150,
@@ -11,9 +11,9 @@ $(document).on('turbolinks:load', function() {
         if(evt.oldIndex > evt.newIndex) {
           moveOption = 'up';
           movePositions = evt.oldIndex - evt.newIndex;
-        } else if(evt.oldIndex < evt.newIndex)  {
+        } else if(evt.oldIndex < evt.newIndex) {
           moveOption = 'down';
-          movePositions = evt.newIndex + evt.oldIndex;
+          movePositions = evt.newIndex - evt.oldIndex;
         }
         $.ajax({
           type: "PATCH",

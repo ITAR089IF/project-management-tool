@@ -15,13 +15,14 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'slim-rails'
-gem 'font-awesome-rails'
+gem 'font_awesome5_rails'
 gem 'figaro'
 gem 'devise'
 gem 'any_login'
 gem 'kaminari'
 gem 'simple_form'
 gem 'carrierwave'
+gem 'mini_magick'
 gem 'ransack'
 gem 'friendly_id'
 gem 'babosa'
@@ -46,6 +47,11 @@ gem 'bitly'
 gem 'prawn'
 gem 'prawn-table'
 gem 'sortable-rails'
+gem 'ckeditor'
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
+gem 'remotipart'
+gem 'redis'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'
@@ -79,3 +85,5 @@ group :test do
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'mini_racer', platforms: :ruby

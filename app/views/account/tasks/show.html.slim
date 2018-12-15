@@ -5,15 +5,24 @@
       .level-left
         .level-item
           .title
-            = "#{@project.name}: #{@task.title}"
+            = link_to @project.name, account_workspace_project_path(workspace_id: @project.workspace, id: @project.id)
+            = ": #{@task.title}"
       .level-right
         .level-item id="watch_task_#{@task.id}"
           = render('/account/tasks/watch_link', task: @task, project: @project)
+    - if @task.creator.present?
+      h6 = "Created by #{ @task.creator.full_name}"
     h3 Description
     = @task.description
+
     - if @task.due_date.present?
       h3 Due date
       = l @task.due_date, format: :date_month_year_concise
+
+    - if @task.completed_at.present?
+      h3 Completed at
+      = "#{l @task.completed_at, format: :date_month_year_concise} by #{@task.completed_by.full_name}"
+
     .level
       #assingnee_user_bar
         = render 'account/tasks/assignee_show', task: @task
@@ -30,7 +39,7 @@
                 = fa_icon "download"
             .level-item
               = link_to remove_attachment_account_project_task_path(@project, @task, attachment_id: file.id), method: :delete, data: { confirm: "Are you sure?" } do
-                = fa_icon "trash"
+                = fa_icon 'trash-alt', type: :regular
   .level
     .level-left
       - if @task.pending?
