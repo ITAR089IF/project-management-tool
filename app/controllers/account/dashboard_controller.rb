@@ -5,9 +5,8 @@ class Account::DashboardController < Account::AccountController
   end
 
   def top_workspaces_card
-
   end
-  
+
   def user_info_card
 
   end
