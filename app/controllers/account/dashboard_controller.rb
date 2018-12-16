@@ -21,7 +21,7 @@ class Account::DashboardController < Account::AccountController
       completed_tasks = current_user.completed_tasks.completed_at_date(date).count
       @user_info.push(created: created_tasks, assigned: assigned_tasks, completed: completed_tasks, date: date.strftime("%d/%m/%y"))
     end
-    render json: @user_info
+    render json: { info: @user_info }
   end
 
   def tasks_info_card
