@@ -26,7 +26,6 @@ RSpec.describe Account::DashboardController, type: :controller do
     it 'should show index page' do
       get :user_info, as: :json
       expect(response.body).to include("info")
-      expect(response).to have_http_status(200)
     end
   end
 
