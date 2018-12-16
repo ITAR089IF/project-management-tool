@@ -4,7 +4,7 @@ class TopUsers
     @user = user
     @workspaces = @user.available_workspaces
     if id == nil
-      if @workspaces.first.present?
+      if @workspaces.any?
         @collection = @workspaces.first.all_members
         @workspace = @workspaces.first
       end
@@ -16,7 +16,7 @@ class TopUsers
 
   def report
     top_users = []
-    if @workspaces.first.present?
+    if @workspaces.any?
       @collection.each do |member|
         name = member.full_name
         completed = @workspace.tasks.complete_by(member).count
