@@ -22,9 +22,7 @@ class TopUsers
         completed = @workspace.tasks.complete_by(member).count
         top_users.push( name: name, completed: completed)
       end
-      top_users = top_users.sort_by{ |k| -k[:completed]}
-      top_five_users = top_users[0..4]
-      top_five_users
+      top_users = top_users.sort_by{ |k| -k[:completed]}.take(5)
     else
       top_users
     end
