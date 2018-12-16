@@ -13,7 +13,6 @@ Rails.application.routes.draw do
     get '/top-workspaces-card', to: 'dashboard#top_workspaces_card'
     get '/user_info_card', to: 'dashboard#user_info_card'
     get '/top-users', to: 'dashboard#top_users_card'
-    get '/tasks-info-card', to: 'dashboard#tasks_info_card'
     get '/tasks-info', to: 'dashboard#tasks_info'
     get '/calendar', to: 'dashboard#calendar'
     get '/inbox', to: 'dashboard#inbox'
