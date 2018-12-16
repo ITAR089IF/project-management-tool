@@ -2,6 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import { WidthProvider, Responsive } from "react-grid-layout";
+import TopWorkspacesCard from '../TopWorkspacesCard';
+import TasksInfoCard from '../TasksInfoCard'
+import UserInfoCard  from '../UserInfoCard'
 
 import * as api from '../../Api/layout_api';
 import * as config from '../config.js';
@@ -17,11 +20,11 @@ class Dashboard extends React.Component {
     super(props);
 
     const defaults = [
-      {i: 'a', x: 0, y: 0, w: 1, h: 2},
+      {i: 'tasks-info-card', x: 0, y: 0, w: 1, h: 2},
       {i: 'b', x: 1, y: 0, w: 1, h: 2},
-      {i: 'c', x: 2, y: 0, w: 1, h: 2},
+      {i: 'user-info-card', x: 2, y: 0, w: 7, h: 9},
       {i: 'd', x: 3, y: 0, w: 1, h: 2},
-      {i: 'e', x: 4, y: 0, w: 1, h: 2}
+      {i: 'top-workspaces-card', x: 5, y: 0, w: 6, h: 8}
     ];
 
     this.state = {
@@ -34,11 +37,9 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     api.load_layout().then(data => {
-      if(data == null) {
-        return;
+      if(data != null) {
+        this.setState({ layout: data.layout})
       }
-
-      this.setState({ layout: data.layout});
     });
   }
 
@@ -63,11 +64,17 @@ class Dashboard extends React.Component {
         layouts={{lg: this.state.layout}}
         useCSSTransforms={false}
       >
-        <div className="box" key="a">a</div>
+        <div className="box" key="tasks-info-card" data-grid={{i: 'tasks-info-card', x: 0, y: 0, w: 4, h: 8, minW: 4, minH: 8}}>
+          <TasksInfoCard/>
+        </div>
         <div className="box" key="b">b</div>
-        <div className="box" key="c">c</div>
+        <div className="box" key="user-info-card" data-grid={{i: 'user-info-card', x: 0, y: 0, w: 7, h: 9, minW: 7, minH: 9}}>
+          <UserInfoCard/>
+        </div>
         <div className="box" key="d">d</div>
-        <div className="box" key="e">e</div>
+        <div className="box" key="top-workspaces-card" data-grid={{i: 'top-workspaces-card', x: 4, y: 8, w: 6, h: 8, minW: 6, minH: 8}}>
+          <TopWorkspacesCard/>
+        </div>
       </ResponsiveReactGridLayout>
     )
   }
