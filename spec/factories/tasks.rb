@@ -28,6 +28,7 @@
 #  index_tasks_on_deleted_at       (deleted_at)
 #  index_tasks_on_project_id       (project_id)
 #  index_tasks_on_row_order        (row_order)
+#  index_tasks_on_title            (title)
 #
 # Foreign Keys
 #

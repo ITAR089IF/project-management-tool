@@ -1,5 +1,10 @@
 = simple_form_for @user, url: [:account, :profile] do |f|
-  = f.input :avatar, label: "Select your profile avatar", wrapper: :upload_file
+  - if @user.with_avatar?
+    = f.input :avatar, label: "Change your profile avatar", wrapper: :upload_file
+    = link_to 'Delete avatar', delete_avatar_account_profile_path, method: :delete,
+              data: { confirm: 'Are you sure?' }, class: "button is-text", remote: true
+  - else
+    = f.input :avatar, label: "Select your profile avatar", wrapper: :upload_file
   = f.input :first_name, wrapper: :bulma_input, required: true, label_html: { class: "has-text-left"}
   = f.input :last_name, wrapper: :bulma_input, required: true, label_html: { class: "has-text-left"}
   = f.input :job_role, wrapper: :bulma_input, label_html: { class: "has-text-left"}
