@@ -1,20 +1,20 @@
 $( document ).on('turbolinks:load', function() {
-  var positions = $('.tasks .level').map(function() {
+  let positions = $('.tasks .level').map(function() {
     return $(this).data('task-id');
   }).get();
 
   $( ".sort" ).click(function() {
     var userInfo = [];
     $('.tasks .level').each(function() {
-      var assigneeId = $(this).data('assignee-id');
+      let assigneeId = $(this).data('assignee-id');
       if (assigneeId != false) {
         userInfo.push([assigneeId, $(this).children('.level-right').children('.image').data('tooltip')]);
       }
     });
 
     userInfo.sort(function(firstUser, secondUser) {
-      var name1 = firstUser[1].toUpperCase();
-      var name2 = secondUser[1].toUpperCase();
+      let name1 = firstUser[1].toUpperCase();
+      let name2 = secondUser[1].toUpperCase();
       if (name1 < name2) {
         return -1;
       }
@@ -24,23 +24,23 @@ $( document ).on('turbolinks:load', function() {
       return 0;
     });
 
-    i=0;
-    while (i < userInfo.length-1) {
-      if (userInfo[i][0] === userInfo[i+1][0] && userInfo[i][1] === userInfo[i+1][1]) {
-        userInfo.splice(i+1, 1);
+    for (let i = 0; i < userInfo.length; i++) {
+      for (let j = userInfo.length-1; j > i; j--) {
+        if (userInfo[i][0] == userInfo[j][0]) {
+          userInfo.splice(j, 1);
+        };
       };
-      i+=1;
     };
 
-    var taskInfo = {};
+    let taskInfo = {};
     userInfo.forEach(function(user) {
       taskInfo[user[0]] = [];
     });
     taskInfo['unassigned'] = [];
 
     $('.tasks .level').each(function() {
-      var taskId = $(this).data('task-id');
-      var assigneeId = $(this).data('assignee-id');
+      let taskId = $(this).data('task-id');
+      let assigneeId = $(this).data('assignee-id');
       if (assigneeId) {
         taskInfo[assigneeId].push(taskId);
       }

@@ -33,7 +33,7 @@ class Workspace < ApplicationRecord
   validates :name, presence: true, length: { maximum: 250 }
 
   def all_members
-    members.union(User.where(id: self.user_id))
+    members.union_all(User.where(id: self.user_id))
   end
 
   def potential_members
