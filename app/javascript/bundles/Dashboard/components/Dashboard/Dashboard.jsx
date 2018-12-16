@@ -32,7 +32,7 @@ class Dashboard extends React.Component {
     this.onResizeStop = this.onResizeStop.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     api.load_layout().then(data => {
       if(data == null) {
         return;
