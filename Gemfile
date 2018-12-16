@@ -52,6 +52,7 @@ gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 gem 'remotipart'
 gem 'redis'
+gem 'libv8', '~> 6.3.0'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'
