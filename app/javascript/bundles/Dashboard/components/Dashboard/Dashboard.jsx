@@ -16,17 +16,20 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
+    const defaults = [
+      {i: 'a', x: 0, y: 0, w: 1, h: 2},
+      {i: 'b', x: 1, y: 0, w: 1, h: 2},
+      {i: 'c', x: 2, y: 0, w: 1, h: 2},
+      {i: 'd', x: 3, y: 0, w: 1, h: 2},
+      {i: 'e', x: 4, y: 0, w: 1, h: 2}
+    ];
+
     this.state = {
-      layout: [
-        {i: 'a', x: 0, y: 0, w: 1, h: 2},
-        {i: 'b', x: 1, y: 2, w: 1, h: 2},
-        {i: 'c', x: 2, y: 4, w: 1, h: 2},
-        {i: 'd', x: 3, y: 6, w: 1, h: 2},
-        {i: 'e', x: 4, y: 8, w: 1, h: 2}
-      ]
+      layout: this.props.layout != null ? this.props.layout : defaults
     }
 
-    this.onLayoutChange = this.onLayoutChange.bind(this);
+    this.onDragStop = this.onDragStop.bind(this);
+    this.onResizeStop = this.onResizeStop.bind(this);
   }
 
   componentDidMount() {
@@ -35,11 +38,15 @@ class Dashboard extends React.Component {
         return;
       }
 
-      this.setState({ layout: data.layout})
+      this.setState({ layout: data.layout});
     });
   }
 
-  onLayoutChange(layout) {
+  onDragStop(layout) {
+    api.save_layout(layout);
+  }
+
+  onResizeStop(layout) {
     api.save_layout(layout);
   }
 
@@ -51,8 +58,10 @@ class Dashboard extends React.Component {
         cols={{lg: 12}}
         rowHeight={30}
         width={1200}
-        onLayoutChange={(layout) => this.onLayoutChange(layout)}
+        onDragStop={(layout) => this.onDragStop(layout)}
+        onResizeStop={(layout) => this.onResizeStop(layout)}
         layouts={{lg: this.state.layout}}
+        useCSSTransforms={false}
       >
         <div className="box" key="a">a</div>
         <div className="box" key="b">b</div>
