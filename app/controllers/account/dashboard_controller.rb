@@ -2,11 +2,17 @@ class Account::DashboardController < Account::AccountController
   after_action :change_messages_read, only: :inbox
 
   def index
+    @user_layout = current_user.dashboard_layout
   end
 
   def top_workspaces_card
 
   end
+<<<<<<< HEAD
+=======
+
+  def user_info_card
+>>>>>>> development
 
   def user_info_card
   end
