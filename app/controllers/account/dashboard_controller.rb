@@ -9,8 +9,8 @@ class Account::DashboardController < Account::AccountController
 
   end
 
-  def user_info_card
-
+  def user_info
+    render json: { info: UserInfo.new(current_user).report }
   end
 
   def tasks_info_card
