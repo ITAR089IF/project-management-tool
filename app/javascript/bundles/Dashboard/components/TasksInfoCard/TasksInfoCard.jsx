@@ -1,10 +1,10 @@
 import React from "react";
+import axios from 'axios';
 import PropTypes from "prop-types";
 import _ from "lodash";
 import "./tasks-info-card.scss";
 import SelectWorkspace from "../SelectWorkspace";
 import SameDataComposedChart from "../SameDataComposedChart";
-const axios = require('axios');
 class TasksInfoCard extends React.Component {
   constructor(props) {
     super(props);
@@ -17,13 +17,22 @@ class TasksInfoCard extends React.Component {
   }
 
   componentDidMount() {
-    this.handleClick();
+    axios.get(`/account/tasks-info`)
+      .then(resp => {
+        this.setState({ data: resp.data.info, workspaces: resp.data.workspaces, isLoading: false });
+      })
   }
 
   handleClick(id){
     this.setState({ isLoading: true });
-    axios.get(`http://localhost:3000/account/tasks-info?id=${id}`)
-      .then(data => this.setState({ data: data.info, active: this.state.workspaces[id] || 'All Workspaces', isLoading: false }))
+    let url = `/account/tasks-info`;
+    if (id) {
+      url = `/account/tasks-info?id=${id}`;
+    }
+    axios.get(url)
+      .then(resp => {
+        this.setState({ data: resp.data.info, workspaces: resp.data.workspaces, active: this.state.workspaces[id] || 'All Workspaces', isLoading: false });
+      })
   }
 
   render() {

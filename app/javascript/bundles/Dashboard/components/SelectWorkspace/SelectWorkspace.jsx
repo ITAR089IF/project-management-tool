@@ -17,7 +17,7 @@ class SelectWorkspace extends React.Component {
         </div>
         <div className="dropdown-menu" id="dropdown-menu" role="menu">
           <div className="dropdown-content">
-            <li className="dropdown-item" key='all' onClick={() => this.props.onClick('all')}>All Workspaces</li>
+            <li className="dropdown-item" key='all' onClick={() => this.props.onClick()}>All Workspaces</li>
             { Object.entries(workspaces).map(([key, value]) => {
               return <li href="#" className="dropdown-item" key={key} onClick={() => this.props.onClick(key)}>
                         {value}
