@@ -78,6 +78,7 @@ Rails.application.routes.draw do
 
     get '/dashboard/load', to: 'dashboard#load'
     put '/dashboard/save', to: 'dashboard#save'
+    get '/my-tasks', to: 'dashboard#my_tasks'
 
     resources :workspaces do
       resources :projects, except: [:index]
