@@ -5,7 +5,8 @@ class Account::DashboardController < Account::AccountController
     @user_layout = current_user.dashboard_layout
   end
 
-  def top_workspaces_card
+  def top_workspaces
+    render json: { info: TopWorkspaces.new(current_user).report }
   end
 
   def user_info
