@@ -7,9 +7,6 @@ class Account::DashboardController < Account::AccountController
   def top_workspaces_card
   end
 
-  def user_info_card
-  end
-
   def tasks_info
     @task_info = []
     @workspaces = current_user.available_workspaces

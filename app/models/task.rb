@@ -27,6 +27,7 @@
 #  index_tasks_on_deleted_at       (deleted_at)
 #  index_tasks_on_project_id       (project_id)
 #  index_tasks_on_row_order        (row_order)
+#  index_tasks_on_title            (title)
 #
 # Foreign Keys
 #
@@ -58,12 +59,9 @@ class Task < ApplicationRecord
   scope :complete,          -> { where.not(completed_at: nil).order(completed_at: :desc) }
   scope :complete_by,       -> (user) { where("completed_by_id = ?", user.id) }
   scope :row_order_asc,     -> { order(row_order: :asc) }
-  scope :search_tasks,      -> (user_id, search) { select('tasks.id, tasks.title, tasks.project_id').joins('
-                                 INNER JOIN projects ON projects.id = tasks.project_id
-                                 INNER JOIN user_projects as up ON projects.id = up.project_id
-                                 INNER JOIN users ON users.id = up.user_id')
-                                   .where('users.id = ? AND tasks.title ~* ?', user_id, "\\m#{search}")
-                                   .limit(10) }
+  scope :search_tasks,      -> (search) { select('tasks.id, tasks.title, tasks.project_id')
+                                                    .where('tasks.title ILIKE ?',"%#{search}%")
+                                                    .limit(10) }
   scope :this_week,         -> { where('created_at > ?', Date.today.beginning_of_week) }
   scope :current_workspace, -> (workspace) { joins(:project).merge(workspace.projects) }
   scope :completed_tasks_with_assignee, -> { where.not(assignee_id: nil, completed_at: nil).group(:assignee_id).count }
