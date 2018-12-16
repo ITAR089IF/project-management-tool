@@ -28,8 +28,13 @@ class Account::DashboardController < Account::AccountController
   def top_users
     @top_users = []
     @workspaces = current_user.available_workspaces
-    @collection = @workspaces.find(params[:id]).all_members
-    @workspace = @workspaces.find(params[:id])
+    if params[:id]
+      @collection = @workspaces.find(params[:id]).all_members
+      @workspace = @workspaces.find(params[:id])
+    else
+      @collection = @workspaces.first.all_members
+      @workspace = @workspaces.first
+    end
     @collection.each do |member|
       name = member.full_name
       completed = @workspace.tasks.complete_by(member).count

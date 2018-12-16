@@ -14,12 +14,11 @@ class TopUsersCard extends React.Component {
       this.state = {
         data: null,
         workspaces: null,
-        active: 'All Workspaces',
         isLoading: true,
         collection: null
       };
   }
- componentDidMount() {
+  componentDidMount() {
    axios.get(`/account/top-users`)
        .then(resp => {
          this.setState({ data: resp.data.info, workspaces: resp.data.workspaces, isLoading: false });
@@ -34,7 +33,7 @@ class TopUsersCard extends React.Component {
       }
       axios.get(url)
         .then(resp => {
-          this.setState({ data: resp.data.info, workspaces: resp.data.workspaces, active: this.state.workspaces[id] || 'All Workspaces', isLoading: false });
+          this.setState({ data: resp.data.info, workspaces: resp.data.workspaces, active: this.state.workspaces[0], isLoading: false });
         })
   }
 

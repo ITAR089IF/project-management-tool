@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./select-workspace.scss";
- class SelectWorkspace extends React.Component {
+
+class SelectWorkspace extends React.Component {
 	render () {
     const workspaces = this.props.workspaces;
   	return (
@@ -16,7 +17,6 @@ import "./select-workspace.scss";
         </div>
         <div className="dropdown-menu" id="dropdown-menu" role="menu">
           <div className="dropdown-content">
-            <li className="dropdown-item" key='1' onClick={() => this.props.onClick()}>{value}</li>
             { Object.entries(workspaces).map(([key, value]) => {
               return <li href="#" className="dropdown-item" key={key} onClick={() => this.props.onClick(key)}>
                         {value}
@@ -28,4 +28,5 @@ import "./select-workspace.scss";
     );
   }
 }
- export default SelectWorkspace;
+
+export default SelectWorkspace;

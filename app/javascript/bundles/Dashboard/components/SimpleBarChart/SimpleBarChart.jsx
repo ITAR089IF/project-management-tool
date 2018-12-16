@@ -5,13 +5,13 @@ import "./simple-bar-chart.scss";
 
 
 const renderCustomizedLabel = (props) => {
-  const { x, y, width, height, value } = props;
+  const { x, y, value } = props;
   const radius = 10;
 
   return (
     <g>
-      <circle cx={x + width / 2} cy={y - radius} r={radius} fill="#8884d8" />
-      <text x={x + width / 2} y={y - radius} fill="#fff" textAnchor="middle" dominantBaseline="middle">
+      <circle cx={x / 2} cy={y - radius} r={radius} fill="#8884d8" />
+      <text x={x / 2} y={y - radius} fill="#fff" textAnchor="middle" dominantBaseline="middle">
         {value.split(' ')[0]}
       </text>
     </g>
@@ -20,9 +20,13 @@ const renderCustomizedLabel = (props) => {
 
 class SimpleBarChart extends React.Component {
   render () {
+    if (this.props.data.length == 0) {
+			return (
+		  	<h4>You don't have any workpaces yet</h4>
+		  );
+		}
   	return (
-    	<BarChart width={600} height={300} data={this.props.data}
-            margin={{top: 5, right: 30, left: 40, bottom: 5}}>
+    	<BarChart  data={this.props.data}>
        <CartesianGrid strokeDasharray="10 10"/>
        <XAxis dataKey="name"/>
        <YAxis/>
