@@ -24,10 +24,11 @@ class UserInfoCard extends React.Component {
 
   render () {
     return (
-      <div>
+      <div className="user-info">
+        <h3 className="user-info-title"> Your progress</h3>
         <UserInfoChart data={this.state.data}/>
       </div>
-    )
+    );
   }
 }
 
