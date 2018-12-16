@@ -15,7 +15,6 @@ RSpec.describe Api::DashboardController, type: :controller do
   describe 'GET /api/my-tasks' do
     it "should show user's tasks page" do
       get :my_tasks, as: :json, params: { project_id: project.id, id: task1.id }
-      parsed_response = JSON.parse(response.body)
       expect(response.body).to include(task1.description)
       expect(response).to have_http_status(200)
     end
