@@ -38,6 +38,14 @@ RSpec.describe Account::DashboardController, type: :controller do
     end
   end
 
+  context 'GET /account/top_users' do
+    it 'should return tasks info' do
+      get :top_users, as: :json
+      expect(response.body).to include("info")
+      expect(response).to have_http_status(200)
+    end
+  end
+
   context 'GET /account/calendar' do
     it 'should return http status 200' do
       get :calendar

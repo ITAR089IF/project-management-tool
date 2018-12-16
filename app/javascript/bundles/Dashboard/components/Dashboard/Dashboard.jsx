@@ -69,7 +69,7 @@ class Dashboard extends React.Component {
         <div className="box" key="tasks-info-card" data-grid={{i: 'tasks-info-card', x: 0, y: 0, w: 4, h: 8, minW: 4, minH: 8}}>
           <TasksInfoCard/>
         </div>
-        <div className="box" key="b" data-grid={{i: 'top-users-card', x: 0, y: 0, w: 3, h: 8, minW: 3, minH: 8}}>
+        <div className="box" key="top-users-card" data-grid={{i: 'top-users-card', x: 0, y: 0, w: 7, h: 9, minW: 7, minH: 9}}>
          <TopUsersCard/>
        </div>
         <div className="box" key="user-info-card" data-grid={{i: 'user-info-card', x: 0, y: 0, w: 7, h: 9, minW: 7, minH: 9}}>
