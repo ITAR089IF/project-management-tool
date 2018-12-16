@@ -13,3 +13,17 @@ export const save_layout = (layout) => {
     { layout }
   ).catch(error => console.log(error));
 }
+
+export const get_init_tasks_info = () => {
+  axios.get(`/account/tasks-info`)
+    .then(response => { return response.data; })
+    .then(data => { return data; })
+    .catch(error => console.log(error));
+}
+
+export const get_tasks_info  = (url) => {
+  axios.get(url)
+  .then(response => { return response.data; })
+  .then(data => { return data; })
+  .catch(error => console.log(error));
+}

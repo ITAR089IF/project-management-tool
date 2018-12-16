@@ -1,17 +1,18 @@
 class TaskInfo
   def initialize(user, id = nil)
     @user = user
+    workspaces = @user.available_workspaces
     if id == nil
-      @collection = @workspaces
+      @collection = workspaces
     else
-      @collection = @workspaces.find(params[:id]).projects
+      @collection = workspaces.find(params[:id]).projects
     end
   end
 
   def report
     task_info = []
     @collection.each do |item|
-      incomplete = item.tasks.assigned_to(current_user).incomplete
+      incomplete = item.tasks.assigned_to(@user).incomplete
       due_soon = incomplete.due_soon.count
       outdated = incomplete.outdated.count
       incomplete = incomplete.count

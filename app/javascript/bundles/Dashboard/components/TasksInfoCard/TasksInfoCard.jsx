@@ -1,7 +1,9 @@
 import React from "react";
-import axios from 'axios';
 import PropTypes from "prop-types";
 import _ from "lodash";
+
+import * as api from '../../Api/layout_api';
+
 import "./tasks-info-card.scss";
 import SelectWorkspace from "../SelectWorkspace";
 import SameDataComposedChart from "../SameDataComposedChart";
@@ -17,9 +19,9 @@ class TasksInfoCard extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`/account/tasks-info`)
-      .then(resp => {
-        this.setState({ data: resp.data.info, workspaces: resp.data.workspaces, isLoading: false });
+    api.get_init_tasks_info()
+      .then(data => {
+        this.setState({ data: data.info, workspaces: data.workspaces, isLoading: false });
       })
   }
 
@@ -29,9 +31,9 @@ class TasksInfoCard extends React.Component {
     if (id) {
       url = `/account/tasks-info?id=${id}`;
     }
-    axios.get(url)
-      .then(resp => {
-        this.setState({ data: resp.data.info, workspaces: resp.data.workspaces, active: this.state.workspaces[id] || 'All Workspaces', isLoading: false });
+    api.get_tasks_info(url)
+      .then(data => {
+        this.setState({ data: data.info, workspaces: data.workspaces, active: this.state.workspaces[id] || 'All Workspaces', isLoading: false });
       })
   }
 

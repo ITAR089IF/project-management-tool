@@ -4,6 +4,6 @@ class WorkspacesReport
   end
 
   def report
-    @user.available_workspaces.to_json(:only => [ :id, :name])
+    @user.available_workspaces.pluck(:id, :name).to_h
   end
 end
