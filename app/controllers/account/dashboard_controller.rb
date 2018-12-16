@@ -25,20 +25,21 @@ class Account::DashboardController < Account::AccountController
     @old_messages = @old_messages.page(params[:page]).per(20)
   end
 
-  def top_users_card
-  end
-
   def top_users
     @top_users = []
-    @workspace = current_user.available_workspaces.first
-    @workspace.all_members.each do |member|
+    @workspaces = current_user.available_workspaces
+    @collection = @workspaces.find(params[:id]).all_members
+    @workspace = @workspaces.find(params[:id])
+    @collection.each do |member|
       name = member.full_name
       completed = @workspace.tasks.complete_by(member).count
       @top_users.push( name: name, completed:completed)
     end
     @top_users = @top_users.sort_by{ |k| -k[:completed]}
     @top_five_users = @top_users[0..4]
-    render json: @top_five_users
+
+    @workspaces = @workspaces.pluck(:id, :name).to_h
+    render json: { info: @top_five_users,  workspaces: @workspaces }
 
   end
 

@@ -1,58 +1,56 @@
 import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LabelList, Legend} from 'recharts';
+import axios from 'axios';
 import "./top-users-card.scss";
 
-const renderCustomizedLabel = (props) => {
-  const { x, y, width, height, value } = props;
-  const radius = 10;
+import SelectWorkspace from "../SelectWorkspace";
+import SimpleBarChart from "../SimpleBarChart";
 
-  return (
-    <g>
-      <circle cx={x + width / 2} cy={y - radius} r={radius} fill="#8884d8" />
-      <text x={x + width / 2} y={y - radius} fill="#fff" textAnchor="middle" dominantBaseline="middle">
-        {value.split(' ')[0]}
-      </text>
-    </g>
-  );
-};
 
 class TopUsersCard extends React.Component {
   constructor(props) {
-  super(props);
-   this.state = {
-    data: null
-  };
-}
+    super(props);
+      this.state = {
+        data: null,
+        workspaces: null,
+        active: 'All Workspaces',
+        isLoading: true,
+        collection: null
+      };
+  }
  componentDidMount() {
-  fetch('http://localhost:3000/account/top_users')
-    .then(response => response.json())
-    .then(data => this.setState({ data: data }));
-}
+   axios.get(`/account/top-users`)
+       .then(resp => {
+         this.setState({ data: resp.data.info, workspaces: resp.data.workspaces, isLoading: false });
+       })
+  }
+
+  handleClick(id){
+      this.setState({ isLoading: true });
+      let url = `/account/top-users`;
+      if (id) {
+        url = `/account/top-users?id=${id}`;
+      }
+      axios.get(url)
+        .then(resp => {
+          this.setState({ data: resp.data.info, workspaces: resp.data.workspaces, active: this.state.workspaces[id] || 'All Workspaces', isLoading: false });
+        })
+  }
 
   render() {
+     if (this.state.isLoading) {
+       return <p>Loading ...</p>;
+     }
+
     return (
-      <SimpleBarChart data={this.state.data} />
-    )
-  }
-}
-class SimpleBarChart extends React.Component {
-  render () {
-  	return (
-    	<BarChart width={600} height={300} data={this.props.data}
-            margin={{top: 5, right: 30, left: 40, bottom: 5}}>
-       <CartesianGrid strokeDasharray="10 10"/>
-       <XAxis dataKey="name"/>
-       <YAxis/>
-       <Tooltip/>
-       <Legend />
-       <Bar dataKey="completed" fill="#8884d8" minPointSize={5}>
-          <LabelList dataKey="name" content={renderCustomizedLabel} />
-        </Bar>
-      </BarChart>
-    );
-  }
+       <div className="top-users">
+         <h3 className="card-title">Top users</h3>
+         <SelectWorkspace workspaces={this.state.workspaces} active={this.state.active} onClick={(id) => this.handleClick(id)}/>
+         <SimpleBarChart data={this.state.data}/>
+       </div>
+     )
+   }
 }
 
 export default TopUsersCard;
