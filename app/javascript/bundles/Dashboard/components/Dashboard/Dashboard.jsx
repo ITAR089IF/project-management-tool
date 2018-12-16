@@ -64,7 +64,7 @@ class Dashboard extends React.Component {
         layouts={{lg: this.state.layout}}
         useCSSTransforms={false}
       >
-        <div className="box" key="a" data-grid={{i: 'a', x: 0, y: 0, w: 7, h: 8, minW: 7, minH: 8}}>
+        <div className="box" key="a" data-grid={{i: 'a', x: 0, y: 0, w: 7, h: 9, minW: 7, minH: 9}}>
           <UserInfoCard/>
         </div>
         <div className="box" key="b" data-grid={{i: 'a', x: 0, y: 0, w: 2, h: 3, minW: 2, minH: 2}}>b</div>

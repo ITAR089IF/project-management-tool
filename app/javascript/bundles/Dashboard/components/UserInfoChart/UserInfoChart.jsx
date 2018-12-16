@@ -8,8 +8,7 @@ class UserInfoChart extends React.Component {
   render () {
     return (
       <ResponsiveContainer>
-      <ComposedChart data={this.props.data}
-          margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+      <ComposedChart data={this.props.data}>
         <XAxis dataKey="date" stroke="#000"/>
         <YAxis orientation="left" stroke="#000"/>
         <CartesianGrid strokeDasharray="3 3"/>
