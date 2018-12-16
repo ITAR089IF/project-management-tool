@@ -18,7 +18,7 @@ class SameDataComposedChart extends React.Component {
 					<YAxis/>
 					<Tooltip/>
 					<Legend/>
-					<Bar dataKey='uncompleted' fill='#413ea0'/>
+					<Bar dataKey='uncompleted' barSize={20} fill='#413ea0'/>
 					<Line type='monotone' dataKey='due soon' stroke='#ff7300'/>
 					<Line type='monotone' dataKey='outdated' stroke='#ff4306'/>
 				</ComposedChart>
