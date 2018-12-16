@@ -13,6 +13,14 @@ class Account::ProfilesController < ApplicationController
     end
   end
 
+  def delete_avatar
+    @user = current_user
+    @avatar = ActiveStorage::Attachment.find(current_user.avatar.id)
+    @avatar.purge_later
+
+    respond_to :js
+  end
+
   def users_params
     params.require(:user).permit(:first_name, :last_name, :role, :department, :about, :avatar, :job_role)
   end

@@ -4,6 +4,7 @@
 #
 #  id                     :bigint(8)        not null, primary key
 #  about                  :text
+#  dashboard_layout       :json
 #  deleted_at             :datetime
 #  department             :string
 #  email                  :string           default(""), not null
@@ -117,6 +118,10 @@ class User < ApplicationRecord
 
   def available_projects
     Project.where(workspace_id: available_workspaces.ids)
+  end
+
+  def available_tasks
+    Task.where(project_id: available_projects.ids)
   end
 
   def admin?

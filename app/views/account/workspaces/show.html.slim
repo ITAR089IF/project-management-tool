@@ -7,7 +7,7 @@
             = @workspace.name
       .level-right
         .level-item
-          = link_to "Workspace details", account_workspace_path(@workspace, format: "pdf"), target: :_blank, class: "button is-link"
+          = link_to "Send details to email", prepare_pdf_account_workspace_path(@workspace), remote: true, class: "button is-link"
         .level-item
           - if current_user.assigned_tasks.current_workspace(@workspace).any? || current_user.followed_tasks.current_workspace(@workspace).any?
             = link_to "My tasks", list_account_workspace_path(@workspace), class: "button is-link"

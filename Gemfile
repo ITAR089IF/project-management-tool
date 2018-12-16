@@ -22,6 +22,7 @@ gem 'any_login'
 gem 'kaminari'
 gem 'simple_form'
 gem 'carrierwave'
+gem 'mini_magick'
 gem 'ransack'
 gem 'friendly_id'
 gem 'babosa'
@@ -46,6 +47,7 @@ gem 'bitly'
 gem 'prawn'
 gem 'prawn-table'
 gem 'sortable-rails'
+gem 'ckeditor'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 gem 'remotipart'
@@ -83,3 +85,5 @@ group :test do
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'mini_racer', platforms: :ruby

@@ -13,6 +13,7 @@
 # Indexes
 #
 #  index_projects_on_deleted_at    (deleted_at)
+#  index_projects_on_name          (name)
 #  index_projects_on_workspace_id  (workspace_id)
 #
 # Foreign Keys
@@ -38,7 +39,7 @@ RSpec.describe Project, type: :model do
 
   context 'scope testing' do
     let!(:user) { create(:user) }
-    let!(:workspace) { create(:workspace, user_id: user.id) }
+    let!(:workspace) { create(:workspace, user: user) }
     let!(:project1) { create(:project, name: 'Asana Demo', workspace_id: workspace.id) }
     let!(:project2) { create(:project, name: 'Facebook', workspace_id: workspace.id) }
     let!(:project3) { create(:project, name: 'Faker', workspace_id: workspace.id) }
@@ -48,9 +49,9 @@ RSpec.describe Project, type: :model do
     end
 
     it 'should find all projects with entered text' do
-      expect(workspace.projects.search_projects('Fa').count).to eq 2
-      expect(workspace.projects.search_projects('dem').count).to eq 1
-      expect(workspace.projects.search_projects('uadsfa').count).to eq 0
+      expect(user.available_projects.search_projects('Fa').count).to eq 2
+      expect(user.available_projects.search_projects('dem').count).to eq 1
+      expect(user.available_projects.search_projects('uadsfa').count).to eq 0
     end
   end
 end

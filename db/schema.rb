@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_03_095121) do
+ActiveRecord::Schema.define(version: 2018_12_11_102657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,18 @@ ActiveRecord::Schema.define(version: 2018_12_03_095121) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "ckeditor_assets", force: :cascade do |t|
+    t.string "data_file_name", null: false
+    t.string "data_content_type"
+    t.integer "data_file_size"
+    t.string "type", limit: 30
+    t.integer "width"
+    t.integer "height"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["type"], name: "index_ckeditor_assets_on_type"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -99,6 +111,7 @@ ActiveRecord::Schema.define(version: 2018_12_03_095121) do
     t.datetime "deleted_at"
     t.text "description"
     t.index ["deleted_at"], name: "index_projects_on_deleted_at"
+    t.index ["name"], name: "index_projects_on_name"
     t.index ["workspace_id"], name: "index_projects_on_workspace_id"
   end
 
@@ -142,6 +155,7 @@ ActiveRecord::Schema.define(version: 2018_12_03_095121) do
     t.index ["deleted_at"], name: "index_tasks_on_deleted_at"
     t.index ["project_id"], name: "index_tasks_on_project_id"
     t.index ["row_order"], name: "index_tasks_on_row_order"
+    t.index ["title"], name: "index_tasks_on_title"
   end
 
   create_table "user_projects", force: :cascade do |t|
@@ -172,6 +186,7 @@ ActiveRecord::Schema.define(version: 2018_12_03_095121) do
     t.text "about"
     t.string "job_role"
     t.datetime "deleted_at"
+    t.json "dashboard_layout"
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -184,6 +199,7 @@ ActiveRecord::Schema.define(version: 2018_12_03_095121) do
     t.bigint "user_id"
     t.datetime "deleted_at"
     t.index ["deleted_at"], name: "index_workspaces_on_deleted_at"
+    t.index ["name"], name: "index_workspaces_on_name"
     t.index ["user_id"], name: "index_workspaces_on_user_id"
   end
 
