@@ -47,7 +47,7 @@ FactoryBot.define do
 
   trait :with_workspaces do
     after(:create) do |user|
-      FactoryBot.create_list(:workspace, 2, user: user)
+      FactoryBot.create_list(:workspace, 6, user: user)
     end
   end
 
@@ -116,8 +116,8 @@ FactoryBot.define do
         workspace.shared_workspaces.create(workspace_id: workspace.id, user_id: User.second.id)
         workspace.projects.each do |project|
           workspace.members.each do |member|
-            project.tasks.incomplete.limit(20).each do |task|
-              task.update(assignee: member, assigned_at: Date.today, completed_at: Date.today, completed_by_id: member.id)
+            project.tasks.incomplete.limit(5).each do |task|
+              task.update(assignee: member, assigned_at: Date.today, completed_at: Date.today, completed_by_id: member.id
             end
           end
         end
