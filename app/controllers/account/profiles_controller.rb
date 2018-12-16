@@ -14,9 +14,11 @@ class Account::ProfilesController < ApplicationController
   end
 
   def delete_avatar
+    @user = current_user
     @avatar = ActiveStorage::Attachment.find(current_user.avatar.id)
     @avatar.purge_later
-    redirect_back(fallback_location: account_profile_path)
+
+    respond_to :js
   end
 
   def users_params

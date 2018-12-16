@@ -43,7 +43,10 @@ RSpec.describe Account::ProfilesController, type: :controller do
   describe "DELETE #delete_avatar" do
     it "should delete the user's avatar" do
       user.avatar.attach(FileFactory.random_file)
-      delete :delete_avatar, params: { id: user.id }
+      delete :delete_avatar, params: { id: user.id },
+      format: :js
+
+      expect(response).to render_template :delete_avatar
       user.reload
       expect(user.avatar.attached?).to_not be
     end
