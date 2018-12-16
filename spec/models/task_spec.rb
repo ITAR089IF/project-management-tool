@@ -3,6 +3,7 @@
 # Table name: tasks
 #
 #  id              :bigint(8)        not null, primary key
+#  assigned_at     :datetime
 #  completed_at    :datetime
 #  deleted_at      :datetime
 #  description     :text
