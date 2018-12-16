@@ -7,7 +7,15 @@ class Account::DashboardController < Account::AccountController
   def top_workspaces_card
 
   end
-  
+
+  def comments_card
+
+  end
+
+  def comments_info
+    render json: { info: CommentsInfo.new(current_user).report }
+  end
+
   def user_info_card
 
   end
