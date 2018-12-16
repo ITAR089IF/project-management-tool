@@ -8,11 +8,6 @@ class Account::DashboardController < Account::AccountController
   def top_workspaces_card
 
   end
-<<<<<<< HEAD
-=======
-
-  def user_info_card
->>>>>>> development
 
   def user_info_card
   end
@@ -32,25 +27,8 @@ class Account::DashboardController < Account::AccountController
   end
 
   def top_users
-    @top_users = []
-    @workspaces = current_user.available_workspaces
-    if params[:id]
-      @collection = @workspaces.find(params[:id]).all_members
-      @workspace = @workspaces.find(params[:id])
-    else
-      @collection = @workspaces.first.all_members
-      @workspace = @workspaces.first
-    end
-    @collection.each do |member|
-      name = member.full_name
-      completed = @workspace.tasks.complete_by(member).count
-      @top_users.push( name: name, completed:completed)
-    end
-    @top_users = @top_users.sort_by{ |k| -k[:completed]}
-    @top_five_users = @top_users[0..4]
-
-    @workspaces = @workspaces.pluck(:id, :name).to_h
-    render json: { info: @top_five_users,  workspaces: @workspaces }
+    render json: { info: TopUsers.new(current_user, params[:id]).report,
+                   workspaces: WorkspacesReport.new(current_user).report }
 
   end
 

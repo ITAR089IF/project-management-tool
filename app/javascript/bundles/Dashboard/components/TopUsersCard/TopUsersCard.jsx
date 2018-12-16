@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import axios from 'axios';
+import * as api from '../../Api/layout_api';
 import "./top-users-card.scss";
 
 import SelectWorkspace from "../SelectWorkspace";
@@ -19,10 +20,10 @@ class TopUsersCard extends React.Component {
       };
   }
   componentDidMount() {
-   axios.get(`/account/top-users`)
-       .then(resp => {
-         this.setState({ data: resp.data.info, workspaces: resp.data.workspaces, isLoading: false });
-       })
+    api.get_init_top_users()
+    .then(data => {
+      this.setState({ data: data.info, workspaces: data.workspaces, isLoading: false });
+   })
   }
 
   handleClick(id){
