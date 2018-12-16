@@ -24,7 +24,8 @@ class Account::DashboardController < Account::AccountController
       @incomplete = @incomplete.count
       @task_info.push({name: item.name, uncompleted: @incomplete, 'due soon' => @due_soon, outdated: @outdated})
     end
-      @workspaces = @workspaces.pluck(:id, :name).to_h
+
+    @workspaces = @workspaces.pluck(:id, :name).to_h
     render json: { info: @task_info, workspaces: @workspaces }
   end
 
