@@ -17,15 +17,15 @@ class UserInfoCard extends React.Component {
 
   componentDidMount() {
     axios.get(`/account/user-info`)
-     .then(resp => {
-       this.setState({ data: resp.data.info });
-     })
+      .then(resp => {
+        this.setState({ data: resp.data.info });
+      })
   }
 
   render () {
     return (
       <div className="user-info">
-        <h3 className="user-info-title"> Your progress</h3>
+        <h3 className="user-info-title"> Your progress:</h3>
         <UserInfoChart data={this.state.data}/>
       </div>
     );
