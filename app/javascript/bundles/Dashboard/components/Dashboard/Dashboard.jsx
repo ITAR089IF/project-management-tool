@@ -24,7 +24,7 @@ class Dashboard extends React.Component {
       {i: 'b', x: 1, y: 0, w: 1, h: 2},
       {i: 'user-info-card', x: 2, y: 0, w: 7, h: 9},
       {i: 'd', x: 3, y: 0, w: 1, h: 2},
-      {i: 'top-workspaces-card', x: 4, y: 8, w: 6, h: 8}
+      {i: 'top-workspaces-card', x: 5, y: 0, w: 6, h: 8}
     ];
 
     this.state = {
