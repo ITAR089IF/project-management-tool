@@ -265,7 +265,7 @@ RSpec.describe Account::TasksController, type: :controller do
 
   context '#POST /assign' do
     it 'initial assign' do
-      post :assign, params: { task: { assignee: user1.id, assigned_at: Date.today }, id: task1.id, project_id: project.id }, format: :js, xhr: true
+      post :assign, params: { task: { assignee: user1.id, assigned_at: DateTime.now }, id: task1.id, project_id: project.id }, format: :js, xhr: true
       task1.reload
       expect(response).to render_template :assign
       expect(task1.assignee).to eql user1
@@ -273,7 +273,7 @@ RSpec.describe Account::TasksController, type: :controller do
     end
 
     it 'reassign' do
-      post :assign, params: { task: { assignee: user1.id, assigned_at: Date.today }, id: task2.id, project_id: project.id }, format: :js, xhr: true
+      post :assign, params: { task: { assignee: user1.id, assigned_at: DateTime.now }, id: task2.id, project_id: project.id }, format: :js, xhr: true
       task2.reload
       expect(response).to render_template :assign
       expect(task2.assignee).to eql user1
@@ -281,7 +281,7 @@ RSpec.describe Account::TasksController, type: :controller do
     end
 
     it 'assignee user start follow task' do
-      post :assign, params: { task: { assignee: user1.id, assigned_at: Date.today }, id: task1.id, project_id: project.id }, format: :js, xhr: true
+      post :assign, params: { task: { assignee: user1.id, assigned_at: DateTime.now }, id: task1.id, project_id: project.id }, format: :js, xhr: true
       task1.reload
       expect(task1.watchers).to include(task1.assignee)
     end
