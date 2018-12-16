@@ -23,12 +23,12 @@ componentDidMount() {
 }
 
 render() {
-   return (
-     <div className="top-workspaces">
-        <h3 className="top-workspaces-title"> Top5 Workspaces:</h3>
-        <TopWorkspacesChart data={this.state.data}/>
-     </div>
-   )
+  return (
+    <div className="top-workspaces">
+      <h3 className="top-workspaces-title">"Top 5" Workspaces:</h3>
+      <TopWorkspacesChart data={this.state.data}/>
+    </div>
+  )
  }
 }
 
