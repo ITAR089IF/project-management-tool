@@ -3,6 +3,7 @@
 # Table name: tasks
 #
 #  id              :bigint(8)        not null, primary key
+#  assigned_at     :datetime
 #  completed_at    :datetime
 #  deleted_at      :datetime
 #  description     :text
@@ -62,9 +63,12 @@ class Task < ApplicationRecord
   scope :search_tasks,      -> (search) { select('tasks.id, tasks.title, tasks.project_id')
                                                     .where('tasks.title ILIKE ?',"%#{search}%")
                                                     .limit(10) }
-  scope :this_week,         -> { where('created_at > ?', Date.today.beginning_of_week) }
-  scope :current_workspace, -> (workspace) { joins(:project).merge(workspace.projects) }
-  scope :completed_tasks_with_assignee, -> { where.not(assignee_id: nil, completed_at: nil).group(:assignee_id).count }
+  scope :this_week,                        -> { where('created_at > ?', Date.today.beginning_of_week) }
+  scope :current_workspace,                -> (workspace) { joins(:project).merge(workspace.projects) }
+  scope :created_on_date,                  -> (date) { where("created_at::date = ?", date) }
+  scope :assigned_on_date,                 -> (date) { where("assigned_at::date = ?", date) }
+  scope :completed_on_date,                -> (date) { where("completed_at::date = ?", date) }
+  scope :completed_tasks_with_assignee,    -> { where.not(assignee_id: nil, completed_at: nil).group(:assignee_id).count }
   scope :completed_tasks_without_assignee, -> { where(assignee_id: nil).where.not(completed_at: nil, completed_by_id: nil).group(:completed_by_id).count }
 
   validates :title, length: { maximum: 250 }, presence: true
@@ -89,7 +93,7 @@ class Task < ApplicationRecord
   end
 
   def assign!(assignee_id, user)
-    result = update(assignee_id: assignee_id, assigned_by_id: user.id)
+    result = update(assignee_id: assignee_id, assigned_by_id: user.id, assigned_at: Time.now)
     send_notifications("Task '#{self.title}' has been assigned to #{assignee.full_name} by #{user.full_name}", self.watchers + [assignee] - [user]) if result
     result
   end

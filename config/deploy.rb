@@ -8,7 +8,7 @@ set :repo_url, "https://github.com/ITAR089IF/project-management-tool"
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/home/deploy/asana"
+set :deploy_to, "/home/deploy1/asana"
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
@@ -37,9 +37,22 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/syst
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
+set :tmp_dir, "/home/deploy1"
 set :conditionally_migrate, true
 set :assets_manifests, ['app/assets/config/manifest.js']
 set :rails_assets_groups, :assets
 set :keep_assets, 2
 set :normalize_asset_timestamps, %w{public/images public/javascripts public/stylesheets}
+before "deploy:assets:precompile", "deploy:yarn_install"
+
+namespace :deploy do
+  desc 'Run rake yarn:install'
+  task :yarn_install do
+    on roles(:web) do
+      within release_path do
+        execute("cd #{release_path} && yarn install")
+      end
+    end
+  end
+end
 

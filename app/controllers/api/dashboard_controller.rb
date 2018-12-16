@@ -11,6 +11,10 @@ class Api::DashboardController < ActionController::API
     end
   end
 
+  def my_tasks
+    @my_tasks = current_user.assigned_tasks
+  end
+
   private
 
   def layout_params
