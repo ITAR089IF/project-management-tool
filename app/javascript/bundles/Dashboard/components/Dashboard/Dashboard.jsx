@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import { WidthProvider, Responsive } from "react-grid-layout";
+import TasksInfoCard from '../TasksInfoCard'
 import UserInfoCard  from '../UserInfoCard'
 
 import * as api from '../../Api/layout_api';
@@ -18,7 +19,7 @@ class Dashboard extends React.Component {
     super(props);
 
     const defaults = [
-      {i: 'a', x: 0, y: 0, w: 1, h: 2},
+      {i: 'tasks-info-card', x: 0, y: 0, w: 1, h: 2},
       {i: 'b', x: 1, y: 0, w: 1, h: 2},
       {i: 'user-info-card', x: 2, y: 0, w: 7, h: 9},
       {i: 'd', x: 3, y: 0, w: 1, h: 2},
@@ -64,13 +65,15 @@ class Dashboard extends React.Component {
         layouts={{lg: this.state.layout}}
         useCSSTransforms={false}
       >
-        <div className="box" key="a" data-grid={{i: 'a', x: 3, y: 0, w: 1, h: 2}}>a</div>
-        <div className="box" key="b" data-grid={{i: 'b', x: 0, y: 0, w: 2, h: 3, minW: 2, minH: 2}}>b</div>
+        <div className="box" key="tasks-info-card" data-grid={{i: 'tasks-info-card', x: 0, y: 0, w: 4, h: 8, minW: 4, minH: 8}}>
+          <TasksInfoCard/>
+        </div>
+        <div className="box" key="b">b</div>
         <div className="box" key="user-info-card" data-grid={{i: 'user-info-card', x: 0, y: 0, w: 7, h: 9, minW: 7, minH: 9}}>
           <UserInfoCard/>
         </div>
-        <div className="box" key="d" data-grid={{i: 'd', x: 3, y: 0, w: 1, h: 2}}>d</div>
-        <div className="box" key="e" data-grid={{i: 'e', x: 4, y: 0, w: 1, h: 2}}>e</div>
+        <div className="box" key="d">d</div>
+        <div className="box" key="e">e</div>
       </ResponsiveReactGridLayout>
     )
   }

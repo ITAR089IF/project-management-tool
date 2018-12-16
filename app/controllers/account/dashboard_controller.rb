@@ -6,15 +6,15 @@ class Account::DashboardController < Account::AccountController
   end
 
   def top_workspaces_card
-
   end
 
   def user_info
     render json: { info: UserInfo.new(current_user).report }
   end
 
-  def tasks_info_card
-
+  def tasks_info
+    render json: { info: TaskInfo.new(current_user, params[:id]).report,
+                  workspaces: WorkspacesReport.new(current_user).report }
   end
 
   def calendar
