@@ -10,6 +10,5 @@ ReactOnRails.register({
   Dashboard,
   TopWorkspacesCard,
   UserInfoCard,
-  TopUsersCard,
-  TasksInfoCard
+  TopUsersCard
 });
