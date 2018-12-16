@@ -13,3 +13,10 @@ export const save_layout = (layout) => {
     { layout }
   ).catch(error => console.log(error));
 }
+
+export const get_init_top_workspaces = () => {
+  return axios.get('/account/top-workspaces')
+    .then(response => { return response.data; })
+    .then(data => { return data; })
+    .catch(error => console.log(error));
+}

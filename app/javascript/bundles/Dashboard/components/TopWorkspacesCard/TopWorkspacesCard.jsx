@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
+import axios from 'axios';
+import * as api from '../../Api/layout_api';
 import "./top-workspaces-card.scss";
 
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import TopWorkspacesChart from '../TopWorkspacesChart';
 
 class TopWorkspacesCard extends React.Component {
   constructor(props) {
@@ -14,35 +16,20 @@ class TopWorkspacesCard extends React.Component {
   }
 
 componentDidMount() {
-  fetch('http://localhost:3000/account/top-workspaces')
-    .then(response => response.json())
-    .then(data => this.setState({ data: data }));
+  api.get_init_top_workspaces()
+      .then(data => {
+        this.setState({ data: data.info });
+      })
 }
 
 render() {
    return (
-     <TopWorkspacesChart data={this.state.data}/>
+     <div className="top-workspaces">
+        <h3 className="top-workspaces-title"> Top5 Workspaces:</h3>
+        <TopWorkspacesChart data={this.state.data}/>
+     </div>
    )
  }
-}
-
-class TopWorkspacesChart extends React.Component {
-	render () {
-  	return (
-      <ResponsiveContainer>
-        <BarChart width={600} height={300} data={this.props.data}
-            margin={{top: 20, right: 30, left: 20, bottom: 5}}>
-          <CartesianGrid strokeDasharray="3 3"/>
-          <XAxis dataKey="name"/>
-          <YAxis/>
-          <Tooltip/>
-          <Legend />
-          <Bar dataKey="completed" stackId="a" fill="#2bb712" />
-          <Bar dataKey="uncompleted" stackId="a" fill="#f44242" />
-        </BarChart>
-      </ResponsiveContainer>
-    );
-  }
 }
 
 export default TopWorkspacesCard;

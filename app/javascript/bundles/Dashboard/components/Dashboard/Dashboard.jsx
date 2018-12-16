@@ -19,11 +19,11 @@ class Dashboard extends React.Component {
 
     this.state = {
       layout: [
-        {i: 'a', x: 0, y: 0, w: 6, h: 8, minW: 6, minH: 8},
+        {i: 'a', x: 0, y: 0, w: 1, h: 2},
         {i: 'b', x: 1, y: 2, w: 1, h: 2},
         {i: 'c', x: 2, y: 4, w: 1, h: 2},
         {i: 'd', x: 3, y: 6, w: 1, h: 2},
-        {i: 'e', x: 4, y: 8, w: 1, h: 2}
+        {i: 'top-workspaces-card', x: 4, y: 8, w: 6, h: 8, minW: 6, minH: 8}
       ]
     }
 
@@ -59,13 +59,13 @@ class Dashboard extends React.Component {
         onResizeStop={(layout) => this.onResizeStop(layout)}
         layouts={{lg: this.state.layout}}
       >
-        <div className="box" key="a">
-          <TopWorkspacesCard />
-        </div>
+        <div className="box" key="a"></div>
         <div className="box" key="b">b</div>
         <div className="box" key="c">c</div>
         <div className="box" key="d">d</div>
-        <div className="box" key="e">e</div>
+        <div className="box" key="top-workspaces-card" data-grid={{i: 'top-workspaces-card', x: 4, y: 8, w: 6, h: 8, minW: 6, minH: 8}}>
+          <TopWorkspacesCard/>
+        </div>
       </ResponsiveReactGridLayout>
     )
   }
