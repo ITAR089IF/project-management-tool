@@ -33,7 +33,7 @@ class TasksInfoCard extends React.Component {
     }
     api.get_tasks_info(url)
       .then(data => {
-        this.setState({ data: data.info, workspaces: data.workspaces, active: this.state.workspaces[id] || 'All Workspaces', isLoading: false });
+        this.setState({ data: data.info, active: this.state.workspaces[id] || 'All Workspaces', isLoading: false });
       })
   }
 

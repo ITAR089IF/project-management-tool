@@ -55,7 +55,7 @@ class Dashboard extends React.Component {
         onLayoutChange={(layout) => this.onLayoutChange(layout)}
         layouts={{lg: this.state.layout}}
       >
-        <div className="box" key="tasks-info-card" data-grid={{i: 'tasks-info-card', x: 0, y: 0, w: 3, h: 8, minW: 3, minH: 8}}>
+        <div className="box" key="tasks-info-card" data-grid={{i: 'tasks-info-card', x: 0, y: 0, w: 4, h: 8, minW: 4, minH: 8}}>
           <TasksInfoCard/>
         </div>
         <div className="box" key="b">b</div>

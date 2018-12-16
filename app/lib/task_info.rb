@@ -5,7 +5,7 @@ class TaskInfo
     if id == nil
       @collection = workspaces
     else
-      @collection = workspaces.find(params[:id]).projects
+      @collection = workspaces.find(id).projects
     end
   end
 

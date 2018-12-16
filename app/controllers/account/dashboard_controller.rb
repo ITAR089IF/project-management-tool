@@ -8,7 +8,7 @@ class Account::DashboardController < Account::AccountController
   end
 
   def tasks_info
-    render json: { info: TaskInfo.new(current_user).report,
+    render json: { info: TaskInfo.new(current_user, params[:id]).report,
                   workspaces: WorkspacesReport.new(current_user).report }
   end
 
