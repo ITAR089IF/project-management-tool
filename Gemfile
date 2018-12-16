@@ -52,6 +52,10 @@ gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 gem 'remotipart'
 gem 'redis'
+<<<<<<< HEAD
+=======
+gem 'libv8', '~> 6.3.0'
+>>>>>>> 33996a29cb3755b4605d88e4e740917a20335890
 
 group :development, :test do
   gem 'awesome_print', '~> 1.8'
@@ -86,4 +90,8 @@ end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+<<<<<<< HEAD
 gem 'mini_racer', platforms: :ruby
+=======
+gem 'mini_racer', platforms: :ruby
+>>>>>>> 33996a29cb3755b4605d88e4e740917a20335890

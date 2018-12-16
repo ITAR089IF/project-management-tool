@@ -2,6 +2,19 @@ class Account::DashboardController < Account::AccountController
   after_action :change_messages_read, only: :inbox
 
   def index
+    @user_layout = current_user.dashboard_layout
+  end
+
+  def top_workspaces_card
+  end
+
+  def user_info
+    render json: { info: UserInfo.new(current_user).report }
+  end
+
+  def tasks_info
+    render json: { info: TaskInfo.new(current_user, params[:id]).report,
+                  workspaces: WorkspacesReport.new(current_user).report }
   end
 
   def top_workspaces_card

@@ -12,6 +12,7 @@
 # Indexes
 #
 #  index_workspaces_on_deleted_at  (deleted_at)
+#  index_workspaces_on_name        (name)
 #  index_workspaces_on_user_id     (user_id)
 #
 # Foreign Keys
@@ -33,7 +34,7 @@ class Workspace < ApplicationRecord
   validates :name, presence: true, length: { maximum: 250 }
 
   def all_members
-    members.union(User.where(id: self.user_id))
+    members.union_all(User.where(id: self.user_id))
   end
 
   def potential_members

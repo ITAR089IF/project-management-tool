@@ -4,6 +4,7 @@
 #
 #  id                     :bigint(8)        not null, primary key
 #  about                  :text
+#  dashboard_layout       :json
 #  deleted_at             :datetime
 #  department             :string
 #  email                  :string           default(""), not null
@@ -76,9 +77,9 @@ FactoryBot.define do
           FactoryBot.create(:task, :future, project: project, creator: user)
           FactoryBot.create(:task, :expired, project: project, creator: user)
           FactoryBot.create(:task, :completed, :expired, completed_by: user, project: project, creator: user)
-          FactoryBot.create_list(:task, rand(10), project: project, creator: user)
-          FactoryBot.create_list(:task, rand(10), :completed_in_range, project: project, assignee: user, creator: user)
-          FactoryBot.create_list(:task, rand(10), :completed_in_range, project: project, creator: user)
+          FactoryBot.create_list(:task, rand(2..10), project: project, creator: user)
+          FactoryBot.create_list(:task, rand(2..10), :completed_in_range, project: project, assignee: user, assigned_at: Date.today, creator: user)
+          FactoryBot.create_list(:task, rand(2..10), :completed_in_range, project: project, creator: user)
         end
       end
     end
@@ -116,7 +117,7 @@ FactoryBot.define do
         workspace.projects.each do |project|
           workspace.members.each do |member|
             project.tasks.incomplete.limit(20).each do |task|
-              task.update(assignee: member, completed_at: Date.today, completed_by_id: member.id)
+              task.update(assignee: member, assigned_at: Date.today, completed_at: Date.today, completed_by_id: member.id)
             end
           end
         end

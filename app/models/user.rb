@@ -4,6 +4,7 @@
 #
 #  id                     :bigint(8)        not null, primary key
 #  about                  :text
+#  dashboard_layout       :json
 #  deleted_at             :datetime
 #  department             :string
 #  email                  :string           default(""), not null
@@ -43,6 +44,7 @@ class User < ApplicationRecord
   has_many :created_tasks, class_name: "Task", foreign_key: :creator_id
   has_many :followed_tasks, through: :task_watches, source: :task
   has_many :assigned_tasks, class_name: "Task", foreign_key: :assignee_id
+  has_many :completed_tasks, class_name: "Task", foreign_key: :completed_by_id
   has_many :shared_workspaces
   has_many :invited_workspaces, through: :shared_workspaces, source: :workspace
   has_one_attached :avatar
@@ -117,6 +119,10 @@ class User < ApplicationRecord
 
   def available_projects
     Project.where(workspace_id: available_workspaces.ids)
+  end
+
+  def available_tasks
+    Task.where(project_id: available_projects.ids)
   end
 
   def admin?

@@ -3,6 +3,7 @@
 # Table name: tasks
 #
 #  id              :bigint(8)        not null, primary key
+#  assigned_at     :datetime
 #  completed_at    :datetime
 #  deleted_at      :datetime
 #  description     :text
@@ -27,6 +28,7 @@
 #  index_tasks_on_deleted_at       (deleted_at)
 #  index_tasks_on_project_id       (project_id)
 #  index_tasks_on_row_order        (row_order)
+#  index_tasks_on_title            (title)
 #
 # Foreign Keys
 #
