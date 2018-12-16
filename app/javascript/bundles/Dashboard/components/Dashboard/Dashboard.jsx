@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import { WidthProvider, Responsive } from "react-grid-layout";
+import TopWorkspacesCard from '../TopWorkspacesCard';
 
 import * as api from '../../Api/layout_api';
 import * as config from '../config.js';
@@ -18,7 +19,7 @@ class Dashboard extends React.Component {
 
     this.state = {
       layout: [
-        {i: 'a', x: 0, y: 0, w: 1, h: 2},
+        {i: 'a', x: 0, y: 0, w: 6, h: 8, minW: 6, minH: 8},
         {i: 'b', x: 1, y: 2, w: 1, h: 2},
         {i: 'c', x: 2, y: 4, w: 1, h: 2},
         {i: 'd', x: 3, y: 6, w: 1, h: 2},
@@ -26,20 +27,23 @@ class Dashboard extends React.Component {
       ]
     }
 
-    this.onLayoutChange = this.onLayoutChange.bind(this);
+    this.onDragStop = this.onDragStop.bind(this);
+    this.onResizeStop = this.onResizeStop.bind(this);
   }
 
   componentDidMount() {
     api.load_layout().then(data => {
-      if(data == null) {
-        return;
+      if(data != null) {
+        this.setState({ layout: data.layout})
       }
-
-      this.setState({ layout: data.layout})
     });
   }
 
-  onLayoutChange(layout) {
+  onDragStop(layout) {
+    api.save_layout(layout);
+  }
+
+  onResizeStop(layout) {
     api.save_layout(layout);
   }
 
@@ -51,10 +55,13 @@ class Dashboard extends React.Component {
         cols={{lg: 12}}
         rowHeight={30}
         width={1200}
-        onLayoutChange={(layout) => this.onLayoutChange(layout)}
+        onDragStop={(layout) => this.onDragStop(layout)}
+        onResizeStop={(layout) => this.onResizeStop(layout)}
         layouts={{lg: this.state.layout}}
       >
-        <div className="box" key="a">a</div>
+        <div className="box" key="a">
+          <TopWorkspacesCard />
+        </div>
         <div className="box" key="b">b</div>
         <div className="box" key="c">c</div>
         <div className="box" key="d">d</div>
