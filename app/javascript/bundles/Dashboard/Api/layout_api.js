@@ -48,10 +48,3 @@ export const get_init_comments_info = () => {
     .then(data => { return data; })
     .catch(error => console.log(error));
 }
-
-export const get_comments_info = (url) => {
-  return axios.get(url)
-    .then(response => { return response.data; })
-    .then(data => { return data; })
-    .catch(error => console.log(error));
-}
