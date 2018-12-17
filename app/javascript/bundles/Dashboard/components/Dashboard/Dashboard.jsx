@@ -21,7 +21,7 @@ class Dashboard extends React.Component {
 
     const defaults = [
       {i: 'tasks-info-card', x: 0, y: 0, w: 1, h: 2},
-      {i: 'b', x: 1, y: 0, w: 1, h: 2},
+      {i: 'top-users-card', x: 1, y: 0, w: 1, h: 2},
       {i: 'user-info-card', x: 2, y: 0, w: 7, h: 9},
       {i: 'd', x: 3, y: 0, w: 1, h: 2},
       {i: 'e', x: 4, y: 0, w: 1, h: 2}

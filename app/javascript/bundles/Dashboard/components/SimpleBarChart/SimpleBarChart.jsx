@@ -6,11 +6,6 @@ import "./simple-bar-chart.scss";
 
 class SimpleBarChart extends React.Component {
   render () {
-    if (this.props.data.length == 0) {
-			return (
-		  	<h4>You don't have any workpaces yet</h4>
-		  );
-		}
   	return (
       <ResponsiveContainer>
       	<BarChart  data={this.props.data}>

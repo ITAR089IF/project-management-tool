@@ -16,13 +16,15 @@ class TopUsersCard extends React.Component {
         data: null,
         workspaces: null,
         isLoading: true,
-        collection: null
+        collection: null,
+        active: 0
       };
   }
   componentDidMount() {
     api.get_init_top_users()
     .then(data => {
-      this.setState({ data: data.info, workspaces: data.workspaces, isLoading: false });
+      const id = Object.keys(data.workspaces)[0];
+      this.setState({ data: data.info, workspaces: data.workspaces, active: data.workspaces[id], isLoading: false });
    })
   }
 
