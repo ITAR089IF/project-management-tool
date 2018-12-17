@@ -22,22 +22,6 @@ class Account::DashboardController < Account::AccountController
     render json: { info: CommentsInfo.new(current_user).report }
   end
 
-  def top_workspaces_card
-
-  end
-
-  def comments_info_card
-
-  end
-
-  def user_info_card
-
-  end
-
-  def tasks_info_card
-
-  end
-
   def calendar
     @user_tasks = current_user.followed_tasks
   end
