@@ -5,7 +5,7 @@ import axios from 'axios';
 import * as api from '../../Api/layout_api';
 import "./top-users-card.scss";
 
-import SelectWorkspace from "../SelectWorkspace";
+import DropdownWorkspace from "../DropdownWorkspace";
 import SimpleBarChart from "../SimpleBarChart";
 
 
@@ -36,7 +36,7 @@ class TopUsersCard extends React.Component {
       }
       axios.get(url)
         .then(resp => {
-          this.setState({ data: resp.data.info, workspaces: resp.data.workspaces, active: this.state.workspaces[0], isLoading: false });
+          this.setState({ data: resp.data.info, workspaces: resp.data.workspaces, active: this.state.workspaces[id], isLoading: false });
         })
   }
 
@@ -48,7 +48,7 @@ class TopUsersCard extends React.Component {
     return (
        <div className="top-users">
          <h3 className="card-title">Top users</h3>
-         <SelectWorkspace workspaces={this.state.workspaces} active={this.state.active} onClick={(id) => this.handleClick(id)}/>
+         <DropdownWorkspace workspaces={this.state.workspaces} active={this.state.active} onClick={(id) => this.handleClick(id)}/>
          <SimpleBarChart data={this.state.data}/>
        </div>
      )

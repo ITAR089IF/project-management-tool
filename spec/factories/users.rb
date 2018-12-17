@@ -117,7 +117,7 @@ FactoryBot.define do
         workspace.projects.each do |project|
           workspace.members.each do |member|
             project.tasks.incomplete.limit(5).each do |task|
-              task.update(assignee: member, assigned_at: Date.today, completed_at: Date.today, completed_by_id: member.id
+              task.update(assignee: member, assigned_at: Date.today, completed_at: Date.today, completed_by_id: member.id)
             end
           end
         end

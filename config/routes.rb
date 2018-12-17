@@ -10,12 +10,8 @@ Rails.application.routes.draw do
 
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
-<<<<<<< HEAD
-    get '/top-workspaces-card', to: 'dashboard#top_workspaces_card'
     get '/top-users', to: 'dashboard#top_users'
-=======
     get '/top-workspaces', to: 'dashboard#top_workspaces'
->>>>>>> development
     get '/user-info', to: 'dashboard#user_info'
     get '/tasks-info', to: 'dashboard#tasks_info'
     get '/calendar', to: 'dashboard#calendar'
@@ -25,6 +21,11 @@ Rails.application.routes.draw do
 
     resources :search, only: [:index], defaults: { format: :json }
     resource :profile, only: [:edit, :update]
+    resource :profile, only: [:edit, :update] do
+      member do
+        delete :delete_avatar
+      end
+    end
     resources :workspaces, except: [:index] do
       post :create_invitation_link
       resources :members, only: [:new, :create, :destroy] do

@@ -43,7 +43,7 @@ class TasksInfoCard extends React.Component {
     }
     return (
       <div className="task-info">
-        <h3 className="card-title">Assigned to you tasks</h3>
+        <h3 className="card-title"> Tasks assigned to you </h3>
         <SelectWorkspace workspaces={this.state.workspaces} active={this.state.active} onClick={(id) => this.handleClick(id)}/>
         <SameDataComposedChart data={this.state.data}/>
       </div>
