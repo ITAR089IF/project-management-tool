@@ -1,2 +1,3 @@
-import CommentsCard from './CommentsCard';
-export default CommentsCard;
+import CommentsInfoCard from './CommentsInfoCard';
+
+export default CommentsInfoCard;

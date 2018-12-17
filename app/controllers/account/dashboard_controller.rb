@@ -18,16 +18,16 @@ class Account::DashboardController < Account::AccountController
                   workspaces: WorkspacesReport.new(current_user).report }
   end
 
+  def comments_info
+    render json: { info: CommentsInfo.new(current_user).report }
+  end
+
   def top_workspaces_card
 
   end
 
-  def comments_card
+  def comments_info_card
 
-  end
-
-  def comments_info
-    render json: { info: CommentsInfo.new(current_user).report }
   end
 
   def user_info_card
