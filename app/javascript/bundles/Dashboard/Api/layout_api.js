@@ -21,6 +21,13 @@ export const get_init_top_users = () => {
   .catch(error => console.log(error));
 }
 
+export const get_init_top_workspaces = () => {
+  return axios.get('/account/top-workspaces')
+    .then(response => { return response.data; })
+    .then(data => { return data; })
+    .catch(error => console.log(error));
+}
+
 export const get_init_tasks_info = () => {
   return axios.get(`/account/tasks-info`)
     .then(response => { return response.data; })

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 import { WidthProvider, Responsive } from "react-grid-layout";
 import TopUsersCard from '../TopUsersCard'
+import TopWorkspacesCard from '../TopWorkspacesCard';
 import TasksInfoCard from '../TasksInfoCard'
 import UserInfoCard  from '../UserInfoCard'
 
@@ -24,7 +25,7 @@ class Dashboard extends React.Component {
       {i: 'top-users-card', x: 1, y: 0, w: 1, h: 2},
       {i: 'user-info-card', x: 2, y: 0, w: 7, h: 9},
       {i: 'd', x: 3, y: 0, w: 1, h: 2},
-      {i: 'e', x: 4, y: 0, w: 1, h: 2}
+      {i: 'top-workspaces-card', x: 5, y: 0, w: 6, h: 8}
     ];
 
     this.state = {
@@ -37,11 +38,9 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     api.load_layout().then(data => {
-      if(data == null) {
-        return;
+      if(data != null) {
+        this.setState({ layout: data.layout})
       }
-
-      this.setState({ layout: data.layout});
     });
   }
 
@@ -76,7 +75,9 @@ class Dashboard extends React.Component {
           <UserInfoCard/>
         </div>
         <div className="box" key="d">d</div>
-        <div className="box" key="e">e</div>
+        <div className="box" key="top-workspaces-card" data-grid={{i: 'top-workspaces-card', x: 4, y: 8, w: 6, h: 8, minW: 6, minH: 8}}>
+          <TopWorkspacesCard/>
+        </div>
       </ResponsiveReactGridLayout>
     )
   }

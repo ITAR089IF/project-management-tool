@@ -10,8 +10,12 @@ Rails.application.routes.draw do
 
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
+<<<<<<< HEAD
     get '/top-workspaces-card', to: 'dashboard#top_workspaces_card'
     get '/top-users', to: 'dashboard#top_users'
+=======
+    get '/top-workspaces', to: 'dashboard#top_workspaces'
+>>>>>>> development
     get '/user-info', to: 'dashboard#user_info'
     get '/tasks-info', to: 'dashboard#tasks_info'
     get '/calendar', to: 'dashboard#calendar'
@@ -78,6 +82,7 @@ Rails.application.routes.draw do
 
     get '/dashboard/load', to: 'dashboard#load'
     put '/dashboard/save', to: 'dashboard#save'
+    get '/my-tasks', to: 'dashboard#my_tasks'
 
     resources :workspaces do
       resources :projects, except: [:index]
