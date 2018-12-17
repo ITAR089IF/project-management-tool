@@ -18,6 +18,10 @@ class Account::DashboardController < Account::AccountController
                   workspaces: WorkspacesReport.new(current_user).report }
   end
 
+  def comments_info
+    render json: { info: CommentsInfo.new(current_user).report }
+  end
+
   def calendar
     @user_tasks = current_user.followed_tasks
   end

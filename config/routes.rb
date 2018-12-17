@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get '/user-info', to: 'dashboard#user_info'
     get '/top-users', to: 'dashboard#top_users_card'
     get '/tasks-info', to: 'dashboard#tasks_info'
+    get '/comments-info', to: 'dashboard#comments_info'
     get '/calendar', to: 'dashboard#calendar'
     get '/inbox', to: 'dashboard#inbox'
     get '/reports/workspaces/:workspace_id', to: 'reports#workspace', as: :workspace_report

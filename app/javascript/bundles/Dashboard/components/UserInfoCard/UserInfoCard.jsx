@@ -34,4 +34,4 @@ class UserInfoCard extends React.Component {
   }
 }
 
- export default UserInfoCard;
+export default UserInfoCard;
