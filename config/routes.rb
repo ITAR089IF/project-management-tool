@@ -21,25 +21,25 @@ Rails.application.routes.draw do
     get '/reports/workspaces/:workspace_id/projects/:id', to: 'reports#project', as: :project_report
 
     resource :profile, only: [:edit, :update] do
-       member do
-         delete :delete_avatar
-       end
-     end
-     resources :search, only: [:index], defaults: { format: :json }
-     resources :workspaces, except: [:index] do
-       post :create_invitation_link
-       resources :members, only: [:new, :create, :destroy] do
-         collection do
-           get :greeting_new_member
-           post :create_thought_link
-         end
-       end
-       resources :projects, except: [:index]
-       member do
-         get :list
-         get :prepare_pdf
-       end
-     end
+      member do
+        delete :delete_avatar
+      end
+    end
+    resources :search, only: [:index], defaults: { format: :json }
+    resources :workspaces, except: [:index] do
+      post :create_invitation_link
+      resources :members, only: [:new, :create, :destroy] do
+        collection do
+          get :greeting_new_member
+          post :create_thought_link
+        end
+      end
+      resources :projects, except: [:index]
+      member do
+        get :list
+        get :prepare_pdf
+      end
+    end
 
     concern :commentable do
       resources :comments, only: [:create, :destroy]
