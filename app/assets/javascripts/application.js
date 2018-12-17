@@ -8,6 +8,7 @@
 //= require account/dashboard
 //= require account/reports
 //= require main
+//= require account/sort_tasks_assignee
 //= require cable
 //= require js-routes
 //= require chart.min

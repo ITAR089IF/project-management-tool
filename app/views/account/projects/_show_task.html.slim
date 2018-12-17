@@ -1,4 +1,4 @@
-.level class="task_#{task.id} #{'pending' if task.pending?}" data-project-id="#{project.id}" data-task-id="#{task.id}"
+.level class="task_#{task.id} #{'pending' if task.pending?}" data-project-id="#{project.id}" data-task-id="#{task.id}" data-assignee-id="#{task.assignee.id if task.assignee}"
   .level-left
     .level-item.glyphicon-move
       - if !task.section?

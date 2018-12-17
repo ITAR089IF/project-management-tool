@@ -1,5 +1,0 @@
-$('.tasks').html('');
-<%- @tasks.each do |task| %>
-  task_html = $("<%= j render('/account/projects/show_task', task: task, project: @project) %>");
-  $('.tasks').append(task_html);
-<% end %>

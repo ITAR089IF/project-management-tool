@@ -7,7 +7,9 @@
   border: 1px solid lightgrey;
   line-height: 24px;
 }
-
+.sort {
+  cursor: pointer;
+}
 .tasks {
   .level {
     background-color: #ffff7461;
@@ -58,5 +60,11 @@
         border-radius: 250983px;
       }
     }
+  }
+}
+
+.list {
+  h2 {
+    margin: 0.5rem;
   }
 }

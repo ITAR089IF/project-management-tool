@@ -16,9 +16,12 @@
       .level-item
         = link_to "Add Section", new_account_project_task_path(@project, section: true), class: "button"
   - if @project.tasks.any?
-    .title
+    .is-size-5.has-text-weight-bold
       |  To Do List:
-    #all_tasks.conteiner.box.tasks
+      .is-pulled-right.is-size-5
+        .sort
+          = fa_icon 'sort-alpha-down'
+    #all_tasks.conteiner.box.tasks.unsorted.list
       - @tasks.each do |task|
         = render '/account/projects/show_task', task: task, project: @project
     .content
