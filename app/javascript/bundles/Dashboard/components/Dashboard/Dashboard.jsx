@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import { WidthProvider, Responsive } from "react-grid-layout";
+import TopUsersCard from '../TopUsersCard'
 import TopWorkspacesCard from '../TopWorkspacesCard';
 import TasksInfoCard from '../TasksInfoCard'
 import UserInfoCard  from '../UserInfoCard'
@@ -21,8 +22,8 @@ class Dashboard extends React.Component {
     super(props);
 
     const defaults = [
-      {i: 'tasks-info-card', x: 0, y: 0, w: 1, h: 2},
-      {i: 'b', x: 1, y: 0, w: 1, h: 2},
+      {i: 'tasks-info-card', x: 0, y: 0, w: 7, h: 9},
+      {i: 'top-users-card', x: 1, y: 0, w: 7, h: 9},
       {i: 'user-info-card', x: 2, y: 0, w: 7, h: 9},
       {i: 'comments-info-card', x: 3, y: 0, w: 7, h: 9},
       {i: 'top-workspaces-card', x: 5, y: 0, w: 6, h: 8}
@@ -65,10 +66,12 @@ class Dashboard extends React.Component {
         layouts={{lg: this.state.layout}}
         useCSSTransforms={false}
       >
-        <div className="box" key="tasks-info-card" data-grid={{i: 'tasks-info-card', x: 0, y: 0, w: 4, h: 8, minW: 4, minH: 8}}>
+        <div className="box" key="tasks-info-card" data-grid={{i: 'tasks-info-card', x: 0, y: 0, w: 4, h: 8, minW: 8, minH: 12}}>
           <TasksInfoCard/>
         </div>
-        <div className="box" key="b">b</div>
+        <div className="box" key="top-users-card" data-grid={{i: 'top-users-card', x: 0, y: 2, w: 7, h: 9, minW: 8, minH: 12}}>
+         <TopUsersCard/>
+       </div>
         <div className="box" key="user-info-card" data-grid={{i: 'user-info-card', x: 0, y: 0, w: 7, h: 9, minW: 7, minH: 9}}>
           <UserInfoCard/>
         </div>

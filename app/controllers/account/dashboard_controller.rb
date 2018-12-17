@@ -32,7 +32,10 @@ class Account::DashboardController < Account::AccountController
     @old_messages = @old_messages.page(params[:page]).per(20)
   end
 
-  def top_users_card
+  def top_users
+    render json: { info: TopUsers.new(current_user, params[:id]).report,
+                   workspaces: WorkspacesReport.new(current_user).report }
+
   end
 
   def change_messages_read

@@ -10,9 +10,9 @@ Rails.application.routes.draw do
 
   namespace :account do
     get '/dashboard', to: 'dashboard#index'
+    get '/top-users', to: 'dashboard#top_users'
     get '/top-workspaces', to: 'dashboard#top_workspaces'
     get '/user-info', to: 'dashboard#user_info'
-    get '/top-users', to: 'dashboard#top_users_card'
     get '/tasks-info', to: 'dashboard#tasks_info'
     get '/comments-info', to: 'dashboard#comments_info'
     get '/calendar', to: 'dashboard#calendar'
@@ -20,12 +20,13 @@ Rails.application.routes.draw do
     get '/reports/workspaces/:workspace_id', to: 'reports#workspace', as: :workspace_report
     get '/reports/workspaces/:workspace_id/projects/:id', to: 'reports#project', as: :project_report
 
+    resources :search, only: [:index], defaults: { format: :json }
+    resource :profile, only: [:edit, :update]
     resource :profile, only: [:edit, :update] do
       member do
         delete :delete_avatar
       end
     end
-    resources :search, only: [:index], defaults: { format: :json }
     resources :workspaces, except: [:index] do
       post :create_invitation_link
       resources :members, only: [:new, :create, :destroy] do
