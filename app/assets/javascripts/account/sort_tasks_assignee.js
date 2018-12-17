@@ -50,12 +50,14 @@ $( document ).on('turbolinks:load', function() {
     });
 
     if ($('.sorted').length == 0) {
-      $('.tasks').after('<div class="container box tasks sorted" id ="all_tasks"></div>');
+      $('.tasks').after('<div class="container box tasks sorted list" id ="all_tasks"></div>');
 
       userInfo.forEach(function(user){
-        $('.sorted').append('<h2 class="has-text-weight-bold">'+user[1]+'</h2>');
+        $('.sorted').append(`<div class="list" data-list-id=${user[0]}></div>`);
+        $('.sorted').find(`[data-list-id=${user[0]}]`).append('<h2 class="has-text-weight-bold">'+user[1]+'</h2>');
+
         taskInfo[user[0]].forEach(function(taskId){
-          $('.sorted').append($(".unsorted").find(`[data-task-id='${taskId}']`));
+          $('.sorted').find(`[data-list-id=${user[0]}]`).append($(".unsorted").find(`[data-task-id='${taskId}']`));
         });
       });
 
@@ -68,7 +70,7 @@ $( document ).on('turbolinks:load', function() {
       dragAndDrop();
     }
     else {
-      $('.sorted').after('<div class="container box tasks unsorted" id ="all_tasks"></div>');
+      $('.sorted').after('<div class="container box tasks unsorted list" id ="all_tasks"></div>');
       positions.forEach(function(taskId){
         $('.unsorted').append($(".sorted").find(`[data-task-id='${taskId}']`));
       });

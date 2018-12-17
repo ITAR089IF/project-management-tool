@@ -21,7 +21,7 @@
       .is-pulled-right.is-size-5
         .sort
           = fa_icon 'sort-alpha-down'
-    #all_tasks.conteiner.box.tasks.unsorted
+    #all_tasks.conteiner.box.tasks.unsorted.list
       - @tasks.each do |task|
         = render '/account/projects/show_task', task: task, project: @project
     .content

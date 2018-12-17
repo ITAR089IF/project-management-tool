@@ -62,6 +62,7 @@ class Account::TasksController < Account::AccountController
     params[:move][:move_positions].to_i.times do
       @task.update(row_order_position: params[:move][:move_option].to_sym)
     end
+  head :ok
   end
 
   def watch
