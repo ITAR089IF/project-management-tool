@@ -16,7 +16,7 @@ class Account::ProfilesController < ApplicationController
   def delete_avatar
     @user = current_user
     @avatar = ActiveStorage::Attachment.find(current_user.avatar.id)
-    @avatar.purge_later
+    @avatar.purge
 
     respond_to :js
   end
